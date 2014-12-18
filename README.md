@@ -13,7 +13,7 @@ MapleBacon is a Swift image download and caching library.
 1. Add MapleBacon as a git submodule: open your project directory in the Terminal and `git submodule add https://github.com/zalando/MapleBacon.git`
 2. Open the resulting `MapleBacon` directory and drag the `Library/MapleBacon/MapleBacon.xcodeproj` file into your Xcode project
 3. In the "Build Phases" tab add MapleBacon as target dependency
-4. Add a "New Copy Files Phase" and rename it to Copy "Frameworks". In the "Destination" dropdown select "Frameworks" and add "MapelBacon.framework" in the list of files to copy.
+4. Add a "New Copy Files Phase" and rename it to "Copy Frameworks". In the "Destination" dropdown select "Frameworks" and add "MapleBacon.framework" in the list of files to copy.
 
 ---
 

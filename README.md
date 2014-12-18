@@ -126,7 +126,7 @@ if let imageURL = NSURL(string: "…") {
 - [Jan Gorman](https://github.com/JanGorman) ([@JanGorman](https://twitter.com/JanGorman))
 - [Ramy Kfoury](https://github.com/ramy-kfoury) ([@ramy_kfoury](https://twitter.com/ramy_kfoury))
 
-## ACknowledgements
+## Acknowledgements
 
 - [Resize a UIImage the right way](http://vocaro.com/trevor/blog/2009/10/12/resize-a-uiimage-the-right-way/)
 

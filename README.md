@@ -71,7 +71,7 @@ imageView.setImageWithURL(imageURL, cacheScaled: true) { (imageInstance, error) 
 
 ```
 
-Under the hood, this will cache the scaled version of the image so the whole computation is done only once. It respects both the size and contentMode of the imageView that you call this method on.
+This will cache the scaled version of the image in the background, so the whole computation is done only once. It respects both the size and contentMode of the imageView that you call this method on.
 
 Alternatively, you can also access the `Resizer` class directly (and use it independently of downloading images).
 

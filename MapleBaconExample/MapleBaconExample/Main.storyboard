@@ -16,7 +16,7 @@
                             <rect key="frame" x="0.0" y="64" width="600" height="400"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cupc" translatesAutoresizingMaskIntoConstraints="NO" id="kfx-p6-LGI">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample" translatesAutoresizingMaskIntoConstraints="NO" id="kfx-p6-LGI">
                                     <rect key="frame" x="140" y="0.0" width="320" height="400"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="400" id="Vza-na-9iV"/>
@@ -130,7 +130,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cupc" translatesAutoresizingMaskIntoConstraints="NO" id="amQ-rj-xqk">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample" translatesAutoresizingMaskIntoConstraints="NO" id="amQ-rj-xqk">
                                 <rect key="frame" x="200" y="74" width="200" height="200"/>
                                 <color key="backgroundColor" red="0.19998738169999999" green="0.20000875000000001" blue="0.19996953009999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -241,6 +241,6 @@
     <resources>
         <image name="Download" width="30" height="27"/>
         <image name="Scale" width="29" height="30"/>
-        <image name="cupc" width="320" height="400"/>
+        <image name="sample" width="762" height="1100"/>
     </resources>
 </document>

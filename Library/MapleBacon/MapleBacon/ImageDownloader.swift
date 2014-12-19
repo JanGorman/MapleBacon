@@ -26,6 +26,7 @@ public class ImageDownloader: NSObject, NSURLSessionDownloadDelegate {
     private var task: NSURLSessionDownloadTask!
     private var progress: NSProgress?
     private var resumeData: NSData?
+    private var invalidated = false
 
     public convenience override init() {
         self.init(delegate: nil)
@@ -86,9 +87,13 @@ public class ImageDownloader: NSObject, NSURLSessionDownloadDelegate {
     public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
         let newData = NSData(contentsOfURL: location)!
         let newImage = UIImage.imageWithData(newData)
-        let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
+        let newImageInstance = ImageInstance(image: newImage, data: newData, state: finishedState(), url: imageURL)
         completionHandler?(newImageInstance, nil)
         progress = nil
+    }
+
+    public func finishedState() -> ImageInstanceState {
+        return invalidated ? .Invalidated : .New
     }
 
     public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
@@ -103,10 +108,15 @@ public class ImageDownloader: NSObject, NSURLSessionDownloadDelegate {
         self.completionHandler!(nil, nil)
         startTask(image: request.URL)
     }
+
+    public func invalidateDownload() {
+        invalidated = true
+    }
+
 }
 
 public enum ImageInstanceState {
-    case New, Cached, Downloading
+    case New, Cached, Downloading, Invalidated
 }
 
 public struct ImageInstance {
@@ -121,4 +131,9 @@ public struct ImageInstance {
         self.url = url
         self.data = data
     }
+
+    public func isInvalidated() -> Bool {
+        return state == .Invalidated
+    }
+
 }

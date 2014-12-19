@@ -5,6 +5,8 @@
 import Foundation
 import UIKit
 
+var ImageViewAssociatedObjectHandle: UInt8 = 0
+
 public class ImageManager: NSObject {
 
     lazy var downloadsInProgress = [NSURL: ImageDownloader]()
@@ -45,7 +47,7 @@ public class ImageManager: NSObject {
                                 storage.storeImage(newImage, data: imageData!, forKey: url.absoluteString!)
                             }
 
-                            completion(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
+                            completion(ImageInstance(image: newImage, state: imageInstance!.state, url: imageInstance?.url), nil)
                         }
                     }
                 })
@@ -66,6 +68,15 @@ public class ImageManager: NSObject {
 
     public func hasDownloadsInProgress() -> Bool {
         return !downloadsInProgress.isEmpty
+    }
+
+    public func invalidateDownloadForImageView(imageView: UIImageView) {
+        if let url = objc_getAssociatedObject(imageView, &ImageViewAssociatedObjectHandle) as? NSURL {
+            if let operation = downloadsInProgress[url] {
+                operation.invalidateDownload()
+            }
+        }
+
     }
 
 }

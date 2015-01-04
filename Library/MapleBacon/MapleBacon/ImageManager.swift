@@ -1,15 +1,18 @@
 //
-//  Copyright (c) 2014 Zalando SE. All rights reserved.
+// Copyright (c) 2015 Zalando SE. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-var ImageViewAssociatedObjectHandle: UInt8 = 0
-
 public class ImageManager: NSObject {
 
-    lazy var downloadsInProgress = [NSURL: ImageDownloader]()
+    private var downloadsInProgress = [NSURL: ImageDownloadOperation]()
+    private var downloadQueue: NSOperationQueue {
+        let queue = NSOperationQueue()
+        queue.maxConcurrentOperationCount = 10
+        return queue
+    }
 
     public class var sharedManager: ImageManager {
 
@@ -20,40 +23,59 @@ public class ImageManager: NSObject {
         return Singleton.instance
     }
 
+    private override init() {
+        super.init()
+    }
+
+    deinit {
+        downloadQueue.cancelAllOperations()
+    }
+
     public func downloadImageAtURL(url: NSURL, cacheScaled: Bool, imageView: UIImageView?,
                                    storage: Storage = MapleBaconStorage.sharedStorage,
-                                   completion: ImageDownloaderCompletion?) {
-        let image = storage.image(forKey: url.absoluteString!)
-        if let cachedImage = image {
+                                   completion: ImageDownloaderCompletion?) -> ImageDownloadOperation? {
+        if let cachedImage = storage.image(forKey: url.absoluteString!) {
             if let completion = completion {
                 completion(ImageInstance(image: cachedImage, state: .Cached, url: url), nil)
             }
         } else {
-            var imageDownloader = downloadsInProgress[url]
-            if (imageDownloader == nil) {
-                imageDownloader = ImageDownloader()
-                downloadsInProgress[url] = imageDownloader
-
-                imageDownloader!.downloadImageAtURL(url, completion: {
+            if downloadsInProgress[url] == nil {
+                let downloadOperation = ImageDownloadOperation(imageURL: url)
+                setQualityOfService(downloadOperation)
+                downloadOperation.completionHandler = {
                     [unowned self] (imageInstance, error) in
-                    self.downloadsInProgress.removeValueForKey(url)
+                    self.downloadsInProgress[url] = nil
                     if let completion = completion {
                         if let newImage = imageInstance?.image {
                             if cacheScaled && imageView != nil && newImage.images? == nil {
                                 self.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
                                         key: url.absoluteString!)
-                            } else {
-                                let imageData = imageInstance?.data
-                                storage.storeImage(newImage, data: imageData!, forKey: url.absoluteString!)
+                            } else if let imageData = imageInstance?.data {
+                                storage.storeImage(newImage, data: imageData, forKey: url.absoluteString!)
                             }
 
-                            completion(ImageInstance(image: newImage, state: imageInstance!.state, url: imageInstance?.url), nil)
+                            completion(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
                         }
                     }
-                })
+                }
+                downloadsInProgress[url] = downloadOperation
+                downloadQueue.addOperation(downloadOperation)
+
+                return downloadOperation
             } else if let completion = completion {
                 completion(ImageInstance(image: nil, state: .Downloading, url: nil), nil)
             }
+        }
+
+        return nil
+    }
+
+    private func setQualityOfService(operation: ImageDownloadOperation) {
+        switch UIDevice.currentDevice().systemVersion.compare("8.0.0", options: NSStringCompareOptions.NumericSearch) {
+        case .OrderedSame, .OrderedDescending:
+            operation.qualityOfService = .UserInitiated
+        default:
+            break
         }
     }
 
@@ -68,15 +90,6 @@ public class ImageManager: NSObject {
 
     public func hasDownloadsInProgress() -> Bool {
         return !downloadsInProgress.isEmpty
-    }
-
-    public func invalidateDownloadForImageView(imageView: UIImageView) {
-        if let url = objc_getAssociatedObject(imageView, &ImageViewAssociatedObjectHandle) as? NSURL {
-            if let operation = downloadsInProgress[url] {
-                operation.invalidateDownload()
-            }
-        }
-
     }
 
 }

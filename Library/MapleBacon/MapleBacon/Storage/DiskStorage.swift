@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2014 Zalando SE. All rights reserved.
+// Copyright (c) 2015 Zalando SE. All rights reserved.
 //
 
 import Foundation

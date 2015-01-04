@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2014 Zalando SE. All rights reserved.
+// Copyright (c) 2015 Zalando SE. All rights reserved.
 //
 
 import UIKit
@@ -51,7 +51,7 @@ public class MapleBaconStorage: Storage, CombinedStorage {
             return image
         }
         if let image = diskStorage.image(forKey: key) {
-            inMemoryStorage.storeImage(image, data: nil,  forKey: key)
+            inMemoryStorage.storeImage(image, data: nil, forKey: key)
             return image
         }
         return nil

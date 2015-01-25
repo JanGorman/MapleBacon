@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
                      "Jan Gorman" => "jan.gorman@zalando.de",
                      "Ramy Kfoury" => "ramy.kfoury@zalando.de"
                    }
-
+  s.requires_arc = true
   s.ios.deployment_target = "8.0"
 
   s.source       = { :git => "https://github.com/zalando/MapleBacon.git", :tag => "1.0.2" }

@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
                      "Ramy Kfoury" => "ramy.kfoury@zalando.de"
                    }
 
-  s.ios.deployment_target = "7.0"
+  s.ios.deployment_target = "8.0"
 
   s.source       = { :git => "https://github.com/zalando/MapleBacon.git", :tag => "1.0.2" }
   s.source_files = "Library/MapleBacon/MapleBacon/**/*.swift"

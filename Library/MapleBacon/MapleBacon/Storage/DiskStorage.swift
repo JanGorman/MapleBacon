@@ -30,7 +30,7 @@ public class DiskStorage: Storage {
         storageQueue = dispatch_queue_create("de.zalando.MapleBacon.Storage", DISPATCH_QUEUE_SERIAL)
 
         let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
-        storagePath = (paths.first as NSString).stringByAppendingPathComponent("de.zalando.MapleBacon.\(name)")
+        storagePath = (paths.first as! NSString).stringByAppendingPathComponent("de.zalando.MapleBacon.\(name)")
 
         fileManager = NSFileManager.defaultManager()
         fileManager.createDirectoryAtPath(storagePath, withIntermediateDirectories: true, attributes: nil, error: nil)
@@ -133,7 +133,7 @@ extension String {
 
     func djb2Hash() -> String {
         let characters = Array(self)
-        return "\(characters.reduce(5381, { (($0 << 5) &+ 1) &+ $1.codePoint() } ))"
+        return "\(characters.reduce(5381, combine: { (($0 << 5) &+ 1) &+ $1.codePoint() } ))"
     }
 
 }

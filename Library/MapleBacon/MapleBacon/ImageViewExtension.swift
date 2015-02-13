@@ -10,7 +10,7 @@ var ImageViewAssociatedObjectHandle: UInt8 = 0
 extension UIImageView {
 
     public func setImageWithURL(url: NSURL, cacheScaled: Bool = false) {
-        setImageWithURL(url, cacheScaled: cacheScaled, nil)
+        setImageWithURL(url, cacheScaled: cacheScaled, completion: nil)
     }
 
     public func setImageWithURL(url: NSURL, cacheScaled: Bool = false, completion: ImageDownloaderCompletion?) {

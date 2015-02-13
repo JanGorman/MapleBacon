@@ -23,7 +23,7 @@ class ImageExampleViewController: UICollectionViewController {
         if let file = NSBundle.mainBundle().pathForResource("imageURLs", ofType: "plist") {
             if let paths = NSArray(contentsOfFile: file) {
                 for url in paths {
-                    imageURLs.append(url as String)
+                    imageURLs.append(url as! String)
                 }
             }
         }
@@ -58,7 +58,7 @@ class ImageExampleViewController: UICollectionViewController {
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as ImageCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as! ImageCell
         var url = imageURLs[indexPath.row]
         if let imageURL = NSURL(string: imageURLs[indexPath.row]) {
             cell.imageView?.setImageWithURL(imageURL) {

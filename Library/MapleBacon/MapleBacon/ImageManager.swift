@@ -47,7 +47,7 @@ public class ImageManager: NSObject {
                     self.downloadsInProgress[url] = nil
                     if let completion = completion {
                         if let newImage = imageInstance?.image {
-                            if cacheScaled && imageView != nil && newImage.images? == nil {
+                            if cacheScaled && imageView != nil && newImage.images == nil {
                                 self.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
                                         key: url.absoluteString!)
                             } else if let imageData = imageInstance?.data {

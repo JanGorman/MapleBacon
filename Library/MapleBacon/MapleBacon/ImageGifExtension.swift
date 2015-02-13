@@ -24,7 +24,7 @@ extension UIImage {
 
     private class func animatedImageWithSource(source: CGImageSourceRef!) -> UIImage {
         let (images, delays) = createImagesAndDelays(source)
-        let gifDuration = delays.reduce(0, +)
+        let gifDuration = delays.reduce(0, combine: +)
         var frames = framesFromImages(images, delays: delays)
         return UIImage.animatedImageWithImages(frames, duration: Double(gifDuration) / 1000.0)
     }
@@ -59,10 +59,10 @@ extension UIImage {
     private class func delayCentisecondsForImageAtIndex(let source: CGImageSourceRef, let index: UInt) -> Int {
         let cfProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil)
         let properties: NSDictionary = cfProperties
-        let gifProperties: NSDictionary = properties.valueForKey(kCGImagePropertyGIFDictionary) as NSDictionary
-        var delayTime: NSNumber = gifProperties.valueForKey(kCGImagePropertyGIFUnclampedDelayTime) as NSNumber
+        let gifProperties: NSDictionary = properties.valueForKey(kCGImagePropertyGIFDictionary as! String) as! NSDictionary
+        var delayTime: NSNumber = gifProperties.valueForKey(kCGImagePropertyGIFUnclampedDelayTime as! String) as! NSNumber
         if delayTime.doubleValue == 0 {
-            delayTime = gifProperties.valueForKey(kCGImagePropertyGIFDelayTime) as NSNumber
+            delayTime = gifProperties.valueForKey(kCGImagePropertyGIFDelayTime as! String) as! NSNumber
         }
         return Int(delayTime.doubleValue * 1000)
     }

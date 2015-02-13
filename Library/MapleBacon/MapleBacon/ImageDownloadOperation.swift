@@ -85,7 +85,7 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
                            willPerformHTTPRedirection response: NSHTTPURLResponse,
                            newRequest request: NSURLRequest, completionHandler: (NSURLRequest!) -> Void) {
         self.completionHandler?(nil, nil)
-        self.imageURL = request.URL
+        self.imageURL = request.URL!
         resumeDownload()
     }
 

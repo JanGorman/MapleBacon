@@ -99,7 +99,7 @@ public class DiskStorage: Storage {
 
     public func image(forKey key: String) -> UIImage? {
         if let data = NSData(contentsOfFile: defaultStoragePath(forKey: key)) {
-            return UIImage.imageWithData(data)
+            return UIImage.imageWithCachedData(data)
         }
         return nil
     }

@@ -69,7 +69,7 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
     public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask,
                            didFinishDownloadingToURL location: NSURL) {
         let newData = NSData(contentsOfURL: location)!
-        let newImage = UIImage.imageWithData(newData)
+        let newImage = UIImage.imageWithCachedData(newData)
         let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
         completionHandler?(newImageInstance, nil)
     }

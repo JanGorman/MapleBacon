@@ -132,8 +132,8 @@ public class Resizer {
         let newRect = CGRectIntegral(CGRectMake(0, 0, size.width, size.height))
         let transposedRect = CGRectMake(0, 0, newRect.size.height, newRect.size.width)
         let imageRef = image.CGImage
-        let bitmap = CGBitmapContextCreate(nil, UInt(newRect.size.width), UInt(newRect.size.height),
-                CGImageGetBitsPerComponent(imageRef), CGImageGetBytesPerRow(imageRef) * UInt(deviceScale),
+        let bitmap = CGBitmapContextCreate(nil, Int(newRect.size.width), Int(newRect.size.height),
+                CGImageGetBitsPerComponent(imageRef), CGImageGetBytesPerRow(imageRef) * Int(deviceScale),
                 CGImageGetColorSpace(imageRef), CGImageGetBitmapInfo(imageRef))
         CGContextConcatCTM(bitmap, transform)
         CGContextSetInterpolationQuality(bitmap, quality)

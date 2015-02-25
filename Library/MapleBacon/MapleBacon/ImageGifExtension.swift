@@ -7,7 +7,7 @@ import ImageIO
 
 extension UIImage {
 
-    class func imageWithData(data: NSData) -> UIImage? {
+    class func imageWithCachedData(data: NSData) -> UIImage? {
         return isAnimatedImage(data) ? animatedImageWithData(data) : UIImage(data: data)!
     }
 
@@ -46,7 +46,7 @@ extension UIImage {
     }
 
     private class func createImagesAndDelays(source: CGImageSourceRef) -> ([CGImageRef], [Int]) {
-        let count = CGImageSourceGetCount(source)
+        let count = Int(CGImageSourceGetCount(source))
         var images = [CGImageRef]()
         var delayCentiseconds = [Int]()
         for i in 0 ..< count {
@@ -56,7 +56,7 @@ extension UIImage {
         return (images, delayCentiseconds)
     }
 
-    private class func delayCentisecondsForImageAtIndex(let source: CGImageSourceRef, let index: UInt) -> Int {
+    private class func delayCentisecondsForImageAtIndex(let source: CGImageSourceRef, let index: Int) -> Int {
         let cfProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil)
         let properties: NSDictionary = cfProperties
         let gifProperties: NSDictionary = properties.valueForKey(kCGImagePropertyGIFDictionary as! String) as! NSDictionary

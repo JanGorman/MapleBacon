@@ -21,10 +21,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F2AB726D1A40395200CCE62B"
-            BuildableName = "MapleBaconExample.app"
+            BuildableName = "MapleBaconExample"
             BlueprintName = "MapleBaconExample"
-            ReferencedContainer = "container:../../MapleBaconExample/MapleBaconExample.xcodeproj">
+            ReferencedContainer = "container:MapleBaconExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>

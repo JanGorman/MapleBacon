@@ -2,10 +2,7 @@
 // Copyright (c) 2015 Zalando SE. All rights reserved.
 //
 
-import Foundation
 import UIKit
-
-let ImageDownloaderErrorDomain = "ImageDownloader"
 
 public typealias ImageDownloaderCompletion = (ImageInstance?, NSError?) -> Void
 
@@ -44,7 +41,7 @@ public class ImageDownloadOperation: NSOperation {
 
     public override func cancel() {
         task.cancelByProducingResumeData {
-            [unowned self] (data: NSData!) -> Void in
+            [unowned self] data in
             self.resumeData = data
         }
     }

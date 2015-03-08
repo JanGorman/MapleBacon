@@ -6,7 +6,9 @@ import UIKit
 
 public class InMemoryStorage: Storage {
 
-    let cache: NSCache
+    let cache: NSCache = {
+        return NSCache()
+    }()
 
     public class var sharedStorage: InMemoryStorage {
 
@@ -22,7 +24,6 @@ public class InMemoryStorage: Storage {
     }
 
     public init(name: String) {
-        cache = NSCache()
         cache.name = "de.zalando.MapleBacon.\(name)"
     }
 

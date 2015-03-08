@@ -4,11 +4,11 @@
 
 import UIKit
 
-let deviceScale = UIScreen.mainScreen().scale
-
 public typealias ResizerCompletion = (UIImage) -> Void
 
 public class Resizer {
+
+    private static let deviceScale = UIScreen.mainScreen().scale
 
     public class func resizeImage(image: UIImage, toSize size: CGSize, async: Bool = true, completion: ResizerCompletion) {
         resizeImage(image, contentMode: .ScaleToFill, toSize: size, interpolationQuality: kCGInterpolationDefault,
@@ -31,19 +31,19 @@ public class Resizer {
 
         switch (contentMode) {
         case .ScaleToFill, .Redraw:
-            newSize = CGSizeMake(image.size.width * horizontalRatio, image.size.height * verticalRatio)
+            newSize = CGSize(width: image.size.width * horizontalRatio, height: image.size.height * verticalRatio)
             offset = offsetFromSize(newSize, toSize: size)
             newX = offset.width / 2
             newY = offset.height / 2
         case .ScaleAspectFill:
             let ratio = max(horizontalRatio, verticalRatio)
-            newSize = CGSizeMake(image.size.width * ratio, image.size.height * ratio)
+            newSize = CGSize(width: image.size.width * ratio, height: image.size.height * ratio)
             offset = offsetFromSize(newSize, toSize: size)
             newX = offset.width / 2
             newY = offset.height / 2
         case .ScaleAspectFit:
             let ratio = min(horizontalRatio, verticalRatio)
-            newSize = CGSizeMake(image.size.width * ratio, image.size.height * ratio)
+            newSize = CGSize(width: image.size.width * ratio, height: image.size.height * ratio)
             offset = offsetFromSize(newSize, toSize: size)
             newX = offset.width / 2
             newY = offset.height / 2
@@ -71,14 +71,15 @@ public class Resizer {
             newY = offset.height
         }
 
-        let scaleDependentNewSize = CGSizeMake(newSize.width * deviceScale, newSize.height * deviceScale)
-        let newBounds = CGRectMake(newX * deviceScale, newY * deviceScale, size.width * deviceScale, size.height * deviceScale)
+        let scaleDependentNewSize = CGSize(width: newSize.width * deviceScale, height: newSize.height * deviceScale)
+        let newBounds = CGRect(x: newX * deviceScale, y: newY * deviceScale, width: size.width * deviceScale,
+                height: size.height * deviceScale)
 
         if async {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                 self.resizeImageFromImage(image, toSize: scaleDependentNewSize, newBounds: newBounds,
                         interpolationQuality: quality, async: async, completion: completion)
-            })
+            }
         } else {
             self.resizeImageFromImage(image, toSize: scaleDependentNewSize, newBounds: newBounds,
                     interpolationQuality: quality, async: async, completion: completion)
@@ -89,28 +90,26 @@ public class Resizer {
                                             interpolationQuality quality: CGInterpolationQuality, async: Bool,
                                             completion: ResizerCompletion) {
         var imageToReturn = image
-        if let resizedImage = imageFromImage(image, toSize: size, interpolationQuality: quality) {
-            if let croppedImage = croppedImageFromImage(resizedImage, toBounds: bounds) {
-                imageToReturn = croppedImage
-            }
+        if let resizedImage = imageFromImage(image, toSize: size, interpolationQuality: quality),
+        let croppedImage = croppedImageFromImage(resizedImage, toBounds: bounds) {
+            imageToReturn = croppedImage
         }
         if async {
-            dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_main_queue()) {
                 completion(imageToReturn)
-            })
+            }
         } else {
             completion(imageToReturn)
         }
     }
 
     private class func offsetFromSize(size: CGSize, toSize: CGSize) -> CGSize {
-        return CGSizeMake(size.width - toSize.width, size.height - toSize.height)
+        return CGSize(width: size.width - toSize.width, height: size.height - toSize.height)
     }
 
     private class func imageFromImage(image: UIImage, toSize size: CGSize,
                                       interpolationQuality quality: CGInterpolationQuality) -> UIImage? {
-        var drawTransposed: Bool!
-
+        let drawTransposed: Bool
         switch (image.imageOrientation) {
         case .Left, .LeftMirrored, .Right, .RightMirrored:
             drawTransposed = true
@@ -129,8 +128,8 @@ public class Resizer {
     private class func imageFromImage(image: UIImage, toSize size: CGSize,
                                       usingTransform transform: CGAffineTransform, drawTransposed transpose: Bool,
                                       interpolationQuality quality: CGInterpolationQuality) -> UIImage? {
-        let newRect = CGRectIntegral(CGRectMake(0, 0, size.width, size.height))
-        let transposedRect = CGRectMake(0, 0, newRect.size.height, newRect.size.width)
+        let newRect = CGRectIntegral(CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let transposedRect = CGRect(x: 0, y: 0, width: newRect.size.height, height: newRect.size.width)
         let imageRef = image.CGImage
         let bitmap = CGBitmapContextCreate(nil, Int(newRect.size.width), Int(newRect.size.height),
                 CGImageGetBitsPerComponent(imageRef), CGImageGetBytesPerRow(imageRef) * Int(deviceScale),
@@ -138,9 +137,7 @@ public class Resizer {
         CGContextConcatCTM(bitmap, transform)
         CGContextSetInterpolationQuality(bitmap, quality)
         CGContextDrawImage(bitmap, transpose ? transposedRect : newRect, imageRef)
-        let newImageRef = CGBitmapContextCreateImage(bitmap)
-
-        return UIImage(CGImage: newImageRef)
+        return UIImage(CGImage: CGBitmapContextCreateImage(bitmap))
     }
 
     private class func transformForOrientationImage(image: UIImage, toSize size: CGSize) -> CGAffineTransform {

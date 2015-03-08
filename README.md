@@ -8,6 +8,9 @@ MapleBacon is a Swift image download and caching library.
 - iOS 7.0+
 - Xcode 6.1
 
+In case you're using Swift 1.2, you can get the code from the `swift/1.2` branch.
+
+
 ## Installation
 
 The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:

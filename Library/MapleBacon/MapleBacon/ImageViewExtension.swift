@@ -21,9 +21,7 @@ extension UIImageView {
                 if let image = imageInstance?.image {
                     self?.image = image
                 }
-                if let completion = completion {
-                    completion(imageInstance, error)
-                }
+                completion?(imageInstance, error)
             }
         }
         if operation != nil {

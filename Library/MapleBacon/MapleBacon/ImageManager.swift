@@ -29,8 +29,8 @@ public class ImageManager {
     public func downloadImageAtURL(url: NSURL, cacheScaled: Bool, imageView: UIImageView?,
                                    storage: Storage = MapleBaconStorage.sharedStorage,
                                    completion: ImageDownloaderCompletion?) -> ImageDownloadOperation? {
-        if let cachedImage = storage.image(forKey: url.absoluteString!), let completion = completion {
-            completion(ImageInstance(image: cachedImage, state: .Cached, url: url), nil)
+        if let cachedImage = storage.image(forKey: url.absoluteString!) {
+            completion?(ImageInstance(image: cachedImage, state: .Cached, url: url), nil)
         } else {
             if downloadsInProgress[url] == nil {
                 let downloadOperation = ImageDownloadOperation(imageURL: url)
@@ -38,7 +38,7 @@ public class ImageManager {
                 downloadOperation.completionHandler = {
                     [unowned self] (imageInstance, _) in
                     self.downloadsInProgress[url] = nil
-                    if let completion = completion, let newImage = imageInstance?.image {
+                    if let newImage = imageInstance?.image {
                         if cacheScaled && imageView != nil && newImage.images == nil {
                             self.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
                                     key: url.absoluteString!)
@@ -46,15 +46,15 @@ public class ImageManager {
                             storage.storeImage(newImage, data: imageData, forKey: url.absoluteString!)
                         }
 
-                        completion(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
+                        completion?(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
                     }
                 }
                 downloadsInProgress[url] = downloadOperation
                 downloadQueue.addOperation(downloadOperation)
 
                 return downloadOperation
-            } else if let completion = completion {
-                completion(ImageInstance(image: nil, state: .Downloading, url: nil), nil)
+            } else {
+                completion?(ImageInstance(image: nil, state: .Downloading, url: nil), nil)
             }
         }
 

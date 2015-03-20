@@ -141,6 +141,9 @@ if let imageURL = NSURL(string: "…") {
 
 - [Resize a UIImage the right way](http://vocaro.com/trevor/blog/2009/10/12/resize-a-uiimage-the-right-way/)
 
+## Misc
+
+Find out a bit more on how MapleBacon came to be on the [Zalando Tech Blog](http://tech.zalando.com/posts/maple-bacon.html)
 
 ## Licence
 

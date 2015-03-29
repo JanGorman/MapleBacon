@@ -1,43 +1,43 @@
 {
-  "images": [
+  "images" : [
     {
-      "extent": "full-screen",
-      "idiom": "iphone",
-      "subtype": "736h",
-      "filename": "HD 5.5.png",
-      "minimum-system-version": "8.0",
-      "orientation": "portrait",
-      "scale": "3x"
+      "extent" : "full-screen",
+      "idiom" : "iphone",
+      "subtype" : "736h",
+      "filename" : "HD 5.5.png",
+      "minimum-system-version" : "8.0",
+      "orientation" : "portrait",
+      "scale" : "3x"
     },
     {
-      "extent": "full-screen",
-      "idiom": "iphone",
-      "subtype": "667h",
-      "filename": "HD 4.7.png",
-      "minimum-system-version": "8.0",
-      "orientation": "portrait",
-      "scale": "2x"
+      "extent" : "full-screen",
+      "idiom" : "iphone",
+      "subtype" : "667h",
+      "filename" : "HD 4.7.png",
+      "minimum-system-version" : "8.0",
+      "orientation" : "portrait",
+      "scale" : "2x"
     },
     {
-      "orientation": "portrait",
-      "idiom": "iphone",
-      "extent": "full-screen",
-      "minimum-system-version": "7.0",
-      "filename": "2x.png",
-      "scale": "2x"
+      "orientation" : "portrait",
+      "idiom" : "iphone",
+      "extent" : "full-screen",
+      "minimum-system-version" : "7.0",
+      "filename" : "2x.png",
+      "scale" : "2x"
     },
     {
-      "extent": "full-screen",
-      "idiom": "iphone",
-      "subtype": "retina4",
-      "filename": "Retina 4.png",
-      "minimum-system-version": "7.0",
-      "orientation": "portrait",
-      "scale": "2x"
+      "extent" : "full-screen",
+      "idiom" : "iphone",
+      "subtype" : "retina4",
+      "filename" : "Retina 4.png",
+      "minimum-system-version" : "7.0",
+      "orientation" : "portrait",
+      "scale" : "2x"
     }
   ],
-  "info": {
-    "version": 1,
-    "author": "xcode"
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
   }
 }

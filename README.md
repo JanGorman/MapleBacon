@@ -1,8 +1,5 @@
 <p align="center"><img src="https://dl.dropboxusercontent.com/u/512759/MapleBacon.png" height="210"/></p>
 
-
-MapleBacon is a Swift image download and caching library.
-
 ## Requirements
 
 - iOS 7.0+

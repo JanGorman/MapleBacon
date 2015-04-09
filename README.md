@@ -7,8 +7,8 @@ MapleBacon is a Swift image download and caching library.
 
 ## Requirements
 
-- iOS 7.0+
-- Xcode 6.1
+- iOS 8.0+
+- Xcode 6.3
 
 ## Installation
 

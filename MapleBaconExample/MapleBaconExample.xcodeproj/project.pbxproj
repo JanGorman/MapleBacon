@@ -11,7 +11,6 @@
 		F2AB72741A40395200CCE62B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB72731A40395200CCE62B /* AppDelegate.swift */; };
 		F2AB72761A40395200CCE62B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB72751A40395200CCE62B /* ViewController.swift */; };
 		F2AB727B1A40395200CCE62B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2AB727A1A40395200CCE62B /* Images.xcassets */; };
-		F2AB728A1A40395200CCE62B /* MapleBaconExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB72891A40395200CCE62B /* MapleBaconExampleTests.swift */; };
 		F2AB72A31A4039EC00CCE62B /* ResizerResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB729F1A4039EC00CCE62B /* ResizerResultView.swift */; };
 		F2AB72A41A4039EC00CCE62B /* ResizerResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB72A01A4039EC00CCE62B /* ResizerResultViewController.swift */; };
 		F2AB72A51A4039EC00CCE62B /* ResizerTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB72A11A4039EC00CCE62B /* ResizerTestViewController.swift */; };
@@ -75,7 +74,6 @@
 		F2AB727A1A40395200CCE62B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F2AB72831A40395200CCE62B /* MapleBaconExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapleBaconExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2AB72881A40395200CCE62B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2AB72891A40395200CCE62B /* MapleBaconExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconExampleTests.swift; sourceTree = "<group>"; };
 		F2AB72931A4039A500CCE62B /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = ../Library/MapleBacon/MapleBacon.xcodeproj; sourceTree = "<group>"; };
 		F2AB729F1A4039EC00CCE62B /* ResizerResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizerResultView.swift; sourceTree = "<group>"; };
 		F2AB72A01A4039EC00CCE62B /* ResizerResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizerResultViewController.swift; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 		F2AB72861A40395200CCE62B /* MapleBaconExampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				F2AB72891A40395200CCE62B /* MapleBaconExampleTests.swift */,
 				F2AB72871A40395200CCE62B /* Supporting Files */,
 			);
 			path = MapleBaconExampleTests;
@@ -313,7 +310,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2AB728A1A40395200CCE62B /* MapleBaconExampleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

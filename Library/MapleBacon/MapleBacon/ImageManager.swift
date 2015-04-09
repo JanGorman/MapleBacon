@@ -2,10 +2,9 @@
 // Copyright (c) 2015 Zalando SE. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-public class ImageManager: NSObject {
+public class ImageManager {
 
     private var downloadsInProgress = [NSURL: ImageDownloadOperation]()
     private var downloadQueue: NSOperationQueue {
@@ -23,10 +22,6 @@ public class ImageManager: NSObject {
         return Singleton.instance
     }
 
-    private override init() {
-        super.init()
-    }
-
     deinit {
         downloadQueue.cancelAllOperations()
     }
@@ -35,35 +30,31 @@ public class ImageManager: NSObject {
                                    storage: Storage = MapleBaconStorage.sharedStorage,
                                    completion: ImageDownloaderCompletion?) -> ImageDownloadOperation? {
         if let cachedImage = storage.image(forKey: url.absoluteString!) {
-            if let completion = completion {
-                completion(ImageInstance(image: cachedImage, state: .Cached, url: url), nil)
-            }
+            completion?(ImageInstance(image: cachedImage, state: .Cached, url: url), nil)
         } else {
             if downloadsInProgress[url] == nil {
                 let downloadOperation = ImageDownloadOperation(imageURL: url)
                 setQualityOfService(downloadOperation)
                 downloadOperation.completionHandler = {
-                    [unowned self] (imageInstance, error) in
+                    [unowned self] (imageInstance, _) in
                     self.downloadsInProgress[url] = nil
-                    if let completion = completion {
-                        if let newImage = imageInstance?.image {
-                            if cacheScaled && imageView != nil && newImage.images? == nil {
-                                self.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
-                                        key: url.absoluteString!)
-                            } else if let imageData = imageInstance?.data {
-                                storage.storeImage(newImage, data: imageData, forKey: url.absoluteString!)
-                            }
-
-                            completion(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
+                    if let newImage = imageInstance?.image {
+                        if cacheScaled && imageView != nil && newImage.images == nil {
+                            self.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
+                                    key: url.absoluteString!)
+                        } else if let imageData = imageInstance?.data {
+                            storage.storeImage(newImage, data: imageData, forKey: url.absoluteString!)
                         }
+
+                        completion?(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
                     }
                 }
                 downloadsInProgress[url] = downloadOperation
                 downloadQueue.addOperation(downloadOperation)
 
                 return downloadOperation
-            } else if let completion = completion {
-                completion(ImageInstance(image: nil, state: .Downloading, url: nil), nil)
+            } else {
+                completion?(ImageInstance(image: nil, state: .Downloading, url: nil), nil)
             }
         }
 
@@ -80,12 +71,11 @@ public class ImageManager: NSObject {
     }
 
     private func resizeAndStoreImage(image: UIImage, imageView: UIImageView, storage: Storage, key: String) {
-        Resizer.resizeImage(image, contentMode: imageView.contentMode,
-                toSize: imageView.bounds.size,
-                interpolationQuality: kCGInterpolationDefault, completion: {
-            (resizedImage) in
+        Resizer.resizeImage(image, contentMode: imageView.contentMode, toSize: imageView.bounds.size,
+                interpolationQuality: kCGInterpolationDefault) {
+            resizedImage in
             storage.storeImage(resizedImage, data: nil, forKey: key)
-        })
+        }
     }
 
     public func hasDownloadsInProgress() -> Bool {

@@ -2,10 +2,7 @@
 // Copyright (c) 2015 Zalando SE. All rights reserved.
 //
 
-import Foundation
 import UIKit
-
-let ImageDownloaderErrorDomain = "ImageDownloader"
 
 public typealias ImageDownloaderCompletion = (ImageInstance?, NSError?) -> Void
 
@@ -44,7 +41,7 @@ public class ImageDownloadOperation: NSOperation {
 
     public override func cancel() {
         task.cancelByProducingResumeData {
-            [unowned self] (data: NSData!) -> Void in
+            [unowned self] data in
             self.resumeData = data
         }
     }
@@ -69,7 +66,7 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
     public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask,
                            didFinishDownloadingToURL location: NSURL) {
         let newData = NSData(contentsOfURL: location)!
-        let newImage = UIImage.imageWithData(newData)
+        let newImage = UIImage.imageWithCachedData(newData)
         let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
         completionHandler?(newImageInstance, nil)
     }
@@ -85,7 +82,7 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
                            willPerformHTTPRedirection response: NSHTTPURLResponse,
                            newRequest request: NSURLRequest, completionHandler: (NSURLRequest!) -> Void) {
         self.completionHandler?(nil, nil)
-        self.imageURL = request.URL
+        self.imageURL = request.URL!
         resumeDownload()
     }
 

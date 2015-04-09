@@ -2,7 +2,6 @@
 // Copyright (c) 2015 Zalando SE. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import MapleBacon
 
@@ -20,12 +19,11 @@ class ImageExampleViewController: UICollectionViewController {
     var imageURLs = ["http://media.giphy.com/media/lI6nHr5hWXlu0/giphy.gif"]
 
     override func viewDidLoad() {
-        if let file = NSBundle.mainBundle().pathForResource("imageURLs", ofType: "plist") {
-            if let paths = NSArray(contentsOfFile: file) {
+        if let file = NSBundle.mainBundle().pathForResource("imageURLs", ofType: "plist"),
+           let paths = NSArray(contentsOfFile: file) {
                 for url in paths {
-                    imageURLs.append(url as String)
+                    imageURLs.append(url as! String)
                 }
-            }
         }
 
         collectionView?.reloadData()
@@ -51,6 +49,10 @@ class ImageExampleViewController: UICollectionViewController {
         MapleBaconStorage.sharedStorage.clearStorage()
     }
 
+}
+
+extension ImageExampleViewController {
+
     // MARK: UICollectionViewDataSource
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -58,11 +60,11 @@ class ImageExampleViewController: UICollectionViewController {
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as ImageCell
-        var url = imageURLs[indexPath.row]
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as! ImageCell
+        let url = imageURLs[indexPath.row]
         if let imageURL = NSURL(string: imageURLs[indexPath.row]) {
             cell.imageView?.setImageWithURL(imageURL) {
-                (imageInstance, error) in
+                (_, error) in
                 if error == nil {
                     let transition = CATransition()
                     cell.imageView?.layer.addAnimation(transition, forKey: "fade")
@@ -71,4 +73,5 @@ class ImageExampleViewController: UICollectionViewController {
         }
         return cell
     }
+
 }

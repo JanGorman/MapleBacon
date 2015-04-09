@@ -1,12 +1,14 @@
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 <p align="center"><img src="https://dl.dropboxusercontent.com/u/512759/MapleBacon.png" height="210"/></p>
+
+
+MapleBacon is a Swift image download and caching library.
 
 ## Requirements
 
 - iOS 7.0+
 - Xcode 6.1
-
-In case you're using Swift 1.2, you can get the code from the `swift/1.2` branch.
-
 
 ## Installation
 

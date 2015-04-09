@@ -20,7 +20,7 @@ class ImageManagerTests: XCTestCase {
         let downloadedImageExpectation = expectationWithDescription("Testing Downloaded Image")
 
         imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
-            [unowned self] (imageInstance: ImageInstance?, error: NSError?) -> Void in
+            [unowned self] (imageInstance, _) in
             if let imageInstance = imageInstance {
                 if imageInstance.state == .New {
                     downloadedImageExpectation.fulfill()
@@ -30,7 +30,7 @@ class ImageManagerTests: XCTestCase {
             }
         })
         imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
-            [unowned self] (imageInstance: ImageInstance?, error: NSError?) -> Void in
+            [unowned self] (imageInstance, _) in
             if let imageInstance = imageInstance {
                 if imageInstance.state == .Downloading {
                     downloadingImageExpectation.fulfill()
@@ -40,22 +40,22 @@ class ImageManagerTests: XCTestCase {
             }
         })
 
-        waitForExpectationsWithTimeout(timeout, handler: {
-            (error: NSError!) -> Void in
+        waitForExpectationsWithTimeout(timeout) {
+            error in
             if (error != nil) {
                 XCTFail("Expectation failed")
             }
-        })
+        }
     }
 
     func test_whenImageManagerAsksForImageAlreadyDownloaded_thenImageIsReturnedFromCache() {
         imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
-            [unowned self] (imageInstance: ImageInstance?, error: NSError?) -> Void in
+            [unowned self] (imageInstance, _) in
             if let imageInstance = imageInstance {
                 let cachedExpectation = self.expectationWithDescription("Testing Cached Image")
 
                 self.imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
-                    [unowned self] (imageInstance: ImageInstance?, error: NSError?) -> Void in
+                    [unowned self] (imageInstance, _) in
                     if let imageInstance = imageInstance {
                         if imageInstance.state == .Cached {
                             cachedExpectation.fulfill()
@@ -65,12 +65,12 @@ class ImageManagerTests: XCTestCase {
                     }
                 })
 
-                self.waitForExpectationsWithTimeout(timeout, handler: {
-                    (error: NSError!) -> Void in
+                self.waitForExpectationsWithTimeout(timeout) {
+                    error in
                     if (error != nil) {
                         XCTFail("Expectation failed")
                     }
-                })
+                }
             }
         })
     }
@@ -90,12 +90,12 @@ class ImageManagerTests: XCTestCase {
             }
         })
 
-        waitForExpectationsWithTimeout(timeout, handler: {
-            (error: NSError!) -> Void in
+        waitForExpectationsWithTimeout(timeout) {
+            error in
             if (error != nil) {
                 XCTFail("Expectation failed")
             }
-        })
+        }
     }
 
     func test_whenUsingImageManagerWithCustomStorage_imageIsStored() {
@@ -112,12 +112,12 @@ class ImageManagerTests: XCTestCase {
             }
         }
 
-        waitForExpectationsWithTimeout(timeout, handler: {
-            (error: NSError!) -> Void in
+        waitForExpectationsWithTimeout(timeout) {
+            error in
             if (error != nil) {
                 XCTFail("Expectation failed")
             }
-        })
+        }
     }
 
 }

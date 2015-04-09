@@ -3,7 +3,6 @@
 //
 
 import XCTest
-import Foundation
 import UIKit
 import MapleBacon
 
@@ -14,18 +13,18 @@ class ImageExtensionTests: XCTestCase {
 
         let imageView = UIImageView()
         imageView.setImageWithURL(NSURL(string: imageURL)!, completion: {
-            (imageInstance: ImageInstance?, error: NSError?) -> Void in
+            (imageInstance, _) in
             if (imageView.image != nil) {
                 expectation.fulfill()
             }
         })
 
-        waitForExpectationsWithTimeout(timeout, handler: {
-            (error: NSError!) -> Void in
+        waitForExpectationsWithTimeout(timeout) {
+            error in
             if (error != nil) {
                 XCTFail("Expectation failed")
             }
-        })
+        }
     }
 
 }

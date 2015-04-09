@@ -32,12 +32,12 @@ class ImageDownloadOperationTests: XCTestCase {
         }
         operation.start()
 
-        waitForExpectationsWithTimeout(timeout, handler: {
-            (error: NSError!) -> Void in
+        waitForExpectationsWithTimeout(timeout) {
+            error in
             if (error != nil) {
                 XCTFail("Expectation failed")
             }
-        })
+        }
     }
 
     func test_whenSuspendingAndResumingDownload_thenTaskFinishesWithImage() {
@@ -56,12 +56,12 @@ class ImageDownloadOperationTests: XCTestCase {
         operation.cancel()
         operation.start()
 
-        waitForExpectationsWithTimeout(timeout, handler: {
-            (error: NSError!) -> Void in
+        waitForExpectationsWithTimeout(timeout) {
+            error in
             if (error != nil) {
                 XCTFail("Expectation failed")
             }
-        })
+        }
     }
 
     func test_whenCancellingDownload_thenTaskFinishesWithCancellationError() {
@@ -81,12 +81,12 @@ class ImageDownloadOperationTests: XCTestCase {
         operation.start()
         operation.cancel()
 
-        waitForExpectationsWithTimeout(timeout, handler: {
-            (error: NSError!) -> Void in
+        waitForExpectationsWithTimeout(timeout) {
+            error in
             if (error != nil) {
                 XCTFail("Expectation failed")
             }
-        })
+        }
     }
 
     func test_whenRequestingImageWithRedirectedURL_thenReturnedURLIsNotTheRequestedURL() {
@@ -104,12 +104,12 @@ class ImageDownloadOperationTests: XCTestCase {
         }
         operation.start()
 
-        waitForExpectationsWithTimeout(timeout, handler: {
-            (error: NSError!) -> Void in
+        waitForExpectationsWithTimeout(timeout) {
+            error in
             if (error != nil) {
                 XCTFail("Expectation failed")
             }
-        })
+        }
     }
 
     func test_whenRequestingImageWithGifURL_thenReturnedImageHasManyFrames() {
@@ -126,12 +126,12 @@ class ImageDownloadOperationTests: XCTestCase {
         }
         operation.start()
 
-        waitForExpectationsWithTimeout(timeout, handler: {
-            (error: NSError!) -> Void in
+        waitForExpectationsWithTimeout(timeout) {
+            error in
             if (error != nil) {
                 XCTFail("Expectation failed")
             }
-        })
+        }
     }
 
 }

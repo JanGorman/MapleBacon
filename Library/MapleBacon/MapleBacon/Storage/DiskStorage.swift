@@ -2,14 +2,17 @@
 // Copyright (c) 2015 Zalando SE. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 public class DiskStorage: Storage {
 
-    let fileManager: NSFileManager
+    let fileManager: NSFileManager = {
+        return NSFileManager.defaultManager()
+    }()
+    let storageQueue: dispatch_queue_t = {
+        dispatch_queue_create("de.zalando.MapleBacon.Storage", DISPATCH_QUEUE_SERIAL)
+    }()
     let storagePath: String
-    let storageQueue: dispatch_queue_t
 
     public var maxAge: NSTimeInterval = 60 * 60 * 24 * 7
 
@@ -27,12 +30,9 @@ public class DiskStorage: Storage {
     }
 
     public init(name: String) {
-        storageQueue = dispatch_queue_create("de.zalando.MapleBacon.Storage", DISPATCH_QUEUE_SERIAL)
-
         let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
-        storagePath = (paths.first as NSString).stringByAppendingPathComponent("de.zalando.MapleBacon.\(name)")
+        storagePath = (paths.first as! NSString).stringByAppendingPathComponent("de.zalando.MapleBacon.\(name)")
 
-        fileManager = NSFileManager.defaultManager()
         fileManager.createDirectoryAtPath(storagePath, withIntermediateDirectories: true, attributes: nil, error: nil)
     }
 
@@ -48,13 +48,12 @@ public class DiskStorage: Storage {
 
     public func pruneStorage() {
         dispatch_async(storageQueue) {
-            if let directoryURL = NSURL(fileURLWithPath: self.storagePath, isDirectory: true) {
-                if let enumerator = self.fileManager.enumeratorAtURL(directoryURL,
-                        includingPropertiesForKeys: [NSURLIsDirectoryKey, NSURLContentModificationDateKey],
-                        options: .SkipsHiddenFiles,
-                        errorHandler: nil) {
-                    self.deleteExpiredFiles(self.expiredFiles(usingEnumerator: enumerator))
-                }
+            if let directoryURL = NSURL(fileURLWithPath: self.storagePath, isDirectory: true),
+            let enumerator = self.fileManager.enumeratorAtURL(directoryURL,
+                    includingPropertiesForKeys: [NSURLIsDirectoryKey, NSURLContentModificationDateKey],
+                    options: .SkipsHiddenFiles,
+                    errorHandler: nil) {
+                self.deleteExpiredFiles(self.expiredFiles(usingEnumerator: enumerator))
             }
         }
     }
@@ -99,7 +98,7 @@ public class DiskStorage: Storage {
 
     public func image(forKey key: String) -> UIImage? {
         if let data = NSData(contentsOfFile: defaultStoragePath(forKey: key)) {
-            return UIImage.imageWithData(data)
+            return UIImage.imageWithCachedData(data)
         }
         return nil
     }
@@ -133,7 +132,7 @@ extension String {
 
     func djb2Hash() -> String {
         let characters = Array(self)
-        return "\(characters.reduce(5381, { (($0 << 5) &+ 1) &+ $1.codePoint() } ))"
+        return "\(characters.reduce(5381, combine: { (($0 << 5) &+ 1) &+ $1.codePoint() } ))"
     }
 
 }

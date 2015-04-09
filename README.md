@@ -1,6 +1,6 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-![Maple Bacon](https://dl.dropboxusercontent.com/u/512759/MapleBacon.png)
+<p align="center"><img src="https://dl.dropboxusercontent.com/u/512759/MapleBacon.png" height="210"/></p>
 
 
 MapleBacon is a Swift image download and caching library.
@@ -140,6 +140,9 @@ if let imageURL = NSURL(string: "…") {
 
 - [Resize a UIImage the right way](http://vocaro.com/trevor/blog/2009/10/12/resize-a-uiimage-the-right-way/)
 
+## Misc
+
+Find out a bit more on how MapleBacon came to be on the [Zalando Tech Blog](http://tech.zalando.com/posts/maple-bacon.html)
 
 ## Licence
 

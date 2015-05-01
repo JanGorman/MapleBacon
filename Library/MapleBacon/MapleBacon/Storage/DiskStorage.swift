@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import CommonCrypto
 
 public class DiskStorage: Storage {
 
@@ -108,7 +109,7 @@ public class DiskStorage: Storage {
     }
 
     private func storagePath(forKey key: String, inPath path: String) -> String {
-        return (path as NSString).stringByAppendingPathComponent(key.djb2Hash())
+        return (path as NSString).stringByAppendingPathComponent(key.md5())
     }
 
     public func removeImage(forKey key: String) {
@@ -128,20 +129,36 @@ public class DiskStorage: Storage {
 
 }
 
-extension String {
+extension Int {
 
-    func djb2Hash() -> String {
-        let characters = Array(self)
-        return "\(characters.reduce(5381, combine: { (($0 << 5) &+ 1) &+ $1.codePoint() } ))"
+    func hexString() -> String {
+        return NSString(format: "%02x", self) as String
     }
 
 }
 
-extension Character {
+extension NSData {
 
-    func codePoint() -> Int {
-        let scalars = String(self).unicodeScalars
-        return Int(scalars[scalars.startIndex].value)
+    func hexString() -> String {
+        var result = ""
+        for i in UnsafeMutableBufferPointer<UInt8>(start: UnsafeMutablePointer<UInt8>(bytes), count: length) {
+            result += Int(i).hexString()
+        }
+        return result
+    }
+
+    func md5() -> NSData {
+        let result = NSMutableData(length: Int(CC_MD5_DIGEST_LENGTH))!
+        CC_MD5(bytes, CC_LONG(length), UnsafeMutablePointer<UInt8>(result.mutableBytes))
+        return NSData(data: result)
+    }
+
+}
+
+extension String {
+
+    func md5() -> String {
+         return self.dataUsingEncoding(NSUTF8StringEncoding)!.md5().hexString()
     }
 
 }

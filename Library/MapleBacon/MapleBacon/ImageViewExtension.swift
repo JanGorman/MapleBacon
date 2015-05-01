@@ -15,7 +15,7 @@ extension UIImageView {
     public func setImageWithURL(url: NSURL, cacheScaled: Bool = false, completion: ImageDownloaderCompletion?) {
         cancelDownload()
         let operation = ImageManager.sharedManager.downloadImageAtURL(url, cacheScaled: cacheScaled, imageView: self) {
-            [weak self] (imageInstance, error) in
+            [weak self] imageInstance, error in
 
             dispatch_async(dispatch_get_main_queue()) {
                 if let image = imageInstance?.image {
@@ -40,9 +40,7 @@ extension UIImageView {
     }
 
     func cancelDownload() {
-        if let operation = self.operation {
-            operation.cancel()
-        }
+        operation?.cancel()
     }
 
 }

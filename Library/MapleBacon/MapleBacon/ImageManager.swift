@@ -34,7 +34,7 @@ public class ImageManager {
         } else {
             if downloadsInProgress[url] == nil {
                 let downloadOperation = ImageDownloadOperation(imageURL: url)
-                setQualityOfService(downloadOperation)
+                downloadOperation.qualityOfService = .UserInitiated
                 downloadOperation.completionHandler = {
                     [unowned self] (imageInstance, _) in
                     self.downloadsInProgress[url] = nil
@@ -59,15 +59,6 @@ public class ImageManager {
         }
 
         return nil
-    }
-
-    private func setQualityOfService(operation: ImageDownloadOperation) {
-        switch UIDevice.currentDevice().systemVersion.compare("8.0.0", options: NSStringCompareOptions.NumericSearch) {
-        case .OrderedSame, .OrderedDescending:
-            operation.qualityOfService = .UserInitiated
-        default:
-            break
-        }
     }
 
     private func resizeAndStoreImage(image: UIImage, imageView: UIImageView, storage: Storage, key: String) {

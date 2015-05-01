@@ -105,4 +105,5 @@ public struct ImageInstance {
         self.url = url
         self.data = data
     }
+
 }

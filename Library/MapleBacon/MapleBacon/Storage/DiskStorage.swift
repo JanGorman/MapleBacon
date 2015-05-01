@@ -3,7 +3,7 @@
 //
 
 import UIKit
-import CommonCrypto
+import CryptoSwift
 
 public class DiskStorage: Storage {
 
@@ -109,7 +109,7 @@ public class DiskStorage: Storage {
     }
 
     private func storagePath(forKey key: String, inPath path: String) -> String {
-        return (path as NSString).stringByAppendingPathComponent(key.md5())
+        return (path as NSString).stringByAppendingPathComponent(key.md5()!)
     }
 
     public func removeImage(forKey key: String) {
@@ -125,40 +125,6 @@ public class DiskStorage: Storage {
             self.fileManager.createDirectoryAtPath(self.storagePath, withIntermediateDirectories: true, attributes: nil,
                     error: nil)
         }
-    }
-
-}
-
-extension Int {
-
-    func hexString() -> String {
-        return NSString(format: "%02x", self) as String
-    }
-
-}
-
-extension NSData {
-
-    func hexString() -> String {
-        var result = ""
-        for i in UnsafeMutableBufferPointer<UInt8>(start: UnsafeMutablePointer<UInt8>(bytes), count: length) {
-            result += Int(i).hexString()
-        }
-        return result
-    }
-
-    func md5() -> NSData {
-        let result = NSMutableData(length: Int(CC_MD5_DIGEST_LENGTH))!
-        CC_MD5(bytes, CC_LONG(length), UnsafeMutablePointer<UInt8>(result.mutableBytes))
-        return NSData(data: result)
-    }
-
-}
-
-extension String {
-
-    func md5() -> String {
-         return self.dataUsingEncoding(NSUTF8StringEncoding)!.md5().hexString()
     }
 
 }

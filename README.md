@@ -98,7 +98,7 @@ MapleBacon will cache your images both in memory and on disk. Disk storage is au
 
 ```swift
 let maxAgeOneDay: NSTimeInterval = 60 * 60 * 24
-MapleBaconStorage.sharedStorage.maxAge = maxAgeOneDay
+DiskStorage.sharedStorage.maxAge = maxAgeOneDay
 ```
 
 You can also wipe the storage completely:
@@ -111,7 +111,7 @@ Or, should the app come under memory pressure, clear the in memory images only:
 
 ```swift
 override func didReceiveMemoryWarning() {
-	DiskStorage.sharedStorage.clearMemoryStorage()
+	MapleBaconStorage.sharedStorage.clearMemoryStorage()
 }
 ```
 

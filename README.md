@@ -111,7 +111,7 @@ Or, should the app come under memory pressure, clear the in memory images only:
 
 ```swift
 override func didReceiveMemoryWarning() {
-	MapleBaconStorage.sharedStorage.clearMemoryStorage()
+	DiskStorage.sharedStorage.clearMemoryStorage()
 }
 ```
 

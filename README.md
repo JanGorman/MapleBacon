@@ -1,5 +1,3 @@
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-
 <p align="center"><img src="https://dl.dropboxusercontent.com/u/512759/MapleBacon.png" height="210"/></p>
 
 
@@ -18,11 +16,8 @@ The easiest way is either through [CocoaPods](http://cocoapods.org). Simply add 
 pod `MapleBacon`
 ```
 
-or [Carthage](https://github.com/Carthage/Carthage). In this case add the following to your `Cartfile` and then run `carthage update`:
+To use [Carthage](https://github.com/Carthage/Carthage), please switch to the `Carthage` branch of the project and follow the instructions. Unfortunately CocoaPods doesn't behave well with custom module maps.
 
-```ruby
-github "zalando/MapleBacon"
-```
 
 If you don't like any of those options, you can add the dependency as a git submdoule:
 

@@ -3,7 +3,7 @@
 //
 
 import UIKit
-import CryptoSwift
+import Crypto
 
 public class DiskStorage: Storage {
 
@@ -109,7 +109,7 @@ public class DiskStorage: Storage {
     }
 
     private func storagePath(forKey key: String, inPath path: String) -> String {
-        return (path as NSString).stringByAppendingPathComponent(key.md5()!)
+        return (path as NSString).stringByAppendingPathComponent(key.MD5 as String)
     }
 
     public func removeImage(forKey key: String) {

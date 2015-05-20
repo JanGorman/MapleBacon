@@ -20,9 +20,9 @@
 		31AA39C553B3B420836A8E79 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA3AAEAAD81D412F89FA50 /* Storage.swift */; };
 		31AA3B249325F7F047E1C8B4 /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA308AA32664DC7B0FF346 /* DiskStorage.swift */; };
 		449BD8751A417A76007AC1BD /* Resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CA5CE91A3F2709008175BA /* Resizer.swift */; };
-		F23D7DE51B0B19E200849A3E /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F23D7DE41B0B19E200849A3E /* Crypto.framework */; };
 		F2520C541A3EDAFF0061BB33 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */; };
 		F2520C6D1A3F06FD0061BB33 /* cupcakes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F2520C6C1A3F06FD0061BB33 /* cupcakes.jpg */; };
+		F2B44D2F1B0D15E2003F1692 /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F23D7DE41B0B19E200849A3E /* Crypto.framework */; };
 		F2CA5CEA1A3F2709008175BA /* Resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CA5CE91A3F2709008175BA /* Resizer.swift */; };
 		F2CA5CEC1A3F2710008175BA /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CA5CEB1A3F2710008175BA /* StorageTests.swift */; };
 /* End PBXBuildFile section */
@@ -63,7 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F23D7DE51B0B19E200849A3E /* Crypto.framework in Frameworks */,
+				F2B44D2F1B0D15E2003F1692 /* Crypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +421,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jangorman/Daten/Arbeit/Zalando/Projects/MapleBacon/Carthage/Build/iOS,
+					"../../Carthage/**",
 				);
 				INFOPLIST_FILE = MapleBacon/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -446,7 +446,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jangorman/Daten/Arbeit/Zalando/Projects/MapleBacon/Carthage/Build/iOS,
+					"../../Carthage/**",
 				);
 				INFOPLIST_FILE = MapleBacon/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

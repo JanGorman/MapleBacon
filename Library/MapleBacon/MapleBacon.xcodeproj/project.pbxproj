@@ -52,7 +52,6 @@
 		F2520C531A3EDAFF0061BB33 /* MapleBaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapleBaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2520C591A3EDAFF0061BB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2520C6C1A3F06FD0061BB33 /* cupcakes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cupcakes.jpg; sourceTree = "<group>"; };
-		F2A8EF181AF3726D00305E16 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		F2CA5CE91A3F2709008175BA /* Resizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resizer.swift; path = ../MapleBacon/Resizer.swift; sourceTree = "<group>"; };
 		F2CA5CEB1A3F2710008175BA /* StorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageTests.swift; path = MapleBaconTests/StorageTests.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -127,7 +126,6 @@
 		F2520C3E1A3EDAFE0061BB33 = {
 			isa = PBXGroup;
 			children = (
-				F2A8EF181AF3726D00305E16 /* libcommonCrypto.dylib */,
 				F2520C4A1A3EDAFE0061BB33 /* MapleBacon */,
 				F2520C571A3EDAFF0061BB33 /* MapleBaconTests */,
 				F2520C491A3EDAFE0061BB33 /* Products */,

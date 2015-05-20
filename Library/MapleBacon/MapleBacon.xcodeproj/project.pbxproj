@@ -48,7 +48,7 @@
 		31AA33CBF1DD27291C9E1DCB /* InMemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryStorage.swift; sourceTree = "<group>"; };
 		31AA3AAEAAD81D412F89FA50 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		31AA3B2762299015563F040F /* ImageDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadOperation.swift; sourceTree = "<group>"; };
-		F23D7DE41B0B19E200849A3E /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = ../../Carthage/Build/iOS/Crypto.framework; sourceTree = "<group>"; };
+		F23D7DE41B0B19E200849A3E /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = ../../../Carthage/Build/iOS/Crypto.framework; sourceTree = "<group>"; };
 		F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapleBacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2520C4C1A3EDAFE0061BB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2520C531A3EDAFF0061BB33 /* MapleBaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapleBaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,7 +129,6 @@
 		F2520C3E1A3EDAFE0061BB33 = {
 			isa = PBXGroup;
 			children = (
-				F23D7DE41B0B19E200849A3E /* Crypto.framework */,
 				F2520C4A1A3EDAFE0061BB33 /* MapleBacon */,
 				F2520C571A3EDAFF0061BB33 /* MapleBaconTests */,
 				F2520C491A3EDAFE0061BB33 /* Products */,
@@ -159,6 +158,7 @@
 		F2520C4B1A3EDAFE0061BB33 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F23D7DE41B0B19E200849A3E /* Crypto.framework */,
 				F2520C4C1A3EDAFE0061BB33 /* Info.plist */,
 			);
 			name = "Supporting Files";

@@ -8,7 +8,7 @@ import ImageIO
 extension UIImage {
 
     class func imageWithCachedData(data: NSData) -> UIImage? {
-        return isAnimatedImage(data) ? animatedImageWithData(data) : UIImage(data: data)!
+        return isAnimatedImage(data) ? animatedImageWithData(data) : UIImage(data: data)
     }
 
     private class func animatedImageWithData(data: NSData) -> UIImage {

@@ -27,6 +27,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F2520C521A3EDAFF0061BB33"
+               BuildableName = "MapleBaconTests.xctest"
+               BlueprintName = "MapleBaconTests"
+               ReferencedContainer = "container:MapleBacon.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
@@ -64,6 +74,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F2520C471A3EDAFE0061BB33"
+            BuildableName = "MapleBacon.framework"
+            BlueprintName = "MapleBacon"
+            ReferencedContainer = "container:MapleBacon.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

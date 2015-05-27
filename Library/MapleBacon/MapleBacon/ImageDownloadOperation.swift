@@ -64,11 +64,15 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
     }
 
     public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask,
-                           didFinishDownloadingToURL location: NSURL) {
-        let newData = NSData(contentsOfURL: location)!
-        let newImage = UIImage.imageWithCachedData(newData)
-        let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
-        completionHandler?(newImageInstance, nil)
+        didFinishDownloadingToURL location: NSURL) {
+            var error: NSError?
+            if let newData = NSData(contentsOfURL: location, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &error) {
+                let newImage = UIImage.imageWithCachedData(newData)
+                let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
+                completionHandler?(newImageInstance, nil)
+            } else {
+                completionHandler?(nil, error)
+            }
     }
 
     public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {

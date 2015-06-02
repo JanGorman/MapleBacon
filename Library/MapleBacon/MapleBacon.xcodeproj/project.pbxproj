@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		261E14481A3EE0C4000516D4 /* ImageDownloadOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E14471A3EE0C4000516D4 /* ImageDownloadOperationTests.swift */; };
-		2622B19A1B159D6900631B6D /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2622B1991B159D6900631B6D /* Crypto.framework */; };
 		268606001A3F341000BA4269 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268605FF1A3F341000BA4269 /* ImageViewExtension.swift */; };
 		268606041A3F3C8500BA4269 /* ImageExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268606011A3F358600BA4269 /* ImageExtensionTests.swift */; };
 		26B702161A4040DE00E3FB72 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B702151A4040DE00E3FB72 /* ImageManager.swift */; };
@@ -39,7 +38,6 @@
 
 /* Begin PBXFileReference section */
 		261E14471A3EE0C4000516D4 /* ImageDownloadOperationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadOperationTests.swift; sourceTree = "<group>"; };
-		2622B1991B159D6900631B6D /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = Carthage/Build/iOS/Crypto.framework; sourceTree = "<group>"; };
 		268605FF1A3F341000BA4269 /* ImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
 		268606011A3F358600BA4269 /* ImageExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtensionTests.swift; sourceTree = "<group>"; };
 		26B702151A4040DE00E3FB72 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
@@ -128,7 +126,6 @@
 		F2520C3E1A3EDAFE0061BB33 = {
 			isa = PBXGroup;
 			children = (
-				2622B1991B159D6900631B6D /* Crypto.framework */,
 				F2520C4A1A3EDAFE0061BB33 /* MapleBacon */,
 				F2520C571A3EDAFF0061BB33 /* MapleBaconTests */,
 				F2520C491A3EDAFE0061BB33 /* Products */,

@@ -142,8 +142,6 @@ extension Int {
     }
 
     private func arrayOfBytes(value: Int, length: Int) -> [UInt8] {
-        var v = value
-
         var valuePointer = UnsafeMutablePointer<Int>.alloc(1)
         valuePointer.memory = value
 

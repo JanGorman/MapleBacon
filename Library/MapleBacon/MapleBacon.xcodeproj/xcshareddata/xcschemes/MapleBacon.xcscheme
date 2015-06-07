@@ -60,9 +60,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BuildableName = "MapleBaconExample"
+            BuildableName = "MapleBaconExample.app"
             BlueprintName = "MapleBaconExample"
-            ReferencedContainer = "container:MapleBaconExample.xcodeproj">
+            ReferencedContainer = "container:../../MapleBaconExample/MapleBaconExample.xcodeproj"
+            BlueprintIdentifier = "F2AB726D1A40395200CCE62B">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

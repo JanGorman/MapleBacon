@@ -20,8 +20,10 @@
 		31AA39C553B3B420836A8E79 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA3AAEAAD81D412F89FA50 /* Storage.swift */; };
 		31AA3B249325F7F047E1C8B4 /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA308AA32664DC7B0FF346 /* DiskStorage.swift */; };
 		449BD8751A417A76007AC1BD /* Resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CA5CE91A3F2709008175BA /* Resizer.swift */; };
+		F250D2311B245674004E3F3D /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = F250D2301B245674004E3F3D /* MD5.swift */; };
 		F2520C541A3EDAFF0061BB33 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */; };
 		F2520C6D1A3F06FD0061BB33 /* cupcakes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F2520C6C1A3F06FD0061BB33 /* cupcakes.jpg */; };
+		F287FB681B24698F0025F059 /* MD5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F287FB671B24698F0025F059 /* MD5Tests.swift */; };
 		F2CA5CEA1A3F2709008175BA /* Resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CA5CE91A3F2709008175BA /* Resizer.swift */; };
 		F2CA5CEC1A3F2710008175BA /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CA5CEB1A3F2710008175BA /* StorageTests.swift */; };
 /* End PBXBuildFile section */
@@ -47,11 +49,13 @@
 		31AA33CBF1DD27291C9E1DCB /* InMemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryStorage.swift; sourceTree = "<group>"; };
 		31AA3AAEAAD81D412F89FA50 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		31AA3B2762299015563F040F /* ImageDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadOperation.swift; sourceTree = "<group>"; };
+		F250D2301B245674004E3F3D /* MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
 		F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapleBacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2520C4C1A3EDAFE0061BB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2520C531A3EDAFF0061BB33 /* MapleBaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapleBaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2520C591A3EDAFF0061BB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2520C6C1A3F06FD0061BB33 /* cupcakes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cupcakes.jpg; sourceTree = "<group>"; };
+		F287FB671B24698F0025F059 /* MD5Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MD5Tests.swift; path = MapleBaconTests/MD5Tests.swift; sourceTree = SOURCE_ROOT; };
 		F2CA5CE91A3F2709008175BA /* Resizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resizer.swift; path = ../MapleBacon/Resizer.swift; sourceTree = "<group>"; };
 		F2CA5CEB1A3F2710008175BA /* StorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageTests.swift; path = MapleBaconTests/StorageTests.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -109,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				F2CA5CEB1A3F2710008175BA /* StorageTests.swift */,
+				F287FB671B24698F0025F059 /* MD5Tests.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 				31AA308AA32664DC7B0FF346 /* DiskStorage.swift */,
 				31AA3AAEAAD81D412F89FA50 /* Storage.swift */,
 				31AA33CBF1DD27291C9E1DCB /* InMemoryStorage.swift */,
+				F250D2301B245674004E3F3D /* MD5.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -293,6 +299,7 @@
 				31AA3B249325F7F047E1C8B4 /* DiskStorage.swift in Sources */,
 				26B702161A4040DE00E3FB72 /* ImageManager.swift in Sources */,
 				F2CA5CEA1A3F2709008175BA /* Resizer.swift in Sources */,
+				F250D2311B245674004E3F3D /* MD5.swift in Sources */,
 				31AA39C553B3B420836A8E79 /* Storage.swift in Sources */,
 				31AA34060D5F022360EDCDAB /* InMemoryStorage.swift in Sources */,
 				31AA31D2FB3606178AE888BD /* ImageDownloadOperation.swift in Sources */,
@@ -307,6 +314,7 @@
 				261E14481A3EE0C4000516D4 /* ImageDownloadOperationTests.swift in Sources */,
 				449BD8751A417A76007AC1BD /* Resizer.swift in Sources */,
 				268606041A3F3C8500BA4269 /* ImageExtensionTests.swift in Sources */,
+				F287FB681B24698F0025F059 /* MD5Tests.swift in Sources */,
 				26B702181A40425E00E3FB72 /* ImageManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

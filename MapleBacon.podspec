@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MapleBacon"
-  s.version      = "1.0.7"
+  s.version      = "1.0.8"
   s.summary      = "A delicious image download and caching library for iOS"
   s.description  = <<-DESC
                   A delicious image download and caching library for iOS. Background downloads, caching and scaling.
@@ -13,8 +13,6 @@ Pod::Spec.new do |s|
                    }
   s.requires_arc = true
   s.ios.deployment_target = "8.0"
-  
-  s.dependency "CryptoSwift", "~> 0.0"
 
   s.source       = { :git => "https://github.com/zalando/MapleBacon.git", :tag => s.version }
   s.source_files = "Library/MapleBacon/MapleBacon/**/*.swift"

@@ -80,7 +80,7 @@ class ImageManagerTests: XCTestCase {
         let newImageExpectation = expectationWithDescription("Testing New Image")
 
         imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
-            [unowned self] (imageInstance: ImageInstance?, error: NSError?) -> Void in
+            [unowned self] imageInstance, error -> Void in
             if let imageInstance = imageInstance {
                 if imageInstance.state == .New {
                     newImageExpectation.fulfill()

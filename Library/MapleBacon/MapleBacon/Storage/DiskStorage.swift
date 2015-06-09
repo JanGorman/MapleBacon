@@ -108,7 +108,7 @@ public class DiskStorage: Storage {
     }
 
     private func storagePath(forKey key: String, inPath path: String) -> String {
-        return (path as NSString).stringByAppendingPathComponent(key.MD5()!)
+        return (path as NSString).stringByAppendingPathComponent(key.MD5())
     }
 
     public func removeImage(forKey key: String) {

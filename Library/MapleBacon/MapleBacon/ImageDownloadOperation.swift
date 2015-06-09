@@ -14,8 +14,8 @@ public class ImageDownloadOperation: NSOperation {
 
     private var imageURL: NSURL
     private var delegate: ImageDownloaderDelegate?
-    private var session: NSURLSession!
-    private var task: NSURLSessionDownloadTask!
+    private var session: NSURLSession?
+    private var task: NSURLSessionDownloadTask?
     private var resumeData: NSData?
     private var progress: NSProgress {
         return NSProgress()
@@ -40,15 +40,15 @@ public class ImageDownloadOperation: NSOperation {
     }
 
     public override func cancel() {
-        task.cancelByProducingResumeData {
+        task?.cancelByProducingResumeData {
             [unowned self] data in
             self.resumeData = data
         }
     }
 
     private func resumeDownload() {
-        task = session.downloadTaskWithURL(imageURL)
-        task.resume()
+        task = session?.downloadTaskWithURL(imageURL)
+        task?.resume()
     }
 
 }

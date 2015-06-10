@@ -47,8 +47,7 @@ public class ImageDownloadOperation: NSOperation {
     }
 
     private func resumeDownload() {
-        if let session = session {
-            let newTask = session.downloadTaskWithURL(imageURL)
+        if let newTask = session?.downloadTaskWithURL(imageURL) {
             newTask.resume()
             task = newTask
         }

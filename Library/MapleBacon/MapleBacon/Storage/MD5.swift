@@ -3,7 +3,7 @@ import Foundation
 let shift : [UInt32] = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21]
 let table: [UInt32] = (0 ..< 64).map { UInt32(0x100000000 * abs(sin(Double($0 + 1)))) }
 
-public extension String {
+extension String {
     public func MD5() -> String {
         return toHexString(md5(Array(self.utf8)))
     }

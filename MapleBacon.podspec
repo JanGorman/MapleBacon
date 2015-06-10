@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MapleBacon"
-  s.version      = "1.0.10"
+  s.version      = "1.0.11"
   s.summary      = "A delicious image download and caching library for iOS"
   s.description  = <<-DESC
                   A delicious image download and caching library for iOS. Background downloads, caching and scaling.

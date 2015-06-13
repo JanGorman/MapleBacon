@@ -55,6 +55,9 @@ public class ImageManager {
                 return downloadOperation
             } else {
                 completion?(ImageInstance(image: nil, state: .Downloading, url: nil), nil)
+                delay(0.1) {
+                    downloadImageAtURL(url, cacheScaled: cacheScaled, imageView: imageView, storage: storage, completion: completion)
+                }
             }
         }
 

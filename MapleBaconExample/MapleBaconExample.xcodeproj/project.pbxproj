@@ -17,37 +17,29 @@
 		F2AB72A61A4039EC00CCE62B /* UIContentModeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB72A21A4039EC00CCE62B /* UIContentModeExtension.swift */; };
 		F2AB72A81A403A3600CCE62B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2AB72A71A403A3600CCE62B /* Main.storyboard */; };
 		F2BC10161A42C87D0087F256 /* imageURLs.plist in Resources */ = {isa = PBXBuildFile; fileRef = F2BC10151A42C87D0087F256 /* imageURLs.plist */; };
-		F2BC10201A42DD0D0087F256 /* MapleBacon.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = F2AB72991A4039A500CCE62B /* MapleBacon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2600819C1B3311170010C64A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 260081971B3311170010C64A /* MapleBacon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F2520C481A3EDAFE0061BB33;
+			remoteInfo = MapleBacon;
+		};
+		2600819E1B3311170010C64A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 260081971B3311170010C64A /* MapleBacon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F2520C531A3EDAFF0061BB33;
+			remoteInfo = MapleBaconTests;
+		};
 		F2AB72841A40395200CCE62B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F2AB72661A40395200CCE62B /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = F2AB726D1A40395200CCE62B;
 			remoteInfo = MapleBaconExample;
-		};
-		F2AB72981A4039A500CCE62B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F2AB72931A4039A500CCE62B /* MapleBacon.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F2520C481A3EDAFE0061BB33;
-			remoteInfo = MapleBacon;
-		};
-		F2AB729A1A4039A500CCE62B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F2AB72931A4039A500CCE62B /* MapleBacon.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F2520C531A3EDAFF0061BB33;
-			remoteInfo = MapleBaconTests;
-		};
-		F2AB729C1A4039B700CCE62B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F2AB72931A4039A500CCE62B /* MapleBacon.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F2520C471A3EDAFE0061BB33;
-			remoteInfo = MapleBacon;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -58,7 +50,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F2BC10201A42DD0D0087F256 /* MapleBacon.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,6 +57,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		260081971B3311170010C64A /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = ../MapleBacon.xcodeproj; sourceTree = "<group>"; };
 		26B7022C1A40710100E3FB72 /* ImageManagerExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManagerExample.swift; sourceTree = "<group>"; };
 		F2AB726E1A40395200CCE62B /* MapleBaconExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapleBaconExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2AB72721A40395200CCE62B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,7 +66,6 @@
 		F2AB727A1A40395200CCE62B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F2AB72831A40395200CCE62B /* MapleBaconExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapleBaconExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2AB72881A40395200CCE62B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2AB72931A4039A500CCE62B /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = ../Library/MapleBacon/MapleBacon.xcodeproj; sourceTree = "<group>"; };
 		F2AB729F1A4039EC00CCE62B /* ResizerResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizerResultView.swift; sourceTree = "<group>"; };
 		F2AB72A01A4039EC00CCE62B /* ResizerResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizerResultViewController.swift; sourceTree = "<group>"; };
 		F2AB72A11A4039EC00CCE62B /* ResizerTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizerTestViewController.swift; sourceTree = "<group>"; };
@@ -101,10 +92,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		260081981B3311170010C64A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2600819D1B3311170010C64A /* MapleBacon.framework */,
+				2600819F1B3311170010C64A /* MapleBaconTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F2AB72651A40395200CCE62B = {
 			isa = PBXGroup;
 			children = (
-				F2AB72931A4039A500CCE62B /* MapleBacon.xcodeproj */,
+				260081971B3311170010C64A /* MapleBacon.xcodeproj */,
 				F2AB72701A40395200CCE62B /* MapleBaconExample */,
 				F2AB72861A40395200CCE62B /* MapleBaconExampleTests */,
 				F2AB726F1A40395200CCE62B /* Products */,
@@ -162,15 +162,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F2AB72941A4039A500CCE62B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F2AB72991A4039A500CCE62B /* MapleBacon.framework */,
-				F2AB729B1A4039A500CCE62B /* MapleBaconTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -186,7 +177,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F2AB729D1A4039B700CCE62B /* PBXTargetDependency */,
 			);
 			name = MapleBaconExample;
 			productName = MapleBaconExample;
@@ -243,8 +233,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = F2AB72941A4039A500CCE62B /* Products */;
-					ProjectRef = F2AB72931A4039A500CCE62B /* MapleBacon.xcodeproj */;
+					ProductGroup = 260081981B3311170010C64A /* Products */;
+					ProjectRef = 260081971B3311170010C64A /* MapleBacon.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -256,18 +246,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		F2AB72991A4039A500CCE62B /* MapleBacon.framework */ = {
+		2600819D1B3311170010C64A /* MapleBacon.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = MapleBacon.framework;
-			remoteRef = F2AB72981A4039A500CCE62B /* PBXContainerItemProxy */;
+			remoteRef = 2600819C1B3311170010C64A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F2AB729B1A4039A500CCE62B /* MapleBaconTests.xctest */ = {
+		2600819F1B3311170010C64A /* MapleBaconTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = MapleBaconTests.xctest;
-			remoteRef = F2AB729A1A4039A500CCE62B /* PBXContainerItemProxy */;
+			remoteRef = 2600819E1B3311170010C64A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -321,11 +311,6 @@
 			isa = PBXTargetDependency;
 			target = F2AB726D1A40395200CCE62B /* MapleBaconExample */;
 			targetProxy = F2AB72841A40395200CCE62B /* PBXContainerItemProxy */;
-		};
-		F2AB729D1A4039B700CCE62B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MapleBacon;
-			targetProxy = F2AB729C1A4039B700CCE62B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -10,13 +10,13 @@ extension String {
 }
 
 func md5(var message: [UInt8]) -> [UInt8] {
-    var messageLenBits = UInt64(message.count) * 8
+    let messageLenBits = UInt64(message.count) * 8
     message.append(0x80)
     while message.count % 64 != 56 {
         message.append(0)
     }
     
-    var lengthBytes = [UInt8](count: 8, repeatedValue: 0)
+    let lengthBytes = [UInt8](count: 8, repeatedValue: 0)
     UnsafeMutablePointer<UInt64>(lengthBytes).memory = messageLenBits.littleEndian
     message += lengthBytes
     
@@ -62,8 +62,8 @@ func md5(var message: [UInt8]) -> [UInt8] {
         d = d &+ originalD
     }
     
-    var result = [UInt8](count: 16, repeatedValue: 0)
-    for (i, n) in enumerate([a, b, c, d]) {
+    let result = [UInt8](count: 16, repeatedValue: 0)
+    for (i, n) in [a, b, c, d].enumerate() {
         UnsafeMutablePointer<UInt32>(result)[i] = n.littleEndian
     }
     return result

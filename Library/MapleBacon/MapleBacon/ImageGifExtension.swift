@@ -11,7 +11,7 @@ extension UIImage {
         return isAnimatedImage(data) ? animatedImageWithData(data) : UIImage(data: data)
     }
 
-    private class func animatedImageWithData(data: NSData) -> UIImage {
+    private class func animatedImageWithData(data: NSData) -> UIImage? {
         let source = CGImageSourceCreateWithData(data as CFDataRef, nil)
         return UIImage.animatedImageWithSource(source)
     }
@@ -22,7 +22,7 @@ extension UIImage {
         return CFSwapInt16(length) == 0x4749
     }
 
-    private class func animatedImageWithSource(source: CGImageSourceRef!) -> UIImage {
+    private class func animatedImageWithSource(source: CGImageSourceRef!) -> UIImage? {
         let (images, delays) = createImagesAndDelays(source)
         let gifDuration = delays.reduce(0, combine: +)
         let frames = framesFromImages(images, delays: delays)
@@ -33,10 +33,10 @@ extension UIImage {
         let gcd = DivisionMath.greatestCommonDivisor(delays)
         var frames = [UIImage]()
         for i in 0 ..< images.count {
-            let frame = UIImage(CGImage: images[Int(i)])!
+            let frame = UIImage(CGImage: images[Int(i)])
             let frameCount = Int(delays[Int(i)] / gcd)
 
-            for j in 0 ..< frameCount {
+            for _ in 0 ..< frameCount {
                 frames.append(frame)
             }
         }
@@ -48,19 +48,21 @@ extension UIImage {
         var images = [CGImageRef]()
         var delayCentiseconds = [Int]()
         for i in 0 ..< count {
-            images.append(CGImageSourceCreateImageAtIndex(source, i, nil))
-            delayCentiseconds.append(delayCentisecondsForImageAtIndex(source, index: i))
+            if let image = CGImageSourceCreateImageAtIndex(source, i, nil) {
+                images.append(image)
+                delayCentiseconds.append(delayCentisecondsForImageAtIndex(source, index: i))
+            }
         }
         return (images, delayCentiseconds)
     }
 
     private class func delayCentisecondsForImageAtIndex(let source: CGImageSourceRef, let index: Int) -> Int {
-        let cfProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil)
-        let properties: NSDictionary = cfProperties
-        if let gifProperties = properties[kCGImagePropertyGIFDictionary as! String] as? NSDictionary {
-            var delayTime = gifProperties[kCGImagePropertyGIFUnclampedDelayTime as! String] as! NSNumber
+        if let cfProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil),
+        properties: NSDictionary = cfProperties,
+            gifProperties = properties[kCGImagePropertyGIFDictionary as String] as? NSDictionary {
+            var delayTime = gifProperties[kCGImagePropertyGIFUnclampedDelayTime as String] as! NSNumber
             if delayTime.doubleValue == 0 {
-                delayTime = gifProperties[kCGImagePropertyGIFDelayTime as! String] as! NSNumber
+                delayTime = gifProperties[kCGImagePropertyGIFDelayTime as String] as! NSNumber
             }
             return Int(delayTime.doubleValue * 1000)
         }

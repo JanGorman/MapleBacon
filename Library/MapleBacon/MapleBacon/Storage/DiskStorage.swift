@@ -30,10 +30,13 @@ public class DiskStorage: Storage {
     }
 
     public init(name: String) {
-        let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
-        storagePath = (paths.first as! NSString).stringByAppendingPathComponent("de.zalando.MapleBacon.\(name)")
-
-        fileManager.createDirectoryAtPath(storagePath, withIntermediateDirectories: true, attributes: nil, error: nil)
+        let path = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first!
+        storagePath = path.stringByAppendingPathComponent("de.zalando.MapleBacon.\(name)")
+        
+        do {
+            try fileManager.createDirectoryAtPath(storagePath, withIntermediateDirectories: true, attributes: nil)
+        } catch _ {
+        }
     }
 
     public func storeImage(image: UIImage, var data: NSData?, forKey key: String) {
@@ -48,8 +51,8 @@ public class DiskStorage: Storage {
 
     public func pruneStorage() {
         dispatch_async(storageQueue) {
-            if let directoryURL = NSURL(fileURLWithPath: self.storagePath, isDirectory: true),
-            let enumerator = self.fileManager.enumeratorAtURL(directoryURL,
+            let directoryURL = NSURL(fileURLWithPath: self.storagePath, isDirectory: true)
+            if let enumerator = self.fileManager.enumeratorAtURL(directoryURL,
                     includingPropertiesForKeys: [NSURLIsDirectoryKey, NSURLContentModificationDateKey],
                     options: .SkipsHiddenFiles,
                     errorHandler: nil) {
@@ -77,7 +80,10 @@ public class DiskStorage: Storage {
 
     private func isDirectory(fileURL: NSURL) -> Bool {
         var isDirectoryResource: AnyObject?
-        fileURL.getResourceValue(&isDirectoryResource, forKey: NSURLIsDirectoryKey, error: nil)
+        do {
+            try fileURL.getResourceValue(&isDirectoryResource, forKey: NSURLIsDirectoryKey)
+        } catch _ {
+        }
         if let isDirectory = isDirectoryResource as? NSNumber {
             return isDirectory.boolValue
         }
@@ -86,13 +92,19 @@ public class DiskStorage: Storage {
 
     private func modificationDate(fileURL: NSURL) -> NSDate? {
         var modificationDateResource: AnyObject?
-        fileURL.getResourceValue(&modificationDateResource, forKey: NSURLContentModificationDateKey, error: nil)
+        do {
+            try fileURL.getResourceValue(&modificationDateResource, forKey: NSURLContentModificationDateKey)
+        } catch _ {
+        }
         return modificationDateResource as? NSDate
     }
 
     private func deleteExpiredFiles(files: [NSURL]) {
         for file in files {
-            fileManager.removeItemAtURL(file, error: nil)
+            do {
+                try fileManager.removeItemAtURL(file)
+            } catch _ {
+            }
         }
     }
 
@@ -113,16 +125,24 @@ public class DiskStorage: Storage {
 
     public func removeImage(forKey key: String) {
         dispatch_async(storageQueue) {
-            self.fileManager.removeItemAtPath(self.defaultStoragePath(forKey: key), error: nil)
+            do {
+                try self.fileManager.removeItemAtPath(self.defaultStoragePath(forKey: key))
+            } catch _ {
+            }
             return
         }
     }
 
     public func clearStorage() {
         dispatch_async(storageQueue) {
-            self.fileManager.removeItemAtPath(self.storagePath, error: nil)
-            self.fileManager.createDirectoryAtPath(self.storagePath, withIntermediateDirectories: true, attributes: nil,
-                    error: nil)
+            do {
+                try self.fileManager.removeItemAtPath(self.storagePath)
+            } catch _ {
+            }
+            do {
+                try self.fileManager.createDirectoryAtPath(self.storagePath, withIntermediateDirectories: true, attributes: nil)
+            } catch _ {
+            }
         }
     }
 

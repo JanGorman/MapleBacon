@@ -51,7 +51,7 @@ class ImageManagerTests: XCTestCase {
     func test_whenImageManagerAsksForImageAlreadyDownloaded_thenImageIsReturnedFromCache() {
         imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
             [unowned self] (imageInstance, _) in
-            if let imageInstance = imageInstance {
+            if let _ = imageInstance {
                 let cachedExpectation = self.expectationWithDescription("Testing Cached Image")
 
                 self.imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
@@ -105,8 +105,8 @@ class ImageManagerTests: XCTestCase {
         let newImageExpectation = expectationWithDescription("Testing New Image")
 
         imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, storage: storage) {
-            [unowned self] (imageInstance, _) in
-            if let imageInstance = imageInstance {
+            imageInstance, _ in
+            if let _ = imageInstance {
                 newImageExpectation.fulfill()
                 XCTAssertNotNil(storage.image(forKey: imageURL))
             }

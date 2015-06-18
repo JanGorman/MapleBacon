@@ -23,7 +23,7 @@ class ResizerTestViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Identifiers.DefaultCellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(Identifiers.DefaultCellIdentifier, forIndexPath: indexPath) as UITableViewCell
         cell.textLabel?.text = data[indexPath.row].simpleDescription()
         return cell
     }

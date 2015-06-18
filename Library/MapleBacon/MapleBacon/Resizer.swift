@@ -124,6 +124,8 @@ public class Resizer {
     private class func croppedImageFromImage(image: UIImage, toBounds bounds: CGRect) -> UIImage? {
         return UIImage(CGImage: CGImageCreateWithImageInRect(image.CGImage, bounds))
     }
+    
+    // CGBitmapContextCreate(data: UnsafeMutablePointer<Void>, _ width: Int, _ height: Int, _ bitsPerComponent: Int, _ bytesPerRow: Int, _ space: CGColorSpace!, _ bitmapInfo: UInt32)
 
     private class func imageFromImage(image: UIImage, toSize size: CGSize,
                                       usingTransform transform: CGAffineTransform, drawTransposed transpose: Bool,
@@ -131,9 +133,9 @@ public class Resizer {
         let newRect = CGRectIntegral(CGRect(x: 0, y: 0, width: size.width, height: size.height))
         let transposedRect = CGRect(x: 0, y: 0, width: newRect.size.height, height: newRect.size.width)
         let imageRef = image.CGImage
-        let bitmap = CGBitmapContextCreate(nil, Int(newRect.size.width), Int(newRect.size.height),
-                CGImageGetBitsPerComponent(imageRef), CGImageGetBytesPerRow(imageRef) * Int(deviceScale),
-                CGImageGetColorSpace(imageRef), CGImageGetBitmapInfo(imageRef))
+                                        
+        let bitmap = CGBitmapContextCreate(nil, Int(newRect.size.width), Int(newRect.size.height), CGImageGetBitsPerComponent(imageRef), CGImageGetBytesPerRow(imageRef) * Int(deviceScale), CGImageGetColorSpace(imageRef), CGImageGetBitmapInfo(imageRef).rawValue)
+        
         CGContextConcatCTM(bitmap, transform)
         CGContextSetInterpolationQuality(bitmap, quality)
         CGContextDrawImage(bitmap, transpose ? transposedRect : newRect, imageRef)

@@ -61,7 +61,7 @@ extension ImageExampleViewController {
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as! ImageCell
-        let url = imageURLs[indexPath.row]
+        _ = imageURLs[indexPath.row]
         if let imageURL = NSURL(string: imageURLs[indexPath.row]) {
             cell.imageView?.setImageWithURL(imageURL) {
                 (_, error) in

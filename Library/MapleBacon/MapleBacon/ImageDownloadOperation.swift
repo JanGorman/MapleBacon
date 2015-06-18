@@ -67,26 +67,26 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
 
     public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask,
         didFinishDownloadingToURL location: NSURL) {
-            var error: NSError?
-            if let newData = NSData(contentsOfURL: location, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &error) {
+            do {
+                let newData = try NSData(contentsOfURL: location, options: NSDataReadingOptions.DataReadingMappedIfSafe)
                 let newImage = UIImage.imageWithCachedData(newData)
                 let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
                 completionHandler?(newImageInstance, nil)
-            } else {
-                completionHandler?(nil, error)
+            } catch let error1 as NSError {
+                completionHandler?(nil, error1)
             }
     }
 
     public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
         if let error = error {
-            println("Remote error: \(error), \(error.userInfo)")
+            print("Remote error: \(error), \(error.userInfo)")
             completionHandler?(nil, error)
         }
     }
 
     public func URLSession(session: NSURLSession, task: NSURLSessionTask,
                            willPerformHTTPRedirection response: NSHTTPURLResponse,
-                           newRequest request: NSURLRequest, completionHandler: (NSURLRequest!) -> Void) {
+                           newRequest request: NSURLRequest, completionHandler: (NSURLRequest?) -> Void) {
         self.completionHandler?(nil, nil)
         self.imageURL = request.URL!
         resumeDownload()

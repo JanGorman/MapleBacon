@@ -86,8 +86,8 @@
 			children = (
 				268605FF1A3F341000BA4269 /* ImageViewExtension.swift */,
 				26B702151A4040DE00E3FB72 /* ImageManager.swift */,
-				26B702421A41803900E3FB72 /* ImageGifExtension.swift */,
 				31AA3B2762299015563F040F /* ImageDownloadOperation.swift */,
+				26B702421A41803900E3FB72 /* ImageGifExtension.swift */,
 				26E1F2021B2C2A2600901E94 /* Delay.swift */,
 			);
 			name = Downloader;

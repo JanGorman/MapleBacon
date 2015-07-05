@@ -1,15 +1,15 @@
 import Foundation
 
-let shift : [UInt32] = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21]
-let table: [UInt32] = (0 ..< 64).map { UInt32(0x100000000 * abs(sin(Double($0 + 1)))) }
+private let shift : [UInt32] = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21]
+private let table: [UInt32] = (0 ..< 64).map { UInt32(0x100000000 * abs(sin(Double($0 + 1)))) }
 
-extension String {
-    public func MD5() -> String {
+public extension String {
+    func MD5() -> String {
         return toHexString(md5(Array(self.utf8)))
     }
 }
 
-func md5(var message: [UInt8]) -> [UInt8] {
+internal func md5(var message: [UInt8]) -> [UInt8] {
     var messageLenBits = UInt64(message.count) * 8
     message.append(0x80)
     while message.count % 64 != 56 {
@@ -69,6 +69,6 @@ func md5(var message: [UInt8]) -> [UInt8] {
     return result
 }
 
-func toHexString(bytes: [UInt8]) -> String {
+private func toHexString(bytes: [UInt8]) -> String {
     return "".join(bytes.map { String(format:"%02x", $0) })
 }

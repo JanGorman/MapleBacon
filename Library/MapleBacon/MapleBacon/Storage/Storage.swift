@@ -4,6 +4,10 @@
 
 import UIKit
 
+let storageQueueKey = "de.zalando.MapleBacon.Storage"
+let baseStoragePath = "de.zalando.MapleBacon."
+let defaultStorageName = "default"
+
 public protocol Storage {
 
     func storeImage(image: UIImage, data: NSData?, forKey key: String)

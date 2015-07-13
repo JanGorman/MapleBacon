@@ -10,7 +10,7 @@ public class DiskStorage: Storage {
         return NSFileManager.defaultManager()
     }()
     let storageQueue: dispatch_queue_t = {
-        dispatch_queue_create("de.zalando.MapleBacon.Storage", DISPATCH_QUEUE_SERIAL)
+        dispatch_queue_create(storageQueueKey, DISPATCH_QUEUE_SERIAL)
     }()
     let storagePath: String
 
@@ -26,12 +26,12 @@ public class DiskStorage: Storage {
     }
 
     public convenience init() {
-        self.init(name: "default")
+        self.init(name: defaultStorageName)
     }
 
     public init(name: String) {
         let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
-        storagePath = (paths.first as! NSString).stringByAppendingPathComponent("de.zalando.MapleBacon.\(name)")
+        storagePath = (paths.first as! NSString).stringByAppendingPathComponent(baseStoragePath + name)
 
         fileManager.createDirectoryAtPath(storagePath, withIntermediateDirectories: true, attributes: nil, error: nil)
     }

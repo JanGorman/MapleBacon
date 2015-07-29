@@ -43,6 +43,7 @@ public class ImageDownloadOperation: NSOperation {
         task?.cancelByProducingResumeData {
             [unowned self] data in
             self.resumeData = data
+            self.finished = true
         }
     }
 
@@ -53,6 +54,19 @@ public class ImageDownloadOperation: NSOperation {
         }
     }
 
+    
+    override public var finished: Bool {
+        get {
+            return _finished
+        }
+        set {
+            willChangeValueForKey("isFinished")
+            _finished = newValue
+            didChangeValueForKey("isFinished")
+        }
+    }
+    
+    private var _finished = false
 }
 
 extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
@@ -75,12 +89,14 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
             } else {
                 completionHandler?(nil, error)
             }
+            self.finished = true
     }
 
     public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
         if let error = error {
             println("Remote error: \(error), \(error.userInfo)")
             completionHandler?(nil, error)
+            self.finished = true
         }
     }
 
@@ -91,7 +107,6 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
         self.imageURL = request.URL!
         resumeDownload()
     }
-
 }
 
 public enum ImageInstanceState {

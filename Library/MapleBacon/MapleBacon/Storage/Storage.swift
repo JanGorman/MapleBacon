@@ -5,21 +5,14 @@
 import UIKit
 
 public protocol Storage {
-
     func storeImage(image: UIImage, data: NSData?, forKey key: String)
-
     func image(forKey key: String) -> UIImage?
-
     func removeImage(forKey key: String)
-
     func clearStorage()
-
 }
 
 public protocol CombinedStorage {
-
     func clearMemoryStorage()
-
 }
 
 public class MapleBaconStorage: Storage, CombinedStorage {
@@ -27,16 +20,15 @@ public class MapleBaconStorage: Storage, CombinedStorage {
     let inMemoryStorage: Storage
     let diskStorage: Storage
 
+    // Singleton support
     public class var sharedStorage: MapleBaconStorage {
-
         struct Singleton {
-            static let instance = MapleBaconStorage()
+            static let shared = MapleBaconStorage()
         }
-
-        return Singleton.instance
+        return Singleton.shared
     }
 
-    init() {
+    private init() {
         inMemoryStorage = InMemoryStorage.sharedStorage
         diskStorage = DiskStorage.sharedStorage
     }

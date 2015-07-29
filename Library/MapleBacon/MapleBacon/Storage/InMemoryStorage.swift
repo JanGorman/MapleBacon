@@ -4,31 +4,28 @@
 
 import UIKit
 
-public class InMemoryStorage: Storage {
+public class InMemoryStorage: NSCache, Storage {
 
-    let cache: NSCache = {
-        return NSCache()
-    }()
-
+    // Singleton Support
     public class var sharedStorage: InMemoryStorage {
-
         struct Singleton {
-            static let instance = InMemoryStorage()
+            static let shared = InMemoryStorage()
         }
-
-        return Singleton.instance
+        return Singleton.shared
     }
 
-    public convenience init() {
-        self.init(name: "default")
+    public convenience init(name: String) {
+        self.init()
+        self.name = "de.zalando.MapleBacon.\(name)"
     }
-
-    public init(name: String) {
-        cache.name = "de.zalando.MapleBacon.\(name)"
+    
+    // Make it private so that only the top init is used
+    private override init() {
+        super.init()
     }
 
     public func storeImage(image: UIImage, data: NSData?, forKey key: String) {
-        cache.setObject(image, forKey: key, cost: cacheCost(forImage: image))
+        setObject(image, forKey: key, cost: cacheCost(forImage: image))
     }
 
     private func cacheCost(forImage image: UIImage) -> Int {
@@ -40,15 +37,15 @@ public class InMemoryStorage: Storage {
     }
 
     public func image(forKey key: String) -> UIImage? {
-        return cache.objectForKey(key) as? UIImage
+        return objectForKey(key) as? UIImage
     }
 
     public func removeImage(forKey key: String) {
-        cache.removeObjectForKey(key)
+        removeObjectForKey(key)
     }
 
     public func clearStorage() {
-        cache.removeAllObjects()
+        removeAllObjects()
     }
 
 }

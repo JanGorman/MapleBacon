@@ -4,7 +4,8 @@
 
 import UIKit
 
-var ImageViewAssociatedObjectHandle: UInt8 = 0
+private var ImageViewAssociatedObjectHandle: UInt8 = 0
+private var ImageViewURLAssociatedObjectHandle: UInt8 = 0
 
 extension UIImageView {
 
@@ -38,9 +39,21 @@ extension UIImageView {
                     objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
         }
     }
+    
+    var url: NSURL? {
+        get {
+            return objc_getAssociatedObject(self, &ImageViewURLAssociatedObjectHandle) as? NSURL
+        }
+        set {
+            objc_setAssociatedObject(self, &ImageViewURLAssociatedObjectHandle, newValue, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+        }
+    }
 
     func cancelDownload() {
         operation?.cancel()
+        if url != nil {
+            ImageManager.sharedManager.downloadsInProgress.removeValueForKey(url!)
+        }
     }
 
 }

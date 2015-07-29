@@ -6,10 +6,9 @@ import UIKit
 import MapleBacon
 
 class ImageCell: UICollectionViewCell {
-
     @IBOutlet weak var imageView: UIImageView?
-
     override func prepareForReuse() {
+        super.prepareForReuse()
         self.imageView?.image = nil
     }
 }
@@ -19,6 +18,7 @@ class ImageExampleViewController: UICollectionViewController {
     var imageURLs = ["http://media.giphy.com/media/lI6nHr5hWXlu0/giphy.gif"]
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         if let file = NSBundle.mainBundle().pathForResource("imageURLs", ofType: "plist"),
            let paths = NSArray(contentsOfFile: file) {
                 for url in paths {
@@ -27,7 +27,6 @@ class ImageExampleViewController: UICollectionViewController {
         }
 
         collectionView?.reloadData()
-        super.viewDidLoad()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -42,7 +41,7 @@ class ImageExampleViewController: UICollectionViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        MapleBaconStorage.sharedStorage.clearMemoryStorage()
+        MapleBaconStorage.sharedStorage.clearStorage()
     }
 
     @IBAction func clearCache(sender: AnyObject) {

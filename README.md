@@ -15,7 +15,7 @@ MapleBacon is a Swift image download and caching library.
 The easiest way is either through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:
 
 ```ruby
-pod `MapleBacon`
+pod 'MapleBacon'
 ```
 
 or [Carthage](https://github.com/Carthage/Carthage). Add the following to your `Cartfile` and then run `carthage update`:

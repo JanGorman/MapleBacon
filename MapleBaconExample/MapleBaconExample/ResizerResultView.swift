@@ -14,7 +14,7 @@ class ResizerResultView: UIView {
     override func drawRect(rect: CGRect) {
         if let contentMode = selectedContentMode, let image = image {
             Resizer.resizeImage(image, contentMode: contentMode, toSize: rect.size,
-                    interpolationQuality: kCGInterpolationHigh, async: false) {
+                    interpolationQuality: CGInterpolationQuality.High, async: false) {
                 resizedImage in
                 let xOffset = rect.size.width > resizedImage.size.width / self.deviceScale ? (rect.size.width - resizedImage.size.width / self.deviceScale) / 2 : 0
                 let yOffset = rect.size.height > resizedImage.size.height / self.deviceScale ? (rect.size.height - resizedImage.size.height / self.deviceScale) / 2 : 0

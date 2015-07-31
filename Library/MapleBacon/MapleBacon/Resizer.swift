@@ -11,7 +11,7 @@ public class Resizer {
     private static let deviceScale = UIScreen.mainScreen().scale
 
     public class func resizeImage(image: UIImage, toSize size: CGSize, async: Bool = true, completion: ResizerCompletion) {
-        resizeImage(image, contentMode: .ScaleToFill, toSize: size, interpolationQuality: kCGInterpolationDefault,
+        resizeImage(image, contentMode: .ScaleToFill, toSize: size, interpolationQuality: .Default,
                 async: async, completion: completion)
     }
 
@@ -122,7 +122,10 @@ public class Resizer {
     }
 
     private class func croppedImageFromImage(image: UIImage, toBounds bounds: CGRect) -> UIImage? {
-        return UIImage(CGImage: CGImageCreateWithImageInRect(image.CGImage, bounds))
+        if let cgimage = CGImageCreateWithImageInRect(image.CGImage, bounds) {
+            return UIImage(CGImage: cgimage)
+        }
+        return nil
     }
     
     // CGBitmapContextCreate(data: UnsafeMutablePointer<Void>, _ width: Int, _ height: Int, _ bitsPerComponent: Int, _ bytesPerRow: Int, _ space: CGColorSpace!, _ bitmapInfo: UInt32)
@@ -139,7 +142,11 @@ public class Resizer {
         CGContextConcatCTM(bitmap, transform)
         CGContextSetInterpolationQuality(bitmap, quality)
         CGContextDrawImage(bitmap, transpose ? transposedRect : newRect, imageRef)
-        return UIImage(CGImage: CGBitmapContextCreateImage(bitmap))
+                                        if let cgimage = CGBitmapContextCreateImage(bitmap) {
+                                            return UIImage(CGImage: cgimage)
+                                        }
+                                        return nil
+        
     }
 
     private class func transformForOrientationImage(image: UIImage, toSize size: CGSize) -> CGAffineTransform {

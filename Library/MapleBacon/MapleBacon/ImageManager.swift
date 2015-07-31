@@ -66,7 +66,7 @@ public class ImageManager {
 
     private func resizeAndStoreImage(image: UIImage, imageView: UIImageView, storage: Storage, key: String) {
         Resizer.resizeImage(image, contentMode: imageView.contentMode, toSize: imageView.bounds.size,
-                interpolationQuality: kCGInterpolationDefault) {
+                interpolationQuality: .Default) {
             resizedImage in
             storage.storeImage(resizedImage, data: nil, forKey: key)
         }

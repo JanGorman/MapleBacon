@@ -20,11 +20,11 @@ public class InMemoryStorage: Storage {
     }
 
     public convenience init() {
-        self.init(name: "default")
+        self.init(name: defaultStorageName)
     }
 
     public init(name: String) {
-        cache.name = "de.zalando.MapleBacon.\(name)"
+        cache.name = baseStoragePath + name
     }
 
     public func storeImage(image: UIImage, data: NSData?, forKey key: String) {

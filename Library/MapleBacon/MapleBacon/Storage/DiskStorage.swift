@@ -30,7 +30,7 @@ public class DiskStorage: Storage {
     }
 
     public init(name: String) {
-        let path = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first!
+        let path = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first! as NSString
         storagePath = path.stringByAppendingPathComponent("de.zalando.MapleBacon.\(name)")
         
         do {

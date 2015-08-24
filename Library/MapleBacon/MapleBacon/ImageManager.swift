@@ -6,41 +6,26 @@ import UIKit
 
 public class ImageManager {
 
-    internal var downloadsInProgress = [NSURL: ImageDownloadOperation]()
-    
-    // The Download Queue
-    private lazy var downloadQueue = NSOperationQueue()
-
-    // Singleton Support
     public static let sharedManager = ImageManager()
+    
+    private let downloadQueue = NSOperationQueue()
+    private var downloadsInProgress = [NSURL: ImageDownloadOperation]()
 
     deinit {
         downloadQueue.cancelAllOperations()
     }
 
-    public func downloadImageAtURL(url: NSURL, cacheScaled: Bool, imageView: UIImageView?, storage: Storage = MapleBaconStorage.sharedStorage, completion: ImageDownloaderCompletion?) -> ImageDownloadOperation? {
-        
-        // If image is in the cache, then return it
+    public func downloadImageAtURL(url: NSURL, cacheScaled: Bool, imageView: UIImageView?,
+                                   storage: Storage = MapleBaconStorage.sharedStorage,
+                                   completion: ImageDownloaderCompletion?) -> ImageDownloadOperation? {
         if let cachedImage = storage.image(forKey: url.absoluteString!) {
             completion?(ImageInstance(image: cachedImage, state: .Cached, url: url), nil)
         } else {
             if downloadsInProgress[url] == nil {
                 let downloadOperation = ImageDownloadOperation(imageURL: url)
                 downloadOperation.qualityOfService = .UserInitiated
-                downloadOperation.completionHandler = {
-                    [unowned self] (imageInstance, _) in
-                    self.downloadsInProgress[url] = nil
-                    if let newImage = imageInstance?.image {
-                        if cacheScaled && imageView != nil && newImage.images == nil {
-                            self.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
-                                    key: url.absoluteString!)
-                        } else if let imageData = imageInstance?.data {
-                            storage.storeImage(newImage, data: imageData, forKey: url.absoluteString!)
-                        }
-
-                        completion?(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
-                    }
-                }
+                downloadOperation.completionHandler = downloadHandlerWithStorage(url, cacheScaled: cacheScaled,
+                        imageView: imageView, storage: storage, completion: completion)
                 downloadsInProgress[url] = downloadOperation
                 downloadQueue.addOperation(downloadOperation)
                 return downloadOperation
@@ -51,8 +36,22 @@ public class ImageManager {
                 }
             }
         }
-
         return nil
+    }
+
+    private func downloadHandlerWithStorage(url: NSURL, cacheScaled: Bool, imageView: UIImageView?, storage: Storage, completion: ImageDownloaderCompletion?) -> ImageDownloaderCompletion {
+        return { [weak self] (imageInstance, _) in
+            self?.downloadsInProgress[url] = nil
+            if let newImage = imageInstance?.image {
+                if cacheScaled && imageView != nil && newImage.images == nil {
+                    self?.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
+                        key: url.absoluteString!)
+                } else if let imageData = imageInstance?.data {
+                    storage.storeImage(newImage, data: imageData, forKey: url.absoluteString!)
+                }
+                completion?(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
+            }
+        }
     }
 
     private func resizeAndStoreImage(image: UIImage, imageView: UIImageView, storage: Storage, key: String) {

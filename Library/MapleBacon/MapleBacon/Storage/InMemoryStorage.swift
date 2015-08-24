@@ -4,35 +4,29 @@
 
 import UIKit
 
-public class InMemoryStorage: NSCache, Storage {
+public final class InMemoryStorage: NSCache {
 
-    // Singleton Support
-    public class var sharedStorage: InMemoryStorage {
-        struct Singleton {
-            static let shared = InMemoryStorage()
-        }
-        return Singleton.shared
-    }
+    public static let sharedStorage = InMemoryStorage()
 
     public convenience init(name: String) {
         self.init()
         self.name = "de.zalando.MapleBacon.\(name)"
     }
     
-    // Make it private so that only the top init is used
     private override init() {
         super.init()
     }
 
+}
+
+extension InMemoryStorage: Storage {
+
     public func storeImage(image: UIImage, data: NSData?, forKey key: String) {
         setObject(image, forKey: key, cost: cacheCost(forImage: image))
     }
-
+    
     private func cacheCost(forImage image: UIImage) -> Int {
-        var imagesCount = 0
-        if let images = image.images {
-            imagesCount = images.count
-        }
+        let imagesCount = image.images?.count ?? 0
         return imagesCount * Int(image.size.width * image.size.height * image.scale * image.scale)
     }
 

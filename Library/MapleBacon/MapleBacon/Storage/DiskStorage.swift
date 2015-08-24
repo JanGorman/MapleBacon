@@ -8,8 +8,8 @@ public final class DiskStorage {
 
     public static let sharedStorage = DiskStorage()
     
-    private let fileManager: NSFileManager = NSFileManager.defaultManager()
-    private let storageQueue: dispatch_queue_t = dispatch_queue_create("de.zalando.MapleBacon.Storage", DISPATCH_QUEUE_SERIAL)
+    private let fileManager = NSFileManager.defaultManager()
+    private let storageQueue = dispatch_queue_create("de.zalando.MapleBacon.Storage", DISPATCH_QUEUE_SERIAL)
     private let storagePath: String
 
     public var maxAge: NSTimeInterval = 60 * 60 * 24 * 7

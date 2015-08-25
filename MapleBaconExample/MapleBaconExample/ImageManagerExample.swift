@@ -6,11 +6,14 @@ import UIKit
 import MapleBacon
 
 class ImageCell: UICollectionViewCell {
+
     @IBOutlet weak var imageView: UIImageView?
+
     override func prepareForReuse() {
         super.prepareForReuse()
         self.imageView?.image = nil
     }
+
 }
 
 class ImageExampleViewController: UICollectionViewController {

@@ -4,6 +4,8 @@
 
 import UIKit
 
+internal let baseStoragePath = "de.zalando.MapleBacon."
+
 public protocol Storage {
 
     func storeImage(image: UIImage, data: NSData?, forKey key: String)

@@ -4,17 +4,20 @@
 
 import UIKit
 
-public final class InMemoryStorage: NSCache {
+public final class InMemoryStorage {
 
     public static let sharedStorage = InMemoryStorage()
 
-    public convenience init(name: String) {
-        self.init()
-        self.name = "de.zalando.MapleBacon.\(name)"
-    }
+    private static let DefaultStorageName = "default"
     
-    private override init() {
-        super.init()
+    private let cache = NSCache()
+
+    public convenience init() {
+        self.init(name: InMemoryStorage.DefaultStorageName)
+    }
+
+    public init(name: String) {
+        cache.name = baseStoragePath + name
     }
 
 }
@@ -22,7 +25,7 @@ public final class InMemoryStorage: NSCache {
 extension InMemoryStorage: Storage {
 
     public func storeImage(image: UIImage, data: NSData?, forKey key: String) {
-        setObject(image, forKey: key, cost: cacheCost(forImage: image))
+        cache.setObject(image, forKey: key, cost: cacheCost(forImage: image))
     }
     
     private func cacheCost(forImage image: UIImage) -> Int {
@@ -31,15 +34,15 @@ extension InMemoryStorage: Storage {
     }
 
     public func image(forKey key: String) -> UIImage? {
-        return objectForKey(key) as? UIImage
+        return cache.objectForKey(key) as? UIImage
     }
 
     public func removeImage(forKey key: String) {
-        removeObjectForKey(key)
+        cache.removeObjectForKey(key)
     }
 
     public func clearStorage() {
-        removeAllObjects()
+        cache.removeAllObjects()
     }
 
 }

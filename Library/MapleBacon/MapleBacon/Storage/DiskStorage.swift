@@ -7,9 +7,11 @@ import UIKit
 public final class DiskStorage {
 
     public static let sharedStorage = DiskStorage()
-    
+
+    private static let QueueLabel = "de.zalando.MapleBacon.Storage"
+
     private let fileManager = NSFileManager.defaultManager()
-    private let storageQueue = dispatch_queue_create("de.zalando.MapleBacon.Storage", DISPATCH_QUEUE_SERIAL)
+    private let storageQueue = dispatch_queue_create(QueueLabel, DISPATCH_QUEUE_SERIAL)
     private let storagePath: String
 
     public var maxAge: NSTimeInterval = 60 * 60 * 24 * 7
@@ -20,7 +22,7 @@ public final class DiskStorage {
 
     public init(name: String) {
         let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true) as! [String]
-        storagePath = paths.first!.stringByAppendingPathComponent("de.zalando.MapleBacon.\(name)")
+        storagePath = paths.first!.stringByAppendingPathComponent(baseStoragePath + name)
         fileManager.createDirectoryAtPath(storagePath, withIntermediateDirectories: true, attributes: nil, error: nil)
     }
 

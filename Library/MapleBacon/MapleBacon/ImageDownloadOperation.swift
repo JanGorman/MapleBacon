@@ -17,9 +17,8 @@ public class ImageDownloadOperation: NSOperation {
     private var session: NSURLSession?
     private var task: NSURLSessionDownloadTask?
     private var resumeData: NSData?
-    private var progress: NSProgress {
-        return NSProgress()
-    }
+    private let progress: NSProgress = NSProgress()
+
     public var completionHandler: ImageDownloaderCompletion?
 
     public convenience init(imageURL: NSURL) {
@@ -43,6 +42,7 @@ public class ImageDownloadOperation: NSOperation {
         task?.cancelByProducingResumeData {
             [unowned self] data in
             self.resumeData = data
+            self.finished = true
         }
     }
 
@@ -50,6 +50,18 @@ public class ImageDownloadOperation: NSOperation {
         if let newTask = session?.downloadTaskWithURL(imageURL) {
             newTask.resume()
             task = newTask
+        }
+    }
+
+    private var _finished = false
+    override public var finished: Bool {
+        get {
+            return _finished
+        }
+        set {
+            willChangeValueForKey("isFinished")
+            _finished = newValue
+            didChangeValueForKey("isFinished")
         }
     }
 
@@ -75,12 +87,13 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
             } else {
                 completionHandler?(nil, error)
             }
+            self.finished = true
     }
 
     public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
         if let error = error {
-            println("Remote error: \(error), \(error.userInfo)")
             completionHandler?(nil, error)
+            finished = true
         }
     }
 
@@ -88,7 +101,7 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
                            willPerformHTTPRedirection response: NSHTTPURLResponse,
                            newRequest request: NSURLRequest, completionHandler: (NSURLRequest!) -> Void) {
         self.completionHandler?(nil, nil)
-        self.imageURL = request.URL!
+        imageURL = request.URL!
         resumeDownload()
     }
 

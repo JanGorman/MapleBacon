@@ -65,8 +65,7 @@ extension ImageExampleViewController {
             cell.imageView?.setImageWithURL(imageURL) {
                 _, error in
                 if error == nil {
-                    let transition = CATransition()
-                    cell.imageView?.layer.addAnimation(transition, forKey: nil)
+                    cell.imageView?.layer.addAnimation(CATransition(), forKey: nil)
                 }
             }
         }

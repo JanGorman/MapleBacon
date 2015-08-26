@@ -8,20 +8,31 @@ private var ImageViewAssociatedObjectHandle: UInt8 = 0
 
 extension UIImageView {
 
-    public func setImageWithURL(url: NSURL, cacheScaled: Bool = false, completion: ImageDownloaderCompletion? = nil) {
+    public func setImageWithURL(url: NSURL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
+            cacheScaled: Bool = false, completion: ImageDownloaderCompletion? = nil) {
+        if let placeholder = placeholder {
+            image = placeholder
+        }
         cancelDownload()
-        let operation = ImageManager.sharedManager.downloadImageAtURL(url, cacheScaled: cacheScaled, imageView: self) {
-            [weak self] imageInstance, error in
+        if let operation = downloadOperationWithURL(url, placeholder: placeholder, crossFadePlaceholder: crossFade,
+            cacheScaled: cacheScaled, completion: completion) {
+            self.operation = operation
+        }
+    }
 
+    private func downloadOperationWithURL(url: NSURL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
+            cacheScaled: Bool = false, completion: ImageDownloaderCompletion? = nil) -> ImageDownloadOperation? {
+        return ImageManager.sharedManager.downloadImageAtURL(url, cacheScaled: cacheScaled, imageView: self) {
+            [weak self] imageInstance, error in
             dispatch_async(dispatch_get_main_queue()) {
                 if let image = imageInstance?.image {
+                    if let _ = placeholder where crossFade {
+                        self?.layer.addAnimation(CATransition(), forKey: nil)
+                    }
                     self?.image = image
                 }
                 completion?(imageInstance, error)
             }
-        }
-        if operation != nil {
-            self.operation = operation
         }
     }
 

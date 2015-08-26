@@ -54,10 +54,25 @@ or with an optional closure, if you want to check for a possible error:
 
 ```swift
 if let imageURL = NSURL(string: "…") {
-	imageView.setImageWithURL(imageURL) { (instance, error) in
+	imageView.setImageWithURL(imageURL) { instance, error in
 		…
 	}
 }
+```
+
+There's also support for a placeholder image with optional (enabled by default) cross fading to the proper image once it's been downloaded:
+
+```swift
+if let imageURL = NSURL(string: "…"), placeholder = UIImage(named: "placeholder") {
+	imageView.setImageWithURL(imageURL, placeholder: placeholder)
+}
+
+// or
+
+if let imageURL = NSURL(string: "…"), placeholder = UIImage(named: "placeholder") {
+	imageView.setImageWithURL(imageURL, placeholder: placeholder, crossFadePlaceholder: false)
+}
+
 ```
 
 ### Using the ImageManager directly
@@ -68,7 +83,7 @@ You can also access the underlying handler directly for more advanced usage:
 if let imageURL = NSURL(string: "…") {
 	let manager = ImageManager.sharedManager
 	
-	manager.downloadImageAtURL(imageURL, completion: { (imageInstance, error) in
+	manager.downloadImageAtURL(imageURL, completion: { imageInstance, error in
 		…
 	})
 }
@@ -82,7 +97,7 @@ For the quality conscious among you, MapleBacon also allows for more advanced (a
 imageView.setImageWithURL(imageURL, cacheScaled: true)
 
 // Or the call back way
-imageView.setImageWithURL(imageURL, cacheScaled: true) { (imageInstance, error) in
+imageView.setImageWithURL(imageURL, cacheScaled: true) { imageInstance, error in
 …
 }
 
@@ -129,7 +144,7 @@ let storage = DiskStorage(name: "…")
 
 if let imageURL = NSURL(string: "…") {
 	ImageManager.sharedManager.downloadImageAtURL(imageURL, storage: storage) {
-		(imageInstance: ImageInstance?, error: NSError?) in
+		imageInstance, error in
 		…
 	}
 }

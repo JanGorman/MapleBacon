@@ -24,7 +24,7 @@ func md5(var message: [UInt8]) -> [UInt8] {
     var b : UInt32 = 0xEFCDAB89
     var c : UInt32 = 0x98BADCFE
     var d : UInt32 = 0x10325476
-    for chunkOffset in stride(from: 0, to: message.count, by: 64) {
+    for chunkOffset in 0.stride(to: message.count, by: 64) {
         let chunk = UnsafePointer<UInt32>(UnsafePointer<UInt8>(message) + chunkOffset)
         let originalA = a
         let originalB = b
@@ -70,5 +70,5 @@ func md5(var message: [UInt8]) -> [UInt8] {
 }
 
 func toHexString(bytes: [UInt8]) -> String {
-    return "".join(bytes.map { String(format:"%02x", $0) })
+    return bytes.map { String(format:"%02x", $0) }.joinWithSeparator("")
 }

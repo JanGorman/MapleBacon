@@ -109,17 +109,17 @@ extension DiskStorage: Storage {
             }
             return isDirectory.boolValue
         } catch _ {
-            
         }
+        return false
     }
 
     private func modificationDate(fileURL: NSURL) -> NSDate? {
+        var modificationDateResource: AnyObject?
         do {
-            var modificationDateResource: AnyObject?
             try fileURL.getResourceValue(&modificationDateResource, forKey: NSURLContentModificationDateKey)
-            return modificationDateResource as? NSDate
         } catch _ {
         }
+        return modificationDateResource as? NSDate
     }
 
     private func deleteExpiredFiles(files: [NSURL]) {

@@ -45,9 +45,9 @@ public class ImageManager {
             if let newImage = imageInstance?.image {
                 if cacheScaled && imageView != nil && newImage.images == nil {
                     self?.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
-                        key: url.absoluteString!)
+                        key: url.absoluteString)
                 } else if let imageData = imageInstance?.data {
-                    storage.storeImage(newImage, data: imageData, forKey: url.absoluteString!)
+                    storage.storeImage(newImage, data: imageData, forKey: url.absoluteString)
                 }
                 completion?(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
             }

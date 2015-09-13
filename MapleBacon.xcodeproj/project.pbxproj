@@ -17,14 +17,12 @@
 		2600817A1B3310B60010C64A /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081751B3310B60010C64A /* ImageManager.swift */; };
 		2600817B1B3310B60010C64A /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081761B3310B60010C64A /* ImageViewExtension.swift */; };
 		2600817D1B3310C00010C64A /* Resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600817C1B3310C00010C64A /* Resizer.swift */; };
-		2600818E1B3310DC0010C64A /* cupcakes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2600817F1B3310D30010C64A /* cupcakes.jpg */; };
 		2600818F1B3310DC0010C64A /* ImageDownloadOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081801B3310D30010C64A /* ImageDownloadOperationTests.swift */; };
 		260081901B3310DC0010C64A /* ImageExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081811B3310D30010C64A /* ImageExtensionTests.swift */; };
 		260081911B3310DC0010C64A /* ImageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081821B3310D30010C64A /* ImageManagerTests.swift */; };
-		260081921B3310DC0010C64A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 260081831B3310D30010C64A /* Info.plist */; };
 		260081931B3310DC0010C64A /* MD5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081841B3310D30010C64A /* MD5Tests.swift */; };
 		260081941B3310DC0010C64A /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081851B3310D30010C64A /* StorageTests.swift */; };
-		260081961B3310E90010C64A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 260081951B3310E90010C64A /* Info.plist */; };
+		94C344701BA52B28006A7914 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94C3446F1BA52B28006A7914 /* Info.plist */; settings = {ASSET_TAGS = (); }; };
 		F2520C541A3EDAFF0061BB33 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,14 +47,13 @@
 		260081751B3310B60010C64A /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageManager.swift; path = Library/MapleBacon/MapleBacon/ImageManager.swift; sourceTree = SOURCE_ROOT; };
 		260081761B3310B60010C64A /* ImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageViewExtension.swift; path = Library/MapleBacon/MapleBacon/ImageViewExtension.swift; sourceTree = SOURCE_ROOT; };
 		2600817C1B3310C00010C64A /* Resizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resizer.swift; path = Library/MapleBacon/MapleBacon/Resizer.swift; sourceTree = SOURCE_ROOT; };
-		2600817F1B3310D30010C64A /* cupcakes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cupcakes.jpg; sourceTree = "<group>"; };
 		260081801B3310D30010C64A /* ImageDownloadOperationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadOperationTests.swift; sourceTree = "<group>"; };
 		260081811B3310D30010C64A /* ImageExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtensionTests.swift; sourceTree = "<group>"; };
 		260081821B3310D30010C64A /* ImageManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManagerTests.swift; sourceTree = "<group>"; };
 		260081831B3310D30010C64A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		260081841B3310D30010C64A /* MD5Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MD5Tests.swift; sourceTree = "<group>"; };
 		260081851B3310D30010C64A /* StorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageTests.swift; sourceTree = "<group>"; };
-		260081951B3310E90010C64A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Library/MapleBacon/MapleBacon/Info.plist; sourceTree = SOURCE_ROOT; };
+		94C3446F1BA52B28006A7914 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Library/MapleBacon/MapleBacon/Info.plist; sourceTree = SOURCE_ROOT; };
 		F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapleBacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2520C531A3EDAFF0061BB33 /* MapleBaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapleBaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -83,11 +80,6 @@
 		260081691B3310A90010C64A /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				268605FF1A3F341000BA4269 /* ImageViewExtension.swift */,
-				26B702151A4040DE00E3FB72 /* ImageManager.swift */,
-				31AA3B2762299015563F040F /* ImageDownloadOperation.swift */,
-				26B702421A41803900E3FB72 /* ImageGifExtension.swift */,
-				26E1F2021B2C2A2600901E94 /* Delay.swift */,
 				2600816A1B3310A90010C64A /* DiskStorage.swift */,
 				2600816B1B3310A90010C64A /* InMemoryStorage.swift */,
 				2600816C1B3310A90010C64A /* MD5.swift */,
@@ -100,13 +92,9 @@
 		2600817E1B3310D30010C64A /* MapleBaconTests */ = {
 			isa = PBXGroup;
 			children = (
-				2600817F1B3310D30010C64A /* cupcakes.jpg */,
-				260081801B3310D30010C64A /* ImageDownloadOperationTests.swift */,
-				260081811B3310D30010C64A /* ImageExtensionTests.swift */,
-				260081821B3310D30010C64A /* ImageManagerTests.swift */,
-				260081831B3310D30010C64A /* Info.plist */,
-				260081841B3310D30010C64A /* MD5Tests.swift */,
-				260081851B3310D30010C64A /* StorageTests.swift */,
+				94C344661BA5293E006A7914 /* Downloader */,
+				94C344671BA5294A006A7914 /* Supporting Files */,
+				94C344681BA5295A006A7914 /* Storage */,
 			);
 			name = MapleBaconTests;
 			path = Library/MapleBacon/MapleBaconTests;
@@ -133,11 +121,38 @@
 			path = MapleBaconTests;
 			sourceTree = SOURCE_ROOT;
 		};
+		94C344661BA5293E006A7914 /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				260081801B3310D30010C64A /* ImageDownloadOperationTests.swift */,
+				260081811B3310D30010C64A /* ImageExtensionTests.swift */,
+				260081821B3310D30010C64A /* ImageManagerTests.swift */,
+			);
+			name = Downloader;
+			sourceTree = "<group>";
+		};
+		94C344671BA5294A006A7914 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				260081831B3310D30010C64A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		94C344681BA5295A006A7914 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				260081841B3310D30010C64A /* MD5Tests.swift */,
+				260081851B3310D30010C64A /* StorageTests.swift */,
+			);
+			name = Storage;
+			sourceTree = "<group>";
+		};
 		F2520C3E1A3EDAFE0061BB33 = {
 			isa = PBXGroup;
 			children = (
-				2600817E1B3310D30010C64A /* MapleBaconTests */,
 				F2520C4A1A3EDAFE0061BB33 /* MapleBacon */,
+				2600817E1B3310D30010C64A /* MapleBaconTests */,
 				F2520C491A3EDAFE0061BB33 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -165,26 +180,7 @@
 		F2520C4B1A3EDAFE0061BB33 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F2520C4C1A3EDAFE0061BB33 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F2520C571A3EDAFF0061BB33 /* MapleBaconTests */ = {
-			isa = PBXGroup;
-			children = (
-				F2520C581A3EDAFF0061BB33 /* Supporting Files */,
-				268606061A3F42FF00BA4269 /* Downloader */,
-				31AA383B8FE99A773C5C70CA /* Storage */,
-			);
-			path = MapleBaconTests;
-			sourceTree = "<group>";
-		};
-		F2520C581A3EDAFF0061BB33 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F2520C6C1A3F06FD0061BB33 /* cupcakes.jpg */,
-				260081951B3310E90010C64A /* Info.plist */,
+				94C3446F1BA52B28006A7914 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -244,6 +240,8 @@
 		F2520C3F1A3EDAFE0061BB33 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Zalando SE";
 				TargetAttributes = {
@@ -278,7 +276,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				260081961B3310E90010C64A /* Info.plist in Resources */,
+				94C344701BA52B28006A7914 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,8 +284,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				260081921B3310DC0010C64A /* Info.plist in Resources */,
-				2600818E1B3310DC0010C64A /* cupcakes.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

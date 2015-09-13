@@ -21,9 +21,8 @@ public final class DiskStorage {
     }
 
     public init(name: String) {
-        let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true) as! [String]
-        storagePath = paths.first!.stringByAppendingPathComponent(baseStoragePath + name)
-        
+        let path = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first! as NSString
+        storagePath = path.stringByAppendingPathComponent(baseStoragePath + name)
         do {
             try fileManager.createDirectoryAtPath(storagePath, withIntermediateDirectories: true, attributes: nil)
         } catch _ {
@@ -53,15 +52,20 @@ extension DiskStorage: Storage {
     
     public func removeImage(forKey key: String) {
         dispatch_async(storageQueue) {
-            self.fileManager.removeItemAtPath(self.defaultStoragePath(forKey: key), error: nil)
+            do {
+                try self.fileManager.removeItemAtPath(self.defaultStoragePath(forKey: key))
+            } catch _ {
+            }
         }
     }
     
     public func clearStorage() {
         dispatch_async(storageQueue) {
-            self.fileManager.removeItemAtPath(self.storagePath, error: nil)
-            self.fileManager.createDirectoryAtPath(self.storagePath, withIntermediateDirectories: true, attributes: nil,
-                error: nil)
+            do {
+                try self.fileManager.removeItemAtPath(self.storagePath)
+                try self.fileManager.createDirectoryAtPath(self.storagePath, withIntermediateDirectories: true, attributes: nil)
+            } catch _ {
+            }
         }
     }
     
@@ -78,7 +82,7 @@ extension DiskStorage: Storage {
     }
 
     private func defaultStoragePath(forKey key: String) -> String {
-        return storagePath.stringByAppendingPathComponent(key.MD5())
+        return (storagePath as NSString).stringByAppendingPathComponent(key.MD5())
     }
 
     private func expiredFiles(usingEnumerator enumerator: NSDirectoryEnumerator) -> [NSURL] {
@@ -123,6 +127,8 @@ extension DiskStorage: Storage {
         for file in files {
             do {
                 try fileManager.removeItemAtURL(file)
+            } catch _ {
+            }
         }
     }
 

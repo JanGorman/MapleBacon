@@ -44,7 +44,7 @@ class StorageTests: XCTestCase {
         var storedImage = storage.image(forKey: storageKey!)
         while storedImage == nil && timeoutDate.timeIntervalSinceNow > 0 {
             storedImage = storage.image(forKey: storageKey!)
-            CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.01, 1)
+            CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.01, true)
         }
         return storedImage
     }

@@ -1,0 +1,532 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		261E14481A3EE0C4000516D4 /* ImageDownloadOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E14471A3EE0C4000516D4 /* ImageDownloadOperationTests.swift */; };
+		268606001A3F341000BA4269 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268605FF1A3F341000BA4269 /* ImageViewExtension.swift */; };
+		268606041A3F3C8500BA4269 /* ImageExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268606011A3F358600BA4269 /* ImageExtensionTests.swift */; };
+		26B702161A4040DE00E3FB72 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B702151A4040DE00E3FB72 /* ImageManager.swift */; };
+		26B702181A40425E00E3FB72 /* ImageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B702171A40425E00E3FB72 /* ImageManagerTests.swift */; };
+		26B702191A4062FE00E3FB72 /* ImageViewExtension.swift in Headers */ = {isa = PBXBuildFile; fileRef = 268605FF1A3F341000BA4269 /* ImageViewExtension.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		26B7021A1A4062FE00E3FB72 /* ImageManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 26B702151A4040DE00E3FB72 /* ImageManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		26B702431A41803900E3FB72 /* ImageGifExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B702421A41803900E3FB72 /* ImageGifExtension.swift */; };
+		26E1F2031B2C2A2600901E94 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E1F2021B2C2A2600901E94 /* Delay.swift */; };
+		31AA31D2FB3606178AE888BD /* ImageDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA3B2762299015563F040F /* ImageDownloadOperation.swift */; };
+		31AA34060D5F022360EDCDAB /* InMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA33CBF1DD27291C9E1DCB /* InMemoryStorage.swift */; };
+		31AA39C553B3B420836A8E79 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA3AAEAAD81D412F89FA50 /* Storage.swift */; };
+		31AA3B249325F7F047E1C8B4 /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA308AA32664DC7B0FF346 /* DiskStorage.swift */; };
+		449BD8751A417A76007AC1BD /* Resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CA5CE91A3F2709008175BA /* Resizer.swift */; };
+		94C344721BA52DAE006A7914 /* cupcakes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94C344711BA52DAE006A7914 /* cupcakes.jpg */; settings = {ASSET_TAGS = (); }; };
+		F250D2311B245674004E3F3D /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = F250D2301B245674004E3F3D /* MD5.swift */; };
+		F2520C541A3EDAFF0061BB33 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */; };
+		F287FB681B24698F0025F059 /* MD5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F287FB671B24698F0025F059 /* MD5Tests.swift */; };
+		F2CA5CEA1A3F2709008175BA /* Resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CA5CE91A3F2709008175BA /* Resizer.swift */; };
+		F2CA5CEC1A3F2710008175BA /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CA5CEB1A3F2710008175BA /* StorageTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F2520C551A3EDAFF0061BB33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2520C3F1A3EDAFE0061BB33 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F2520C471A3EDAFE0061BB33;
+			remoteInfo = MapleBacon;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		261E14471A3EE0C4000516D4 /* ImageDownloadOperationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadOperationTests.swift; sourceTree = "<group>"; };
+		268605FF1A3F341000BA4269 /* ImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
+		268606011A3F358600BA4269 /* ImageExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtensionTests.swift; sourceTree = "<group>"; };
+		26B702151A4040DE00E3FB72 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		26B702171A40425E00E3FB72 /* ImageManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManagerTests.swift; sourceTree = "<group>"; };
+		26B702421A41803900E3FB72 /* ImageGifExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageGifExtension.swift; sourceTree = "<group>"; };
+		26E1F2021B2C2A2600901E94 /* Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
+		31AA308AA32664DC7B0FF346 /* DiskStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
+		31AA33CBF1DD27291C9E1DCB /* InMemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryStorage.swift; sourceTree = "<group>"; };
+		31AA3AAEAAD81D412F89FA50 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		31AA3B2762299015563F040F /* ImageDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadOperation.swift; sourceTree = "<group>"; };
+		94C344711BA52DAE006A7914 /* cupcakes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cupcakes.jpg; sourceTree = "<group>"; };
+		F250D2301B245674004E3F3D /* MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
+		F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapleBacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2520C4C1A3EDAFE0061BB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2520C531A3EDAFF0061BB33 /* MapleBaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapleBaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2520C591A3EDAFF0061BB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F287FB671B24698F0025F059 /* MD5Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MD5Tests.swift; path = MapleBaconTests/MD5Tests.swift; sourceTree = SOURCE_ROOT; };
+		F2CA5CE91A3F2709008175BA /* Resizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resizer.swift; path = ../MapleBacon/Resizer.swift; sourceTree = "<group>"; };
+		F2CA5CEB1A3F2710008175BA /* StorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageTests.swift; path = MapleBaconTests/StorageTests.swift; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F2520C441A3EDAFE0061BB33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2520C501A3EDAFF0061BB33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2520C541A3EDAFF0061BB33 /* MapleBacon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		268606051A3F42F500BA4269 /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				268605FF1A3F341000BA4269 /* ImageViewExtension.swift */,
+				26B702151A4040DE00E3FB72 /* ImageManager.swift */,
+				31AA3B2762299015563F040F /* ImageDownloadOperation.swift */,
+				26B702421A41803900E3FB72 /* ImageGifExtension.swift */,
+				26E1F2021B2C2A2600901E94 /* Delay.swift */,
+			);
+			name = Downloader;
+			sourceTree = "<group>";
+		};
+		268606061A3F42FF00BA4269 /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				261E14471A3EE0C4000516D4 /* ImageDownloadOperationTests.swift */,
+				268606011A3F358600BA4269 /* ImageExtensionTests.swift */,
+				26B702171A40425E00E3FB72 /* ImageManagerTests.swift */,
+			);
+			name = Downloader;
+			sourceTree = "<group>";
+		};
+		31AA37DF7903088C583AC89B /* Scaling */ = {
+			isa = PBXGroup;
+			children = (
+				F2CA5CE91A3F2709008175BA /* Resizer.swift */,
+			);
+			name = Scaling;
+			path = MapleBaconTests;
+			sourceTree = SOURCE_ROOT;
+		};
+		31AA383B8FE99A773C5C70CA /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				F2CA5CEB1A3F2710008175BA /* StorageTests.swift */,
+				F287FB671B24698F0025F059 /* MD5Tests.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		31AA3EE2B8CE017D19743640 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				31AA308AA32664DC7B0FF346 /* DiskStorage.swift */,
+				31AA3AAEAAD81D412F89FA50 /* Storage.swift */,
+				31AA33CBF1DD27291C9E1DCB /* InMemoryStorage.swift */,
+				F250D2301B245674004E3F3D /* MD5.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		F2520C3E1A3EDAFE0061BB33 = {
+			isa = PBXGroup;
+			children = (
+				F2520C4A1A3EDAFE0061BB33 /* MapleBacon */,
+				F2520C571A3EDAFF0061BB33 /* MapleBaconTests */,
+				F2520C491A3EDAFE0061BB33 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F2520C491A3EDAFE0061BB33 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */,
+				F2520C531A3EDAFF0061BB33 /* MapleBaconTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F2520C4A1A3EDAFE0061BB33 /* MapleBacon */ = {
+			isa = PBXGroup;
+			children = (
+				31AA37DF7903088C583AC89B /* Scaling */,
+				31AA3EE2B8CE017D19743640 /* Storage */,
+				F2520C4B1A3EDAFE0061BB33 /* Supporting Files */,
+				268606051A3F42F500BA4269 /* Downloader */,
+			);
+			path = MapleBacon;
+			sourceTree = "<group>";
+		};
+		F2520C4B1A3EDAFE0061BB33 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F2520C4C1A3EDAFE0061BB33 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F2520C571A3EDAFF0061BB33 /* MapleBaconTests */ = {
+			isa = PBXGroup;
+			children = (
+				F2520C581A3EDAFF0061BB33 /* Supporting Files */,
+				268606061A3F42FF00BA4269 /* Downloader */,
+				31AA383B8FE99A773C5C70CA /* Storage */,
+			);
+			path = MapleBaconTests;
+			sourceTree = "<group>";
+		};
+		F2520C581A3EDAFF0061BB33 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				94C344711BA52DAE006A7914 /* cupcakes.jpg */,
+				F2520C591A3EDAFF0061BB33 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F2520C451A3EDAFE0061BB33 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26B702191A4062FE00E3FB72 /* ImageViewExtension.swift in Headers */,
+				26B7021A1A4062FE00E3FB72 /* ImageManager.swift in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		F2520C471A3EDAFE0061BB33 /* MapleBacon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2520C5E1A3EDAFF0061BB33 /* Build configuration list for PBXNativeTarget "MapleBacon" */;
+			buildPhases = (
+				F2520C431A3EDAFE0061BB33 /* Sources */,
+				F2520C441A3EDAFE0061BB33 /* Frameworks */,
+				F2520C451A3EDAFE0061BB33 /* Headers */,
+				F2520C461A3EDAFE0061BB33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MapleBacon;
+			productName = MapleBacon;
+			productReference = F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F2520C521A3EDAFF0061BB33 /* MapleBaconTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2520C611A3EDAFF0061BB33 /* Build configuration list for PBXNativeTarget "MapleBaconTests" */;
+			buildPhases = (
+				F2520C4F1A3EDAFF0061BB33 /* Sources */,
+				F2520C501A3EDAFF0061BB33 /* Frameworks */,
+				F2520C511A3EDAFF0061BB33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F2520C561A3EDAFF0061BB33 /* PBXTargetDependency */,
+			);
+			name = MapleBaconTests;
+			productName = MapleBaconTests;
+			productReference = F2520C531A3EDAFF0061BB33 /* MapleBaconTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F2520C3F1A3EDAFE0061BB33 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Zalando SE";
+				TargetAttributes = {
+					F2520C471A3EDAFE0061BB33 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					F2520C521A3EDAFF0061BB33 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = F2520C421A3EDAFE0061BB33 /* Build configuration list for PBXProject "MapleBacon" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F2520C3E1A3EDAFE0061BB33;
+			productRefGroup = F2520C491A3EDAFE0061BB33 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F2520C471A3EDAFE0061BB33 /* MapleBacon */,
+				F2520C521A3EDAFF0061BB33 /* MapleBaconTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F2520C461A3EDAFE0061BB33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2520C511A3EDAFF0061BB33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94C344721BA52DAE006A7914 /* cupcakes.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F2520C431A3EDAFE0061BB33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26B702431A41803900E3FB72 /* ImageGifExtension.swift in Sources */,
+				268606001A3F341000BA4269 /* ImageViewExtension.swift in Sources */,
+				31AA3B249325F7F047E1C8B4 /* DiskStorage.swift in Sources */,
+				26B702161A4040DE00E3FB72 /* ImageManager.swift in Sources */,
+				F2CA5CEA1A3F2709008175BA /* Resizer.swift in Sources */,
+				F250D2311B245674004E3F3D /* MD5.swift in Sources */,
+				31AA39C553B3B420836A8E79 /* Storage.swift in Sources */,
+				31AA34060D5F022360EDCDAB /* InMemoryStorage.swift in Sources */,
+				31AA31D2FB3606178AE888BD /* ImageDownloadOperation.swift in Sources */,
+				26E1F2031B2C2A2600901E94 /* Delay.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2520C4F1A3EDAFF0061BB33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2CA5CEC1A3F2710008175BA /* StorageTests.swift in Sources */,
+				261E14481A3EE0C4000516D4 /* ImageDownloadOperationTests.swift in Sources */,
+				449BD8751A417A76007AC1BD /* Resizer.swift in Sources */,
+				268606041A3F3C8500BA4269 /* ImageExtensionTests.swift in Sources */,
+				F287FB681B24698F0025F059 /* MD5Tests.swift in Sources */,
+				26B702181A40425E00E3FB72 /* ImageManagerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F2520C561A3EDAFF0061BB33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F2520C471A3EDAFE0061BB33 /* MapleBacon */;
+			targetProxy = F2520C551A3EDAFF0061BB33 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		F2520C5C1A3EDAFF0061BB33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F2520C5D1A3EDAFF0061BB33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		F2520C5F1A3EDAFF0061BB33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MapleBacon/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.zalando.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F2520C601A3EDAFF0061BB33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MapleBacon/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.zalando.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		F2520C621A3EDAFF0061BB33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MapleBaconTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.zalando.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F2520C631A3EDAFF0061BB33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MapleBaconTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.zalando.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F2520C421A3EDAFE0061BB33 /* Build configuration list for PBXProject "MapleBacon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2520C5C1A3EDAFF0061BB33 /* Debug */,
+				F2520C5D1A3EDAFF0061BB33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2520C5E1A3EDAFF0061BB33 /* Build configuration list for PBXNativeTarget "MapleBacon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2520C5F1A3EDAFF0061BB33 /* Debug */,
+				F2520C601A3EDAFF0061BB33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2520C611A3EDAFF0061BB33 /* Build configuration list for PBXNativeTarget "MapleBaconTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2520C621A3EDAFF0061BB33 /* Debug */,
+				F2520C631A3EDAFF0061BB33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F2520C3F1A3EDAFE0061BB33 /* Project object */;
+}

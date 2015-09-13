@@ -83,6 +83,11 @@
 		260081691B3310A90010C64A /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				268605FF1A3F341000BA4269 /* ImageViewExtension.swift */,
+				26B702151A4040DE00E3FB72 /* ImageManager.swift */,
+				31AA3B2762299015563F040F /* ImageDownloadOperation.swift */,
+				26B702421A41803900E3FB72 /* ImageGifExtension.swift */,
+				26E1F2021B2C2A2600901E94 /* Delay.swift */,
 				2600816A1B3310A90010C64A /* DiskStorage.swift */,
 				2600816B1B3310A90010C64A /* InMemoryStorage.swift */,
 				2600816C1B3310A90010C64A /* MD5.swift */,
@@ -160,6 +165,25 @@
 		F2520C4B1A3EDAFE0061BB33 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F2520C4C1A3EDAFE0061BB33 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F2520C571A3EDAFF0061BB33 /* MapleBaconTests */ = {
+			isa = PBXGroup;
+			children = (
+				F2520C581A3EDAFF0061BB33 /* Supporting Files */,
+				268606061A3F42FF00BA4269 /* Downloader */,
+				31AA383B8FE99A773C5C70CA /* Storage */,
+			);
+			path = MapleBaconTests;
+			sourceTree = "<group>";
+		};
+		F2520C581A3EDAFF0061BB33 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F2520C6C1A3F06FD0061BB33 /* cupcakes.jpg */,
 				260081951B3310E90010C64A /* Info.plist */,
 			);
 			name = "Supporting Files";

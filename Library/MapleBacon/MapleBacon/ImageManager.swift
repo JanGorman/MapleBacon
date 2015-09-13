@@ -6,21 +6,10 @@ import UIKit
 
 public class ImageManager {
 
+    public static let sharedManager = ImageManager()
+    
+    private let downloadQueue = NSOperationQueue()
     private var downloadsInProgress = [NSURL: ImageDownloadOperation]()
-    private var downloadQueue: NSOperationQueue {
-        let queue = NSOperationQueue()
-        queue.maxConcurrentOperationCount = 10
-        return queue
-    }
-
-    public class var sharedManager: ImageManager {
-
-        struct Singleton {
-            static let instance = ImageManager()
-        }
-
-        return Singleton.instance
-    }
 
     deinit {
         downloadQueue.cancelAllOperations()
@@ -35,23 +24,10 @@ public class ImageManager {
             if downloadsInProgress[url] == nil {
                 let downloadOperation = ImageDownloadOperation(imageURL: url)
                 downloadOperation.qualityOfService = .UserInitiated
-                downloadOperation.completionHandler = {
-                    [unowned self] (imageInstance, _) in
-                    self.downloadsInProgress[url] = nil
-                    if let newImage = imageInstance?.image {
-                        if cacheScaled && imageView != nil && newImage.images == nil {
-                            self.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
-                                    key: url.absoluteString)
-                        } else if let imageData = imageInstance?.data {
-                            storage.storeImage(newImage, data: imageData, forKey: url.absoluteString)
-                        }
-
-                        completion?(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
-                    }
-                }
+                downloadOperation.completionHandler = downloadHandlerWithStorage(url, cacheScaled: cacheScaled,
+                        imageView: imageView, storage: storage, completion: completion)
                 downloadsInProgress[url] = downloadOperation
                 downloadQueue.addOperation(downloadOperation)
-
                 return downloadOperation
             } else {
                 completion?(ImageInstance(image: nil, state: .Downloading, url: nil), nil)
@@ -60,8 +36,22 @@ public class ImageManager {
                 }
             }
         }
-
         return nil
+    }
+
+    private func downloadHandlerWithStorage(url: NSURL, cacheScaled: Bool, imageView: UIImageView?, storage: Storage, completion: ImageDownloaderCompletion?) -> ImageDownloaderCompletion {
+        return { [weak self] (imageInstance, _) in
+            self?.downloadsInProgress[url] = nil
+            if let newImage = imageInstance?.image {
+                if cacheScaled && imageView != nil && newImage.images == nil {
+                    self?.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
+                        key: url.absoluteString!)
+                } else if let imageData = imageInstance?.data {
+                    storage.storeImage(newImage, data: imageData, forKey: url.absoluteString!)
+                }
+                completion?(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
+            }
+        }
     }
 
     private func resizeAndStoreImage(image: UIImage, imageView: UIImageView, storage: Storage, key: String) {

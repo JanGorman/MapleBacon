@@ -4,14 +4,13 @@
 
 import UIKit
 
+internal let baseStoragePath = "de.zalando.MapleBacon."
+
 public protocol Storage {
 
     func storeImage(image: UIImage, data: NSData?, forKey key: String)
-
     func image(forKey key: String) -> UIImage?
-
     func removeImage(forKey key: String)
-
     func clearStorage()
 
 }
@@ -22,30 +21,27 @@ public protocol CombinedStorage {
 
 }
 
-public class MapleBaconStorage: Storage, CombinedStorage {
+public final class MapleBaconStorage {
 
-    let inMemoryStorage: Storage
-    let diskStorage: Storage
+    private let inMemoryStorage: Storage
+    private let diskStorage: Storage
 
-    public class var sharedStorage: MapleBaconStorage {
+    public static let sharedStorage = MapleBaconStorage()
 
-        struct Singleton {
-            static let instance = MapleBaconStorage()
-        }
-
-        return Singleton.instance
-    }
-
-    init() {
+    private init() {
         inMemoryStorage = InMemoryStorage.sharedStorage
         diskStorage = DiskStorage.sharedStorage
     }
+
+}
+
+extension MapleBaconStorage: Storage {
 
     public func storeImage(image: UIImage, data: NSData?, forKey key: String) {
         inMemoryStorage.storeImage(image, data: data, forKey: key)
         diskStorage.storeImage(image, data: data, forKey: key)
     }
-
+    
     public func image(forKey key: String) -> UIImage? {
         if let image = inMemoryStorage.image(forKey: key) {
             return image
@@ -56,16 +52,20 @@ public class MapleBaconStorage: Storage, CombinedStorage {
         }
         return nil
     }
-
+    
     public func removeImage(forKey key: String) {
         inMemoryStorage.removeImage(forKey: key)
         diskStorage.removeImage(forKey: key)
     }
-
+    
     public func clearStorage() {
         inMemoryStorage.clearStorage()
         diskStorage.clearStorage()
     }
+    
+}
+
+extension MapleBaconStorage: CombinedStorage {
 
     public func clearMemoryStorage() {
         inMemoryStorage.clearStorage()

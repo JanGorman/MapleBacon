@@ -4,38 +4,32 @@
 
 import UIKit
 
-public class InMemoryStorage: Storage {
+public final class InMemoryStorage {
 
-    let cache: NSCache = {
-        return NSCache()
-    }()
+    public static let sharedStorage = InMemoryStorage()
 
-    public class var sharedStorage: InMemoryStorage {
-
-        struct Singleton {
-            static let instance = InMemoryStorage()
-        }
-
-        return Singleton.instance
-    }
+    private static let DefaultStorageName = "default"
+    
+    private let cache = NSCache()
 
     public convenience init() {
-        self.init(name: "default")
+        self.init(name: InMemoryStorage.DefaultStorageName)
     }
 
     public init(name: String) {
-        cache.name = "de.zalando.MapleBacon.\(name)"
+        cache.name = baseStoragePath + name
     }
+
+}
+
+extension InMemoryStorage: Storage {
 
     public func storeImage(image: UIImage, data: NSData?, forKey key: String) {
         cache.setObject(image, forKey: key, cost: cacheCost(forImage: image))
     }
-
+    
     private func cacheCost(forImage image: UIImage) -> Int {
-        var imagesCount = 0
-        if let images = image.images {
-            imagesCount = images.count
-        }
+        let imagesCount = image.images?.count ?? 0
         return imagesCount * Int(image.size.width * image.size.height * image.scale * image.scale)
     }
 

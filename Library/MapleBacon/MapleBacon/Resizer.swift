@@ -127,8 +127,6 @@ public class Resizer {
         }
         return nil
     }
-    
-    // CGBitmapContextCreate(data: UnsafeMutablePointer<Void>, _ width: Int, _ height: Int, _ bitsPerComponent: Int, _ bytesPerRow: Int, _ space: CGColorSpace!, _ bitmapInfo: UInt32)
 
     private class func imageFromImage(image: UIImage, toSize size: CGSize,
                                       usingTransform transform: CGAffineTransform, drawTransposed transpose: Bool,

@@ -34,7 +34,7 @@ public final class DiskStorage {
 extension DiskStorage: Storage {
     
     public func storeImage(image: UIImage, var data: NSData?, forKey key: String) {
-        dispatch_async(storageQueue) {
+        dispatch_async(storageQueue) { [unowned self] in
             if (data == nil) {
                 data = UIImagePNGRepresentation(image)
             }
@@ -44,14 +44,14 @@ extension DiskStorage: Storage {
     }
     
     public func image(forKey key: String) -> UIImage? {
-        if let data = NSData(contentsOfFile: defaultStoragePath(forKey: key)) {
-            return UIImage.imageWithCachedData(data)
+        guard let data = NSData(contentsOfFile: defaultStoragePath(forKey: key)) else {
+            return nil
         }
-        return nil
+        return UIImage.imageWithCachedData(data)
     }
     
     public func removeImage(forKey key: String) {
-        dispatch_async(storageQueue) {
+        dispatch_async(storageQueue) { [unowned self] in
             do {
                 try self.fileManager.removeItemAtPath(self.defaultStoragePath(forKey: key))
             } catch _ {
@@ -60,7 +60,7 @@ extension DiskStorage: Storage {
     }
     
     public func clearStorage() {
-        dispatch_async(storageQueue) {
+        dispatch_async(storageQueue) { [unowned self] in
             do {
                 try self.fileManager.removeItemAtPath(self.storagePath)
                 try self.fileManager.createDirectoryAtPath(self.storagePath, withIntermediateDirectories: true, attributes: nil)
@@ -72,12 +72,12 @@ extension DiskStorage: Storage {
     public func pruneStorage() {
         dispatch_async(storageQueue) { [unowned self] in
             let directoryURL = NSURL(fileURLWithPath: self.storagePath, isDirectory: true)
-            if let enumerator = self.fileManager.enumeratorAtURL(directoryURL,
-                    includingPropertiesForKeys: [NSURLIsDirectoryKey, NSURLContentModificationDateKey],
-                    options: .SkipsHiddenFiles,
-                    errorHandler: nil) {
-                        self.deleteExpiredFiles(self.expiredFiles(usingEnumerator: enumerator))
+            guard let enumerator = self.fileManager.enumeratorAtURL(directoryURL,
+                includingPropertiesForKeys: [NSURLIsDirectoryKey, NSURLContentModificationDateKey],
+                options: .SkipsHiddenFiles, errorHandler: nil) else {
+                return
             }
+            self.deleteExpiredFiles(self.expiredFiles(usingEnumerator: enumerator))
         }
     }
 
@@ -93,34 +93,33 @@ extension DiskStorage: Storage {
                 enumerator.skipDescendants()
                 continue
             }
-            if let modificationDate = self.modificationDate(fileURL) {
-                if modificationDate.laterDate(expirationDate) == expirationDate {
-                    expiredFiles.append(fileURL)
-                }
+            if let modificationDate = modificationDate(fileURL) where modificationDate.laterDate(expirationDate) == expirationDate {
+                expiredFiles.append(fileURL)
             }
         }
         return expiredFiles
     }
 
     private func isDirectory(fileURL: NSURL) -> Bool {
-        var isDirectoryResource: AnyObject?
         do {
+            var isDirectoryResource: AnyObject?
             try fileURL.getResourceValue(&isDirectoryResource, forKey: NSURLIsDirectoryKey)
-        } catch _ {
-        }
-        if let isDirectory = isDirectoryResource as? NSNumber {
+            guard let isDirectory = isDirectoryResource as? NSNumber else {
+                return false
+            }
             return isDirectory.boolValue
+        } catch _ {
+            
         }
-        return false
     }
 
     private func modificationDate(fileURL: NSURL) -> NSDate? {
-        var modificationDateResource: AnyObject?
         do {
+            var modificationDateResource: AnyObject?
             try fileURL.getResourceValue(&modificationDateResource, forKey: NSURLContentModificationDateKey)
+            return modificationDateResource as? NSDate
         } catch _ {
         }
-        return modificationDateResource as? NSDate
     }
 
     private func deleteExpiredFiles(files: [NSURL]) {

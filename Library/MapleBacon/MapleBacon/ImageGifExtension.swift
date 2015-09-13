@@ -32,11 +32,11 @@ extension UIImage {
     private class func framesFromImages(images: [CGImageRef], delays: [Int]) -> [UIImage] {
         let gcd = DivisionMath.greatestCommonDivisor(delays)
         var frames = [UIImage]()
-        for i in 0 ..< images.count {
+        for i in 0..<images.count {
             let frame = UIImage(CGImage: images[Int(i)])
             let frameCount = Int(delays[Int(i)] / gcd)
 
-            for _ in 0 ..< frameCount {
+            for _ in 0..<frameCount {
                 frames.append(frame)
             }
         }

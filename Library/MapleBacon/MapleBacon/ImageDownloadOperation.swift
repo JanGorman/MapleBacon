@@ -47,10 +47,11 @@ public class ImageDownloadOperation: NSOperation {
     }
 
     private func resumeDownload() {
-        if let newTask = session?.downloadTaskWithURL(imageURL) {
-            newTask.resume()
-            task = newTask
+        guard let newTask = session?.downloadTaskWithURL(imageURL) else {
+            return
         }
+        newTask.resume()
+        task = newTask
     }
 
     private var _finished = false
@@ -79,15 +80,15 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
 
     public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask,
         didFinishDownloadingToURL location: NSURL) {
-            do {
-                let newData = try NSData(contentsOfURL: location, options: NSDataReadingOptions.DataReadingMappedIfSafe)
-                let newImage = UIImage.imageWithCachedData(newData)
-                let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
-                completionHandler?(newImageInstance, nil)
-            } catch let error1 as NSError {
-                completionHandler?(nil, error1)
-            }
-            self.finished = true
+        do {
+            let newData = try NSData(contentsOfURL: location, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+            let newImage = UIImage.imageWithCachedData(newData)
+            let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
+            completionHandler?(newImageInstance, nil)
+        } catch let error1 as NSError {
+            completionHandler?(nil, error1)
+        }
+        self.finished = true
     }
 
     public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {

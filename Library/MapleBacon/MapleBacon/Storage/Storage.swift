@@ -45,8 +45,7 @@ extension MapleBaconStorage: Storage {
     public func image(forKey key: String) -> UIImage? {
         if let image = inMemoryStorage.image(forKey: key) {
             return image
-        }
-        if let image = diskStorage.image(forKey: key) {
+        } else if let image = diskStorage.image(forKey: key) {
             inMemoryStorage.storeImage(image, data: nil, forKey: key)
             return image
         }

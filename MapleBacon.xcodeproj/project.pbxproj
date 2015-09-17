@@ -430,6 +430,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zalando.MapleBacon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -451,6 +452,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zalando.MapleBacon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

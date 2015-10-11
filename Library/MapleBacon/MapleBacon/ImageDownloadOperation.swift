@@ -39,18 +39,20 @@ public class ImageDownloadOperation: NSOperation {
     }
 
     public override func cancel() {
-        task?.cancelByProducingResumeData {
-            [unowned self] data in
+        task?.cancelByProducingResumeData { [unowned self] data in
             self.resumeData = data
             self.finished = true
         }
     }
 
     private func resumeDownload() {
-        guard let newTask = session?.downloadTaskWithURL(imageURL) else {
-            return
+        let newTask: NSURLSessionDownloadTask?
+        if let resumeData = resumeData {
+            newTask = session?.downloadTaskWithResumeData(resumeData)
+        } else {
+            newTask = session?.downloadTaskWithURL(imageURL)
         }
-        newTask.resume()
+        newTask?.resume()
         task = newTask
     }
 
@@ -85,8 +87,8 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
             let newImage = UIImage.imageWithCachedData(newData)
             let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
             completionHandler?(newImageInstance, nil)
-        } catch let error1 as NSError {
-            completionHandler?(nil, error1)
+        } catch let error as NSError {
+            completionHandler?(nil, error)
         }
         self.finished = true
     }

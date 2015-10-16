@@ -21,7 +21,7 @@
 		31AA39C553B3B420836A8E79 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA3AAEAAD81D412F89FA50 /* Storage.swift */; };
 		31AA3B249325F7F047E1C8B4 /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA308AA32664DC7B0FF346 /* DiskStorage.swift */; };
 		449BD8751A417A76007AC1BD /* Resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CA5CE91A3F2709008175BA /* Resizer.swift */; };
-		94C344721BA52DAE006A7914 /* cupcakes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94C344711BA52DAE006A7914 /* cupcakes.jpg */; settings = {ASSET_TAGS = (); }; };
+		94C344721BA52DAE006A7914 /* cupcakes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94C344711BA52DAE006A7914 /* cupcakes.jpg */; };
 		F250D2311B245674004E3F3D /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = F250D2301B245674004E3F3D /* MD5.swift */; };
 		F2520C541A3EDAFF0061BB33 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */; };
 		F287FB681B24698F0025F059 /* MD5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F287FB671B24698F0025F059 /* MD5Tests.swift */; };
@@ -440,6 +440,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -461,6 +462,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.zalando.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};

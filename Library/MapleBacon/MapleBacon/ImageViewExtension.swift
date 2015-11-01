@@ -25,11 +25,11 @@ extension UIImageView {
         return ImageManager.sharedManager.downloadImageAtURL(url, cacheScaled: cacheScaled, imageView: self) {
             [weak self] imageInstance, error in
             dispatch_async(dispatch_get_main_queue()) {
-                if let image = imageInstance?.image {
-                    if let _ = placeholder where crossFade {
+                if let instance = imageInstance {
+                    if let _ = placeholder where crossFade && instance.state != .Cached {
                         self?.layer.addAnimation(CATransition(), forKey: nil)
                     }
-                    self?.image = image
+                    self?.image = instance.image
                 }
                 completion?(imageInstance, error)
             }

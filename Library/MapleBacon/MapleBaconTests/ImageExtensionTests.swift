@@ -4,7 +4,7 @@
 
 import XCTest
 import UIKit
-import MapleBacon
+@testable import MapleBacon
 
 class ImageExtensionTests: XCTestCase {
 
@@ -27,4 +27,8 @@ class ImageExtensionTests: XCTestCase {
         }
     }
 
+    func test_whenDataIsEmpty_thenImageWithCachedDataReturnsNilWithoutCrashing() {
+        let emptyData = NSData()
+        XCTAssertNil(UIImage.imageWithCachedData(emptyData))
+    }
 }

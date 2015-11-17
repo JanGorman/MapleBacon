@@ -36,7 +36,7 @@ extension UIImage {
         var frames = [UIImage]()
         for i in 0..<images.count {
             let frame = UIImage(CGImage: images[Int(i)])
-            let frameCount = Int(delays[Int(i)] / gcd)
+            let frameCount = abs(Int(delays[Int(i)] / gcd))
 
             for _ in 0..<frameCount {
                 frames.append(frame)

@@ -4,7 +4,8 @@
 
 import UIKit
 
-private var ImageViewAssociatedObjectHandle: UInt8 = 0
+private var ImageViewAssociatedObjectOperationHandle: UInt8 = 0
+private var ImageViewAssociatedObjectKeyHandle: UInt8 = 1
 
 extension UIImageView {
 
@@ -14,6 +15,7 @@ extension UIImageView {
             image = placeholder
         }
         cancelDownload()
+        self.key = url
         if let operation = downloadOperationWithURL(url, placeholder: placeholder, crossFadePlaceholder: crossFade,
             cacheScaled: cacheScaled, completion: completion) {
             self.operation = operation
@@ -29,7 +31,9 @@ extension UIImageView {
                     if let _ = placeholder where crossFade && instance.state != .Cached {
                         self?.layer.addAnimation(CATransition(), forKey: nil)
                     }
-                    self?.image = instance.image
+                    if (self?.key == instance.url) {
+                        self?.image = instance.image
+                    }
                 }
                 completion?(imageInstance, error)
             }
@@ -38,16 +42,28 @@ extension UIImageView {
 
     private var operation: ImageDownloadOperation? {
         get {
-            return objc_getAssociatedObject(self, &ImageViewAssociatedObjectHandle) as? ImageDownloadOperation
+            return objc_getAssociatedObject(self, &ImageViewAssociatedObjectOperationHandle) as? ImageDownloadOperation
         }
         set {
-            objc_setAssociatedObject(self, &ImageViewAssociatedObjectHandle, newValue,
+            objc_setAssociatedObject(self, &ImageViewAssociatedObjectOperationHandle, newValue,
                     objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
+    
+    private var key: NSURL? {
+        get {
+            return objc_getAssociatedObject(self, &ImageViewAssociatedObjectKeyHandle) as? NSURL
+        }
+        set {
+            objc_setAssociatedObject(self, &ImageViewAssociatedObjectKeyHandle, newValue,
+                objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
 
+    
     func cancelDownload() {
         operation?.cancel()
+        key = nil
     }
 
 }

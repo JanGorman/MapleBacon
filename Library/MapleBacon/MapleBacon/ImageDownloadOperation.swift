@@ -86,8 +86,10 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
             let newData = try NSData(contentsOfURL: location, options: NSDataReadingOptions.DataReadingMappedIfSafe)
             let newImage = UIImage.imageWithCachedData(newData)
             let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
+            if (self.cancelled == true) { return }
             completionHandler?(newImageInstance, nil)
         } catch let error as NSError {
+            if (self.cancelled == true) { return }
             completionHandler?(nil, error)
         }
         self.finished = true
@@ -95,6 +97,10 @@ extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
 
     public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
         if let error = error {
+            if (self.cancelled == true) {
+                finished = true
+                return
+            }
             completionHandler?(nil, error)
             finished = true
         }

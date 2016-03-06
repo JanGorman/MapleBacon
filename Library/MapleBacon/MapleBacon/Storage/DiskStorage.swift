@@ -6,13 +6,20 @@ import UIKit
 
 public final class DiskStorage {
 
+    /// Singleton instance
     public static let sharedStorage = DiskStorage()
 
+    private let useUuid: Bool = true
+    
+    /// label for serial queue
     private static let QueueLabel = "de.zalando.MapleBacon.Storage"
-
+    
     private let fileManager = NSFileManager.defaultManager()
+
     private let storageQueue = dispatch_queue_create(QueueLabel, DISPATCH_QUEUE_SERIAL)
+    
     private let storagePath: String
+    
     public var maxAge: NSTimeInterval = 60 * 60 * 24 * 7
 
 
@@ -21,8 +28,13 @@ public final class DiskStorage {
     }
 
     public init(name: String) {
-        let path = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first! as NSString
-        storagePath = path.stringByAppendingPathComponent(baseStoragePath + name)
+        
+        guard let path: NSString = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first! as NSString else {
+            preconditionFailure("no paths available")
+        }
+        
+        self.storagePath = path.stringByAppendingPathComponent(baseStoragePath + name)
+        
         do {
             try fileManager.createDirectoryAtPath(storagePath, withIntermediateDirectories: true, attributes: nil)
         } catch _ {
@@ -33,25 +45,38 @@ public final class DiskStorage {
 
 extension DiskStorage: Storage {
     
-    public func storeImage(image: UIImage, var data: NSData?, forKey key: String) {
-        dispatch_async(storageQueue) { [unowned self] in
-            if (data == nil) {
-                data = UIImagePNGRepresentation(image)
-            }
-            self.fileManager.createFileAtPath(self.defaultStoragePath(forKey: key), contents: data!, attributes: nil)
+    public func storeImage(image: UIImage, forKey key: String) {
+        
+        guard let data: NSData = UIImagePNGRepresentation(image) else {
+            return
+        }
+        
+        self.storeImage(data, forKey: key)
+    }
+    
+    public func storeImage(data: NSData, forKey key: String) {
+        
+        dispatch_async(storageQueue) {
+            [unowned self] in
+            
+            self.fileManager.createFileAtPath(self.defaultStoragePath(forKey: key), contents: data, attributes: nil)
             self.pruneStorage()
         }
     }
     
     public func image(forKey key: String) -> UIImage? {
+        
         guard let data = NSData(contentsOfFile: defaultStoragePath(forKey: key)) else {
             return nil
         }
+        
         return UIImage.imageWithCachedData(data)
     }
     
     public func removeImage(forKey key: String) {
-        dispatch_async(storageQueue) { [unowned self] in
+        dispatch_async(storageQueue) {
+            [unowned self] in
+            
             do {
                 try self.fileManager.removeItemAtPath(self.defaultStoragePath(forKey: key))
             } catch _ {
@@ -60,7 +85,9 @@ extension DiskStorage: Storage {
     }
     
     public func clearStorage() {
-        dispatch_async(storageQueue) { [unowned self] in
+        dispatch_async(storageQueue) {
+            [unowned self] in
+            
             do {
                 try self.fileManager.removeItemAtPath(self.storagePath)
                 try self.fileManager.createDirectoryAtPath(self.storagePath, withIntermediateDirectories: true, attributes: nil)
@@ -70,19 +97,28 @@ extension DiskStorage: Storage {
     }
     
     public func pruneStorage() {
-        dispatch_async(storageQueue) { [unowned self] in
+        dispatch_async(storageQueue) {
+            [unowned self] in
+            
             let directoryURL = NSURL(fileURLWithPath: self.storagePath, isDirectory: true)
+            
             guard let enumerator = self.fileManager.enumeratorAtURL(directoryURL,
                 includingPropertiesForKeys: [NSURLIsDirectoryKey, NSURLContentModificationDateKey],
                 options: .SkipsHiddenFiles, errorHandler: nil) else {
                 return
             }
+            
             self.deleteExpiredFiles(self.expiredFiles(usingEnumerator: enumerator))
         }
     }
 
     private func defaultStoragePath(forKey key: String) -> String {
-        return (storagePath as NSString).stringByAppendingPathComponent(key.MD5())
+        
+        let digestedKey = (self.useUuid)
+            ? NSUUID(namespace: defaultImageNs, name: key).UUIDString
+            : key.sha1()
+        
+        return (storagePath as NSString).stringByAppendingPathComponent(digestedKey)
     }
 
     private func expiredFiles(usingEnumerator enumerator: NSDirectoryEnumerator) -> [NSURL] {

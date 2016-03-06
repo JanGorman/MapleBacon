@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "946B985A1C0C432B00B0276E"
-               BuildableName = "MapleBacon-tvOS.framework"
+               BuildableName = "MapleBacon.framework"
                BlueprintName = "MapleBacon-tvOS"
                ReferencedContainer = "container:MapleBacon.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "946B985A1C0C432B00B0276E"
-            BuildableName = "MapleBacon-tvOS.framework"
+            BuildableName = "MapleBacon.framework"
             BlueprintName = "MapleBacon-tvOS"
             ReferencedContainer = "container:MapleBacon.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "946B985A1C0C432B00B0276E"
-            BuildableName = "MapleBacon-tvOS.framework"
+            BuildableName = "MapleBacon.framework"
             BlueprintName = "MapleBacon-tvOS"
             ReferencedContainer = "container:MapleBacon.xcodeproj">
          </BuildableReference>

@@ -4,16 +4,14 @@
 
 import UIKit
 
-internal let baseStoragePath = "de.zalando.MapleBacon."
+internal let baseStoragePath = MapleBaconConfig.sharedConfig.storage.baseStoragePath
 
-/// create default NS from ns:URL from http://www.ietf.org/rfc/rfc4122.txt
 internal let defaultImageNs = NSUUID(
-    namespace: NSUUID(UUIDString: "6ba7b811-9dad-11d1-80b4-00c04fd430c8")!,
-    name: "de.zalando.MapleBacon.imagestore"
+    namespace: NSUUID(UUIDString: MapleBaconConfig.sharedConfig.storage.rootUUIDNamespace)!,
+    name: MapleBaconConfig.sharedConfig.storage.baseUUIDName
 )
 
 public protocol Storage {
-    
     /**
      Should store an image
      
@@ -50,19 +48,16 @@ public protocol Storage {
      Clears the entire storage
      */
     func clearStorage()
-
 }
 
 public protocol CombinedStorage {
-
     func clearMemoryStorage()
-
 }
 
 public class MapleBaconStorage {
 
     /// Singleton instance
-    public static let sharedInstance = MapleBaconStorage()
+    public static let sharedStorage = MapleBaconStorage()
     
     /// Available storages
     private static let inMemoryStorage = "mem"
@@ -76,7 +71,6 @@ public class MapleBaconStorage {
      Creates all storage adapters and inits the general storage
      */
     private init() {
-        
         self.adapters = [
             MapleBaconStorage.inMemoryStorage: InMemoryStorage.sharedStorage,
             MapleBaconStorage.diskStorage: DiskStorage.sharedStorage
@@ -91,11 +85,9 @@ public class MapleBaconStorage {
      - returns: the adapter
      */
     private func adapter(name: String) -> Storage {
-        
         guard let adapter: Storage = self.adapters[name] else {
             preconditionFailure("unknown adapter requested")
         }
-        
         return adapter
     }
 }
@@ -104,28 +96,32 @@ extension MapleBaconStorage: Storage {
 
     public func storeImage(image: UIImage, forKey key: String) {
         
-        self.adapters.forEach({$1.storeImage(image, forKey: key)})
+        self.adapters.forEach { $1.storeImage(image, forKey: key) }
     }
     
     public func storeImage(data: NSData, forKey key: String) {
         
-        self.adapters.forEach({$1.storeImage(data, forKey: key)})
+        self.adapters.forEach {$1.storeImage(data, forKey: key) }
     }
     
     public func image(forKey key: String) -> UIImage? {
         
+        // try reading from memory first
         if let image: UIImage = self.adapter(MapleBaconStorage.inMemoryStorage).image(forKey: key) {
-            
             return image
         }
         
+        // read from all other if it fails
         var img: UIImage? = nil
-        self.adapters.forEach({
-        
+        self.adapters.forEach {
+            
+            // in order to complete the forEach without break we skip
+            // results if another is found previously
             if nil != img {
                 return
             }
             
+            // We do not ask memory storage again as we did before
             if MapleBaconStorage.inMemoryStorage == $0 {
                 return
             }
@@ -133,27 +129,21 @@ extension MapleBaconStorage: Storage {
             if let image: UIImage = $1.image(forKey: key) {
                 img = image
             }
-        })
-        
+        }
         return img
     }
     
     public func removeImage(forKey key: String) {
-
-        self.adapters.forEach({$1.removeImage(forKey: key)})
+        self.adapters.forEach { $1.removeImage(forKey: key) }
     }
     
     public func clearStorage() {
-        
-        self.adapters.forEach({$1.clearStorage()})
+        self.adapters.forEach { $1.clearStorage() }
     }
-    
 }
 
 extension MapleBaconStorage: CombinedStorage {
-
     public func clearMemoryStorage() {
         self.adapter(MapleBaconStorage.inMemoryStorage).clearStorage()
     }
-
 }

@@ -51,6 +51,14 @@
                BlueprintName = "MapleBaconTests"
                ReferencedContainer = "container:MapleBacon.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ImageManagerTests/test_whenImageManagerAsksForImageBeingDownloaded_thenImageInstanceReturnsDownloadingState()">
+               </Test>
+               <Test
+                  Identifier = "ImageManagerTests/test_whenImageManagerAsksForImageNotYetDownloaded_thenImageIsReturnedAsNew()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "NO">

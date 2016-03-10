@@ -24,6 +24,7 @@
 		260081941B3310DC0010C64A /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081851B3310D30010C64A /* StorageTests.swift */; };
 		946B985E1C0C432C00B0276E /* MapleBacon-tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 946B985D1C0C432C00B0276E /* MapleBacon-tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94B554AD1BCAA3710026D2B1 /* cupcakes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94B554AC1BCAA3710026D2B1 /* cupcakes.jpg */; };
+		ABCDD8A81C917FBF004A468F /* MapleBaconConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCDD8A71C917FBF004A468F /* MapleBaconConfig.swift */; };
 		ABF8F6971C8C539000238157 /* NSUUID+V5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF8F6961C8C539000238157 /* NSUUID+V5.swift */; };
 		F2520C541A3EDAFF0061BB33 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */; };
 /* End PBXBuildFile section */
@@ -66,6 +67,7 @@
 		AB337F6E1C8ADEF300E1930E /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphoneos.modulemap; sourceTree = "<group>"; };
 		AB337F6F1C8ADF0F00E1930E /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphonesimulator.modulemap; sourceTree = "<group>"; };
 		AB337F701C8ADF2900E1930E /* macosx.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = macosx.modulemap; sourceTree = "<group>"; };
+		ABCDD8A71C917FBF004A468F /* MapleBaconConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapleBaconConfig.swift; path = Library/MapleBacon/MapleBacon/MapleBaconConfig.swift; sourceTree = SOURCE_ROOT; };
 		ABF8F6961C8C539000238157 /* NSUUID+V5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUUID+V5.swift"; sourceTree = "<group>"; };
 		F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapleBacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2520C531A3EDAFF0061BB33 /* MapleBaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapleBaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,6 +199,14 @@
 			path = CommonCrypto;
 			sourceTree = "<group>";
 		};
+		ABCDD8A61C917F8E004A468F /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				ABCDD8A71C917FBF004A468F /* MapleBaconConfig.swift */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
 		ABF8F6981C8C6F3A00238157 /* Adapters */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +241,7 @@
 		F2520C4A1A3EDAFE0061BB33 /* MapleBacon */ = {
 			isa = PBXGroup;
 			children = (
+				ABCDD8A61C917F8E004A468F /* Config */,
 				260081691B3310A90010C64A /* Storage */,
 				31AA37DF7903088C583AC89B /* Scaling */,
 				F2520C4B1A3EDAFE0061BB33 /* Supporting Files */,
@@ -452,6 +463,7 @@
 				2600816F1B3310A90010C64A /* InMemoryStorage.swift in Sources */,
 				2600817A1B3310B60010C64A /* ImageManager.swift in Sources */,
 				260081791B3310B60010C64A /* ImageGifExtension.swift in Sources */,
+				ABCDD8A81C917FBF004A468F /* MapleBaconConfig.swift in Sources */,
 				260081711B3310A90010C64A /* Storage.swift in Sources */,
 				260081781B3310B60010C64A /* ImageDownloadOperation.swift in Sources */,
 			);

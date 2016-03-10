@@ -8,31 +8,23 @@ public final class DiskStorage {
 
     /// Singleton instance
     public static let sharedStorage = DiskStorage()
-
-    private let useUuid: Bool = true
+    private let useUuid: Bool = MapleBaconConfig.sharedConfig.storage.useUUID
     
     /// label for serial queue
-    private static let QueueLabel = "de.zalando.MapleBacon.Storage"
-    
+    private static let QueueLabel = MapleBaconConfig.sharedConfig.storage.queueLabel
     private let fileManager = NSFileManager.defaultManager()
-
     private let storageQueue = dispatch_queue_create(QueueLabel, DISPATCH_QUEUE_SERIAL)
-    
     private let storagePath: String
-    
     public var maxAge: NSTimeInterval = 60 * 60 * 24 * 7
 
-
     public convenience init() {
-        self.init(name: "default")
+        self.init(name: MapleBaconConfig.sharedConfig.storage.defaultStorageName)
     }
 
     public init(name: String) {
-        
         guard let path: NSString = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first! as NSString else {
             preconditionFailure("no paths available")
         }
-        
         self.storagePath = path.stringByAppendingPathComponent(baseStoragePath + name)
         
         do {
@@ -46,30 +38,24 @@ public final class DiskStorage {
 extension DiskStorage: Storage {
     
     public func storeImage(image: UIImage, forKey key: String) {
-        
         guard let data: NSData = UIImagePNGRepresentation(image) else {
             return
         }
-        
         self.storeImage(data, forKey: key)
     }
     
     public func storeImage(data: NSData, forKey key: String) {
-        
         dispatch_async(storageQueue) {
             [unowned self] in
-            
             self.fileManager.createFileAtPath(self.defaultStoragePath(forKey: key), contents: data, attributes: nil)
             self.pruneStorage()
         }
     }
     
     public func image(forKey key: String) -> UIImage? {
-        
         guard let data = NSData(contentsOfFile: defaultStoragePath(forKey: key)) else {
             return nil
         }
-        
         return UIImage.imageWithCachedData(data)
     }
     
@@ -86,8 +72,6 @@ extension DiskStorage: Storage {
     
     public func clearStorage() {
         dispatch_async(storageQueue) {
-            [unowned self] in
-            
             do {
                 try self.fileManager.removeItemAtPath(self.storagePath)
                 try self.fileManager.createDirectoryAtPath(self.storagePath, withIntermediateDirectories: true, attributes: nil)
@@ -117,7 +101,6 @@ extension DiskStorage: Storage {
         let digestedKey = (self.useUuid)
             ? NSUUID(namespace: defaultImageNs, name: key).UUIDString
             : key.sha1()
-        
         return (storagePath as NSString).stringByAppendingPathComponent(digestedKey)
     }
 

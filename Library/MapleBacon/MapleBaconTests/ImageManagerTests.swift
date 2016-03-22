@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 import MapleBacon
 
-public let timeout: NSTimeInterval = 10
+public let timeout: NSTimeInterval = 30
 
 class ImageManagerTests: XCTestCase {
 

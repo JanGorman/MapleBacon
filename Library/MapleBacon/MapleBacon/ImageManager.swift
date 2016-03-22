@@ -47,7 +47,8 @@ public class ImageManager {
                     self?.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
                         key: url.absoluteString)
                 } else if let imageData = imageInstance?.data {
-                    storage.storeImage(newImage, data: imageData, forKey: url.absoluteString)
+                    //storage.storeImage(newImage, data: imageData, forKey: url.absoluteString)
+                    storage.storeImage(imageData, forKey: url.absoluteString)
                 }
                 completion?(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
             }
@@ -56,9 +57,11 @@ public class ImageManager {
 
     private func resizeAndStoreImage(image: UIImage, imageView: UIImageView, storage: Storage, key: String) {
         Resizer.resizeImage(image, contentMode: imageView.contentMode, toSize: imageView.bounds.size,
-                interpolationQuality: .Default) {
+                interpolationQuality: CGInterpolationQuality.Default) {
             resizedImage in
-            storage.storeImage(resizedImage, data: nil, forKey: key)
+                    
+            storage.storeImage(resizedImage, forKey: key)
+//            storage.storeImage(resizedImage, data: nil, forKey: key)
         }
     }
 

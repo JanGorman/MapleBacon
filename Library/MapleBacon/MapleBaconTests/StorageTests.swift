@@ -51,7 +51,7 @@ class StorageTests: XCTestCase {
 
     func test_whenStoringOnDisk_itIsPersisted() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
 
             diskStorage.storeImage(image, data:nil, forKey: storageKey!)
 
@@ -61,7 +61,7 @@ class StorageTests: XCTestCase {
 
     func test_whenDeletingImageFromDisk_itDoesNotExist() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
 
             diskStorage.storeImage(image, data:nil, forKey: storageKey!)
             diskStorage.removeImage(forKey: storageKey!)
@@ -72,7 +72,7 @@ class StorageTests: XCTestCase {
 
     func test_whenStoringInMemory_itIsPersisted() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
 
             inMemoryStorage.storeImage(image, data:nil, forKey: storageKey!)
 
@@ -82,7 +82,7 @@ class StorageTests: XCTestCase {
 
     func test_whenDeletimgImageFromMemory_itDoesNotExist() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
 
             inMemoryStorage.storeImage(image, data:nil, forKey: storageKey!)
             inMemoryStorage.removeImage(forKey: storageKey!)
@@ -93,7 +93,7 @@ class StorageTests: XCTestCase {
 
     func test_whenStoringInBaseStorage_itIsPersisted() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
 
             combinedStorage.storeImage(image, data:nil, forKey: storageKey!)
 
@@ -103,7 +103,7 @@ class StorageTests: XCTestCase {
 
     func test_whenDeletingImageFromBaseStorage_itDoesNotExist() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
 
             combinedStorage.storeImage(image, data:nil, forKey: storageKey!)
             combinedStorage.removeImage(forKey: storageKey!)
@@ -114,7 +114,7 @@ class StorageTests: XCTestCase {
 
     func test_whenImageIsStoredOnDiskOnly_itIsAddedToMemoryCache() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
 
             diskStorage.storeImage(image, data:nil, forKey: storageKey!)
 
@@ -129,7 +129,7 @@ class StorageTests: XCTestCase {
 
     func test_whenImageExpires_itIsDeleted() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
             diskStorage.maxAge = 0.01;
 
             diskStorage.storeImage(image, data:nil, forKey: storageKey!)
@@ -140,7 +140,7 @@ class StorageTests: XCTestCase {
 
     func test_whenClearingInMemoryStorage_imageIsRemoved() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
             inMemoryStorage.storeImage(image, data:nil, forKey: storageKey!)
 
             inMemoryStorage.clearStorage()
@@ -151,7 +151,7 @@ class StorageTests: XCTestCase {
 
     func test_whenClearingDiskStorage_imageIsRemoved() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
             diskStorage.storeImage(image, data:nil, forKey: storageKey!)
 
             diskStorage.clearStorage()
@@ -163,7 +163,7 @@ class StorageTests: XCTestCase {
     func test_whenUsingNamedStorage_itIsPersisted() {
         if let image = testImage {
             let storage = DiskStorage(name: "different")
-            storageKey = __FUNCTION__
+            storageKey = #function
 
             storage.storeImage(image, data:nil, forKey: storageKey!)
 
@@ -175,7 +175,7 @@ class StorageTests: XCTestCase {
 
     func test_whenClearingOnlyMemory_itIsStillPersistedOnDisk() {
         if let image = testImage {
-            storageKey = __FUNCTION__
+            storageKey = #function
             combinedStorage.storeImage(image, data:nil, forKey: storageKey!)
 
             combinedStorage.clearMemoryStorage()

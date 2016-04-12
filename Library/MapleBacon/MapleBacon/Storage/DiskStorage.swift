@@ -33,13 +33,14 @@ public final class DiskStorage {
 
 extension DiskStorage: Storage {
     
-    public func storeImage(image: UIImage, var data: NSData?, forKey key: String) {
-        dispatch_async(storageQueue) { [unowned self] in
-            if (data == nil) {
-                data = UIImagePNGRepresentation(image)
+    public func storeImage(image: UIImage, data: NSData?, forKey key: String) {
+        dispatch_async(storageQueue) { [weak self] in
+            guard let data = data ?? UIImagePNGRepresentation(image), storage = self else {
+                return
             }
-            self.fileManager.createFileAtPath(self.defaultStoragePath(forKey: key), contents: data!, attributes: nil)
-            self.pruneStorage()
+            storage.fileManager.createFileAtPath(storage.defaultStoragePath(forKey: key), contents: data,
+                                                 attributes: nil)
+            storage.pruneStorage()
         }
     }
     
@@ -51,21 +52,18 @@ extension DiskStorage: Storage {
     }
     
     public func removeImage(forKey key: String) {
-        dispatch_async(storageQueue) { [unowned self] in
-            do {
-                try self.fileManager.removeItemAtPath(self.defaultStoragePath(forKey: key))
-            } catch _ {
-            }
+        dispatch_async(storageQueue) { [weak self] in
+            guard let path = self?.defaultStoragePath(forKey: key) else { return }
+            let _ = try? self?.fileManager.removeItemAtPath(path)
         }
     }
     
     public func clearStorage() {
-        dispatch_async(storageQueue) { [unowned self] in
-            do {
-                try self.fileManager.removeItemAtPath(self.storagePath)
-                try self.fileManager.createDirectoryAtPath(self.storagePath, withIntermediateDirectories: true, attributes: nil)
-            } catch _ {
-            }
+        dispatch_async(storageQueue) { [weak self] in
+            guard let path = self?.storagePath else { return }
+            let _ = try? self?.fileManager.removeItemAtPath(path)
+            let _ = try? self?.fileManager.createDirectoryAtPath(path, withIntermediateDirectories: true,
+                                                                 attributes: nil)
         }
     }
     

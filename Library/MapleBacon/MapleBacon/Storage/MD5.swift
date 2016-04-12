@@ -9,7 +9,8 @@ public extension String {
     }
 }
 
-internal func md5(var message: [UInt8]) -> [UInt8] {
+internal func md5(message: [UInt8]) -> [UInt8] {
+    var message = message
     let messageLenBits = UInt64(message.count) * 8
     message.append(0x80)
     while message.count % 64 != 56 {

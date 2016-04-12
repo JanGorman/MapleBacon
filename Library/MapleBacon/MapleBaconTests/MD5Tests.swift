@@ -18,7 +18,7 @@ class MD5Tests: XCTestCase {
         XCTAssertEqual("The quick brown fox jumped over the lazy dog's back".MD5(), "e38ca1d920c4b8b8d3946b2c72f01680")
         let md51 = "http://i4.ztat.net/detail/L4/62/1C/05/4T/11/L4621C054-T11@10.jpg".MD5()
         let md52 = "http://i4.ztat.net/detail/VL/02/1C/00/PJ/11/VL021C00P-J11@14.jpg".MD5()
-        XCTAssert(md51 != md52)
+        XCTAssertNotEqual(md51, md52)
     }
 
 }

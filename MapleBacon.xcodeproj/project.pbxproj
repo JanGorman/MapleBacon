@@ -22,6 +22,16 @@
 		260081911B3310DC0010C64A /* ImageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081821B3310D30010C64A /* ImageManagerTests.swift */; };
 		260081931B3310DC0010C64A /* MD5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081841B3310D30010C64A /* MD5Tests.swift */; };
 		260081941B3310DC0010C64A /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081851B3310D30010C64A /* StorageTests.swift */; };
+		2625026B1CC13C5B0057C4A6 /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816A1B3310A90010C64A /* DiskStorage.swift */; };
+		2625026C1CC13C5B0057C4A6 /* InMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816B1B3310A90010C64A /* InMemoryStorage.swift */; };
+		2625026D1CC13C5B0057C4A6 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816C1B3310A90010C64A /* MD5.swift */; };
+		2625026E1CC13C5B0057C4A6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816D1B3310A90010C64A /* Storage.swift */; };
+		2625026F1CC13C640057C4A6 /* Resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600817C1B3310C00010C64A /* Resizer.swift */; };
+		262502701CC13C690057C4A6 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081721B3310B60010C64A /* Delay.swift */; };
+		262502711CC13C690057C4A6 /* ImageDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081731B3310B60010C64A /* ImageDownloadOperation.swift */; };
+		262502721CC13C690057C4A6 /* ImageGifExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081741B3310B60010C64A /* ImageGifExtension.swift */; };
+		262502731CC13C690057C4A6 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081751B3310B60010C64A /* ImageManager.swift */; };
+		262502741CC13C690057C4A6 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081761B3310B60010C64A /* ImageViewExtension.swift */; };
 		946B985E1C0C432C00B0276E /* MapleBacon-tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 946B985D1C0C432C00B0276E /* MapleBacon-tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94B554AD1BCAA3710026D2B1 /* cupcakes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94B554AC1BCAA3710026D2B1 /* cupcakes.jpg */; };
 		F2520C541A3EDAFF0061BB33 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */; };
@@ -355,6 +365,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				262502721CC13C690057C4A6 /* ImageGifExtension.swift in Sources */,
+				2625026B1CC13C5B0057C4A6 /* DiskStorage.swift in Sources */,
+				262502741CC13C690057C4A6 /* ImageViewExtension.swift in Sources */,
+				2625026E1CC13C5B0057C4A6 /* Storage.swift in Sources */,
+				262502731CC13C690057C4A6 /* ImageManager.swift in Sources */,
+				2625026F1CC13C640057C4A6 /* Resizer.swift in Sources */,
+				262502701CC13C690057C4A6 /* Delay.swift in Sources */,
+				2625026C1CC13C5B0057C4A6 /* InMemoryStorage.swift in Sources */,
+				262502711CC13C690057C4A6 /* ImageDownloadOperation.swift in Sources */,
+				2625026D1CC13C5B0057C4A6 /* MD5.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +632,7 @@
 				946B98611C0C432C00B0276E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F2520C421A3EDAFE0061BB33 /* Build configuration list for PBXProject "MapleBacon" */ = {
 			isa = XCConfigurationList;

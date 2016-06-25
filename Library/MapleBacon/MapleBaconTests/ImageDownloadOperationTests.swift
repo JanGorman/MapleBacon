@@ -34,7 +34,7 @@ class ImageDownloadOperationTests: XCTestCase {
 
         waitForExpectations(withTimeout: timeout) {
             error in
-            if (error != nil) {
+            if nil != error {
                 XCTFail("Expectation failed")
             }
         }
@@ -46,7 +46,7 @@ class ImageDownloadOperationTests: XCTestCase {
         let operation = ImageDownloadOperation(imageURL: URL(string: imageURL)!)
         operation.completionHandler = {
             (imageInstance, error) in
-            if (error == nil) {
+            if nil == error {
                 downloadExpectation.fulfill()
                 XCTAssertNotNil(imageInstance?.image, "Task finished but image was nil")
                 XCTAssertNil(error)
@@ -58,7 +58,8 @@ class ImageDownloadOperationTests: XCTestCase {
 
         waitForExpectations(withTimeout: timeout) {
             error in
-            if (error != nil) {
+            
+            if nil != error {
                 XCTFail("Expectation failed")
             }
         }
@@ -70,7 +71,8 @@ class ImageDownloadOperationTests: XCTestCase {
         let operation = ImageDownloadOperation(imageURL: URL(string: imageURL)!)
         operation.completionHandler = {
             (imageInstance, error) in
-            if (error != nil) {
+            
+            if nil != error {
                 cancelExpectation.fulfill()
                 XCTAssertNil(imageInstance?.image, "Task finished but image was nil")
                 XCTAssertNotNil(error)
@@ -83,7 +85,8 @@ class ImageDownloadOperationTests: XCTestCase {
 
         waitForExpectations(withTimeout: timeout) {
             error in
-            if (error != nil) {
+            
+            if nil != error {
                 XCTFail("Expectation failed")
             }
         }
@@ -95,9 +98,12 @@ class ImageDownloadOperationTests: XCTestCase {
         let operation = ImageDownloadOperation(imageURL: URL(string: redirectURL)!)
         operation.completionHandler = {
             (imageInstance, _) in
-            if (imageInstance != nil) {
+            
+            if imageInstance != nil {
+                
                 let imageURL = imageInstance?.url!.absoluteString
-                if (imageURL != redirectURL) {
+                
+                if imageURL != redirectURL {
                     redirectedExpectation.fulfill()
                 }
             }
@@ -106,7 +112,7 @@ class ImageDownloadOperationTests: XCTestCase {
 
         waitForExpectations(withTimeout: timeout) {
             error in
-            if (error != nil) {
+            if nil != error {
                 XCTFail("Expectation failed")
             }
         }
@@ -118,7 +124,7 @@ class ImageDownloadOperationTests: XCTestCase {
         let operation = ImageDownloadOperation(imageURL: URL(string: gifURL)!)
         operation.completionHandler = {
             (imageInstance, _) in
-            if (imageInstance != nil) {
+            if nil != imageInstance {
                 let image = imageInstance?.image
                 gifExpectation.fulfill()
                 XCTAssert(image?.images?.count > 0, "Requesting GIF image but image doesn't have multiple images")
@@ -128,7 +134,7 @@ class ImageDownloadOperationTests: XCTestCase {
 
         waitForExpectations(withTimeout: timeout) {
             error in
-            if (error != nil) {
+            if nil != error {
                 XCTFail("Expectation failed")
             }
         }

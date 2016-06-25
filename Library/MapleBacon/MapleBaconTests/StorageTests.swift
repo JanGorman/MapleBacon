@@ -132,7 +132,7 @@ class StorageTests: XCTestCase {
     func test_whenImageExpires_itIsDeleted() {
         if let image = testImage {
             storageKey = #function
-            diskStorage.maxAge = 0.01;
+            diskStorage.maxAge = 0.01
 
             diskStorage.store(image: image, forKey: storageKey!)
 

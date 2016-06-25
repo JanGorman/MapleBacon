@@ -9,37 +9,41 @@ public class ImageManager {
     public static let sharedManager = ImageManager()
     
     private let downloadQueue = OperationQueue()
-    private var downloadsInProgress = [NSURL: ImageDownloadOperation]()
+    private var downloadsInProgress = [URL: ImageDownloadOperation]()
 
     deinit {
         downloadQueue.cancelAllOperations()
     }
 
-    public func downloadImageAtURL(url: URL, cacheScaled: Bool, imageView: UIImageView?,
+    public func downloadImage(atUrl url: URL, cacheScaled: Bool, imageView: UIImageView?,
                                    storage: Storage = MapleBaconStorage.sharedStorage,
                                    completion: ImageDownloaderCompletion?) -> ImageDownloadOperation? {
+        
         if let cachedImage = storage.image(forKey: url.absoluteString!) {
             completion?(ImageInstance(image: cachedImage, state: .Cached, url: url), nil)
-        } else {
-            if downloadsInProgress[url] == nil {
-                let downloadOperation = ImageDownloadOperation(imageURL: url)
-                downloadOperation.qualityOfService = .userInitiated
-                downloadOperation.completionHandler = downloadHandlerWithStorage(url: url, cacheScaled: cacheScaled,
-                        imageView: imageView, storage: storage, completion: completion)
-                downloadsInProgress[url] = downloadOperation
-                downloadQueue.addOperation(downloadOperation)
-                return downloadOperation
-            } else {
-                completion?(ImageInstance(image: nil, state: .Downloading, url: nil), nil)
-                delay(delay: 0.1) {
-                    self.downloadImageAtURL(url: url, cacheScaled: cacheScaled, imageView: imageView, storage: storage, completion: completion)
-                }
-            }
+            return nil
         }
+        
+        if nil == downloadsInProgress[url] {
+            let downloadOperation = ImageDownloadOperation(imageURL: url)
+            downloadOperation.qualityOfService = .userInitiated
+            downloadOperation.completionHandler = downloadHandlerWithStorage(url: url, cacheScaled: cacheScaled,
+                    imageView: imageView, storage: storage, completion: completion)
+            downloadsInProgress[url] = downloadOperation
+            downloadQueue.addOperation(downloadOperation)
+            return downloadOperation
+        }
+        
+        completion?(ImageInstance(image: nil, state: .Downloading, url: nil), nil)
+        delay(delay: 0.1) {
+            _ = self.downloadImage(atUrl: url, cacheScaled: cacheScaled, imageView: imageView, storage: storage, completion: completion)
+        }
+
         return nil
     }
 
-    private func downloadHandlerWithStorage(url: NSURL, cacheScaled: Bool, imageView: UIImageView?, storage: Storage, completion: ImageDownloaderCompletion?) -> ImageDownloaderCompletion {
+    private func downloadHandlerWithStorage(url: URL, cacheScaled: Bool, imageView: UIImageView?, storage: Storage, completion: ImageDownloaderCompletion?) -> ImageDownloaderCompletion {
+        
         return { [weak self] (imageInstance, _) in
             self?.downloadsInProgress[url] = nil
             if let newImage = imageInstance?.image {

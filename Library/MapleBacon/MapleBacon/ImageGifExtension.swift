@@ -59,16 +59,23 @@ extension UIImage {
     }
 
     private class func delayCentisecondsForImageAtIndex(source: CGImageSource, index: Int) -> Int {
-        if let cfProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil),
-        properties: NSDictionary = cfProperties,
-            gifProperties = properties[kCGImagePropertyGIFDictionary as String] as? NSDictionary {
-            var delayTime = gifProperties[kCGImagePropertyGIFUnclampedDelayTime as String] as! NSNumber
-            if delayTime.doubleValue == 0 {
-                delayTime = gifProperties[kCGImagePropertyGIFDelayTime as String] as! NSNumber
-            }
-            return Int(delayTime.doubleValue * 1000)
+        
+        guard
+            let properties: NSDictionary = CGImageSourceCopyPropertiesAtIndex(source, index, nil) as? NSDictionary,
+            let gifProperties = properties[String(kCGImagePropertyGIFDictionary)] as? NSDictionary,
+            var delayTime: NSNumber = gifProperties[String(kCGImagePropertyGIFUnclampedDelayTime)] as? NSNumber
+        else {
+            return -1
         }
-        return -1
+                
+        if delayTime.doubleValue == 0 {
+            
+            if let propDelayTime: NSNumber = gifProperties[kCGImagePropertyGIFDelayTime as String] as? NSNumber {
+                delayTime = propDelayTime
+            }
+        }
+        
+        return Int(delayTime.doubleValue * 1000)
     }
 
     private class DivisionMath {

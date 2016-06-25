@@ -14,14 +14,14 @@ class ImageExtensionTests: XCTestCase {
         let imageView = UIImageView()
         imageView.setImageWithURL(url: URL(string: imageURL)!, completion: {
             (imageInstance, _) in
-            if (imageView.image != nil) {
+            if nil != imageView.image {
                 expectation.fulfill()
             }
         })
 
         waitForExpectations(withTimeout: timeout) {
             error in
-            if (error != nil) {
+            if nil != error {
                 XCTFail("Expectation failed")
             }
         }

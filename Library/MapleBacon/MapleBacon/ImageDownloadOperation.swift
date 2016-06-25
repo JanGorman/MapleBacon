@@ -7,7 +7,7 @@ import UIKit
 public typealias ImageDownloaderCompletion = (ImageInstance?, NSError?) -> Void
 
 public protocol ImageDownloaderDelegate {
-    func imageDownloaderDelegate(downloader: ImageDownloadOperation, didReportProgress progress: Progress);
+    func imageDownloaderDelegate(downloader: ImageDownloadOperation, didReportProgress progress: Progress)
 }
 
 public class ImageDownloadOperation: Operation {
@@ -79,6 +79,7 @@ extension ImageDownloadOperation: URLSessionDownloadDelegate {
     public func urlSession(_ session: Foundation.URLSession, downloadTask: URLSessionDownloadTask,
                            didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
                            totalBytesExpectedToWrite: Int64) {
+        
         progress.totalUnitCount = totalBytesWritten
         progress.completedUnitCount = bytesWritten
         delegate?.imageDownloaderDelegate(downloader: self, didReportProgress: progress)
@@ -91,10 +92,10 @@ extension ImageDownloadOperation: URLSessionDownloadDelegate {
             let newData = try Data(contentsOf: location, options: Data.ReadingOptions.dataReadingMappedIfSafe)
             let newImage = UIImage.image(withCachedData: newData)
             let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
-            if (self.isCancelled == true) { return }
+            if self.isCancelled == true { return }
             completionHandler?(newImageInstance, nil)
         } catch let error as NSError {
-            if (self.isCancelled == true) { return }
+            if self.isCancelled == true { return }
             completionHandler?(nil, error)
         }
         self._finished = true
@@ -102,7 +103,7 @@ extension ImageDownloadOperation: URLSessionDownloadDelegate {
 
     public func urlSession(_ session: Foundation.URLSession, task: URLSessionTask, didCompleteWithError error: NSError?) {
         if let error = error {
-            if (self.isCancelled == true) {
+            if self.isCancelled == true {
                 self._finished = true
                 return
             }

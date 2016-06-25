@@ -30,10 +30,14 @@ internal extension CGRect {
     }
 }
 
+// MARK: - Resizer Class -
 public class Resizer {
     
     var image: UIImage
     
+    /**
+     Internal entity to compute and hold resizing values
+    */
     private struct ResizeCalculationEntity {
         
         var currentSize: CGSize  = CGSize()
@@ -61,7 +65,7 @@ public class Resizer {
         }
         
         mutating func applyContentMode(contentMode: UIViewContentMode) {
-            switch (contentMode) {
+            switch contentMode {
             case .scaleToFill, .redraw:
                 self.newSize = CGSize(width: self.currentSize.width * self.horizontalRatio, height: self.currentSize.height * self.verticalRatio)
                 self.offset  = self.calcOffset(fromSize: self.newSize, toSize: self.intendedSize)
@@ -102,14 +106,23 @@ public class Resizer {
         }
     }
     
+    /**
+     Inits with the image to transform
+     */
     init(image: UIImage) {
         self.image = image
     }
     
+    /**
+     Resize fkt with default content mode and quality
+     */
     public func resize(toSize size: CGSize, async: Bool = true, completion: ResizerCompletion) {
         self.resize(toSize: size, contentMode: .scaleToFill, interpolationQuality: .default, async: async, completion: completion)
     }
     
+    /**
+     Resize fkt
+     */
     public func resize(toSize size: CGSize, contentMode: UIViewContentMode, interpolationQuality quality: CGInterpolationQuality = .default, async: Bool = true, completion: ResizerCompletion) {
         
         // if image is already smaller/equal than/like requested abbort
@@ -137,13 +150,15 @@ public class Resizer {
         action()
     }
     
-    // resizeImageFromImage
+    /**
+     Prequisite reszing method
+     */
     private func resize(toSize size: CGSize, toBounds bounds: CGRect, interpolationQuality quality: CGInterpolationQuality, async: Bool, completion: ResizerCompletion) {
         
         var imageToReturn = self.image
         
         let drawTransposed: Bool
-        switch (image.imageOrientation) {
+        switch image.imageOrientation {
         case .left, .leftMirrored, .right, .rightMirrored:
             drawTransposed = true
         default:
@@ -152,8 +167,8 @@ public class Resizer {
         
         if
             let resizedImage = resize(toSize: size, usingTransform: transformForOrientation(toSize: size), drawTransposed: drawTransposed, interpolationQuality: quality),
-            let croppedImage = crop(image: resizedImage, toBounds: bounds) {
-            
+            let croppedImage = crop(image: resizedImage, toBounds: bounds)
+        {
             imageToReturn = croppedImage
         }
       
@@ -169,7 +184,9 @@ public class Resizer {
         action()
     }
 
-    
+    /**
+     Actual resizing method
+     */
     private func resize(toSize size: CGSize, usingTransform transform: CGAffineTransform, drawTransposed transpose: Bool, interpolationQuality quality: CGInterpolationQuality) -> UIImage? {
         
         let newRect = size.zeroBoundedRect().integral
@@ -209,7 +226,7 @@ public class Resizer {
     private func transformForOrientation(toSize size: CGSize) -> CGAffineTransform {
         var transform = CGAffineTransform()
         
-        switch (image.imageOrientation) {
+        switch image.imageOrientation {
         case .down, .downMirrored:
             transform = transform.translateBy(x: size.width, y: size.height)
             transform = transform.rotate(CGFloat(M_PI))
@@ -223,7 +240,7 @@ public class Resizer {
             break
         }
         
-        switch (image.imageOrientation) {
+        switch image.imageOrientation {
         case .downMirrored, .upMirrored:
             transform = transform.translateBy(x: size.width, y: 0)
             transform = transform.scaleBy(x: -1, y: 1)

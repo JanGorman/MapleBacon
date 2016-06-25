@@ -19,7 +19,7 @@ class ImageManagerTests: XCTestCase {
         let downloadingImageExpectation = expectation(withDescription: "Testing Downloading Image")
         let downloadedImageExpectation = expectation(withDescription: "Testing Downloaded Image")
 
-        imageManager.downloadImageAtURL(url: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
+        _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
             [unowned self] (imageInstance, _) in
             if let imageInstance = imageInstance {
                 if imageInstance.state == .New {
@@ -29,7 +29,8 @@ class ImageManagerTests: XCTestCase {
                 }
             }
         })
-        imageManager.downloadImageAtURL(url: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
+        
+        _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
             [unowned self] (imageInstance, _) in
             if let imageInstance = imageInstance {
                 if imageInstance.state == .Downloading {
@@ -42,19 +43,20 @@ class ImageManagerTests: XCTestCase {
 
         waitForExpectations(withTimeout: timeout) {
             error in
-            if (error != nil) {
+            if nil != error {
                 XCTFail("Expectation failed")
             }
         }
     }
 
     func test_whenImageManagerAsksForImageAlreadyDownloaded_thenImageIsReturnedFromCache() {
-        imageManager.downloadImageAtURL(url: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
+        
+        _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
             [unowned self] (imageInstance, _) in
             if let _ = imageInstance {
                 let cachedExpectation = self.expectation(withDescription: "Testing Cached Image")
 
-                self.imageManager.downloadImageAtURL(url: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
+                self.imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
                     [unowned self] (imageInstance, _) in
                     if let imageInstance = imageInstance {
                         if imageInstance.state == .Cached {
@@ -67,7 +69,7 @@ class ImageManagerTests: XCTestCase {
 
                 self.waitForExpectations(withTimeout: timeout) {
                     error in
-                    if (error != nil) {
+                    if nil != error {
                         XCTFail("Expectation failed")
                     }
                 }
@@ -79,7 +81,7 @@ class ImageManagerTests: XCTestCase {
         MapleBaconStorage.sharedStorage.remove(imageForKey: imageURL)
         let newImageExpectation = expectation(withDescription: "Testing New Image")
 
-        imageManager.downloadImageAtURL(url: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
+        _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
             [unowned self] imageInstance, error -> Void in
             if let imageInstance = imageInstance {
                 if imageInstance.state == .New {
@@ -92,7 +94,7 @@ class ImageManagerTests: XCTestCase {
 
         waitForExpectations(withTimeout: timeout) {
             error in
-            if (error != nil) {
+            if nil != error {
                 XCTFail("Expectation failed")
             }
         }
@@ -104,7 +106,7 @@ class ImageManagerTests: XCTestCase {
 
         let newImageExpectation = expectation(withDescription: "Testing New Image")
 
-        imageManager.downloadImageAtURL(url: URL(string: imageURL)!, cacheScaled: false, imageView: nil, storage: storage) {
+        _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil, storage: storage) {
             imageInstance, _ in
             if let _ = imageInstance {
                 newImageExpectation.fulfill()
@@ -114,7 +116,7 @@ class ImageManagerTests: XCTestCase {
 
         waitForExpectations(withTimeout: timeout) {
             error in
-            if (error != nil) {
+            if nil != error {
                 XCTFail("Expectation failed")
             }
         }

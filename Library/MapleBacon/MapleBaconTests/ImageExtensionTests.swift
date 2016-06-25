@@ -9,17 +9,17 @@ import UIKit
 class ImageExtensionTests: XCTestCase {
 
     func test_whenImageViewRequestImageWithValidURL_thenImageViewHasImage() {
-        let expectation = expectationWithDescription("Testing Valid imageView extension")
+        let expectation = self.expectation(withDescription: "Testing Valid imageView extension")
 
         let imageView = UIImageView()
-        imageView.setImageWithURL(NSURL(string: imageURL)!, completion: {
+        imageView.setImageWithURL(url: URL(string: imageURL)!, completion: {
             (imageInstance, _) in
             if (imageView.image != nil) {
                 expectation.fulfill()
             }
         })
 
-        waitForExpectationsWithTimeout(timeout) {
+        waitForExpectations(withTimeout: timeout) {
             error in
             if (error != nil) {
                 XCTFail("Expectation failed")
@@ -28,7 +28,7 @@ class ImageExtensionTests: XCTestCase {
     }
 
     func test_whenDataIsEmpty_thenImageWithCachedDataReturnsNilWithoutCrashing() {
-        let emptyData = NSData()
-        XCTAssertNil(UIImage.imageWithCachedData(emptyData))
+        let emptyData = Data()
+        XCTAssertNil(UIImage.image(withCachedData: emptyData))
     }
 }

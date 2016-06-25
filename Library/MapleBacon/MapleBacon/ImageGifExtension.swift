@@ -7,35 +7,35 @@ import ImageIO
 
 extension UIImage {
 
-    class func imageWithCachedData(data: NSData) -> UIImage? {
-        guard data.length > 0 else { return nil }
+    class func image(withCachedData data: Data) -> UIImage? {
+        guard data.count > 0 else { return nil }
         
-        return isAnimatedImage(data) ? animatedImageWithData(data) : UIImage(data: data)
+        return isAnimatedImage(data: data) ? animatedImageWithData(data: data) : UIImage(data: data as Data)
     }
 
-    private class func animatedImageWithData(data: NSData) -> UIImage? {
-        let source = CGImageSourceCreateWithData(data as CFDataRef, nil)
-        return UIImage.animatedImageWithSource(source)
+    private class func animatedImageWithData(data: Data) -> UIImage? {
+        let source = CGImageSourceCreateWithData(data as CFData, nil)
+        return UIImage.animatedImageWithSource(source: source)
     }
 
-    private class func isAnimatedImage(data: NSData) -> Bool {
+    private class func isAnimatedImage(data: Data) -> Bool {
         var length = UInt16(0)
-        data.getBytes(&length, range: NSRange(location: 0, length: 2))
+        (data as NSData).getBytes(&length, range: NSRange(location: 0, length: 2))
         return CFSwapInt16(length) == 0x4749
     }
 
-    private class func animatedImageWithSource(source: CGImageSourceRef!) -> UIImage? {
-        let (images, delays) = createImagesAndDelays(source)
+    private class func animatedImageWithSource(source: CGImageSource!) -> UIImage? {
+        let (images, delays) = createImagesAndDelays(source: source)
         let gifDuration = delays.reduce(0, combine: +)
-        let frames = framesFromImages(images, delays: delays)
-        return UIImage.animatedImageWithImages(frames, duration: Double(gifDuration) / 1000.0)
+        let frames = framesFromImages(images: images, delays: delays)
+        return UIImage.animatedImage(with: frames, duration: Double(gifDuration) / 1000.0)
     }
 
-    private class func framesFromImages(images: [CGImageRef], delays: [Int]) -> [UIImage] {
-        let gcd = DivisionMath.greatestCommonDivisor(delays)
+    private class func framesFromImages(images: [CGImage], delays: [Int]) -> [UIImage] {
+        let gcd = DivisionMath.greatestCommonDivisor(array: delays)
         var frames = [UIImage]()
         for i in 0..<images.count {
-            let frame = UIImage(CGImage: images[Int(i)])
+            let frame = UIImage(cgImage: images[Int(i)])
             let frameCount = abs(Int(delays[Int(i)] / gcd))
 
             for _ in 0..<frameCount {
@@ -45,20 +45,20 @@ extension UIImage {
         return frames
     }
 
-    private class func createImagesAndDelays(source: CGImageSourceRef) -> ([CGImageRef], [Int]) {
+    private class func createImagesAndDelays(source: CGImageSource) -> ([CGImage], [Int]) {
         let count = Int(CGImageSourceGetCount(source))
-        var images = [CGImageRef]()
+        var images = [CGImage]()
         var delayCentiseconds = [Int]()
         for i in 0 ..< count {
             if let image = CGImageSourceCreateImageAtIndex(source, i, nil) {
                 images.append(image)
-                delayCentiseconds.append(delayCentisecondsForImageAtIndex(source, index: i))
+                delayCentiseconds.append(delayCentisecondsForImageAtIndex(source: source, index: i))
             }
         }
         return (images, delayCentiseconds)
     }
 
-    private class func delayCentisecondsForImageAtIndex(let source: CGImageSourceRef, let index: Int) -> Int {
+    private class func delayCentisecondsForImageAtIndex(source: CGImageSource, index: Int) -> Int {
         if let cfProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil),
         properties: NSDictionary = cfProperties,
             gifProperties = properties[kCGImagePropertyGIFDictionary as String] as? NSDictionary {
@@ -79,11 +79,11 @@ extension UIImage {
             }
         }
 
-        class func greatestCommonDivisorForPair(a: Int?, _ b: Int?) -> Int {
+        class func greatestCommonDivisorForPair(_ a: Int?, _ b: Int?) -> Int {
             switch (a, b) {
-            case (.None, .None):
+            case (.none, .none):
                 return 0
-            case (let a, .Some(0)):
+            case (let a, .some(0)):
                 return a!
             default:
                 return greatestCommonDivisorForPair(b!, a! % b!)

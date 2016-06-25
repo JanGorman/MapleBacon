@@ -18,24 +18,25 @@ extension NSUUID {
      
      - parameter ns:   the namespace UUID
      - parameter name: the string
-     
-     - returns: the instance of NSUUID
      */
-    convenience init(namespace ns: NSUUID, name: String) {
+    convenience init(namespace ns: UUID, name: String) {
         
         var uuidBytes: UInt8 = 0
-        ns.getUUIDBytes(&uuidBytes)
+        (ns as NSUUID).getBytes(&uuidBytes)
         
-        let nsname                = name as NSString
-        let namespaceData: NSData = NSData(bytes: &uuidBytes, length: 16)
-        let nameData: NSData      = NSData(bytes: nsname.cStringUsingEncoding(NSUTF8StringEncoding), length: nsname.length)
+        let namespaceData: Data = NSData(bytes: &uuidBytes, length: 16) as Data
+        let nameData: Data      = NSData(bytes: name.cString(using: String.Encoding.utf8), length: name.characters.count) as Data
         
-        let concatData: NSMutableData = NSMutableData()
-        concatData.appendData(namespaceData)
-        concatData.appendData(nameData)
+        var concatData = Data()
+        concatData.append(namespaceData)
+        concatData.append(nameData)
         
-        var digest: [UInt8] = [UInt8](count:Int(CC_SHA1_DIGEST_LENGTH), repeatedValue: 0)
-        CC_SHA1(concatData.bytes, CC_LONG(concatData.length), &digest)
+        var digest: [UInt8] = [UInt8](repeating: 0, count:Int(CC_SHA1_DIGEST_LENGTH))
+        
+        let dataBytes: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>(allocatingCapacity: concatData.count)
+        concatData.copyBytes(to: dataBytes, count: concatData.count)
+        
+        CC_SHA1(dataBytes, CC_LONG(concatData.count), &digest)
         
         let bytes: [UInt8] = [
             digest[0],
@@ -46,7 +47,7 @@ extension NSUUID {
             digest[5],
             ((digest[6] & 0x0F) | 0x50),
             digest[7],
-            ((digest[8] & 0x3F) | 0xB0),
+            ((digest[8] & 0x3F) | 0x80),
             digest[9],
             digest[10],
             digest[11],
@@ -56,6 +57,6 @@ extension NSUUID {
             digest[15]
         ]
         
-        self.init(UUIDBytes: bytes)
+        self.init(uuidBytes: bytes)
     }
 }

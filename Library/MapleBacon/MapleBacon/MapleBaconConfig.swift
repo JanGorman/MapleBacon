@@ -18,7 +18,7 @@ public class MapleBaconConfig {
     public static let sharedConfig: MapleBaconConfig = MapleBaconConfig()
     
     /// Holds the storage part of the config
-    var storage: MapleBaconConfig.Storage
+    var storage: Storage
     
     /**
      Private Constructor
@@ -70,7 +70,7 @@ public class MapleBaconConfig {
          allows to set all values (or some) within the 
          constructor
          */
-        init(@noescape _ initialize: ((Storage) -> Void) = { _ in }) {
+        init( _ initialize: @noescape(Storage) -> Void = { _ in }) {
             initialize(self)
         }
     }

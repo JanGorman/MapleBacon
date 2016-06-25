@@ -16,7 +16,7 @@ public final class InMemoryStorage {
     private static let DefaultStorageName = MapleBaconConfig.sharedConfig.storage.defaultStorageName
     
     /// the cache
-    private let cache = NSCache()
+    private let cache = Cache<NSString, UIImage>()
 
     /**
      Init with default storage name
@@ -43,15 +43,15 @@ public final class InMemoryStorage {
  */
 extension InMemoryStorage: Storage {
 
-    public func storeImage(image: UIImage, forKey key: String) {
+    public func store(image: UIImage, forKey key: String) {
         self.cache.setObject(image, forKey: key, cost: self.cacheCost(forImage: image))
     }
     
-    public func storeImage(data: NSData, forKey key: String) {
-        guard let image: UIImage = UIImage.imageWithCachedData(data) else {
+    public func store(data: Data, forKey key: String) {
+        guard let image: UIImage = UIImage.image(withCachedData: data) else {
             return
         }
-        self.storeImage(image, forKey: key)
+        self.store(image: image, forKey: key)
     }
     
     private func cacheCost(forImage image: UIImage) -> Int {
@@ -60,14 +60,14 @@ extension InMemoryStorage: Storage {
     }
 
     public func image(forKey key: String) -> UIImage? {
-        return cache.objectForKey(key) as? UIImage
+        return cache.object(forKey: key)
     }
 
-    public func removeImage(forKey key: String) {
-        cache.removeObjectForKey(key)
+    public func remove(imageForKey key: String) {
+        cache.removeObject(forKey: key)
     }
 
-    public func clearStorage() {
+    public func clear() {
         cache.removeAllObjects()
     }
 }

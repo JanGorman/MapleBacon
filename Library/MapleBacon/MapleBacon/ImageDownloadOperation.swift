@@ -7,113 +7,116 @@ import UIKit
 public typealias ImageDownloaderCompletion = (ImageInstance?, NSError?) -> Void
 
 public protocol ImageDownloaderDelegate {
-    func imageDownloaderDelegate(downloader: ImageDownloadOperation, didReportProgress progress: NSProgress);
+    func imageDownloaderDelegate(downloader: ImageDownloadOperation, didReportProgress progress: Progress);
 }
 
-public class ImageDownloadOperation: NSOperation {
+public class ImageDownloadOperation: Operation {
 
-    private var imageURL: NSURL
+    private var imageURL: URL
     private var delegate: ImageDownloaderDelegate?
-    private var session: NSURLSession?
-    private var task: NSURLSessionDownloadTask?
-    private var resumeData: NSData?
-    private let progress: NSProgress = NSProgress()
+    private var session: Foundation.URLSession?
+    private var task: URLSessionDownloadTask?
+    private var resumeData: Data?
+    private let progress: Progress = Progress()
 
     public var completionHandler: ImageDownloaderCompletion?
 
-    public convenience init(imageURL: NSURL) {
+    private var _finished = false {
+        didSet {
+            didChangeValue(forKey: "isFinished")
+        }
+        willSet {
+           willChangeValue(forKey: "isFinished")
+        }
+    }
+    
+    override public var isFinished: Bool {
+        get {
+            return _finished
+        }
+    }
+    
+    public convenience init(imageURL: URL) {
         self.init(imageURL: imageURL, delegate: nil)
     }
 
-    public init(imageURL: NSURL, delegate: ImageDownloaderDelegate?) {
+    public init(imageURL: URL, delegate: ImageDownloaderDelegate?) {
         self.imageURL = imageURL
         self.delegate = delegate
         super.init()
     }
 
     public override func start() {
-        let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        session = NSURLSession(configuration: sessionConfiguration, delegate: self,
-                delegateQueue: NSOperationQueue.mainQueue())
+        let sessionConfiguration = URLSessionConfiguration.default()
+        session = Foundation.URLSession(configuration: sessionConfiguration, delegate: self,
+                delegateQueue: OperationQueue.main())
         resumeDownload()
     }
 
     public override func cancel() {
-        task?.cancelByProducingResumeData { [unowned self] data in
+        task?.cancel(byProducingResumeData: {
+            (data) in
+            
             self.resumeData = data
-            self.finished = true
-        }
+            self._finished = true
+        })
     }
 
     private func resumeDownload() {
-        let newTask: NSURLSessionDownloadTask?
+        let newTask: URLSessionDownloadTask?
         if let resumeData = resumeData {
-            newTask = session?.downloadTaskWithResumeData(resumeData)
+            newTask = session?.downloadTask(withResumeData: resumeData)
         } else {
-            newTask = session?.downloadTaskWithURL(imageURL)
+            newTask = session?.downloadTask(with: imageURL)
         }
         newTask?.resume()
         task = newTask
     }
-
-    private var _finished = false
-    override public var finished: Bool {
-        get {
-            return _finished
-        }
-        set {
-            willChangeValueForKey("isFinished")
-            _finished = newValue
-            didChangeValueForKey("isFinished")
-        }
-    }
-
 }
 
-extension ImageDownloadOperation: NSURLSessionDownloadDelegate {
+extension ImageDownloadOperation: URLSessionDownloadDelegate {
 
-    public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask,
+    public func urlSession(_ session: Foundation.URLSession, downloadTask: URLSessionDownloadTask,
                            didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
                            totalBytesExpectedToWrite: Int64) {
         progress.totalUnitCount = totalBytesWritten
         progress.completedUnitCount = bytesWritten
-        delegate?.imageDownloaderDelegate(self, didReportProgress: progress)
+        delegate?.imageDownloaderDelegate(downloader: self, didReportProgress: progress)
     }
 
-    public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask,
-        didFinishDownloadingToURL location: NSURL) {
+    public func urlSession(_ session: Foundation.URLSession, downloadTask: URLSessionDownloadTask,
+                           didFinishDownloadingTo location: URL) {
         do {
-            let newData = try NSData(contentsOfURL: location, options: NSDataReadingOptions.DataReadingMappedIfSafe)
-            let newImage = UIImage.imageWithCachedData(newData)
+            
+            let newData = try Data(contentsOf: location, options: Data.ReadingOptions.dataReadingMappedIfSafe)
+            let newImage = UIImage.image(withCachedData: newData)
             let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
-            if (self.cancelled == true) { return }
+            if (self.isCancelled == true) { return }
             completionHandler?(newImageInstance, nil)
         } catch let error as NSError {
-            if (self.cancelled == true) { return }
+            if (self.isCancelled == true) { return }
             completionHandler?(nil, error)
         }
-        self.finished = true
+        self._finished = true
     }
 
-    public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+    public func urlSession(_ session: Foundation.URLSession, task: URLSessionTask, didCompleteWithError error: NSError?) {
         if let error = error {
-            if (self.cancelled == true) {
-                finished = true
+            if (self.isCancelled == true) {
+                self._finished = true
                 return
             }
             completionHandler?(nil, error)
-            finished = true
+            self._finished = true
         }
     }
-
-    public func URLSession(session: NSURLSession, task: NSURLSessionTask,
-                           willPerformHTTPRedirection response: NSHTTPURLResponse,
-                           newRequest request: NSURLRequest, completionHandler: (NSURLRequest?) -> Void) {
+    
+    public func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest, completionHandler: (URLRequest?) -> Swift.Void) {
+        
         self.completionHandler?(nil, nil)
-        imageURL = request.URL!
+        imageURL = request.url!
         resumeDownload()
     }
-
 }
 
 public enum ImageInstanceState {
@@ -123,11 +126,11 @@ public enum ImageInstanceState {
 public struct ImageInstance {
 
     public let image: UIImage?
-    public let data: NSData?
+    public let data: Data?
     public let state: ImageInstanceState
-    public let url: NSURL?
+    public let url: URL?
 
-    init(image: UIImage?, data: NSData? = nil, state: ImageInstanceState, url: NSURL?) {
+    init(image: UIImage?, data: Data? = nil, state: ImageInstanceState, url: URL?) {
         self.image = image
         self.state = state
         self.url = url

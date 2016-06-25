@@ -24,6 +24,7 @@
 		260081941B3310DC0010C64A /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081851B3310D30010C64A /* StorageTests.swift */; };
 		946B985E1C0C432C00B0276E /* MapleBacon-tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 946B985D1C0C432C00B0276E /* MapleBacon-tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94B554AD1BCAA3710026D2B1 /* cupcakes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94B554AC1BCAA3710026D2B1 /* cupcakes.jpg */; };
+		9FA18F8C1D1E94F4005A2580 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB337F651C8ADDBD00E1930E /* CommonCrypto.framework */; };
 		ABCDD8A81C917FBF004A468F /* MapleBaconConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCDD8A71C917FBF004A468F /* MapleBaconConfig.swift */; };
 		ABF8F6971C8C539000238157 /* NSUUID+V5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF8F6961C8C539000238157 /* NSUUID+V5.swift */; };
 		F2520C541A3EDAFF0061BB33 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */; };
@@ -92,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FA18F8C1D1E94F4005A2580 /* CommonCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,9 +379,13 @@
 					};
 					F2520C471A3EDAFE0061BB33 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = XET2U8929Q;
+						DevelopmentTeamName = "Danilo Topalovic";
+						LastSwiftMigration = 0800;
 					};
 					F2520C521A3EDAFF0061BB33 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -683,6 +689,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -704,6 +711,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zalando.MapleBacon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -721,6 +729,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Library/MapleBacon/MapleBaconTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -734,6 +743,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Library/MapleBacon/MapleBaconTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

@@ -21,9 +21,9 @@ class ImageDownloadOperationTests: XCTestCase {
     }
 
     func test_whenDownloadingValidImage_thenTaskFinishesWithImage() {
-        let expectation = expectationWithDescription("Testing async ImageDownlader")
+        let expectation = self.expectation(withDescription: "Testing async ImageDownlader")
 
-        let operation = ImageDownloadOperation(imageURL: NSURL(string: imageURL)!)
+        let operation = ImageDownloadOperation(imageURL: URL(string: imageURL)!)
         operation.completionHandler = {
             (imageInstance, error) in
             expectation.fulfill()
@@ -32,7 +32,7 @@ class ImageDownloadOperationTests: XCTestCase {
         }
         operation.start()
 
-        waitForExpectationsWithTimeout(timeout) {
+        waitForExpectations(withTimeout: timeout) {
             error in
             if (error != nil) {
                 XCTFail("Expectation failed")
@@ -41,9 +41,9 @@ class ImageDownloadOperationTests: XCTestCase {
     }
 
     func test_whenSuspendingAndResumingDownload_thenTaskFinishesWithImage() {
-        let downloadExpectation = expectationWithDescription("Testing async ImageDownlader")
+        let downloadExpectation = expectation(withDescription: "Testing async ImageDownlader")
 
-        let operation = ImageDownloadOperation(imageURL: NSURL(string: imageURL)!)
+        let operation = ImageDownloadOperation(imageURL: URL(string: imageURL)!)
         operation.completionHandler = {
             (imageInstance, error) in
             if (error == nil) {
@@ -56,7 +56,7 @@ class ImageDownloadOperationTests: XCTestCase {
         operation.cancel()
         operation.start()
 
-        waitForExpectationsWithTimeout(timeout) {
+        waitForExpectations(withTimeout: timeout) {
             error in
             if (error != nil) {
                 XCTFail("Expectation failed")
@@ -65,9 +65,9 @@ class ImageDownloadOperationTests: XCTestCase {
     }
 
     func test_whenCancellingDownload_thenTaskFinishesWithCancellationError() {
-        let cancelExpectation = expectationWithDescription("Testing Cancelling ImageDownlader")
+        let cancelExpectation = expectation(withDescription: "Testing Cancelling ImageDownlader")
 
-        let operation = ImageDownloadOperation(imageURL: NSURL(string: imageURL)!)
+        let operation = ImageDownloadOperation(imageURL: URL(string: imageURL)!)
         operation.completionHandler = {
             (imageInstance, error) in
             if (error != nil) {
@@ -81,7 +81,7 @@ class ImageDownloadOperationTests: XCTestCase {
         operation.start()
         operation.cancel()
 
-        waitForExpectationsWithTimeout(timeout) {
+        waitForExpectations(withTimeout: timeout) {
             error in
             if (error != nil) {
                 XCTFail("Expectation failed")
@@ -90,9 +90,9 @@ class ImageDownloadOperationTests: XCTestCase {
     }
 
     func test_whenRequestingImageWithRedirectedURL_thenReturnedURLIsNotTheRequestedURL() {
-        let redirectedExpectation = expectationWithDescription("Testing Redirected URL ImageDownlader")
+        let redirectedExpectation = expectation(withDescription: "Testing Redirected URL ImageDownlader")
 
-        let operation = ImageDownloadOperation(imageURL: NSURL(string: redirectURL)!)
+        let operation = ImageDownloadOperation(imageURL: URL(string: redirectURL)!)
         operation.completionHandler = {
             (imageInstance, _) in
             if (imageInstance != nil) {
@@ -104,7 +104,7 @@ class ImageDownloadOperationTests: XCTestCase {
         }
         operation.start()
 
-        waitForExpectationsWithTimeout(timeout) {
+        waitForExpectations(withTimeout: timeout) {
             error in
             if (error != nil) {
                 XCTFail("Expectation failed")
@@ -113,9 +113,9 @@ class ImageDownloadOperationTests: XCTestCase {
     }
 
     func test_whenRequestingImageWithGifURL_thenReturnedImageHasManyFrames() {
-        let gifExpectation = expectationWithDescription("Testing Gif URL ImageDownlader")
+        let gifExpectation = expectation(withDescription: "Testing Gif URL ImageDownlader")
 
-        let operation = ImageDownloadOperation(imageURL: NSURL(string: gifURL)!)
+        let operation = ImageDownloadOperation(imageURL: URL(string: gifURL)!)
         operation.completionHandler = {
             (imageInstance, _) in
             if (imageInstance != nil) {
@@ -126,7 +126,7 @@ class ImageDownloadOperationTests: XCTestCase {
         }
         operation.start()
 
-        waitForExpectationsWithTimeout(timeout) {
+        waitForExpectations(withTimeout: timeout) {
             error in
             if (error != nil) {
                 XCTFail("Expectation failed")

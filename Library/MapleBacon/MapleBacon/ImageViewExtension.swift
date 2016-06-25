@@ -9,34 +9,35 @@ private var ImageViewAssociatedObjectKeyHandle: UInt8 = 1
 
 extension UIImageView {
 
-    public func setImageWithURL(url: NSURL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
+    public func setImageWithURL(url: URL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
             cacheScaled: Bool = false, completion: ImageDownloaderCompletion? = nil) {
         if let placeholder = placeholder {
             image = placeholder
         }
         cancelDownload()
         self.key = url
-        if let operation = downloadOperationWithURL(url, placeholder: placeholder, crossFadePlaceholder: crossFade,
+        if let operation = downloadOperationWithURL(url: url, placeholder: placeholder, crossFadePlaceholder: crossFade,
             cacheScaled: cacheScaled, completion: completion) {
             self.operation = operation
         }
     }
 
-    private func downloadOperationWithURL(url: NSURL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
+    private func downloadOperationWithURL(url: URL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
             cacheScaled: Bool = false, completion: ImageDownloaderCompletion? = nil) -> ImageDownloadOperation? {
-        return ImageManager.sharedManager.downloadImageAtURL(url, cacheScaled: cacheScaled, imageView: self) {
+        return ImageManager.sharedManager.downloadImageAtURL(url: url, cacheScaled: cacheScaled, imageView: self) {
             [weak self] imageInstance, error in
-            dispatch_async(dispatch_get_main_queue()) {
+            
+            DispatchQueue.main.async(execute: { 
                 if let instance = imageInstance {
                     if let _ = placeholder where crossFade && instance.state != .Cached {
-                        self?.layer.addAnimation(CATransition(), forKey: nil)
+                        self?.layer.add(CATransition(), forKey: nil)
                     }
                     if (self?.key == instance.url) {
                         self?.image = instance.image
                     }
                 }
                 completion?(imageInstance, error)
-            }
+            })
         }
     }
 

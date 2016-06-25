@@ -6,176 +6,234 @@ import UIKit
 
 public typealias ResizerCompletion = (UIImage) -> Void
 
-public class Resizer {
-
-    private static let deviceScale = UIScreen.mainScreen().scale
-
-    public class func resizeImage(image: UIImage, toSize size: CGSize, async: Bool = true, completion: ResizerCompletion) {
-        resizeImage(image, contentMode: .ScaleToFill, toSize: size, interpolationQuality: .Default,
-                async: async, completion: completion)
+internal extension CGSize {
+    
+    func scaled(factor: CGFloat? = nil) -> CGSize {
+        let scale = factor ?? UIScreen.main().scale
+        return CGSize(width: self.width * scale, height: self.height * scale)
     }
+    
+    func zeroBoundedRect() -> CGRect {
+        return CGRect(x: 0, y: 0, width: self.width, height: self.height)
+    }
+}
 
-    public class func resizeImage(image: UIImage, contentMode: UIViewContentMode, toSize size: CGSize,
-                                  interpolationQuality quality: CGInterpolationQuality,
-                                  async: Bool = true, completion: ResizerCompletion) {
+internal extension CGRect {
+    
+    func scaled(factor: CGFloat? = nil) -> CGRect {
+        let scale = factor ?? UIScreen.main().scale
+        return CGRect(x: self.origin.x * scale, y: self.origin.y * scale, width: self.size.width * scale, height: self.size.height * scale)
+    }
+    
+    func zeroBoundedRect() -> CGRect {
+        return CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+    }
+}
+
+public class Resizer {
+    
+    var image: UIImage
+    
+    private struct ResizeCalculationEntity {
+        
+        var currentSize: CGSize  = CGSize()
+        var intendedSize: CGSize = CGSize()
+        
+        var horizontalRatio: CGFloat = 0
+        var verticalRatio: CGFloat = 0
+        var newSize: CGSize = CGSize()
+        var offset: CGSize = CGSize()
+        var offsetPoint: CGPoint = CGPoint()
+        
+        var resizeBounds: CGRect {
+            return CGRect(x: self.offsetPoint.x, y: self.offsetPoint.y, width: self.intendedSize.width, height: self.intendedSize.height)
+        }
+        
+        init(currentSize imgSize: CGSize, intendedSize size: CGSize) {
+            
+            self.currentSize = imgSize
+            self.intendedSize = size
+            
+            self.horizontalRatio = size.width / imgSize.width
+            self.verticalRatio = size.height / imgSize.height
+            self.offset = CGSize(width: imgSize.width - size.width, height: imgSize.height - size.height)
+            self.offsetPoint = CGPoint(x: self.offset.width / 2.0, y: self.offset.height / 2.0)
+        }
+        
+        mutating func applyContentMode(contentMode: UIViewContentMode) {
+            switch (contentMode) {
+            case .scaleToFill, .redraw:
+                self.newSize = CGSize(width: self.currentSize.width * self.horizontalRatio, height: self.currentSize.height * self.verticalRatio)
+                self.offset  = self.calcOffset(fromSize: self.newSize, toSize: self.intendedSize)
+            case .scaleAspectFill:
+                let ratio = max(self.horizontalRatio, self.verticalRatio)
+                newSize = CGSize(width: self.currentSize.width * ratio, height: currentSize.height * ratio)
+                offset = self.calcOffset(fromSize: newSize, toSize: self.intendedSize)
+            case .scaleAspectFit:
+                let ratio = min(self.horizontalRatio, self.verticalRatio)
+                newSize = CGSize(width: self.currentSize.width * ratio, height: self.currentSize.height * ratio)
+                offset = self.calcOffset(fromSize: newSize, toSize: self.intendedSize)
+            case .center:
+                break
+            case .top:
+                self.offsetPoint.y = 0
+            case .bottom:
+                self.offsetPoint.y = self.offset.height
+            case .left:
+                self.offsetPoint.x = 0
+            case .right:
+                self.offsetPoint.x = self.offset.width
+            case .topLeft:
+                self.offsetPoint = CGPoint(x: 0, y: 0)
+            case .topRight:
+                self.offsetPoint = CGPoint(x: self.offset.width, y: 0)
+            case .bottomLeft:
+                self.offsetPoint = CGPoint(x: 0, y: self.offset.height)
+            case .bottomRight:
+                self.offsetPoint = CGPoint(x: self.offset.width, y: self.offset.height)
+            }
+        }
+        
+        private mutating func calcOffset(fromSize size: CGSize, toSize: CGSize) -> CGSize {
+            let size = CGSize(width: size.width - toSize.width, height: size.height - toSize.height)
+            self.offsetPoint = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
+            
+            return size
+        }
+    }
+    
+    init(image: UIImage) {
+        self.image = image
+    }
+    
+    public func resize(toSize size: CGSize, async: Bool = true, completion: ResizerCompletion) {
+        self.resize(toSize: size, contentMode: .scaleToFill, interpolationQuality: .default, async: async, completion: completion)
+    }
+    
+    public func resize(toSize size: CGSize, contentMode: UIViewContentMode, interpolationQuality quality: CGInterpolationQuality = .default, async: Bool = true, completion: ResizerCompletion) {
+        
+        // if image is already smaller/equal than/like requested abbort
         if image.size.height < size.height && image.size.width < size.width {
             completion(image)
             return
         }
-        let horizontalRatio = size.width / image.size.width
-        let verticalRatio = size.height / image.size.height
-        var newSize = image.size
-        var offset = offsetFromSize(image.size, toSize: size)
-        var newX = offset.width / 2
-        var newY = offset.height / 2
-
-        switch (contentMode) {
-        case .ScaleToFill, .Redraw:
-            newSize = CGSize(width: image.size.width * horizontalRatio, height: image.size.height * verticalRatio)
-            offset = offsetFromSize(newSize, toSize: size)
-            newX = offset.width / 2
-            newY = offset.height / 2
-        case .ScaleAspectFill:
-            let ratio = max(horizontalRatio, verticalRatio)
-            newSize = CGSize(width: image.size.width * ratio, height: image.size.height * ratio)
-            offset = offsetFromSize(newSize, toSize: size)
-            newX = offset.width / 2
-            newY = offset.height / 2
-        case .ScaleAspectFit:
-            let ratio = min(horizontalRatio, verticalRatio)
-            newSize = CGSize(width: image.size.width * ratio, height: image.size.height * ratio)
-            offset = offsetFromSize(newSize, toSize: size)
-            newX = offset.width / 2
-            newY = offset.height / 2
-        case .Center:
-            break
-        case .Top:
-            newY = 0
-        case .Bottom:
-            newY = offset.height
-        case .Left:
-            newX = 0
-        case .Right:
-            newX = offset.width
-        case .TopLeft:
-            newX = 0
-            newY = 0
-        case .TopRight:
-            newX = offset.width
-            newY = 0
-        case .BottomLeft:
-            newX = 0
-            newY = offset.height
-        case .BottomRight:
-            newX = offset.width
-            newY = offset.height
+        
+        var resizeData = ResizeCalculationEntity(currentSize: image.size, intendedSize: size)
+        resizeData.applyContentMode(contentMode: contentMode)
+        
+        let newSize   = resizeData.newSize.scaled()
+        let newBounds = resizeData.resizeBounds.scaled()
+        
+        let action = {
+            self.resize(toSize: newSize, toBounds: newBounds, interpolationQuality: quality, async: async, completion: completion)
         }
-
-        let scaleDependentNewSize = CGSize(width: newSize.width * deviceScale, height: newSize.height * deviceScale)
-        let newBounds = CGRect(x: newX * deviceScale, y: newY * deviceScale, width: size.width * deviceScale,
-                height: size.height * deviceScale)
 
         if async {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                self.resizeImageFromImage(image, toSize: scaleDependentNewSize, newBounds: newBounds,
-                        interpolationQuality: quality, async: async, completion: completion)
-            }
-        } else {
-            self.resizeImageFromImage(image, toSize: scaleDependentNewSize, newBounds: newBounds,
-                    interpolationQuality: quality, async: async, completion: completion)
+            
+            DispatchQueue.global().async(execute: action)
+            return
         }
+        
+        action()
     }
-
-    private class func resizeImageFromImage(image: UIImage, toSize size: CGSize, newBounds bounds: CGRect,
-                                            interpolationQuality quality: CGInterpolationQuality, async: Bool,
-                                            completion: ResizerCompletion) {
-        var imageToReturn = image
-        if let resizedImage = imageFromImage(image, toSize: size, interpolationQuality: quality),
-        let croppedImage = croppedImageFromImage(resizedImage, toBounds: bounds) {
-            imageToReturn = croppedImage
-        }
-        if async {
-            dispatch_async(dispatch_get_main_queue()) {
-                completion(imageToReturn)
-            }
-        } else {
-            completion(imageToReturn)
-        }
-    }
-
-    private class func offsetFromSize(size: CGSize, toSize: CGSize) -> CGSize {
-        return CGSize(width: size.width - toSize.width, height: size.height - toSize.height)
-    }
-
-    private class func imageFromImage(image: UIImage, toSize size: CGSize,
-                                      interpolationQuality quality: CGInterpolationQuality) -> UIImage? {
+    
+    // resizeImageFromImage
+    private func resize(toSize size: CGSize, toBounds bounds: CGRect, interpolationQuality quality: CGInterpolationQuality, async: Bool, completion: ResizerCompletion) {
+        
+        var imageToReturn = self.image
+        
         let drawTransposed: Bool
         switch (image.imageOrientation) {
-        case .Left, .LeftMirrored, .Right, .RightMirrored:
+        case .left, .leftMirrored, .right, .rightMirrored:
             drawTransposed = true
         default:
             drawTransposed = false
         }
-
-        return imageFromImage(image, toSize: size, usingTransform: transformForOrientationImage(image, toSize: size),
-                drawTransposed: drawTransposed, interpolationQuality: quality)
+        
+        if
+            let resizedImage = resize(toSize: size, usingTransform: transformForOrientation(toSize: size), drawTransposed: drawTransposed, interpolationQuality: quality),
+            let croppedImage = crop(image: resizedImage, toBounds: bounds) {
+            
+            imageToReturn = croppedImage
+        }
+      
+        let action = {
+            completion(imageToReturn)
+        }
+        
+        if async {
+            DispatchQueue.main.async(execute: action)
+            return
+        }
+        
+        action()
     }
 
-    private class func croppedImageFromImage(image: UIImage, toBounds bounds: CGRect) -> UIImage? {
-        if let cgimage = CGImageCreateWithImageInRect(image.CGImage, bounds) {
-            return UIImage(CGImage: cgimage)
+    
+    private func resize(toSize size: CGSize, usingTransform transform: CGAffineTransform, drawTransposed transpose: Bool, interpolationQuality quality: CGInterpolationQuality) -> UIImage? {
+        
+        let newRect = size.zeroBoundedRect().integral
+        let transposedRect = newRect.zeroBoundedRect()
+        
+        guard let imageRef: CGImage = image.cgImage else {
+            return nil
+        }
+        
+        let bpc = imageRef.bitsPerComponent
+        let bpr = imageRef.bytesPerRow * Int(UIScreen.main().scale)
+        let crs = imageRef.colorSpace!
+        let bmi = imageRef.bitmapInfo.rawValue
+        
+        guard let bitmap = CGContext(data: nil, width: Int(newRect.size.width), height: Int(newRect.size.height), bitsPerComponent: bpc, bytesPerRow: bpr, space: crs, bitmapInfo: bmi) else {
+            return nil
+        }
+        
+        bitmap.concatCTM(transform)
+        bitmap.interpolationQuality = quality
+        bitmap.draw(in: transpose ? transposedRect : newRect, image: imageRef)
+        
+        if let cgimage = bitmap.makeImage() {
+            return UIImage(cgImage: cgimage)
+        }
+        
+        return nil
+    }
+    
+    private func crop(image: UIImage, toBounds bounds: CGRect) -> UIImage? {
+        if let cgimage = image.cgImage!.cropping(to: bounds) {
+            return UIImage(cgImage: cgimage)
         }
         return nil
     }
-
-    private class func imageFromImage(image: UIImage, toSize size: CGSize,
-                                      usingTransform transform: CGAffineTransform, drawTransposed transpose: Bool,
-                                      interpolationQuality quality: CGInterpolationQuality) -> UIImage? {
-        let newRect = CGRectIntegral(CGRect(x: 0, y: 0, width: size.width, height: size.height))
-        let transposedRect = CGRect(x: 0, y: 0, width: newRect.size.height, height: newRect.size.width)
-        let imageRef = image.CGImage
-                                        
-        let bitmap = CGBitmapContextCreate(nil, Int(newRect.size.width), Int(newRect.size.height), CGImageGetBitsPerComponent(imageRef), CGImageGetBytesPerRow(imageRef) * Int(deviceScale), CGImageGetColorSpace(imageRef), CGImageGetBitmapInfo(imageRef).rawValue)
+    
+    private func transformForOrientation(toSize size: CGSize) -> CGAffineTransform {
+        var transform = CGAffineTransform()
         
-        CGContextConcatCTM(bitmap, transform)
-        CGContextSetInterpolationQuality(bitmap, quality)
-        CGContextDrawImage(bitmap, transpose ? transposedRect : newRect, imageRef)
-                                        if let cgimage = CGBitmapContextCreateImage(bitmap) {
-                                            return UIImage(CGImage: cgimage)
-                                        }
-                                        return nil
-        
-    }
-
-    private class func transformForOrientationImage(image: UIImage, toSize size: CGSize) -> CGAffineTransform {
-        var transform = CGAffineTransformIdentity
-
         switch (image.imageOrientation) {
-        case .Down, .DownMirrored:
-            transform = CGAffineTransformTranslate(transform, size.width, size.height)
-            transform = CGAffineTransformRotate(transform, CGFloat(M_PI))
-        case .Left, .LeftMirrored:
-            transform = CGAffineTransformTranslate(transform, size.width, 0)
-            transform = CGAffineTransformRotate(transform, CGFloat(M_PI_2))
-        case .Right, .RightMirrored:
-            transform = CGAffineTransformTranslate(transform, 0, size.height)
-            transform = CGAffineTransformRotate(transform, CGFloat(-M_PI_2))
+        case .down, .downMirrored:
+            transform = transform.translateBy(x: size.width, y: size.height)
+            transform = transform.rotate(CGFloat(M_PI))
+        case .left, .leftMirrored:
+            transform = transform.translateBy(x: size.width, y: 0)
+            transform = transform.rotate(CGFloat(M_PI_2))
+        case .right, .rightMirrored:
+            transform = transform.translateBy(x: 0, y: size.height)
+            transform = transform.rotate(CGFloat(-M_PI_2))
         default:
             break
         }
-
+        
         switch (image.imageOrientation) {
-        case .DownMirrored, .UpMirrored:
-            transform = CGAffineTransformTranslate(transform, size.width, 0)
-            transform = CGAffineTransformScale(transform, -1, 1)
-        case .LeftMirrored, .RightMirrored:
-            transform = CGAffineTransformTranslate(transform, size.height, 0)
-            transform = CGAffineTransformScale(transform, -1, 1)
+        case .downMirrored, .upMirrored:
+            transform = transform.translateBy(x: size.width, y: 0)
+            transform = transform.scaleBy(x: -1, y: 1)
+        case .leftMirrored, .rightMirrored:
+            transform = transform.translateBy(x: size.height, y: 0)
+            transform = transform.scaleBy(x: -1, y: 1)
         default:
             break
         }
-
+        
         return transform
     }
-
 }

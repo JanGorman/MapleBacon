@@ -22,7 +22,7 @@ class ImageExampleViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let file = NSBundle.mainBundle().pathForResource("imageURLs", ofType: "plist"),
+        if let file = Bundle.main().pathForResource("imageURLs", ofType: "plist"),
            paths = NSArray(contentsOfFile: file) as? [String] {
                 for url in paths {
                     imageURLs.append(url)
@@ -31,13 +31,13 @@ class ImageExampleViewController: UICollectionViewController {
         collectionView?.reloadData()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let gradient = CAGradientLayer()
         gradient.frame = view.frame
-        gradient.colors = [UIColor(red: 127 / 255, green: 187 / 255, blue: 154 / 255, alpha: 1).CGColor,
-                           UIColor(red: 14 / 255, green: 43 / 255, blue: 57 / 255, alpha: 1).CGColor]
-        view.layer.insertSublayer(gradient, atIndex: 0)
+        gradient.colors = [UIColor(red: 127 / 255, green: 187 / 255, blue: 154 / 255, alpha: 1).cgColor,
+                           UIColor(red: 14 / 255, green: 43 / 255, blue: 57 / 255, alpha: 1).cgColor]
+        view.layer.insertSublayer(gradient, at: 0)
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,7 +46,7 @@ class ImageExampleViewController: UICollectionViewController {
     }
 
     @IBAction func clearCache(sender: AnyObject) {
-        MapleBaconStorage.sharedStorage.clearStorage()
+        MapleBaconStorage.sharedStorage.clear()
     }
 
 }
@@ -55,21 +55,22 @@ extension ImageExampleViewController {
 
     // MARK: UICollectionViewDataSource
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageURLs.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell: ImageCell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as? ImageCell else {
+        guard let cell: ImageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCell else {
             return UICollectionViewCell()
         }
         
-        if let imageURL = NSURL(string: imageURLs[indexPath.row]) {
-            cell.imageView?.setImageWithURL(imageURL) {
+        if let imageURL = URL(string: imageURLs[indexPath.row]) {
+            cell.imageView?.setImage(withUrl: imageURL) {
                 _, error in
-                if error == nil {
-                    cell.imageView?.layer.addAnimation(CATransition(), forKey: nil)
+                
+                if nil == error {
+                    cell.imageView?.layer.add(CATransition(), forKey: nil)
                 }
             }
         }

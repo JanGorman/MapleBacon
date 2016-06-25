@@ -109,7 +109,7 @@ public class Resizer {
     /**
      Inits with the image to transform
      */
-    init(image: UIImage) {
+    public init(image: UIImage) {
         self.image = image
     }
     

@@ -9,7 +9,7 @@ private var imageViewAssociatedObjectKeyHandle: UInt8 = 1
 
 extension UIImageView {
 
-    public func setImageWithURL(url: URL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
+    public func setImage(withUrl url: URL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
             cacheScaled: Bool = false, completion: ImageDownloaderCompletion? = nil) {
         if let placeholder = placeholder {
             image = placeholder

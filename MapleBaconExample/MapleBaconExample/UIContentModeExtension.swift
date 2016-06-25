@@ -6,38 +6,38 @@ import UIKit
 
 extension UIViewContentMode {
 
-//    func simpleDescription() -> String {
-//        switch self {
-//        case .ScaleToFill:
-//            return "ScaleToFill"
-//        case .ScaleAspectFit:
-//            return "ScaleAspectFit"
-//        case .ScaleAspectFill:
-//            return "ScaleAspectFill"
-//        case .Redraw:
-//            return "Redraw"
-//        case .Center:
-//            return "Center"
-//        case .Top:
-//            return "Top"
-//        case .Bottom:
-//            return "Bottom"
-//        case .Left:
-//            return "Left"
-//        case .Right:
-//            return "Right"
-//        case .TopLeft:
-//            return "TopLeft"
-//        case .TopRight:
-//            return "TopRight"
-//        case .BottomLeft:
-//            return "BottomLeft"
-//        case .BottomRight:
-//            return "BottomRight"
-//        }
-//    }
+    func simpleDescription() -> String {
+        switch self {
+        case .scaleToFill:
+            return "ScaleToFill"
+        case .scaleAspectFit:
+            return "ScaleAspectFit"
+        case .scaleAspectFill:
+            return "ScaleAspectFill"
+        case .redraw:
+            return "Redraw"
+        case .center:
+            return "Center"
+        case .top:
+            return "Top"
+        case .bottom:
+            return "Bottom"
+        case .left:
+            return "Left"
+        case .right:
+            return "Right"
+        case .topLeft:
+            return "TopLeft"
+        case .topRight:
+            return "TopRight"
+        case .bottomLeft:
+            return "BottomLeft"
+        case .bottomRight:
+            return "BottomRight"
+        }
+    }
 
-    static let allValues = [ScaleToFill, ScaleAspectFit, ScaleAspectFill, Redraw,
-                            Center, Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight]
+    static let allValues = [scaleToFill, scaleAspectFit, scaleAspectFill, redraw,
+                            center, top, bottom, left, right, topLeft, topRight, bottomLeft, bottomRight]
 
 }

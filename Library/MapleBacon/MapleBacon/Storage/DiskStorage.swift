@@ -25,7 +25,7 @@ public final class DiskStorage {
         guard let path: NSString = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first! as NSString else {
             preconditionFailure("no paths available")
         }
-        self.storagePath = path.appendingPathComponent(baseStoragePath + name)
+        storagePath = path.appendingPathComponent(baseStoragePath + name)
         
         do {
             try fileManager.createDirectory(atPath: storagePath, withIntermediateDirectories: true, attributes: nil)
@@ -41,11 +41,10 @@ extension DiskStorage: Storage {
         guard let data: Data = UIImagePNGRepresentation(image) else {
             return
         }
-        self.store(data: data, forKey: key)
+        store(data: data, forKey: key)
     }
     
     public func store(data: Data, forKey key: String) {
-        
         storageQueue.async { 
             [unowned self] in
             self.fileManager.createFile(atPath: self.defaultPath(forKey: key), contents: data, attributes: nil)
@@ -55,7 +54,7 @@ extension DiskStorage: Storage {
     
     public func image(forKey key: String) -> UIImage? {
         do {
-            let data: Data = try Data(contentsOf: self.defaultUrl(forKey: key))
+            let data = try Data(contentsOf: self.defaultUrl(forKey: key))
             return UIImage.image(withCachedData: data)
         } catch _ {
             return nil
@@ -63,7 +62,6 @@ extension DiskStorage: Storage {
     }
     
     public func remove(imageForKey key: String) {
-
         storageQueue.async { 
             [unowned self] in
             
@@ -75,9 +73,7 @@ extension DiskStorage: Storage {
     }
     
     public func clear() {
-        
         storageQueue.async {
-            
             do {
                 try self.fileManager.removeItem(atPath: self.storagePath)
                 try self.fileManager.createDirectory(atPath: self.storagePath, withIntermediateDirectories: true, attributes: nil)
@@ -87,11 +83,8 @@ extension DiskStorage: Storage {
     }
     
     public func prune() {
-        
         storageQueue.async {
-            
             let directoryURL = URL(fileURLWithPath: self.storagePath, isDirectory: true)
-            
             guard let enumerator = self.fileManager.enumerator(at: directoryURL,
                 includingPropertiesForKeys: [URLResourceKey.isDirectoryKey.rawValue, URLResourceKey.contentModificationDateKey.rawValue],
                 options: .skipsHiddenFiles, errorHandler: nil) else {
@@ -104,7 +97,7 @@ extension DiskStorage: Storage {
 
     private func defaultPath(forKey key: String) -> String {
         
-        let digestedKey = (self.useUuid)
+        let digestedKey = useUuid
             ? NSUUID(namespace: defaultImageNs, name: key).uuidString.lowercased()
             : key.sha1()
         
@@ -116,15 +109,15 @@ extension DiskStorage: Storage {
         return URL(fileURLWithPath: self.defaultPath(forKey: key), isDirectory: true)
     }
 
-    private func expiredFiles(usingEnumerator enumerator: FileManager.DirectoryEnumerator) -> [NSURL] {
-        let expirationDate = NSDate(timeIntervalSinceNow: -maxAge)
-        var expiredFiles = [NSURL]()
-        while let fileURL = enumerator.nextObject() as? NSURL {
+    private func expiredFiles(usingEnumerator enumerator: FileManager.DirectoryEnumerator) -> [URL] {
+        let expirationDate = Date(timeIntervalSinceNow: -maxAge)
+        var expiredFiles = [URL]()
+        while let fileURL = enumerator.nextObject() as? URL {
             if self.isDirectory(fileURL: fileURL) {
                 enumerator.skipDescendants()
                 continue
             }
-            if let modificationDate = modificationDate(fileURL: fileURL) where modificationDate.laterDate(expirationDate as Date) == expirationDate {
+            if let modificationDate = modificationDate(fileURL: fileURL) where modificationDate.laterDate(expirationDate) == expirationDate {
                 expiredFiles.append(fileURL)
             }
         }
@@ -153,10 +146,10 @@ extension DiskStorage: Storage {
         return modificationDateResource as? NSDate
     }
 
-    private func deleteExpiredFiles(files: [NSURL]) {
+    private func deleteExpiredFiles(files: [URL]) {
         for file in files {
             do {
-                try fileManager.removeItem(at: file as URL)
+                try fileManager.removeItem(at: file)
             } catch _ {
             }
         }

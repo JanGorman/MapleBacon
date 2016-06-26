@@ -20,7 +20,7 @@ public class ImageManager {
                                    completion: ImageDownloaderCompletion?) -> ImageDownloadOperation? {
         
         if let cachedImage = storage.image(forKey: url.absoluteString!) {
-            completion?(ImageInstance(image: cachedImage, state: .Cached, url: url), nil)
+            completion?(ImageInstance(image: cachedImage, state: .cached, url: url), nil)
             return nil
         }
         
@@ -34,7 +34,7 @@ public class ImageManager {
             return downloadOperation
         }
         
-        completion?(ImageInstance(image: nil, state: .Downloading, url: nil), nil)
+        completion?(ImageInstance(image: nil, state: .downloading, url: nil), nil)
         delay(delay: 0.1) {
             _ = self.downloadImage(atUrl: url, cacheScaled: cacheScaled, imageView: imageView, storage: storage, completion: completion)
         }
@@ -48,22 +48,21 @@ public class ImageManager {
             self?.downloadsInProgress[url] = nil
             if let newImage = imageInstance?.image {
                 if cacheScaled && imageView != nil && newImage.images == nil {
-                    self?.resizeAndStoreImage(image: newImage, imageView: imageView!, storage: storage,
+                    self?.resizeAndStore(image: newImage, imageView: imageView!, storage: storage,
                         key: url.absoluteString!)
                 } else if let imageData = imageInstance?.data {
-                    //storage.storeImage(newImage, data: imageData, forKey: url.absoluteString)
+                    
                     storage.store(data: imageData, forKey: url.absoluteString!)
                 }
-                completion?(ImageInstance(image: newImage, state: .New, url: imageInstance?.url), nil)
+                completion?(ImageInstance(image: newImage, state: .new, url: imageInstance?.url), nil)
             }
         }
     }
 
-    private func resizeAndStoreImage(image: UIImage, imageView: UIImageView, storage: Storage, key: String) {
+    private func resizeAndStore(image: UIImage, imageView: UIImageView, storage: Storage, key: String) {
         
         let resizer = Resizer(image: image)
-        resizer.resize(toSize: imageView.bounds.size, contentMode: imageView.contentMode, interpolationQuality: CGInterpolationQuality.default) {
-            (resizedImage) in
+        resizer.resize(toSize: imageView.bounds.size, contentMode: imageView.contentMode, interpolationQuality: CGInterpolationQuality.default) { resizedImage in
             
             storage.store(image: resizedImage, forKey: key)
         }

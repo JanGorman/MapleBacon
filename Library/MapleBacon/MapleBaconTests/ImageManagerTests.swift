@@ -22,7 +22,7 @@ class ImageManagerTests: XCTestCase {
         _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
             [unowned self] (imageInstance, _) in
             if let imageInstance = imageInstance {
-                if imageInstance.state == .New {
+                if imageInstance.state == .new {
                     downloadedImageExpectation.fulfill()
                     XCTAssertFalse(self.imageManager.hasDownloadsInProgress(),
                             "Image downloaded but manager still has downloads in progress")
@@ -33,7 +33,7 @@ class ImageManagerTests: XCTestCase {
         _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
             [unowned self] (imageInstance, _) in
             if let imageInstance = imageInstance {
-                if imageInstance.state == .Downloading {
+                if imageInstance.state == .downloading {
                     downloadingImageExpectation.fulfill()
                     XCTAssertTrue(self.imageManager.hasDownloadsInProgress(),
                             "Image downloading but manager has no downloads in progress")
@@ -59,7 +59,7 @@ class ImageManagerTests: XCTestCase {
                 self.imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
                     [unowned self] (imageInstance, _) in
                     if let imageInstance = imageInstance {
-                        if imageInstance.state == .Cached {
+                        if imageInstance.state == .cached {
                             cachedExpectation.fulfill()
                             XCTAssertFalse(self.imageManager.hasDownloadsInProgress(),
                                     "Image returned from cache but manager still has downloads in progress")
@@ -84,7 +84,7 @@ class ImageManagerTests: XCTestCase {
         _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
             [unowned self] imageInstance, error -> Void in
             if let imageInstance = imageInstance {
-                if imageInstance.state == .New {
+                if imageInstance.state == .new {
                     newImageExpectation.fulfill()
                     XCTAssertFalse(self.imageManager.hasDownloadsInProgress(),
                             "Image downloaded but manager still has downloads in progress")

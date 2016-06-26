@@ -13,7 +13,7 @@ internal let defaultImageNs: UUID = NSUUID(
 
 public protocol Storage {
     /**
-     Should store an image
+     Stores an image
      
      - parameter image: the image
      - parameter key:   the key to save the image for
@@ -21,7 +21,7 @@ public protocol Storage {
     func store(image: UIImage, forKey key: String)
     
     /**
-     Should store the NSData
+     Stores the NSData
      
      - parameter data: the data
      - parameter key:  the key to save for
@@ -84,9 +84,9 @@ public class MapleBaconStorage {
      
      - returns: the adapter
      */
-    private func adapter(name: String) -> Storage {
+    private func adapter(withName name: String) -> Storage? {
         guard let adapter: Storage = self.adapters[name] else {
-            preconditionFailure("unknown adapter requested")
+            return nil
         }
         return adapter
     }
@@ -96,40 +96,30 @@ extension MapleBaconStorage: Storage {
 
     public func store(image: UIImage, forKey key: String) {
         
-        self.adapters.forEach { $1.store(image: image, forKey: key) }
+        adapters.values.forEach { $0.store(image: image, forKey: key) }
     }
     
     public func store(data: Data, forKey key: String) {
         
-        self.adapters.forEach {$1.store(data: data, forKey: key) }
+        adapters.values.forEach { $0.store(data: data, forKey: key) }
     }
     
     public func image(forKey key: String) -> UIImage? {
         
-        // try reading from memory first
-        if let image: UIImage = self.adapter(name: MapleBaconStorage.inMemoryStorage).image(forKey: key) {
+        if let adapter = self.adapter(withName: MapleBaconStorage.inMemoryStorage), image = adapter.image(forKey: key) {
             return image
         }
         
-        // read from all other if it fails
         var img: UIImage? = nil
-        self.adapters.forEach {
-            
-            // in order to complete the forEach without break we skip
-            // results if another is found previously
-            if nil != img {
-                return
-            }
-            
-            // We do not ask memory storage again as we did before
-            if MapleBaconStorage.inMemoryStorage == $0 {
-                return
-            }
+        
+        self.adapters.filter { $0.key != MapleBaconStorage.inMemoryStorage }.forEach {
+            if img != nil { return }
             
             if let image: UIImage = $1.image(forKey: key) {
                 img = image
             }
         }
+        
         return img
     }
     
@@ -144,6 +134,6 @@ extension MapleBaconStorage: Storage {
 
 extension MapleBaconStorage: CombinedStorage {
     public func clearMemoryStorage() {
-        self.adapter(name: MapleBaconStorage.inMemoryStorage).clear()
+        self.adapter(withName: MapleBaconStorage.inMemoryStorage)?.clear()
     }
 }

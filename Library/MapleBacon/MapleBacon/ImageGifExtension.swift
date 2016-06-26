@@ -8,14 +8,14 @@ import ImageIO
 extension UIImage {
 
     class func image(withCachedData data: Data) -> UIImage? {
-        guard data.count > 0 else { return nil }
+        guard !data.isEmpty else { return nil }
         
-        return isAnimatedImage(data: data) ? animatedImageWithData(data: data) : UIImage(data: data as Data)
+        return isAnimatedImage(data: data) ? animatedImage(withData: data) : UIImage(data: data)
     }
 
-    private class func animatedImageWithData(data: Data) -> UIImage? {
+    private class func animatedImage(withData data: Data) -> UIImage? {
         let source = CGImageSourceCreateWithData(data as CFData, nil)
-        return UIImage.animatedImageWithSource(source: source)
+        return UIImage.animatedImage(withSource: source)
     }
 
     private class func isAnimatedImage(data: Data) -> Bool {
@@ -24,14 +24,14 @@ extension UIImage {
         return CFSwapInt16(length) == 0x4749
     }
 
-    private class func animatedImageWithSource(source: CGImageSource!) -> UIImage? {
+    private class func animatedImage(withSource source: CGImageSource!) -> UIImage? {
         let (images, delays) = createImagesAndDelays(source: source)
         let gifDuration = delays.reduce(0, combine: +)
-        let frames = framesFromImages(images: images, delays: delays)
+        let frames = self.frames(fromImages: images, delays: delays)
         return UIImage.animatedImage(with: frames, duration: Double(gifDuration) / 1000.0)
     }
 
-    private class func framesFromImages(images: [CGImage], delays: [Int]) -> [UIImage] {
+    private class func frames(fromImages images: [CGImage], delays: [Int]) -> [UIImage] {
         let gcd = DivisionMath.greatestCommonDivisor(array: delays)
         var frames = [UIImage]()
         for i in 0..<images.count {
@@ -52,29 +52,26 @@ extension UIImage {
         for i in 0 ..< count {
             if let image = CGImageSourceCreateImageAtIndex(source, i, nil) {
                 images.append(image)
-                delayCentiseconds.append(delayCentisecondsForImageAtIndex(source: source, index: i))
+                delayCentiseconds.append(self.delayCentiseconds(forImageSource: source, atIndex: i))
             }
         }
         return (images, delayCentiseconds)
     }
 
-    private class func delayCentisecondsForImageAtIndex(source: CGImageSource, index: Int) -> Int {
+    private class func delayCentiseconds(forImageSource source: CGImageSource, atIndex index: Int) -> Int {
         
         guard
             let properties: NSDictionary = CGImageSourceCopyPropertiesAtIndex(source, index, nil) as? NSDictionary,
-            let gifProperties = properties[String(kCGImagePropertyGIFDictionary)] as? NSDictionary,
+            gifProperties = properties[String(kCGImagePropertyGIFDictionary)] as? NSDictionary,
             var delayTime: NSNumber = gifProperties[String(kCGImagePropertyGIFUnclampedDelayTime)] as? NSNumber
         else {
             return -1
         }
-                
-        if delayTime.doubleValue == 0 {
-            
-            if let propDelayTime: NSNumber = gifProperties[kCGImagePropertyGIFDelayTime as String] as? NSNumber {
-                delayTime = propDelayTime
-            }
-        }
         
+        if let propDelayTime: NSNumber = gifProperties[kCGImagePropertyGIFDelayTime as String] as? NSNumber where delayTime.doubleValue == 0 {
+            delayTime = propDelayTime
+        }
+
         return Int(delayTime.doubleValue * 1000)
     }
 

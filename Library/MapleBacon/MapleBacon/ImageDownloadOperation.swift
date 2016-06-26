@@ -14,10 +14,10 @@ public class ImageDownloadOperation: Operation {
 
     private var imageURL: URL
     private var delegate: ImageDownloaderDelegate?
-    private var session: Foundation.URLSession?
+    private var session: URLSession?
     private var task: URLSessionDownloadTask?
     private var resumeData: Data?
-    private let progress: Progress = Progress()
+    private let progress = Progress()
 
     public var completionHandler: ImageDownloaderCompletion?
 
@@ -31,9 +31,7 @@ public class ImageDownloadOperation: Operation {
     }
     
     override public var isFinished: Bool {
-        get {
-            return _finished
-        }
+        return _finished
     }
     
     public convenience init(imageURL: URL) {
@@ -47,16 +45,12 @@ public class ImageDownloadOperation: Operation {
     }
 
     public override func start() {
-        let sessionConfiguration = URLSessionConfiguration.default()
-        session = Foundation.URLSession(configuration: sessionConfiguration, delegate: self,
-                delegateQueue: OperationQueue.main())
+        session = URLSession(configuration: .default(), delegate: self, delegateQueue: .main())
         resumeDownload()
     }
 
     public override func cancel() {
-        task?.cancel(byProducingResumeData: {
-            (data) in
-            
+        task?.cancel(byProducingResumeData: { data in
             self.resumeData = data
             self._finished = true
         })
@@ -76,7 +70,7 @@ public class ImageDownloadOperation: Operation {
 
 extension ImageDownloadOperation: URLSessionDownloadDelegate {
 
-    public func urlSession(_ session: Foundation.URLSession, downloadTask: URLSessionDownloadTask,
+    public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
                            didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
                            totalBytesExpectedToWrite: Int64) {
         
@@ -85,17 +79,17 @@ extension ImageDownloadOperation: URLSessionDownloadDelegate {
         delegate?.imageDownloaderDelegate(downloader: self, didReportProgress: progress)
     }
 
-    public func urlSession(_ session: Foundation.URLSession, downloadTask: URLSessionDownloadTask,
+    public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
                            didFinishDownloadingTo location: URL) {
         do {
             
             let newData = try Data(contentsOf: location, options: Data.ReadingOptions.dataReadingMappedIfSafe)
             let newImage = UIImage.image(withCachedData: newData)
-            let newImageInstance = ImageInstance(image: newImage, data: newData, state: .New, url: imageURL)
-            if self.isCancelled == true { return }
+            let newImageInstance = ImageInstance(image: newImage, data: newData, state: .new, url: imageURL)
+            if self.isCancelled { return }
             completionHandler?(newImageInstance, nil)
         } catch let error as NSError {
-            if self.isCancelled == true { return }
+            if self.isCancelled { return }
             completionHandler?(nil, error)
         }
         self._finished = true
@@ -103,7 +97,7 @@ extension ImageDownloadOperation: URLSessionDownloadDelegate {
 
     public func urlSession(_ session: Foundation.URLSession, task: URLSessionTask, didCompleteWithError error: NSError?) {
         if let error = error {
-            if self.isCancelled == true {
+            if self.isCancelled {
                 self._finished = true
                 return
             }
@@ -121,7 +115,7 @@ extension ImageDownloadOperation: URLSessionDownloadDelegate {
 }
 
 public enum ImageInstanceState {
-    case New, Cached, Downloading
+    case new, cached, downloading
 }
 
 public struct ImageInstance {

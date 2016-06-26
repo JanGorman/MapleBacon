@@ -9,21 +9,13 @@
 import Foundation
 import UIKit
 
-/**
- * MapleBacon Config
- */
+
 public class MapleBaconConfig {
     
-    /// singleton param
-    public static let sharedConfig: MapleBaconConfig = MapleBaconConfig()
+    public static let sharedConfig = MapleBaconConfig()
     
-    /// Holds the storage part of the config
     var storage: Storage
     
-    /**
-     Private Constructor
-     inits default config
-     */
     private init() {
         self.storage = MapleBaconConfig.Storage.defaultStorage()
     }
@@ -45,7 +37,7 @@ public class MapleBaconConfig {
         var rootUUIDNamespace: String = ""
         /// should be the bundle-id or other unique app ident
         var baseUUIDName: String = ""
-        /// use UUID Idents instead of clean sha1
+        /// use UUID Idents instead of sha1-ing the image itself
         var useUUID: Bool = true
         
         /**

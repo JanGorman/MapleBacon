@@ -114,21 +114,6 @@ class StorageTests: XCTestCase {
         }
     }
 
-//    func test_whenImageIsStoredOnDiskOnly_itIsAddedToMemoryCache() {
-//        if let image = testImage {
-//            storageKey = __FUNCTION__
-//
-//            diskStorage.storeImage(image, forKey: storageKey!)
-//
-//            let diskImage = asyncStoredImage(inStorage: combinedStorage)
-//            let memoryImage = inMemoryStorage.image(forKey: storageKey!)
-//
-//            XCTAssertNotNil(diskImage)
-//            XCTAssertNotNil(memoryImage)
-//            XCTAssertEqual(diskImage!, memoryImage!)
-//        }
-//    }
-
     func test_whenImageExpires_itIsDeleted() {
         if let image = testImage {
             storageKey = #function

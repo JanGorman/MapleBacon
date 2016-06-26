@@ -12,7 +12,7 @@ class ImageExtensionTests: XCTestCase {
         let expectation = self.expectation(withDescription: "Testing Valid imageView extension")
 
         let imageView = UIImageView()
-        imageView.setImageWithURL(url: URL(string: imageURL)!, completion: {
+        imageView.setImage(withUrl: URL(string: imageURL)!, completion: {
             (imageInstance, _) in
             if nil != imageView.image {
                 expectation.fulfill()

@@ -16,13 +16,13 @@ extension UIImageView {
         }
         cancelDownload()
         self.key = url
-        if let operation = downloadOperationWithURL(url: url, placeholder: placeholder, crossFadePlaceholder: crossFade,
+        if let operation = downloadOperation(withUrl: url, placeholder: placeholder, crossFadePlaceholder: crossFade,
             cacheScaled: cacheScaled, completion: completion) {
             self.operation = operation
         }
     }
 
-    private func downloadOperationWithURL(url: URL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
+    private func downloadOperation(withUrl url: URL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
             cacheScaled: Bool = false, completion: ImageDownloaderCompletion? = nil) -> ImageDownloadOperation? {
         return ImageManager.sharedManager.downloadImage(atUrl: url, cacheScaled: cacheScaled, imageView: self) {
             [weak self] imageInstance, error in
@@ -30,7 +30,7 @@ extension UIImageView {
             DispatchQueue.main.async(execute: { 
                 if let instance = imageInstance {
                     
-                    if let _ = placeholder where crossFade && instance.state != .Cached {
+                    if let _ = placeholder where crossFade && instance.state != .cached {
                         self?.layer.add(CATransition(), forKey: nil)
                     }
                     

@@ -12,6 +12,8 @@ import CommonCrypto
 // MARK: - V5 UUID
 extension NSUUID {
     
+    private static let uuidSize = 16
+    
     /**
      Convenience init for building a uuid from V5 Standard using a
      UUID namespace and a string "name"
@@ -21,11 +23,12 @@ extension NSUUID {
      */
     convenience init(namespace ns: UUID, name: String) {
         
+        let uuidSize = 16
         var uuidBytes: UInt8 = 0
         (ns as NSUUID).getBytes(&uuidBytes)
         
-        let namespaceData: Data = NSData(bytes: &uuidBytes, length: 16) as Data
-        let nameData: Data      = NSData(bytes: name.cString(using: String.Encoding.utf8), length: name.characters.count) as Data
+        let namespaceData: Data = NSData(bytes: &uuidBytes, length: uuidSize) as Data
+        let nameData: Data = NSData(bytes: name.cString(using: .utf8), length: name.characters.count) as Data
         
         var concatData = Data()
         concatData.append(namespaceData)

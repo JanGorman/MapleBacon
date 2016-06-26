@@ -20,11 +20,11 @@
 		2600818F1B3310DC0010C64A /* ImageDownloadOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081801B3310D30010C64A /* ImageDownloadOperationTests.swift */; };
 		260081901B3310DC0010C64A /* ImageExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081811B3310D30010C64A /* ImageExtensionTests.swift */; };
 		260081911B3310DC0010C64A /* ImageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081821B3310D30010C64A /* ImageManagerTests.swift */; };
-		260081931B3310DC0010C64A /* MD5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081841B3310D30010C64A /* MD5Tests.swift */; };
 		260081941B3310DC0010C64A /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081851B3310D30010C64A /* StorageTests.swift */; };
 		946B985E1C0C432C00B0276E /* MapleBacon-tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 946B985D1C0C432C00B0276E /* MapleBacon-tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94B554AD1BCAA3710026D2B1 /* cupcakes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94B554AC1BCAA3710026D2B1 /* cupcakes.jpg */; };
 		9FA18F8C1D1E94F4005A2580 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB337F651C8ADDBD00E1930E /* CommonCrypto.framework */; };
+		9FEE40C81D2091EA0032B780 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEE40C71D2091EA0032B780 /* Extensions.swift */; };
 		ABCDD8A81C917FBF004A468F /* MapleBaconConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCDD8A71C917FBF004A468F /* MapleBaconConfig.swift */; };
 		ABF8F6971C8C539000238157 /* NSUUID+V5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF8F6961C8C539000238157 /* NSUUID+V5.swift */; };
 		F2520C541A3EDAFF0061BB33 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2520C481A3EDAFE0061BB33 /* MapleBacon.framework */; };
@@ -55,13 +55,13 @@
 		260081811B3310D30010C64A /* ImageExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtensionTests.swift; sourceTree = "<group>"; };
 		260081821B3310D30010C64A /* ImageManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManagerTests.swift; sourceTree = "<group>"; };
 		260081831B3310D30010C64A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		260081841B3310D30010C64A /* MD5Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MD5Tests.swift; sourceTree = "<group>"; };
 		260081851B3310D30010C64A /* StorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageTests.swift; sourceTree = "<group>"; };
 		946B985B1C0C432B00B0276E /* MapleBacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapleBacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		946B985D1C0C432C00B0276E /* MapleBacon-tvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MapleBacon-tvOS.h"; sourceTree = "<group>"; };
 		946B985F1C0C432C00B0276E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94B554AC1BCAA3710026D2B1 /* cupcakes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cupcakes.jpg; sourceTree = "<group>"; };
 		94C3446F1BA52B28006A7914 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Library/MapleBacon/MapleBacon/Info.plist; sourceTree = SOURCE_ROOT; };
+		9FEE40C71D2091EA0032B780 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Library/MapleBacon/MapleBacon/Extensions.swift; sourceTree = SOURCE_ROOT; };
 		AB337F651C8ADDBD00E1930E /* CommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB337F691C8ADDBD00E1930E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB337F6D1C8ADE5C00E1930E /* CommonCrypto.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CommonCrypto.xcconfig; sourceTree = "<group>"; };
@@ -147,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				2600817C1B3310C00010C64A /* Resizer.swift */,
+				9FEE40C71D2091EA0032B780 /* Extensions.swift */,
 			);
 			name = Scaling;
 			path = MapleBaconTests;
@@ -183,7 +184,6 @@
 		94C344681BA5295A006A7914 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				260081841B3310D30010C64A /* MD5Tests.swift */,
 				260081851B3310D30010C64A /* StorageTests.swift */,
 			);
 			name = Storage;
@@ -468,6 +468,7 @@
 				ABF8F6971C8C539000238157 /* NSUUID+V5.swift in Sources */,
 				2600816F1B3310A90010C64A /* InMemoryStorage.swift in Sources */,
 				2600817A1B3310B60010C64A /* ImageManager.swift in Sources */,
+				9FEE40C81D2091EA0032B780 /* Extensions.swift in Sources */,
 				260081791B3310B60010C64A /* ImageGifExtension.swift in Sources */,
 				ABCDD8A81C917FBF004A468F /* MapleBaconConfig.swift in Sources */,
 				260081711B3310A90010C64A /* Storage.swift in Sources */,
@@ -481,7 +482,6 @@
 			files = (
 				260081911B3310DC0010C64A /* ImageManagerTests.swift in Sources */,
 				2600818F1B3310DC0010C64A /* ImageDownloadOperationTests.swift in Sources */,
-				260081931B3310DC0010C64A /* MD5Tests.swift in Sources */,
 				260081901B3310DC0010C64A /* ImageExtensionTests.swift in Sources */,
 				260081941B3310DC0010C64A /* StorageTests.swift in Sources */,
 			);

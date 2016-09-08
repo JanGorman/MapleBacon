@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2600816E1B3310A90010C64A /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816A1B3310A90010C64A /* DiskStorage.swift */; };
 		2600816F1B3310A90010C64A /* InMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816B1B3310A90010C64A /* InMemoryStorage.swift */; };
-		260081701B3310A90010C64A /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816C1B3310A90010C64A /* MD5.swift */; };
 		260081711B3310A90010C64A /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816D1B3310A90010C64A /* Storage.swift */; };
 		260081771B3310B60010C64A /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081721B3310B60010C64A /* Delay.swift */; };
 		260081781B3310B60010C64A /* ImageDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081731B3310B60010C64A /* ImageDownloadOperation.swift */; };
@@ -20,11 +19,9 @@
 		2600818F1B3310DC0010C64A /* ImageDownloadOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081801B3310D30010C64A /* ImageDownloadOperationTests.swift */; };
 		260081901B3310DC0010C64A /* ImageExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081811B3310D30010C64A /* ImageExtensionTests.swift */; };
 		260081911B3310DC0010C64A /* ImageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081821B3310D30010C64A /* ImageManagerTests.swift */; };
-		260081931B3310DC0010C64A /* MD5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081841B3310D30010C64A /* MD5Tests.swift */; };
 		260081941B3310DC0010C64A /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081851B3310D30010C64A /* StorageTests.swift */; };
 		2625026B1CC13C5B0057C4A6 /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816A1B3310A90010C64A /* DiskStorage.swift */; };
 		2625026C1CC13C5B0057C4A6 /* InMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816B1B3310A90010C64A /* InMemoryStorage.swift */; };
-		2625026D1CC13C5B0057C4A6 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816C1B3310A90010C64A /* MD5.swift */; };
 		2625026E1CC13C5B0057C4A6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600816D1B3310A90010C64A /* Storage.swift */; };
 		2625026F1CC13C640057C4A6 /* Resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2600817C1B3310C00010C64A /* Resizer.swift */; };
 		262502701CC13C690057C4A6 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260081721B3310B60010C64A /* Delay.swift */; };
@@ -50,7 +47,6 @@
 /* Begin PBXFileReference section */
 		2600816A1B3310A90010C64A /* DiskStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
 		2600816B1B3310A90010C64A /* InMemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryStorage.swift; sourceTree = "<group>"; };
-		2600816C1B3310A90010C64A /* MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
 		2600816D1B3310A90010C64A /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		260081721B3310B60010C64A /* Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Delay.swift; path = Library/MapleBacon/MapleBacon/Delay.swift; sourceTree = SOURCE_ROOT; };
 		260081731B3310B60010C64A /* ImageDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageDownloadOperation.swift; path = Library/MapleBacon/MapleBacon/ImageDownloadOperation.swift; sourceTree = SOURCE_ROOT; };
@@ -62,7 +58,6 @@
 		260081811B3310D30010C64A /* ImageExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtensionTests.swift; sourceTree = "<group>"; };
 		260081821B3310D30010C64A /* ImageManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManagerTests.swift; sourceTree = "<group>"; };
 		260081831B3310D30010C64A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		260081841B3310D30010C64A /* MD5Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MD5Tests.swift; sourceTree = "<group>"; };
 		260081851B3310D30010C64A /* StorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageTests.swift; sourceTree = "<group>"; };
 		946B985B1C0C432B00B0276E /* MapleBacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapleBacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		946B985D1C0C432C00B0276E /* MapleBacon-tvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MapleBacon-tvOS.h"; sourceTree = "<group>"; };
@@ -104,7 +99,6 @@
 			children = (
 				2600816A1B3310A90010C64A /* DiskStorage.swift */,
 				2600816B1B3310A90010C64A /* InMemoryStorage.swift */,
-				2600816C1B3310A90010C64A /* MD5.swift */,
 				2600816D1B3310A90010C64A /* Storage.swift */,
 			);
 			name = Storage;
@@ -174,7 +168,6 @@
 		94C344681BA5295A006A7914 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				260081841B3310D30010C64A /* MD5Tests.swift */,
 				260081851B3310D30010C64A /* StorageTests.swift */,
 			);
 			name = Storage;
@@ -302,7 +295,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Zalando SE";
 				TargetAttributes = {
 					946B985A1C0C432B00B0276E = {
@@ -310,9 +303,11 @@
 					};
 					F2520C471A3EDAFE0061BB33 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0800;
 					};
 					F2520C521A3EDAFF0061BB33 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -374,7 +369,6 @@
 				262502701CC13C690057C4A6 /* Delay.swift in Sources */,
 				2625026C1CC13C5B0057C4A6 /* InMemoryStorage.swift in Sources */,
 				262502711CC13C690057C4A6 /* ImageDownloadOperation.swift in Sources */,
-				2625026D1CC13C5B0057C4A6 /* MD5.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,7 +379,6 @@
 				260081771B3310B60010C64A /* Delay.swift in Sources */,
 				2600816E1B3310A90010C64A /* DiskStorage.swift in Sources */,
 				2600817D1B3310C00010C64A /* Resizer.swift in Sources */,
-				260081701B3310A90010C64A /* MD5.swift in Sources */,
 				2600817B1B3310B60010C64A /* ImageViewExtension.swift in Sources */,
 				2600816F1B3310A90010C64A /* InMemoryStorage.swift in Sources */,
 				2600817A1B3310B60010C64A /* ImageManager.swift in Sources */,
@@ -401,7 +394,6 @@
 			files = (
 				260081911B3310DC0010C64A /* ImageManagerTests.swift in Sources */,
 				2600818F1B3310DC0010C64A /* ImageDownloadOperationTests.swift in Sources */,
-				260081931B3310DC0010C64A /* MD5Tests.swift in Sources */,
 				260081901B3310DC0010C64A /* ImageExtensionTests.swift in Sources */,
 				260081941B3310DC0010C64A /* StorageTests.swift in Sources */,
 			);
@@ -421,6 +413,7 @@
 		946B98601C0C432C00B0276E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -443,6 +436,7 @@
 		946B98611C0C432C00B0276E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -476,8 +470,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -487,6 +483,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -523,8 +520,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -533,6 +532,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -542,6 +542,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -553,6 +554,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -568,6 +570,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -575,6 +578,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -589,6 +593,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zalando.MapleBacon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -606,6 +611,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Library/MapleBacon/MapleBaconTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -619,6 +625,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Library/MapleBacon/MapleBaconTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

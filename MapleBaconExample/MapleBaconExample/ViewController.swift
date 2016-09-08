@@ -4,6 +4,6 @@
 
 import UIKit
 
-class ViewController: UITabBarController {
+final class ViewController: UITabBarController {
 }
 

@@ -8,12 +8,12 @@ public final class InMemoryStorage {
 
     public static let sharedStorage = InMemoryStorage()
 
-    private static let DefaultStorageName = "default"
+    private static let defaultStorageName = "default"
     
-    private let cache = NSCache()
+    fileprivate let cache = NSCache<NSString, UIImage>()
 
     public convenience init() {
-        self.init(name: InMemoryStorage.DefaultStorageName)
+        self.init(name: InMemoryStorage.defaultStorageName)
     }
 
     public init(name: String) {
@@ -24,21 +24,21 @@ public final class InMemoryStorage {
 
 extension InMemoryStorage: Storage {
 
-    public func storeImage(image: UIImage, data: NSData?, forKey key: String) {
-        cache.setObject(image, forKey: key, cost: cacheCost(forImage: image))
+    public func storeImage(_ image: UIImage, data: Data?, forKey key: String) {
+        cache.setObject(image, forKey: key as NSString, cost: cacheCost(forImage: image))
     }
     
-    private func cacheCost(forImage image: UIImage) -> Int {
+    fileprivate func cacheCost(forImage image: UIImage) -> Int {
         let imagesCount = image.images?.count ?? 0
         return imagesCount * Int(image.size.width * image.size.height * image.scale * image.scale)
     }
 
     public func image(forKey key: String) -> UIImage? {
-        return cache.objectForKey(key) as? UIImage
+        return cache.object(forKey: key as NSString)
     }
 
     public func removeImage(forKey key: String) {
-        cache.removeObjectForKey(key)
+        cache.removeObject(forKey: key as NSString)
     }
 
     public func clearStorage() {

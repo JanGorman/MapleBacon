@@ -14,14 +14,14 @@ class StorageTests: XCTestCase {
 
     var testImage: UIImage?
     var storageKey: String?
-    var defaultMaxAge: NSTimeInterval?
+    var defaultMaxAge: TimeInterval?
 
     override func setUp() {
         super.setUp()
 
         defaultMaxAge = diskStorage.maxAge
 
-        if let path = NSBundle(forClass: StorageTests.self).pathForResource("cupcakes", ofType: "jpg") {
+        if let path = Bundle(for: StorageTests.self).path(forResource: "cupcakes", ofType: "jpg") {
             testImage = UIImage(contentsOfFile: path)
         } else {
             XCTFail("Missing image")
@@ -40,11 +40,11 @@ class StorageTests: XCTestCase {
     }
 
     func asyncStoredImage(inStorage storage: Storage) -> UIImage? {
-        let timeoutDate = NSDate(timeIntervalSinceNow: 1.0)
+        let timeoutDate = Date(timeIntervalSinceNow: 1.0)
         var storedImage = storage.image(forKey: storageKey!)
         while storedImage == nil && timeoutDate.timeIntervalSinceNow > 0 {
             storedImage = storage.image(forKey: storageKey!)
-            CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.01, true)
+            CFRunLoopRunInMode(CFRunLoopMode.defaultMode, 0.01, true)
         }
         return storedImage
     }

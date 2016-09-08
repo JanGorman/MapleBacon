@@ -9,29 +9,30 @@ private var ImageViewAssociatedObjectKeyHandle: UInt8 = 1
 
 extension UIImageView {
 
-    public func setImageWithURL(url: NSURL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
-            cacheScaled: Bool = false, completion: ImageDownloaderCompletion? = nil) {
+    public func setImageWithURL(_ url: URL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
+                                cacheScaled: Bool = false, completion: ImageDownloaderCompletion? = nil) {
         if let placeholder = placeholder {
             image = placeholder
         }
         cancelDownload()
         self.key = url
         if let operation = downloadOperationWithURL(url, placeholder: placeholder, crossFadePlaceholder: crossFade,
-            cacheScaled: cacheScaled, completion: completion) {
-            self.operation = operation
+                                                    cacheScaled: cacheScaled, completion: completion) {
+          self.operation = operation
         }
     }
 
-    private func downloadOperationWithURL(url: NSURL, placeholder: UIImage? = nil, crossFadePlaceholder crossFade: Bool = true,
-            cacheScaled: Bool = false, completion: ImageDownloaderCompletion? = nil) -> ImageDownloadOperation? {
+    private func downloadOperationWithURL(_ url: URL, placeholder: UIImage? = nil,
+                                              crossFadePlaceholder crossFade: Bool = true, cacheScaled: Bool = false,
+                                              completion: ImageDownloaderCompletion? = nil) -> ImageDownloadOperation? {
         return ImageManager.sharedManager.downloadImageAtURL(url, cacheScaled: cacheScaled, imageView: self) {
             [weak self] imageInstance, error in
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 if let instance = imageInstance {
-                    if let _ = placeholder where crossFade && instance.state != .Cached {
-                        self?.layer.addAnimation(CATransition(), forKey: nil)
+                    if let _ = placeholder , crossFade && instance.state != .cached {
+                        self?.layer.add(CATransition(), forKey: nil)
                     }
-                    if (self?.key == instance.url) {
+                    if self?.key == instance.url {
                         self?.image = instance.image
                     }
                 }
@@ -46,21 +47,20 @@ extension UIImageView {
         }
         set {
             objc_setAssociatedObject(self, &ImageViewAssociatedObjectOperationHandle, newValue,
-                    objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
-    private var key: NSURL? {
+    private var key: URL? {
         get {
-            return objc_getAssociatedObject(self, &ImageViewAssociatedObjectKeyHandle) as? NSURL
+            return objc_getAssociatedObject(self, &ImageViewAssociatedObjectKeyHandle) as? URL
         }
         set {
             objc_setAssociatedObject(self, &ImageViewAssociatedObjectKeyHandle, newValue,
-                objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 
-    
     func cancelDownload() {
         operation?.cancel()
         key = nil

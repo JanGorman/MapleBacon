@@ -8,7 +8,7 @@ internal let baseStoragePath = "de.zalando.MapleBacon."
 
 public protocol Storage {
 
-    func storeImage(image: UIImage, data: NSData?, forKey key: String)
+    func storeImage(_ image: UIImage, data: Data?, forKey key: String)
     func image(forKey key: String) -> UIImage?
     func removeImage(forKey key: String)
     func clearStorage()
@@ -23,8 +23,8 @@ public protocol CombinedStorage {
 
 public final class MapleBaconStorage {
 
-    private let inMemoryStorage: Storage
-    private let diskStorage: Storage
+    fileprivate let inMemoryStorage: Storage
+    fileprivate let diskStorage: Storage
 
     public static let sharedStorage = MapleBaconStorage()
 
@@ -37,7 +37,7 @@ public final class MapleBaconStorage {
 
 extension MapleBaconStorage: Storage {
 
-    public func storeImage(image: UIImage, data: NSData?, forKey key: String) {
+    public func storeImage(_ image: UIImage, data: Data?, forKey key: String) {
         inMemoryStorage.storeImage(image, data: data, forKey: key)
         diskStorage.storeImage(image, data: data, forKey: key)
     }

@@ -4,7 +4,10 @@
 
 import Foundation
 
-func delay(_ delay: Double, closure: @escaping () -> Void) {
-    let time = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-    DispatchQueue.main.asyncAfter(deadline: time, execute: closure)
+/// Delay execution by some DispatchTimeInterval. Runs on the main thread.
+///
+/// - Parameter by: The DispatchTimeInterval to delay execution by
+/// - Parameter closure: The closure to run.
+func delay(by delay: DispatchTimeInterval, closure: @escaping () -> Void) {
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay, execute: closure)
 }

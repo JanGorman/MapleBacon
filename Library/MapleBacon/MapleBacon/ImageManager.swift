@@ -32,7 +32,7 @@ public final class ImageManager {
                 return downloadOperation
             } else {
                 completion?(ImageInstance(image: nil, state: .downloading, url: nil), nil)
-                delay(0.1) {
+                delay(by: .milliseconds(1)) {
                     _ = self.downloadImage(atUrl: url, cacheScaled: cacheScaled, imageView: imageView, storage: storage,
                                            completion: completion)
                 }

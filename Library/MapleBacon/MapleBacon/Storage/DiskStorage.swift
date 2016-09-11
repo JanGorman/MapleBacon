@@ -30,7 +30,7 @@ public final class DiskStorage {
 
 extension DiskStorage: Storage {
     
-    public func storeImage(_ image: UIImage, data: Data?, forKey key: String) {
+    public func store(image: UIImage, data: Data?, forKey key: String) {
         storageQueue.async { [weak self] in
             guard let data = data ?? UIImagePNGRepresentation(image), let storage = self else { return }
             storage.fileManager.createFile(atPath: storage.defaultStoragePath(forKey: key), contents: data,

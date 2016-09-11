@@ -24,7 +24,7 @@ public final class InMemoryStorage {
 
 extension InMemoryStorage: Storage {
 
-    public func storeImage(_ image: UIImage, data: Data?, forKey key: String) {
+    public func store(image: UIImage, data: Data?, forKey key: String) {
         cache.setObject(image, forKey: key as NSString, cost: cacheCost(forImage: image))
     }
     

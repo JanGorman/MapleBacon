@@ -10,15 +10,15 @@ public final class Resizer {
 
     fileprivate static let deviceScale = UIScreen.main.scale
 
-    public static func resizeImage(_ image: UIImage, toSize size: CGSize, async: Bool = true,
+    public static func resize(image: UIImage, toSize size: CGSize, async: Bool = true,
                                 completion: @escaping ResizerCompletion) {
-        resizeImage(image, contentMode: .scaleToFill, toSize: size, interpolationQuality: .default, async: async,
-                    completion: completion)
+        resize(image: image, contentMode: .scaleToFill, toSize: size, interpolationQuality: .default, async: async,
+               completion: completion)
     }
 
-    public static func resizeImage(_ image: UIImage, contentMode: UIViewContentMode, toSize size: CGSize,
-                                  interpolationQuality quality: CGInterpolationQuality,
-                                  async: Bool = true, completion: @escaping ResizerCompletion) {
+    public static func resize(image: UIImage, contentMode: UIViewContentMode, toSize size: CGSize,
+                              interpolationQuality quality: CGInterpolationQuality,
+                              async: Bool = true, completion: @escaping ResizerCompletion) {
         if image.size.height < size.height && image.size.width < size.width {
             completion(image)
             return
@@ -91,7 +91,7 @@ public final class Resizer {
                                              interpolationQuality quality: CGInterpolationQuality, async: Bool,
                                              completion: @escaping ResizerCompletion) {
         var imageToReturn = image
-        if let resizedImage = imageFromImage(image, toSize: size, interpolationQuality: quality),
+        if let resizedImage = imageFrom(image: image, toSize: size, interpolationQuality: quality),
            let croppedImage = croppedImageFromImage(resizedImage, toBounds: bounds) {
             imageToReturn = croppedImage
         }
@@ -108,18 +108,20 @@ public final class Resizer {
         return CGSize(width: size.width - toSize.width, height: size.height - toSize.height)
     }
 
-    private static func imageFromImage(_ image: UIImage, toSize size: CGSize,
-                                       interpolationQuality quality: CGInterpolationQuality) -> UIImage? {
-        let drawTransposed: Bool
-        switch (image.imageOrientation) {
+    private static func imageFrom(image: UIImage, toSize size: CGSize,
+                                  interpolationQuality quality: CGInterpolationQuality) -> UIImage? {
+        return imageFrom(image: image, toSize: size, usingTransform: transformForOrientationImage(image, toSize: size),
+                         drawTransposed: drawTransposed(orientation: image.imageOrientation),
+                         interpolationQuality: quality)
+    }
+    
+    private static func drawTransposed(orientation: UIImageOrientation) -> Bool {
+        switch (orientation) {
         case .left, .leftMirrored, .right, .rightMirrored:
-            drawTransposed = true
+            return true
         default:
-            drawTransposed = false
+            return false
         }
-
-        return imageFromImage(image, toSize: size, usingTransform: transformForOrientationImage(image, toSize: size),
-                              drawTransposed: drawTransposed, interpolationQuality: quality)
     }
 
     private static func croppedImageFromImage(_ image: UIImage, toBounds bounds: CGRect) -> UIImage? {
@@ -129,21 +131,21 @@ public final class Resizer {
         return nil
     }
 
-    private static func imageFromImage(_ image: UIImage, toSize size: CGSize,
-                                       usingTransform transform: CGAffineTransform, drawTransposed transpose: Bool,
-                                       interpolationQuality quality: CGInterpolationQuality) -> UIImage? {
+    private static func imageFrom(image: UIImage, toSize size: CGSize,
+                                  usingTransform transform: CGAffineTransform, drawTransposed transpose: Bool,
+                                  interpolationQuality quality: CGInterpolationQuality) -> UIImage? {
       let newRect = CGRect(x: 0, y: 0, width: size.width, height: size.height).integral
       let transposedRect = CGRect(x: 0, y: 0, width: newRect.size.height, height: newRect.size.width)
-      let imageRef = image.cgImage
+      let cgImage = image.cgImage
       
       let bitmap = CGContext(data: nil, width: Int(newRect.size.width),
-                             height: Int(newRect.size.height), bitsPerComponent: (imageRef?.bitsPerComponent)!,
-                             bytesPerRow: (imageRef?.bytesPerRow)! * Int(deviceScale), space: (imageRef?.colorSpace!)!,
-                             bitmapInfo: (imageRef?.bitmapInfo.rawValue)!)
+                             height: Int(newRect.size.height), bitsPerComponent: (cgImage?.bitsPerComponent)!,
+                             bytesPerRow: (cgImage?.bytesPerRow)! * Int(deviceScale), space: (cgImage?.colorSpace!)!,
+                             bitmapInfo: (cgImage?.bitmapInfo.rawValue)!)
       
       bitmap?.concatenate(transform)
-      bitmap!.interpolationQuality = quality
-      bitmap?.draw(imageRef!, in: transpose ? transposedRect : newRect)
+      bitmap?.interpolationQuality = quality
+      bitmap?.draw(cgImage!, in: transpose ? transposedRect : newRect)
       if let cgImage = bitmap?.makeImage() {
         return UIImage(cgImage: cgImage)
       }

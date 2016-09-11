@@ -6,7 +6,7 @@ import UIKit
 
 public final class ImageManager {
 
-    open static let sharedManager = ImageManager()
+    public static let sharedManager = ImageManager()
     
     fileprivate let downloadQueue = OperationQueue()
     fileprivate var downloadsInProgress = [URL: ImageDownloadOperation]()
@@ -15,9 +15,9 @@ public final class ImageManager {
         downloadQueue.cancelAllOperations()
     }
 
-    public func downloadImageAtURL(_ url: URL, cacheScaled: Bool, imageView: UIImageView?,
-                                   storage: Storage = MapleBaconStorage.sharedStorage,
-                                   completion: ImageDownloaderCompletion?) -> ImageDownloadOperation? {
+    public func downloadImage(atUrl url: URL, cacheScaled: Bool, imageView: UIImageView?,
+                              storage: Storage = MapleBaconStorage.sharedStorage,
+                              completion: ImageDownloaderCompletion?) -> ImageDownloadOperation? {
         if let cachedImage = storage.image(forKey: url.absoluteString) {
             completion?(ImageInstance(image: cachedImage, state: .cached, url: url), nil)
         } else {
@@ -33,8 +33,8 @@ public final class ImageManager {
             } else {
                 completion?(ImageInstance(image: nil, state: .downloading, url: nil), nil)
                 delay(0.1) {
-                    _ = self.downloadImageAtURL(url, cacheScaled: cacheScaled, imageView: imageView, storage: storage,
-                                                completion: completion)
+                    _ = self.downloadImage(atUrl: url, cacheScaled: cacheScaled, imageView: imageView, storage: storage,
+                                           completion: completion)
                 }
             }
         }
@@ -47,20 +47,20 @@ public final class ImageManager {
             self?.downloadsInProgress[url] = nil
             if let newImage = imageInstance?.image {
                 if cacheScaled && imageView != nil && newImage.images == nil {
-                    self?.resizeAndStoreImage(newImage, imageView: imageView!, storage: storage,
-                                              key: url.absoluteString)
+                    self?.resizeAndStore(image: newImage, imageView: imageView!, storage: storage,
+                                         key: url.absoluteString)
                 } else if let imageData = imageInstance?.data {
-                    storage.storeImage(newImage, data: imageData, forKey: url.absoluteString)
+                    storage.store(image: newImage, data: imageData, forKey: url.absoluteString)
                 }
                 completion?(ImageInstance(image: newImage, state: .new, url: imageInstance?.url), nil)
             }
         }
     }
 
-    private func resizeAndStoreImage(_ image: UIImage, imageView: UIImageView, storage: Storage, key: String) {
-        Resizer.resizeImage(image, contentMode: imageView.contentMode, toSize: imageView.bounds.size,
-                            interpolationQuality: .default) { resizedImage in
-            storage.storeImage(resizedImage, data: nil, forKey: key)
+    private func resizeAndStore(image: UIImage, imageView: UIImageView, storage: Storage, key: String) {
+        Resizer.resize(image: image, contentMode: imageView.contentMode, toSize: imageView.bounds.size,
+                       interpolationQuality: .default) { resizedImage in
+                        storage.store(image: resizedImage, data: nil, forKey: key)
         }
     }
 

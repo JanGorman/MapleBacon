@@ -6,39 +6,39 @@ import UIKit
 
 public typealias ImageDownloaderCompletion = (ImageInstance?, NSError?) -> Void
 
-public protocol ImageDownloaderDelegate {
+public protocol ImageDownloadDelegate {
     func imageDownloaderDelegate(_ downloader: ImageDownloadOperation, didReportProgress progress: Progress);
 }
 
 public final class ImageDownloadOperation: Operation {
 
     fileprivate var imageURL: URL
-    fileprivate var delegate: ImageDownloaderDelegate?
+    fileprivate var delegate: ImageDownloadDelegate?
     fileprivate var session: Foundation.URLSession?
     fileprivate var task: URLSessionDownloadTask?
     fileprivate var resumeData: Data?
     fileprivate let progress: Progress = Progress()
 
-    open var completionHandler: ImageDownloaderCompletion?
+    public var completionHandler: ImageDownloaderCompletion?
 
     public convenience init(imageURL: URL) {
         self.init(imageURL: imageURL, delegate: nil)
     }
 
-    public init(imageURL: URL, delegate: ImageDownloaderDelegate?) {
+    public init(imageURL: URL, delegate: ImageDownloadDelegate?) {
         self.imageURL = imageURL
         self.delegate = delegate
         super.init()
     }
 
-    open override func start() {
+    public override func start() {
         let sessionConfiguration = URLSessionConfiguration.default
         session = Foundation.URLSession(configuration: sessionConfiguration, delegate: self,
-                delegateQueue: OperationQueue.main)
+                                        delegateQueue: OperationQueue.main)
         resumeDownload()
     }
 
-    open override func cancel() {
+    public override func cancel() {
         task?.cancel { [unowned self] data in
             self.resumeData = data
             self.isFinished = true
@@ -57,7 +57,7 @@ public final class ImageDownloadOperation: Operation {
     }
 
     fileprivate var _finished = false
-    override open var isFinished: Bool {
+    override public var isFinished: Bool {
         get {
             return _finished
         }
@@ -111,8 +111,8 @@ extension ImageDownloadOperation: URLSessionDownloadDelegate {
     }
 
     public func urlSession(_ session: URLSession, task: URLSessionTask,
-                           willPerformHTTPRedirection response: HTTPURLResponse,
-                           newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
+                           willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest,
+                           completionHandler: @escaping (URLRequest?) -> Void) {
         self.completionHandler?(nil, nil)
         imageURL = request.url!
         resumeDownload()

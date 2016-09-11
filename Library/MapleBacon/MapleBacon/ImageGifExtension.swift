@@ -9,12 +9,12 @@ extension UIImage {
 
     static func imageWithCachedData(_ data: Data) -> UIImage? {
         guard !data.isEmpty else { return nil }
-        return isAnimatedImage(data) ? animatedImageWithData(data) : UIImage(data: data)
+        return isAnimatedImage(data) ? animatedImage(withData: data) : UIImage(data: data)
     }
 
-    private static func animatedImageWithData(_ data: Data) -> UIImage? {
+    private static func animatedImage(withData data: Data) -> UIImage? {
         let source = CGImageSourceCreateWithData(data as CFData, nil)
-        return UIImage.animatedImageWithSource(source)
+        return UIImage.animatedImage(withSource: source)
     }
 
     private static func isAnimatedImage(_ data: Data) -> Bool {
@@ -23,14 +23,14 @@ extension UIImage {
         return CFSwapInt16(length) == 0x4749
     }
 
-    private static func animatedImageWithSource(_ source: CGImageSource!) -> UIImage? {
+    private static func animatedImage(withSource source: CGImageSource!) -> UIImage? {
         let (images, delays) = createImagesAndDelays(source)
         let gifDuration = delays.reduce(0, +)
-        let frames = framesFromImages(images, delays: delays)
-        return UIImage.animatedImage(with: frames, duration: Double(gifDuration) / 1000.0)
+        let imageFrames = frames(fromImages: images, delays: delays)
+        return UIImage.animatedImage(with: imageFrames, duration: Double(gifDuration) / 1000.0)
     }
 
-    private static func framesFromImages(_ images: [CGImage], delays: [Int]) -> [UIImage] {
+    private static func frames(fromImages images: [CGImage], delays: [Int]) -> [UIImage] {
         let gcd = DivisionMath.greatestCommonDivisor(delays)
         var frames = [UIImage]()
         for i in 0..<images.count {
@@ -46,18 +46,18 @@ extension UIImage {
 
     private static func createImagesAndDelays(_ source: CGImageSource) -> ([CGImage], [Int]) {
         let count = Int(CGImageSourceGetCount(source))
-        var images = [CGImage]()
-        var delayCentiseconds = [Int]()
+        var images: [CGImage] = []
+        var delays: [Int] = []
         for i in 0 ..< count {
             if let image = CGImageSourceCreateImageAtIndex(source, i, nil) {
                 images.append(image)
-                delayCentiseconds.append(delayCentisecondsForImageAtIndex(source, index: i))
+                delays.append(delayCentiseconds(forImageSource: source, atIndex: i))
             }
         }
-        return (images, delayCentiseconds)
+        return (images, delays)
     }
 
-    private static func delayCentisecondsForImageAtIndex(_ source: CGImageSource, index: Int) -> Int {
+    private static func delayCentiseconds(forImageSource source: CGImageSource, atIndex index: Int) -> Int {
         guard let properties = CGImageSourceCopyPropertiesAtIndex(source, index, nil) as? NSDictionary else { return -1 }
         if let gifProperties = properties[kCGImagePropertyGIFDictionary as String] as? NSDictionary {
             var delayTime = gifProperties[kCGImagePropertyGIFUnclampedDelayTime as String] as! NSNumber

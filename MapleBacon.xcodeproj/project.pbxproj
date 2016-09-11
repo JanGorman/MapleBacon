@@ -181,7 +181,9 @@
 				946B985C1C0C432C00B0276E /* MapleBacon-tvOS */,
 				F2520C491A3EDAFE0061BB33 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		F2520C491A3EDAFE0061BB33 /* Products */ = {
 			isa = PBXGroup;

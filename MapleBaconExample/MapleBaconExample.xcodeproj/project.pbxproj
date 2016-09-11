@@ -124,7 +124,9 @@
 				F2AB72861A40395200CCE62B /* MapleBaconExampleTests */,
 				F2AB726F1A40395200CCE62B /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		F2AB726F1A40395200CCE62B /* Products */ = {
 			isa = PBXGroup;

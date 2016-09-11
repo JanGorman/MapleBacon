@@ -13,13 +13,13 @@ final class ResizerResultView: UIView {
 
     override func draw(_ rect: CGRect) {
         if let contentMode = selectedContentMode, let image = image {
-            Resizer.resizeImage(image, contentMode: contentMode, toSize: rect.size, interpolationQuality: .high,
-                                async: false) { resizedImage in
-                let xOffset = self.xOffset(forImage: resizedImage, fittingRect: rect)
-                let yOffset = self.yOffset(forImage: resizedImage, fittingRect: rect)
-                let rect = CGRect(x: xOffset, y: yOffset, width: resizedImage.size.width / self.deviceScale,
-                                  height: resizedImage.size.height / self.deviceScale)
-                resizedImage.draw(in: rect)
+            Resizer.resize(image: image, contentMode: contentMode, toSize: rect.size, interpolationQuality: .high,
+                           async: false) { resizedImage in
+                            let xOffset = self.xOffset(forImage: resizedImage, fittingRect: rect)
+                            let yOffset = self.yOffset(forImage: resizedImage, fittingRect: rect)
+                            let rect = CGRect(x: xOffset, y: yOffset, width: resizedImage.size.width / self.deviceScale,
+                                              height: resizedImage.size.height / self.deviceScale)
+                            resizedImage.draw(in: rect)
             }
         }
     }

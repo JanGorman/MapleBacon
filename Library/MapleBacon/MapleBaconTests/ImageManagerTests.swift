@@ -7,92 +7,55 @@ import Foundation
 import UIKit
 import MapleBacon
 
-public let timeout: NSTimeInterval = 10
+public let timeout: TimeInterval = 10
 
 class ImageManagerTests: XCTestCase {
 
     let imageManager = ImageManager.sharedManager
 
-    func test_whenImageManagerAsksForImageBeingDownloaded_thenImageInstanceReturnsDownloadingState() {
-        MapleBaconStorage.sharedStorage.removeImage(forKey: imageURL)
-
-        let downloadingImageExpectation = expectationWithDescription("Testing Downloading Image")
-        let downloadedImageExpectation = expectationWithDescription("Testing Downloaded Image")
-
-        imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
-            [unowned self] (imageInstance, _) in
-            if let imageInstance = imageInstance {
-                if imageInstance.state == .New {
-                    downloadedImageExpectation.fulfill()
-                    XCTAssertFalse(self.imageManager.hasDownloadsInProgress(),
-                            "Image downloaded but manager still has downloads in progress")
-                }
-            }
-        })
-        imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
-            [unowned self] (imageInstance, _) in
-            if let imageInstance = imageInstance {
-                if imageInstance.state == .Downloading {
-                    downloadingImageExpectation.fulfill()
-                    XCTAssertTrue(self.imageManager.hasDownloadsInProgress(),
-                            "Image downloading but manager has no downloads in progress")
-                }
-            }
-        })
-
-        waitForExpectationsWithTimeout(timeout) {
-            error in
-            if (error != nil) {
-                XCTFail("Expectation failed")
-            }
-        }
-    }
-
     func test_whenImageManagerAsksForImageAlreadyDownloaded_thenImageIsReturnedFromCache() {
-        imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
-            [unowned self] (imageInstance, _) in
+        _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil) {
+            [unowned self] imageInstance, _ in
             if let _ = imageInstance {
-                let cachedExpectation = self.expectationWithDescription("Testing Cached Image")
+                let cachedExpectation = self.expectation(description: "Testing Cached Image")
 
-                self.imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
-                    [unowned self] (imageInstance, _) in
+                _ = self.imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil) {
+                    [unowned self] imageInstance, _ in
                     if let imageInstance = imageInstance {
-                        if imageInstance.state == .Cached {
+                        if imageInstance.state == .cached {
                             cachedExpectation.fulfill()
                             XCTAssertFalse(self.imageManager.hasDownloadsInProgress(),
                                     "Image returned from cache but manager still has downloads in progress")
                         }
                     }
-                })
+                }
 
-                self.waitForExpectationsWithTimeout(timeout) {
-                    error in
-                    if (error != nil) {
+                self.waitForExpectations(timeout: timeout) { error in
+                    if error != nil {
                         XCTFail("Expectation failed")
                     }
                 }
             }
-        })
+        }
     }
 
     func test_whenImageManagerAsksForImageNotYetDownloaded_thenImageIsReturnedAsNew() {
         MapleBaconStorage.sharedStorage.removeImage(forKey: imageURL)
-        let newImageExpectation = expectationWithDescription("Testing New Image")
+        let newImageExpectation = expectation(description: "Testing New Image")
 
-        imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, completion: {
+        _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil) {
             [unowned self] imageInstance, error -> Void in
             if let imageInstance = imageInstance {
-                if imageInstance.state == .New {
+                if imageInstance.state == .new {
                     newImageExpectation.fulfill()
                     XCTAssertFalse(self.imageManager.hasDownloadsInProgress(),
                             "Image downloaded but manager still has downloads in progress")
                 }
             }
-        })
+        }
 
-        waitForExpectationsWithTimeout(timeout) {
-            error in
-            if (error != nil) {
+        waitForExpectations(timeout: timeout) { error in
+            if error != nil {
                 XCTFail("Expectation failed")
             }
         }
@@ -102,19 +65,18 @@ class ImageManagerTests: XCTestCase {
         let storage = InMemoryStorage(name: "customPath")
         storage.removeImage(forKey: imageURL)
 
-        let newImageExpectation = expectationWithDescription("Testing New Image")
+        let newImageExpectation = expectation(description: "Testing New Image")
 
-        imageManager.downloadImageAtURL(NSURL(string: imageURL)!, cacheScaled: false, imageView: nil, storage: storage) {
-            imageInstance, _ in
-            if let _ = imageInstance {
-                newImageExpectation.fulfill()
-                XCTAssertNotNil(storage.image(forKey: imageURL))
-            }
+        _ = imageManager.downloadImage(atUrl: URL(string: imageURL)!, cacheScaled: false, imageView: nil,
+                                       storage: storage) { imageInstance, _ in
+                                        if let _ = imageInstance {
+                                            newImageExpectation.fulfill()
+                                            XCTAssertNotNil(storage.image(forKey: imageURL))
+                                        }
         }
 
-        waitForExpectationsWithTimeout(timeout) {
-            error in
-            if (error != nil) {
+        waitForExpectations(timeout: timeout) { error in
+            if error != nil {
                 XCTFail("Expectation failed")
             }
         }

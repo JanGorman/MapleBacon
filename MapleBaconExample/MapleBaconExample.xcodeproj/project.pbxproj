@@ -34,6 +34,20 @@
 			remoteGlobalIDString = F2520C531A3EDAFF0061BB33;
 			remoteInfo = MapleBaconTests;
 		};
+		9434CF0B1D81E337006E6FEB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 260081971B3311170010C64A /* MapleBacon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 946B985B1C0C432B00B0276E;
+			remoteInfo = "MapleBacon-tvOS";
+		};
+		94E710371D81E3F900A4509A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 260081971B3311170010C64A /* MapleBacon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F2520C471A3EDAFE0061BB33;
+			remoteInfo = MapleBacon;
+		};
 		F2AB72841A40395200CCE62B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F2AB72661A40395200CCE62B /* Project object */;
@@ -97,6 +111,7 @@
 			children = (
 				2600819D1B3311170010C64A /* MapleBacon.framework */,
 				2600819F1B3311170010C64A /* MapleBaconTests.xctest */,
+				9434CF0C1D81E337006E6FEB /* MapleBacon.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -109,7 +124,9 @@
 				F2AB72861A40395200CCE62B /* MapleBaconExampleTests */,
 				F2AB726F1A40395200CCE62B /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		F2AB726F1A40395200CCE62B /* Products */ = {
 			isa = PBXGroup;
@@ -177,6 +194,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				94E710381D81E3F900A4509A /* PBXTargetDependency */,
 			);
 			name = MapleBaconExample;
 			productName = MapleBaconExample;
@@ -209,11 +227,12 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Zalando SE";
 				TargetAttributes = {
 					F2AB726D1A40395200CCE62B = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0800;
 					};
 					F2AB72821A40395200CCE62B = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -259,6 +278,13 @@
 			fileType = wrapper.cfbundle;
 			path = MapleBaconTests.xctest;
 			remoteRef = 2600819E1B3311170010C64A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9434CF0C1D81E337006E6FEB /* MapleBacon.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MapleBacon.framework;
+			remoteRef = 9434CF0B1D81E337006E6FEB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -308,6 +334,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		94E710381D81E3F900A4509A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MapleBacon;
+			targetProxy = 94E710371D81E3F900A4509A /* PBXContainerItemProxy */;
+		};
 		F2AB72851A40395200CCE62B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F2AB726D1A40395200CCE62B /* MapleBaconExample */;
@@ -329,8 +360,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -339,6 +372,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -372,8 +406,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -381,6 +417,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -390,6 +427,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -403,6 +441,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.zalando.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -415,6 +454,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.zalando.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

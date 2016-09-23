@@ -8,36 +8,36 @@ extension UIViewContentMode {
 
     func simpleDescription() -> String {
         switch self {
-        case .ScaleToFill:
+        case .scaleToFill:
             return "ScaleToFill"
-        case .ScaleAspectFit:
+        case .scaleAspectFit:
             return "ScaleAspectFit"
-        case .ScaleAspectFill:
+        case .scaleAspectFill:
             return "ScaleAspectFill"
-        case .Redraw:
+        case .redraw:
             return "Redraw"
-        case .Center:
+        case .center:
             return "Center"
-        case .Top:
+        case .top:
             return "Top"
-        case .Bottom:
+        case .bottom:
             return "Bottom"
-        case .Left:
+        case .left:
             return "Left"
-        case .Right:
+        case .right:
             return "Right"
-        case .TopLeft:
+        case .topLeft:
             return "TopLeft"
-        case .TopRight:
+        case .topRight:
             return "TopRight"
-        case .BottomLeft:
+        case .bottomLeft:
             return "BottomLeft"
-        case .BottomRight:
+        case .bottomRight:
             return "BottomRight"
         }
     }
 
-    static let allValues = [ScaleToFill, ScaleAspectFit, ScaleAspectFill, Redraw,
-                            Center, Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight]
+    static let allValues = [scaleToFill, scaleAspectFit, scaleAspectFill, redraw, center, top, bottom, left, right,
+                            topLeft, topRight, bottomLeft, bottomRight]
 
 }

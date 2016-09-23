@@ -10,9 +10,9 @@ MapleBacon is a Swift image download and caching library.
 
 ## Requirements
 
+- Swift 3
 - iOS 8.0+
-- Xcode 7.0
-
+- Xcode 8.0+
 
 ## Installation
 
@@ -49,16 +49,16 @@ import MapleBacon
 
 …
 
-if let imageURL = NSURL(string: "…") {
-	imageView.setImageWithURL(imageURL)
+if let imageUrl = URL(string: "…") {
+	imageView.setImage(withUrl: imageUrl)
 }
 ```
 
 or with an optional closure, if you want to check for a possible error:
 
 ```swift
-if let imageURL = NSURL(string: "…") {
-	imageView.setImageWithURL(imageURL) { instance, error in
+if let imageUrl = URL(string: "…") {
+	imageView.setImage(withUrl: imageUrl) { instance, error in
 		…
 	}
 }
@@ -67,14 +67,14 @@ if let imageURL = NSURL(string: "…") {
 There's also support for a placeholder image with optional (enabled by default) cross fading to the proper image once it's been downloaded:
 
 ```swift
-if let imageURL = NSURL(string: "…"), placeholder = UIImage(named: "placeholder") {
-	imageView.setImageWithURL(imageURL, placeholder: placeholder)
+if let imageUrl = URL(string: "…"), placeholder = UIImage(named: "placeholder") {
+	imageView.setImage(withUrl: imageUrl, placeholder: placeholder)
 }
 
 // or
 
-if let imageURL = NSURL(string: "…"), placeholder = UIImage(named: "placeholder") {
-	imageView.setImageWithURL(imageURL, placeholder: placeholder, crossFadePlaceholder: false)
+if let imageUrl = URL(string: "…"), placeholder = UIImage(named: "placeholder") {
+	imageView.setImage(withUrl: imageUrl, placeholder: placeholder, crossFadePlaceholder: false)
 }
 
 ```
@@ -84,10 +84,10 @@ if let imageURL = NSURL(string: "…"), placeholder = UIImage(named: "placeholde
 You can also access the underlying handler directly for more advanced usage:
 
 ```swift
-if let imageURL = NSURL(string: "…") {
+if let imageUrl = URL(string: "…") {
 	let manager = ImageManager.sharedManager
 	
-	manager.downloadImageAtURL(imageURL, completion: { imageInstance, error in
+	manager.downloadImageAtURL(imageUrl, completion: { imageInstance, error in
 		…
 	})
 }
@@ -98,10 +98,10 @@ if let imageURL = NSURL(string: "…") {
 For the quality conscious among you, MapleBacon also allows for more advanced (and more expensive) scaling of downloaded images. Under the hood this uses Core Graphics. The simplest way to use this mode is to pass in a `cacheScaled: true` Bool into the `UIImageView` extension:
 
 ```swift
-imageView.setImageWithURL(imageURL, cacheScaled: true)
+imageView.setImage(withUrl: imageURL, cacheScaled: true)
 
 // Or the call back way
-imageView.setImageWithURL(imageURL, cacheScaled: true) { imageInstance, error in
+imageView.setImage(withUrl: imageURL, cacheScaled: true) { imageInstance, error in
 …
 }
 
@@ -146,8 +146,8 @@ This requires a little more effort on your end. In this case you'll need to use 
 ```swift
 let storage = DiskStorage(name: "…")
 
-if let imageURL = NSURL(string: "…") {
-	ImageManager.sharedManager.downloadImageAtURL(imageURL, storage: storage) {
+if let imageUrl = URL(string: "…") {
+	ImageManager.sharedManager.downloadImage(atUrl: imageUrl, storage: storage) {
 		imageInstance, error in
 		…
 	}

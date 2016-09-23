@@ -5,22 +5,31 @@
 import UIKit
 import MapleBacon
 
-class ResizerResultView: UIView {
+final class ResizerResultView: UIView {
 
     var image: UIImage?
     var selectedContentMode: UIViewContentMode?
-    let deviceScale = UIScreen.mainScreen().scale
+    let deviceScale = UIScreen.main.scale
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         if let contentMode = selectedContentMode, let image = image {
-            Resizer.resizeImage(image, contentMode: contentMode, toSize: rect.size,
-                    interpolationQuality: CGInterpolationQuality.High, async: false) {
-                resizedImage in
-                let xOffset = rect.size.width > resizedImage.size.width / self.deviceScale ? (rect.size.width - resizedImage.size.width / self.deviceScale) / 2 : 0
-                let yOffset = rect.size.height > resizedImage.size.height / self.deviceScale ? (rect.size.height - resizedImage.size.height / self.deviceScale) / 2 : 0
-                resizedImage.drawInRect(CGRectMake(xOffset, yOffset, resizedImage.size.width / self.deviceScale, resizedImage.size.height / self.deviceScale))
+            Resizer.resize(image: image, contentMode: contentMode, toSize: rect.size, interpolationQuality: .high,
+                           async: false) { resizedImage in
+                            let xOffset = self.xOffset(forImage: resizedImage, fittingRect: rect)
+                            let yOffset = self.yOffset(forImage: resizedImage, fittingRect: rect)
+                            let rect = CGRect(x: xOffset, y: yOffset, width: resizedImage.size.width / self.deviceScale,
+                                              height: resizedImage.size.height / self.deviceScale)
+                            resizedImage.draw(in: rect)
             }
         }
     }
+  
+  private func xOffset(forImage image: UIImage, fittingRect rect: CGRect) -> CGFloat {
+    return rect.size.width > image.size.width / deviceScale ? (rect.size.width - image.size.width / deviceScale) / 2 : 0
+  }
+  
+  private func yOffset(forImage image: UIImage, fittingRect rect: CGRect) -> CGFloat {
+    return rect.size.height > image.size.height / deviceScale ? (rect.size.height - image.size.height / deviceScale) / 2 : 0
+  }
 
 }

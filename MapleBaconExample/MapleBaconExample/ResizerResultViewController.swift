@@ -4,12 +4,12 @@
 
 import UIKit
 
-class ResizerResultViewController: UIViewController {
+final class ResizerResultViewController: UIViewController {
 
     var selectedContentMode: UIViewContentMode?
 
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var resultView: ResizerResultView!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var resultView: ResizerResultView!
 
     override func viewDidLoad() {
         super.viewDidLoad()

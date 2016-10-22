@@ -69,7 +69,7 @@
             BlueprintIdentifier = "F2AB726D1A40395200CCE62B"
             BuildableName = "MapleBaconExample.app"
             BlueprintName = "MapleBaconExample"
-            ReferencedContainer = "container:../../MapleBaconExample/MapleBaconExample.xcodeproj">
+            ReferencedContainer = "container:MapleBaconExample/MapleBaconExample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -92,7 +92,7 @@
             BlueprintIdentifier = "F2AB726D1A40395200CCE62B"
             BuildableName = "MapleBaconExample.app"
             BlueprintName = "MapleBaconExample"
-            ReferencedContainer = "container:../../MapleBaconExample/MapleBaconExample.xcodeproj">
+            ReferencedContainer = "container:MapleBaconExample/MapleBaconExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

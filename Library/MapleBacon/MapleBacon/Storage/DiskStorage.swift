@@ -40,7 +40,8 @@ extension DiskStorage: Storage {
     }
     
     public func image(forKey key: String) -> UIImage? {
-        guard let data = try? Data(contentsOf: URL(fileURLWithPath: defaultStoragePath(forKey: key))) else { return nil }
+        let path = defaultStoragePath(forKey: key)
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else { return nil }
         return UIImage.imageWithCachedData(data)
     }
     
@@ -71,6 +72,7 @@ extension DiskStorage: Storage {
     }
 
     fileprivate func defaultStoragePath(forKey key: String) -> String {
+        let key  = key.components(separatedBy: .punctuationCharacters).joined()
         return (storagePath as NSString).appendingPathComponent(key)
     }
 

@@ -16,20 +16,21 @@ MapleBacon is a Swift image download and caching library.
 
 ## Installation
 
-The easiest way is either through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:
+The easiest way is either through [CocoaPods](http://cocoapods.org) or [Carthage](https://github.com/Carthage/Carthage). 
+
+For the CocoaPods option, simply add the dependency to your `Podfile`, then `pod install`:
 
 ```ruby
 pod 'MapleBacon'
 ```
 
-or [Carthage](https://github.com/Carthage/Carthage). Add the following to your `Cartfile` and then run `carthage update`:
+For the Carthage option, add the following to your `Cartfile`, then run `carthage update`:
 
 ```ogdl
 github "zalando/MapleBacon"
 ```
 
-
-If you don't like any of those options, you can add the dependency as a git submdoule:
+If you don't like either of those options, you can add the dependency as a git submodule:
 
 1. Add MapleBacon as a git submodule: open your project directory in the Terminal and `git submodule add https://github.com/zalando/MapleBacon.git`
 2. Open the resulting `MapleBacon` directory and drag the `Library/MapleBacon/MapleBacon.xcodeproj` file into your Xcode project

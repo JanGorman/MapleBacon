@@ -62,6 +62,16 @@
                ReferencedContainer = "container:../../MapleBaconExample/MapleBaconExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F2AB72821A40395200CCE62B"
+               BuildableName = "MapleBaconExampleTests.xctest"
+               BlueprintName = "MapleBaconExampleTests"
+               ReferencedContainer = "container:MapleBaconExample/MapleBaconExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

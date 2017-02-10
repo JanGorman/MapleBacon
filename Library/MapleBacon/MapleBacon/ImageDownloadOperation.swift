@@ -20,6 +20,8 @@ public final class ImageDownloadOperation: Operation {
     fileprivate let progress: Progress = Progress()
 
     public var completionHandler: ImageDownloaderCompletion?
+    
+    public var httpAdditionalHeaders:[AnyHashable: Any]?
 
     public convenience init(imageURL: URL) {
         self.init(imageURL: imageURL, delegate: nil)
@@ -33,8 +35,10 @@ public final class ImageDownloadOperation: Operation {
 
     public override func start() {
         let sessionConfiguration = URLSessionConfiguration.default
+        sessionConfiguration.httpAdditionalHeaders = httpAdditionalHeaders
         session = Foundation.URLSession(configuration: sessionConfiguration, delegate: self,
                                         delegateQueue: OperationQueue.main)
+        
         resumeDownload()
     }
 

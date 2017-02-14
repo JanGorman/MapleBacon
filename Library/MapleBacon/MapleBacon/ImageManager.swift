@@ -11,6 +11,8 @@ public final class ImageManager {
     fileprivate let downloadQueue = OperationQueue()
     fileprivate var downloadsInProgress = [URL: ImageDownloadOperation]()
 
+    public var httpAdditionalHeaders: [AnyHashable: Any]?
+    
     deinit {
         downloadQueue.cancelAllOperations()
     }
@@ -23,6 +25,7 @@ public final class ImageManager {
         } else {
             if downloadsInProgress[url] == nil {
                 let downloadOperation = ImageDownloadOperation(imageURL: url)
+                downloadOperation.httpAdditionalHeaders = httpAdditionalHeaders
                 downloadOperation.qualityOfService = .userInitiated
                 downloadOperation.completionHandler = downloadHandlerWithStorage(url, cacheScaled: cacheScaled,
                                                                                  imageView: imageView, storage: storage,

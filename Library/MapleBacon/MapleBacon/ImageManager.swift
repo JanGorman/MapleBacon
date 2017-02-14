@@ -11,7 +11,7 @@ public final class ImageManager {
     fileprivate let downloadQueue = OperationQueue()
     fileprivate var downloadsInProgress = [URL: ImageDownloadOperation]()
 
-    public var httpAdditionalHeaders:[AnyHashable:Any]?
+    public var httpAdditionalHeaders: [AnyHashable: Any]?
     
     deinit {
         downloadQueue.cancelAllOperations()

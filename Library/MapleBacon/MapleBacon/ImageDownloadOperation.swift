@@ -21,7 +21,7 @@ public final class ImageDownloadOperation: Operation {
 
     public var completionHandler: ImageDownloaderCompletion?
     
-    public var httpAdditionalHeaders:[AnyHashable: Any]?
+    public var httpAdditionalHeaders: [AnyHashable: Any]?
 
     public convenience init(imageURL: URL) {
         self.init(imageURL: imageURL, delegate: nil)

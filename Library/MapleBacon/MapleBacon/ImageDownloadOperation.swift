@@ -43,9 +43,9 @@ public final class ImageDownloadOperation: Operation {
     }
 
     public override func cancel() {
-        task?.cancel { [unowned self] data in
-            self.resumeData = data
-            self.isFinished = true
+        task?.cancel { [weak self] data in
+            self?.resumeData = data
+            self?.isFinished = true
         }
     }
 
@@ -86,6 +86,13 @@ extension ImageDownloadOperation: URLSessionDownloadDelegate {
 
     public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
                            didFinishDownloadingTo location: URL) {
+        defer {
+            // An instance of `URLSession` keeps strong reference to it's delegate.
+            // See the related API reference: https://developer.apple.com/reference/foundation/urlsession/1411597-init
+            // This prevents deallocation of both: The session *and* the delegate, which causes a retain cycle.
+            // Therefore it's needed to invalidate the session after the download has finished.
+            session.finishTasksAndInvalidate()
+        }
         do {
             let newData = try Data(contentsOf: location, options: .mappedIfSafe)
             let newImage = UIImage.imageWithCachedData(newData)
@@ -104,6 +111,13 @@ extension ImageDownloadOperation: URLSessionDownloadDelegate {
     }
 
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        defer {
+            // An instance of `URLSession` keeps strong reference to it's delegate.
+            // See the related API reference: https://developer.apple.com/reference/foundation/urlsession/1411597-init
+            // This prevents deallocation of both: The session *and* the delegate, which causes a retain cycle.
+            // Therefore it's needed to invalidate the session after the download has finished.
+            session.finishTasksAndInvalidate()
+        }
         if let error = error {
             if isCancelled {
                 isFinished = true

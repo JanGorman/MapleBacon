@@ -3,7 +3,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-<p align="center"><img src="https://dl.dropboxusercontent.com/u/512759/MapleBacon.png" height="210"/></p>
+<p align="center"><img src="https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1" height="210"/></p>
 
 
 MapleBacon is a Swift image download and caching library. It is not currently in active development.

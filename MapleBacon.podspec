@@ -17,4 +17,5 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/zalando/MapleBacon.git", :tag => s.version }
   s.source_files = "Library/MapleBacon/MapleBacon/**/*.swift"
+  s.frameworks   = 'ImageIO', 'MobileCoreServices'
 end

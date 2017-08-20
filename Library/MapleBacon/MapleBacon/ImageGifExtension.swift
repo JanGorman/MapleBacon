@@ -4,6 +4,7 @@
 
 import UIKit
 import ImageIO
+import MobileCoreServices
 
 extension UIImage {
 
@@ -18,9 +19,9 @@ extension UIImage {
     }
 
     private static func isAnimatedImage(_ data: Data) -> Bool {
-        var length = UInt16(0)
-        (data as NSData).getBytes(&length, range: NSRange(location: 0, length: 2))
-        return CFSwapInt16(length) == 0x4749
+        guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
+              let imageType = CGImageSourceGetType(imageSource), UTTypeConformsTo(imageType, kUTTypeGIF) else { return false }
+        return true
     }
 
     private static func animatedImage(withSource source: CGImageSource!) -> UIImage? {

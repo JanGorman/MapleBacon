@@ -20,8 +20,8 @@ extension UIImage {
 
     private static func isAnimatedImage(_ data: Data) -> Bool {
         guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
-              let imageType = CGImageSourceGetType(imageSource), UTTypeConformsTo(imageType, kUTTypeGIF) else { return false }
-        return true
+              let imageType = CGImageSourceGetType(imageSource) else { return false }
+        return UTTypeConformsTo(imageType, kUTTypeGIF)
     }
 
     private static func animatedImage(withSource source: CGImageSource!) -> UIImage? {

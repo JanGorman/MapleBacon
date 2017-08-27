@@ -1,0 +1,6 @@
+framework module MapleBacon {
+  umbrella header "MapleBacon-umbrella.h"
+
+  export *
+  module * { export * }
+}

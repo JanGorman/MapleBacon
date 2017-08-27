@@ -1,20 +1,42 @@
-Pod::Spec.new do |s|
-  s.name         = "MapleBacon"
-  s.version      = "3.1.0"
-  s.summary      = "A delicious image download and caching library for iOS"
-  s.description  = <<-DESC
-                  A delicious image download and caching library for iOS. Background downloads, caching and scaling.
-                   DESC
-  s.homepage     = "https://github.com/zalando/MapleBacon/"
-  s.license      = { :type => "MIT", :file => "LICENSE" }
-  s.authors      = { "Dimitrios Georgakopoulos" => "dimitrios.georgakopoulos@zalando.de",
-                     "Jan Gorman" => "jan.gorman@zalando.de",
-                     "Ramy Kfoury" => "ramy.kfoury@zalando.de"
-                   }
-  s.requires_arc = true
-  s.ios.deployment_target = "8.0"
-  s.tvos.deployment_target = "9.0"
+#
+# Be sure to run `pod lib lint MapleBacon.podspec' to ensure this is a
+# valid spec before submitting.
+#
+# Any lines starting with a # are optional, but their use is encouraged
+# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
+#
 
-  s.source       = { :git => "https://github.com/zalando/MapleBacon.git", :tag => s.version }
-  s.source_files = "Library/MapleBacon/MapleBacon/**/*.swift"
+Pod::Spec.new do |s|
+  s.name             = 'MapleBacon'
+  s.version          = '0.1.0'
+  s.summary          = 'A short description of MapleBacon.'
+
+# This description is used to generate tags and improve search results.
+#   * Think: What does it do? Why did you write it? What is the focus?
+#   * Try to keep it short, snappy and to the point.
+#   * Write the description between the DESC delimiters below.
+#   * Finally, don't worry about the indent, CocoaPods strips it!
+
+  s.description      = <<-DESC
+TODO: Add long description of the pod here.
+                       DESC
+
+  s.homepage         = 'https://github.com/JanGorman/MapleBacon'
+  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.author           = { 'JanGorman' => 'gorman.jan@gmail.com' }
+  s.source           = { :git => 'https://github.com/JanGorman/MapleBacon.git', :tag => s.version.to_s }
+  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+
+  s.ios.deployment_target = '8.0'
+
+  s.source_files = 'MapleBacon/Classes/**/*'
+  
+  # s.resource_bundles = {
+  #   'MapleBacon' => ['MapleBacon/Assets/*.png']
+  # }
+
+  # s.public_header_files = 'Pod/Classes/**/*.h'
+  # s.frameworks = 'UIKit', 'MapKit'
+  # s.dependency 'AFNetworking', '~> 2.3'
 end

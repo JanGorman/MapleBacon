@@ -1,0 +1,16 @@
+PODS:
+  - MapleBacon (0.1.0)
+
+DEPENDENCIES:
+  - MapleBacon (from `../`)
+
+EXTERNAL SOURCES:
+  MapleBacon:
+    :path: ../
+
+SPEC CHECKSUMS:
+  MapleBacon: a6a25c616b77c8f7a00583d5bb4e1d9fec5724d7
+
+PODFILE CHECKSUM: 28bc3f0334bea5871245e445c188bc08da15a92a
+
+COCOAPODS: 1.3.1

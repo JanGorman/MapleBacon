@@ -1,0 +1,11 @@
+framework module MapleBacon {
+  umbrella header "MapleBacon-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module MapleBacon.Swift {
+    header "MapleBacon-Swift.h"
+    requires objc
+}

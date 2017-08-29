@@ -31,7 +31,10 @@ public final class Cache {
   public func retrieveImage(forKey key: String, completion: (UIImage?) -> Void) {
     if let image = memory.object(forKey: key as NSString) as? UIImage {
       completion(image)
+      return
     }
+    
+    completion(nil)
   }
     
 }

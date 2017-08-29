@@ -1,0 +1,8 @@
+language: objective-c
+osx_image: xcode9
+before_install:
+    - cd MapleBacon
+script:
+    - echo $SIMULATOR_ID
+    - open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID
+    - fastlane scan

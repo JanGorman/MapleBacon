@@ -39,6 +39,23 @@ class CacheTests: XCTestCase {
     wait(for: [expectation], timeout: 1)
   }
   
+  func testClearMemory() {
+    let expectation = self.expectation(description: "Retrieve image from cache")
+    let cache = Cache.default
+    let image = testImage()
+    let key = "test"
+    
+    cache.store(image, forKey: key) {
+      cache.clearMemory()
+      cache.retrieveImage(forKey: key) { image in
+        XCTAssertNil(image)
+        expectation.fulfill()
+      }
+    }
+    
+    wait(for: [expectation], timeout: 1)
+  }
+  
   private func testImage() -> UIImage {
     return UIImage(named: "MapleBacon", in: Bundle(for: CacheTests.self), compatibleWith: nil)!
   }

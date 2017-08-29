@@ -36,5 +36,9 @@ public final class Cache {
     
     completion(nil)
   }
+  
+  public func clearMemory() {
+    memory.removeAllObjects()
+  }
     
 }

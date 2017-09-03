@@ -27,7 +27,7 @@ public final class Cache {
     diskQueue = DispatchQueue(label: cacheName, qos: .background)
     
     let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
-    cachePath = (path as NSString).appendingPathComponent(path)
+    cachePath = (path as NSString).appendingPathComponent(name)
   }
   
   public func store(_ image: UIImage, forKey key: String, completion: (() -> Void)? = nil) {

@@ -23,6 +23,23 @@ class CacheTests: XCTestCase {
     
     wait(for: [expectation], timeout: 1)
   }
+
+  func testNamedCachesAreDistinct() {
+    let expectation = self.expectation(description: "Retrieve image from cache")
+    let defaultCache = Cache.default
+    let namedCache = Cache(name: "named")
+    let image = testImage()
+    let key = #function
+
+    defaultCache.store(image, forKey: key) {
+      namedCache.retrieveImage(forKey: key, completion: { image, _ in
+        XCTAssertNil(image)
+        expectation.fulfill()
+      })
+    }
+
+    wait(for: [expectation], timeout: 1)
+  }
   
   func testUnknownCacheKeyReturnsNoImage() {
     let expectation = self.expectation(description: "Retrieve no image from cache")
@@ -57,7 +74,7 @@ class CacheTests: XCTestCase {
     
     wait(for: [expectation], timeout: 1)
   }
-  
+
   private func testImage() -> UIImage {
     return UIImage(named: "MapleBacon", in: Bundle(for: CacheTests.self), compatibleWith: nil)!
   }

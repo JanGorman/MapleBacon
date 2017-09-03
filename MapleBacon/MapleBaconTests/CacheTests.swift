@@ -28,7 +28,7 @@ class CacheTests: XCTestCase {
       }
     }
     
-    wait(for: [expectation], timeout: 1)
+    wait(for: [expectation], timeout: 10)
   }
 
   func testNamedCachesAreDistinct() {
@@ -45,7 +45,7 @@ class CacheTests: XCTestCase {
       })
     }
 
-    wait(for: [expectation], timeout: 1)
+    wait(for: [expectation], timeout: 10)
   }
   
   func testUnknownCacheKeyReturnsNoImage() {
@@ -61,7 +61,7 @@ class CacheTests: XCTestCase {
       }
     }
     
-    wait(for: [expectation], timeout: 1)
+    wait(for: [expectation], timeout: 10)
   }
   
   func testItStoresImagesToDisk() {
@@ -79,7 +79,7 @@ class CacheTests: XCTestCase {
       }
     }
     
-    wait(for: [expectation], timeout: 1)
+    wait(for: [expectation], timeout: 10)
   }
 
   func testItClearsDiskCache() {
@@ -98,7 +98,7 @@ class CacheTests: XCTestCase {
       }
     }
 
-    wait(for: [expectation], timeout: 1)
+    wait(for: [expectation], timeout: 10)
   }
 
   private func testImage() -> UIImage {

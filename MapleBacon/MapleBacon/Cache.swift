@@ -75,5 +75,16 @@ public final class Cache {
   public func clearMemory() {
     memory.removeAllObjects()
   }
+
+  public func clearDisk(_ completion: (() -> Void)? = nil) {
+    diskQueue.async { [unowned self] in
+      defer {
+        completion?()
+      }
+
+      _ = try? self.fileManager.removeItem(atPath: self.cachePath)
+      self.createCacheDirectoryIfNeeded()
+    }
+  }
     
 }

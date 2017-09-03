@@ -7,6 +7,13 @@ import UIKit
 @testable import MapleBacon
 
 class CacheTests: XCTestCase {
+
+  override func tearDown() {
+    super.tearDown()
+
+    Cache.default.clearMemory()
+    Cache.default.clearDisk()
+  }
   
   func testItStoresImageInMemory() {
     let expectation = self.expectation(description: "Retrieve image from cache")
@@ -61,7 +68,7 @@ class CacheTests: XCTestCase {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
     let image = testImage()
-    let key = "test"
+    let key = #function
     
     cache.store(image, forKey: key) {
       cache.clearMemory()
@@ -75,8 +82,27 @@ class CacheTests: XCTestCase {
     wait(for: [expectation], timeout: 1)
   }
 
+  func testItClearsDiskCache() {
+    let expectation = self.expectation(description: "Clear disk cache")
+    let cache = Cache.default
+    let image = testImage()
+    let key = #function
+
+    cache.store(image, forKey: key) {
+      cache.clearMemory()
+      cache.clearDisk {
+        cache.retrieveImage(forKey: key) { image, _ in
+          XCTAssertNil(image)
+          expectation.fulfill()
+        }
+      }
+    }
+
+    wait(for: [expectation], timeout: 1)
+  }
+
   private func testImage() -> UIImage {
     return UIImage(named: "MapleBacon", in: Bundle(for: CacheTests.self), compatibleWith: nil)!
   }
-  
+
 }

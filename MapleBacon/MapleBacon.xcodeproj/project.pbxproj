@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		777691571F5C237A00BCDFF9 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777691561F5C237A00BCDFF9 /* Downloader.swift */; };
+		777691591F5C238F00BCDFF9 /* DownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777691581F5C238F00BCDFF9 /* DownloaderTests.swift */; };
 		77B73D501F553A8700874885 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B73D461F553A8700874885 /* MapleBacon.framework */; };
 		77B73D551F553A8700874885 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B73D541F553A8700874885 /* CacheTests.swift */; };
 		77B73D571F553A8700874885 /* MapleBacon.h in Headers */ = {isa = PBXBuildFile; fileRef = 77B73D491F553A8700874885 /* MapleBacon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		77B73D611F553AE800874885 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B73D601F553AE800874885 /* Cache.swift */; };
 		77B73D661F553F4800874885 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77B73D651F553F4800874885 /* Assets.xcassets */; };
+		77C5BECA1F798C5F00B762A0 /* Hippolyte.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C5BEC41F798B7E00B762A0 /* Hippolyte.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,9 +25,25 @@
 			remoteGlobalIDString = 77B73D451F553A8700874885;
 			remoteInfo = MapleBacon;
 		};
+		77C5BEC31F798B7E00B762A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 77A290CE1F62EADF001E70FA;
+			remoteInfo = Hippolyte;
+		};
+		77C5BEC51F798B7E00B762A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 77A290D71F62EADF001E70FA;
+			remoteInfo = HippolyteTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		777691561F5C237A00BCDFF9 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
+		777691581F5C238F00BCDFF9 /* DownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloaderTests.swift; sourceTree = "<group>"; };
 		77B73D461F553A8700874885 /* MapleBacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapleBacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77B73D491F553A8700874885 /* MapleBacon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapleBacon.h; sourceTree = "<group>"; };
 		77B73D4A1F553A8700874885 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -33,6 +52,7 @@
 		77B73D561F553A8700874885 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77B73D601F553AE800874885 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		77B73D651F553F4800874885 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Hippolyte.xcodeproj; path = Frameworks/Hippolyte/Hippolyte.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77C5BECA1F798C5F00B762A0 /* Hippolyte.framework in Frameworks */,
 				77B73D501F553A8700874885 /* MapleBacon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,9 +78,11 @@
 		77B73D3C1F553A8700874885 = {
 			isa = PBXGroup;
 			children = (
+				77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */,
 				77B73D481F553A8700874885 /* MapleBacon */,
 				77B73D531F553A8700874885 /* MapleBaconTests */,
 				77B73D471F553A8700874885 /* Products */,
+				77C5BEC91F798C5F00B762A0 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -78,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				77B73D601F553AE800874885 /* Cache.swift */,
+				777691561F5C237A00BCDFF9 /* Downloader.swift */,
 				77B73D491F553A8700874885 /* MapleBacon.h */,
 				77B73D4A1F553A8700874885 /* Info.plist */,
 			);
@@ -88,10 +112,27 @@
 			isa = PBXGroup;
 			children = (
 				77B73D541F553A8700874885 /* CacheTests.swift */,
+				777691581F5C238F00BCDFF9 /* DownloaderTests.swift */,
 				77B73D561F553A8700874885 /* Info.plist */,
 				77B73D651F553F4800874885 /* Assets.xcassets */,
 			);
 			path = MapleBaconTests;
+			sourceTree = "<group>";
+		};
+		77C5BEBF1F798B7E00B762A0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				77C5BEC41F798B7E00B762A0 /* Hippolyte.framework */,
+				77C5BEC61F798B7E00B762A0 /* HippolyteTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		77C5BEC91F798C5F00B762A0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,6 +216,12 @@
 			mainGroup = 77B73D3C1F553A8700874885;
 			productRefGroup = 77B73D471F553A8700874885 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 77C5BEBF1F798B7E00B762A0 /* Products */;
+					ProjectRef = 77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				77B73D451F553A8700874885 /* MapleBacon */,
@@ -182,6 +229,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		77C5BEC41F798B7E00B762A0 /* Hippolyte.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Hippolyte.framework;
+			remoteRef = 77C5BEC31F798B7E00B762A0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		77C5BEC61F798B7E00B762A0 /* HippolyteTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = HippolyteTests.xctest;
+			remoteRef = 77C5BEC51F798B7E00B762A0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		77B73D441F553A8700874885 /* Resources */ = {
@@ -206,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				777691571F5C237A00BCDFF9 /* Downloader.swift in Sources */,
 				77B73D611F553AE800874885 /* Cache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				777691591F5C238F00BCDFF9 /* DownloaderTests.swift in Sources */,
 				77B73D551F553A8700874885 /* CacheTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

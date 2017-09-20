@@ -10,9 +10,9 @@ MapleBacon is a Swift image download and caching library. It is not currently in
 
 ## Requirements
 
-- Swift 3.1
+- Swift 4
 - iOS 8.0+
-- Xcode 8.0+
+- Xcode 9.0+
 
 ## Installation
 

@@ -22,7 +22,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let darkColor = UIColor(red: 14 / 255, green: 43 / 255, blue: 57 / 255, alpha: 1)
         UINavigationBar.appearance().tintColor = darkColor
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: darkColor]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: darkColor]
         UITabBar.appearance().barTintColor = darkColor
     }
 

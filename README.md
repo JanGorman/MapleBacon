@@ -6,7 +6,7 @@
 <p align="center"><img src="https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1" height="210"/></p>
 
 
-MapleBacon is a Swift image download and caching library. It is not currently in active development.
+MapleBacon is a Swift image download and caching library. The future is happening right now in the [reboot](https://github.com/JanGorman/MapleBacon/tree/reboot) branch.
 
 ## Requirements
 
@@ -175,7 +175,7 @@ Find out a bit more on how MapleBacon came to be on the [Zalando Tech Blog](http
  
 The MIT License (MIT)
 
-Copyright (c) 2015 Zalando SE
+Copyright (c) 2017 Jan Gorman
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

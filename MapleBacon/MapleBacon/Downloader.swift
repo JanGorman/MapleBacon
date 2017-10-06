@@ -12,9 +12,9 @@ protocol DownloadStateDelegate: class {
 
   func progress(for url: URL) -> DownloadProgress?
   func completion(for url: URL) -> DownloadCompletion?
-  func downloadDoneOrFailed(for url: URL?)
+  func clearDownload(for url: URL?)
   func download(for url: URL) -> Download?
-  func updateDownload(for url: URL, download: Download)
+  func updateDownload(for url: URL, with download: Download)
 
 }
 
@@ -75,7 +75,7 @@ extension Downloader: DownloadStateDelegate {
     return runningDownloads[url]?.completion
   }
 
-  func downloadDoneOrFailed(for url: URL?) {
+  func clearDownload(for url: URL?) {
     guard let url = url else { return }
     mutex.sync(flags: .barrier) {
       runningDownloads[url] = nil
@@ -90,7 +90,7 @@ extension Downloader: DownloadStateDelegate {
     return download
   }
 
-  func updateDownload(for url: URL, download: Download) {
+  func updateDownload(for url: URL, with download: Download) {
     mutex.sync(flags: .barrier) {
       runningDownloads[url] = download
     }
@@ -107,15 +107,15 @@ private class SessionDelegate: NSObject, URLSessionDataDelegate {
           var download = delegate?.download(for: url),
           let total = dataTask.response?.expectedContentLength else { return }
     download.data.append(data)
-    // Question, should this actual be a value type if this forces replacing the whole data?
-    delegate?.updateDownload(for: url, download: download)
+    // Question, should this rather be a value type if this forces replacing the whole data?
+    delegate?.updateDownload(for: url, with: download)
     delegate?.progress(for: url)?(numericCast(download.data.count), total)
   }
 
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
     var url: URL? = nil
     defer {
-      delegate?.downloadDoneOrFailed(for: url)
+      delegate?.clearDownload(for: url)
       session.finishTasksAndInvalidate()
     }
     guard let requestUrl = task.originalRequest?.url,

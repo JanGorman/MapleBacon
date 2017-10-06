@@ -169,7 +169,7 @@ if let imageUrl = URL(string: "…") {
 
 ## Misc
 
-Find out a bit more on how MapleBacon came to be on the [Zalando Tech Blog](http://tech.zalando.com/posts/maple-bacon.html)
+Find out a bit more on how MapleBacon came to be on the [Zalando Tech Blog](https://jobs.zalando.com/tech/blog/maple-bacon/)
 
 ## License
  

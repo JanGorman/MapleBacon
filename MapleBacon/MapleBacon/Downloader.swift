@@ -5,7 +5,7 @@
 import Foundation
 
 public typealias DownloadProgress = (_ received: Int64, _ total: Int64) -> Void
-public typealias DownloadCompletion = (UIImage) -> Void
+public typealias DownloadCompletion = (UIImage?) -> Void
 
 
 protocol DownloadStateDelegate: class {
@@ -28,6 +28,8 @@ struct Download {
 }
 
 public class Downloader {
+  
+  public static let `default` = Downloader()
 
   private static let prefix = "com.schnaub.Downloader."
 

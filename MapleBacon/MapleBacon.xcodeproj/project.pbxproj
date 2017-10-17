@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7760852B1F8A50DB000CF974 /* UIImageView+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7760852A1F8A50DB000CF974 /* UIImageView+MapleBacon.swift */; };
+		7760852F1F8A51BB000CF974 /* MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7760852E1F8A51BB000CF974 /* MapleBacon.swift */; };
 		777691571F5C237A00BCDFF9 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777691561F5C237A00BCDFF9 /* Downloader.swift */; };
 		777691591F5C238F00BCDFF9 /* DownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777691581F5C238F00BCDFF9 /* DownloaderTests.swift */; };
 		77B73D501F553A8700874885 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B73D461F553A8700874885 /* MapleBacon.framework */; };
@@ -42,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7760852A1F8A50DB000CF974 /* UIImageView+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+MapleBacon.swift"; sourceTree = "<group>"; };
+		7760852E1F8A51BB000CF974 /* MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBacon.swift; sourceTree = "<group>"; };
 		777691561F5C237A00BCDFF9 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		777691581F5C238F00BCDFF9 /* DownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloaderTests.swift; sourceTree = "<group>"; };
 		77B73D461F553A8700874885 /* MapleBacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapleBacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +106,8 @@
 			children = (
 				77B73D601F553AE800874885 /* Cache.swift */,
 				777691561F5C237A00BCDFF9 /* Downloader.swift */,
+				7760852A1F8A50DB000CF974 /* UIImageView+MapleBacon.swift */,
+				7760852E1F8A51BB000CF974 /* MapleBacon.swift */,
 				77B73D491F553A8700874885 /* MapleBacon.h */,
 				77B73D4A1F553A8700874885 /* Info.plist */,
 			);
@@ -271,6 +277,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				777691571F5C237A00BCDFF9 /* Downloader.swift in Sources */,
+				7760852F1F8A51BB000CF974 /* MapleBacon.swift in Sources */,
+				7760852B1F8A50DB000CF974 /* UIImageView+MapleBacon.swift in Sources */,
 				77B73D611F553AE800874885 /* Cache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -28,6 +28,9 @@ public final class Cache {
     
     let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
     cachePath = (path as NSString).appendingPathComponent(name)
+
+    NotificationCenter.default.addObserver(self, selector: #selector(clearMemory),
+                                           name: .UIApplicationDidReceiveMemoryWarning, object: nil)
   }
   
   public func store(_ image: UIImage, forKey key: String, completion: (() -> Void)? = nil) {
@@ -72,7 +75,7 @@ public final class Cache {
     return image
   }
   
-  public func clearMemory() {
+  @objc public func clearMemory() {
     memory.removeAllObjects()
   }
 

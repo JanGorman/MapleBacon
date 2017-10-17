@@ -118,7 +118,7 @@ private class SessionDelegate: NSObject, URLSessionDataDelegate {
     var url: URL? = nil
     defer {
       delegate?.clearDownload(for: url)
-      session.finishTasksAndInvalidate()
+//      session.finishTasksAndInvalidate()
     }
     guard let requestUrl = task.originalRequest?.url,
           let download = delegate?.download(for: requestUrl),

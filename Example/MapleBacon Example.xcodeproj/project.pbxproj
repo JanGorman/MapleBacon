@@ -1,0 +1,414 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		77CC4C0E1F9686D4000A0BB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4C0D1F9686D4000A0BB2 /* AppDelegate.swift */; };
+		77CC4C101F9686D4000A0BB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4C0F1F9686D4000A0BB2 /* ViewController.swift */; };
+		77CC4C131F9686D4000A0BB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77CC4C111F9686D4000A0BB2 /* Main.storyboard */; };
+		77CC4C151F9686D4000A0BB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77CC4C141F9686D4000A0BB2 /* Assets.xcassets */; };
+		77CC4C181F9686D4000A0BB2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77CC4C161F9686D4000A0BB2 /* LaunchScreen.storyboard */; };
+		77CC4C2D1F96880D000A0BB2 /* UICollectionView+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4C2C1F96880D000A0BB2 /* UICollectionView+MapleBacon.swift */; };
+		77CC4C2F1F96884F000A0BB2 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4C2E1F96884F000A0BB2 /* ImageCell.swift */; };
+		77CC4C311F968D84000A0BB2 /* images.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77CC4C301F968D84000A0BB2 /* images.plist */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		77CC4C251F968725000A0BB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 77CC4C1F1F968725000A0BB2 /* MapleBacon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 77B73D461F553A8700874885;
+			remoteInfo = MapleBacon;
+		};
+		77CC4C271F968725000A0BB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 77CC4C1F1F968725000A0BB2 /* MapleBacon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 77B73D4F1F553A8700874885;
+			remoteInfo = MapleBaconTests;
+		};
+		77CC4C291F96873C000A0BB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 77CC4C1F1F968725000A0BB2 /* MapleBacon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 77B73D451F553A8700874885;
+			remoteInfo = MapleBacon;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		77CC4C0A1F9686D4000A0BB2 /* MapleBacon Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MapleBacon Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		77CC4C0D1F9686D4000A0BB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		77CC4C0F1F9686D4000A0BB2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		77CC4C121F9686D4000A0BB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		77CC4C141F9686D4000A0BB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		77CC4C171F9686D4000A0BB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		77CC4C191F9686D4000A0BB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		77CC4C1F1F968725000A0BB2 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = ../MapleBacon/MapleBacon.xcodeproj; sourceTree = "<group>"; };
+		77CC4C2C1F96880D000A0BB2 /* UICollectionView+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+MapleBacon.swift"; sourceTree = "<group>"; };
+		77CC4C2E1F96884F000A0BB2 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		77CC4C301F968D84000A0BB2 /* images.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = images.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		77CC4C071F9686D4000A0BB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		77CC4C011F9686D4000A0BB2 = {
+			isa = PBXGroup;
+			children = (
+				77CC4C1F1F968725000A0BB2 /* MapleBacon.xcodeproj */,
+				77CC4C0C1F9686D4000A0BB2 /* MapleBacon Example */,
+				77CC4C0B1F9686D4000A0BB2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		77CC4C0B1F9686D4000A0BB2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				77CC4C0A1F9686D4000A0BB2 /* MapleBacon Example.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		77CC4C0C1F9686D4000A0BB2 /* MapleBacon Example */ = {
+			isa = PBXGroup;
+			children = (
+				77CC4C2B1F9687DC000A0BB2 /* Boilerplate */,
+				77CC4C0D1F9686D4000A0BB2 /* AppDelegate.swift */,
+				77CC4C0F1F9686D4000A0BB2 /* ViewController.swift */,
+				77CC4C111F9686D4000A0BB2 /* Main.storyboard */,
+				77CC4C141F9686D4000A0BB2 /* Assets.xcassets */,
+				77CC4C161F9686D4000A0BB2 /* LaunchScreen.storyboard */,
+				77CC4C191F9686D4000A0BB2 /* Info.plist */,
+				77CC4C301F968D84000A0BB2 /* images.plist */,
+			);
+			path = "MapleBacon Example";
+			sourceTree = "<group>";
+		};
+		77CC4C201F968725000A0BB2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				77CC4C261F968725000A0BB2 /* MapleBacon.framework */,
+				77CC4C281F968725000A0BB2 /* MapleBaconTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		77CC4C2B1F9687DC000A0BB2 /* Boilerplate */ = {
+			isa = PBXGroup;
+			children = (
+				77CC4C2C1F96880D000A0BB2 /* UICollectionView+MapleBacon.swift */,
+				77CC4C2E1F96884F000A0BB2 /* ImageCell.swift */,
+			);
+			path = Boilerplate;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		77CC4C091F9686D4000A0BB2 /* MapleBacon Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 77CC4C1C1F9686D4000A0BB2 /* Build configuration list for PBXNativeTarget "MapleBacon Example" */;
+			buildPhases = (
+				77CC4C061F9686D4000A0BB2 /* Sources */,
+				77CC4C071F9686D4000A0BB2 /* Frameworks */,
+				77CC4C081F9686D4000A0BB2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				77CC4C2A1F96873C000A0BB2 /* PBXTargetDependency */,
+			);
+			name = "MapleBacon Example";
+			productName = "MapleBacon Example";
+			productReference = 77CC4C0A1F9686D4000A0BB2 /* MapleBacon Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		77CC4C021F9686D4000A0BB2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0900;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Jan Gorman";
+				TargetAttributes = {
+					77CC4C091F9686D4000A0BB2 = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 77CC4C051F9686D4000A0BB2 /* Build configuration list for PBXProject "MapleBacon Example" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 77CC4C011F9686D4000A0BB2;
+			productRefGroup = 77CC4C0B1F9686D4000A0BB2 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 77CC4C201F968725000A0BB2 /* Products */;
+					ProjectRef = 77CC4C1F1F968725000A0BB2 /* MapleBacon.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				77CC4C091F9686D4000A0BB2 /* MapleBacon Example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		77CC4C261F968725000A0BB2 /* MapleBacon.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MapleBacon.framework;
+			remoteRef = 77CC4C251F968725000A0BB2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		77CC4C281F968725000A0BB2 /* MapleBaconTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MapleBaconTests.xctest;
+			remoteRef = 77CC4C271F968725000A0BB2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		77CC4C081F9686D4000A0BB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77CC4C311F968D84000A0BB2 /* images.plist in Resources */,
+				77CC4C181F9686D4000A0BB2 /* LaunchScreen.storyboard in Resources */,
+				77CC4C151F9686D4000A0BB2 /* Assets.xcassets in Resources */,
+				77CC4C131F9686D4000A0BB2 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		77CC4C061F9686D4000A0BB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77CC4C101F9686D4000A0BB2 /* ViewController.swift in Sources */,
+				77CC4C2F1F96884F000A0BB2 /* ImageCell.swift in Sources */,
+				77CC4C2D1F96880D000A0BB2 /* UICollectionView+MapleBacon.swift in Sources */,
+				77CC4C0E1F9686D4000A0BB2 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		77CC4C2A1F96873C000A0BB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MapleBacon;
+			targetProxy = 77CC4C291F96873C000A0BB2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		77CC4C111F9686D4000A0BB2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				77CC4C121F9686D4000A0BB2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		77CC4C161F9686D4000A0BB2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				77CC4C171F9686D4000A0BB2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		77CC4C1A1F9686D4000A0BB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		77CC4C1B1F9686D4000A0BB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		77CC4C1D1F9686D4000A0BB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CPRVB9W254;
+				INFOPLIST_FILE = "MapleBacon Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.MapleBacon-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		77CC4C1E1F9686D4000A0BB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CPRVB9W254;
+				INFOPLIST_FILE = "MapleBacon Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.MapleBacon-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		77CC4C051F9686D4000A0BB2 /* Build configuration list for PBXProject "MapleBacon Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77CC4C1A1F9686D4000A0BB2 /* Debug */,
+				77CC4C1B1F9686D4000A0BB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		77CC4C1C1F9686D4000A0BB2 /* Build configuration list for PBXNativeTarget "MapleBacon Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77CC4C1D1F9686D4000A0BB2 /* Debug */,
+				77CC4C1E1F9686D4000A0BB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 77CC4C021F9686D4000A0BB2 /* Project object */;
+}

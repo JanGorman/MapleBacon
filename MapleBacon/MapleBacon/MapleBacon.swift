@@ -21,8 +21,16 @@ public final class MapleBacon {
     self.downloader = downloader
   }
   
-  public func image(with url: URL, progress: DownloadProgress?, completion: DownloadCompletion?) {
-    
+  public func image(with url: URL, progress: DownloadProgress?, completion: @escaping DownloadCompletion) {
+    let key = url.absoluteString
+    cache.retrieveImage(forKey: key) { image, _ in
+      guard let image = image else {
+        self.downloader.download(url, progress: progress, completion: completion)
+        return
+      }
+      completion(image)
+    }
   }
+
   
 }

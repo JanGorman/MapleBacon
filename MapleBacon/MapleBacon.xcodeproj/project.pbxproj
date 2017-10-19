@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		775FE0B61F98E7A600D548E1 /* UIButton+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775FE0B51F98E7A600D548E1 /* UIButton+MapleBacon.swift */; };
+		775FE0BA1F98E9E600D548E1 /* MapleBaconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */; };
+		775FE0BC1F98EA3900D548E1 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775FE0BB1F98EA3900D548E1 /* TestHelper.swift */; };
 		7760852B1F8A50DB000CF974 /* UIImageView+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7760852A1F8A50DB000CF974 /* UIImageView+MapleBacon.swift */; };
 		7760852F1F8A51BB000CF974 /* MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7760852E1F8A51BB000CF974 /* MapleBacon.swift */; };
 		777691571F5C237A00BCDFF9 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777691561F5C237A00BCDFF9 /* Downloader.swift */; };
@@ -44,6 +47,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		775FE0B51F98E7A600D548E1 /* UIButton+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+MapleBacon.swift"; sourceTree = "<group>"; };
+		775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconTests.swift; sourceTree = "<group>"; };
+		775FE0BB1F98EA3900D548E1 /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
 		7760852A1F8A50DB000CF974 /* UIImageView+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+MapleBacon.swift"; sourceTree = "<group>"; };
 		7760852E1F8A51BB000CF974 /* MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBacon.swift; sourceTree = "<group>"; };
 		777691561F5C237A00BCDFF9 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
@@ -79,6 +85,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		775FE0B11F98E78C00D548E1 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				77B73D601F553AE800874885 /* Cache.swift */,
+				777691561F5C237A00BCDFF9 /* Downloader.swift */,
+				7760852E1F8A51BB000CF974 /* MapleBacon.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		775FE0B41F98E79600D548E1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7760852A1F8A50DB000CF974 /* UIImageView+MapleBacon.swift */,
+				775FE0B51F98E7A600D548E1 /* UIButton+MapleBacon.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		77B73D3C1F553A8700874885 = {
 			isa = PBXGroup;
 			children = (
@@ -104,10 +129,8 @@
 		77B73D481F553A8700874885 /* MapleBacon */ = {
 			isa = PBXGroup;
 			children = (
-				77B73D601F553AE800874885 /* Cache.swift */,
-				777691561F5C237A00BCDFF9 /* Downloader.swift */,
-				7760852A1F8A50DB000CF974 /* UIImageView+MapleBacon.swift */,
-				7760852E1F8A51BB000CF974 /* MapleBacon.swift */,
+				775FE0B41F98E79600D548E1 /* Extensions */,
+				775FE0B11F98E78C00D548E1 /* Core */,
 				77B73D491F553A8700874885 /* MapleBacon.h */,
 				77B73D4A1F553A8700874885 /* Info.plist */,
 			);
@@ -119,6 +142,8 @@
 			children = (
 				77B73D541F553A8700874885 /* CacheTests.swift */,
 				777691581F5C238F00BCDFF9 /* DownloaderTests.swift */,
+				775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */,
+				775FE0BB1F98EA3900D548E1 /* TestHelper.swift */,
 				77B73D561F553A8700874885 /* Info.plist */,
 				77B73D651F553F4800874885 /* Assets.xcassets */,
 			);
@@ -276,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				775FE0B61F98E7A600D548E1 /* UIButton+MapleBacon.swift in Sources */,
 				777691571F5C237A00BCDFF9 /* Downloader.swift in Sources */,
 				7760852F1F8A51BB000CF974 /* MapleBacon.swift in Sources */,
 				7760852B1F8A50DB000CF974 /* UIImageView+MapleBacon.swift in Sources */,
@@ -289,6 +315,8 @@
 			files = (
 				777691591F5C238F00BCDFF9 /* DownloaderTests.swift in Sources */,
 				77B73D551F553A8700874885 /* CacheTests.swift in Sources */,
+				775FE0BA1F98E9E600D548E1 /* MapleBaconTests.swift in Sources */,
+				775FE0BC1F98EA3900D548E1 /* TestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

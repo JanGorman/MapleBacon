@@ -4,31 +4,34 @@
 
 import UIKit
 
-extension UIImageView {
+extension UIButton {
   
-  /// Set image on self from a URL
+  /// Set an image from the provided URL
   ///
   /// - Parameters:
   ///     - url: The URL to load an image from
+  ///     - state: The `UIControlState` for which this image should be set
   ///     - placeholder: An optional placeholder image to set while loading
   ///     - progress: An optional closure to track the download progress
   ///     - completion: An optional closure to call once the download is done
   public func setImage(with url: URL?,
-                       placeHolder: UIImage? = nil,
+                       for state: UIControlState,
+                       placeholder: UIImage? = nil,
                        progress: DownloadProgress? = nil,
                        completion: DownloadCompletion? = nil) {
     defer {
-      image = placeHolder
+      setImage(placeholder, for: state)
     }
     guard let url = url else {
       completion?(nil)
       return
     }
-
+    
     MapleBacon.shared.image(with: url, progress: progress) { [weak self] image in
-      self?.image = image
+      self?.setImage(image, for: state)
       completion?(image)
     }
   }
   
 }
+

@@ -7,6 +7,8 @@ import UIKit
 @testable import MapleBacon
 
 class CacheTests: XCTestCase {
+  
+  private let helper = TestHelper()
 
   override func tearDown() {
     super.tearDown()
@@ -18,7 +20,7 @@ class CacheTests: XCTestCase {
   func testItStoresImageInMemory() {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
-    let image = testImage()
+    let image = helper.testImage()
     let key = #function
     
     cache.store(image, forKey: key) {
@@ -35,7 +37,7 @@ class CacheTests: XCTestCase {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let defaultCache = Cache.default
     let namedCache = Cache(name: "named")
-    let image = testImage()
+    let image = helper.testImage()
     let key = #function
 
     defaultCache.store(image, forKey: key) {
@@ -51,7 +53,7 @@ class CacheTests: XCTestCase {
   func testUnknownCacheKeyReturnsNoImage() {
     let expectation = self.expectation(description: "Retrieve no image from cache")
     let cache = Cache.default
-    let image = testImage()
+    let image = helper.testImage()
     
     cache.store(image, forKey: "key1") {
       cache.retrieveImage(forKey: "key2") { image, type in
@@ -67,7 +69,7 @@ class CacheTests: XCTestCase {
   func testItStoresImagesToDisk() {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
-    let image = testImage()
+    let image = helper.testImage()
     let key = #function
     
     cache.store(image, forKey: key) {
@@ -85,7 +87,7 @@ class CacheTests: XCTestCase {
   func testItClearsDiskCache() {
     let expectation = self.expectation(description: "Clear disk cache")
     let cache = Cache.default
-    let image = testImage()
+    let image = helper.testImage()
     let key = #function
 
     cache.store(image, forKey: key) {
@@ -99,10 +101,6 @@ class CacheTests: XCTestCase {
     }
 
     wait(for: [expectation], timeout: 10)
-  }
-
-  private func testImage() -> UIImage {
-    return UIImage(named: "MapleBacon", in: Bundle(for: CacheTests.self), compatibleWith: nil)!
   }
 
 }

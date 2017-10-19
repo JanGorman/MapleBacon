@@ -10,6 +10,7 @@
 This branch is work in progress. 
 
 - Reduces the API surface area of MapleBacon
+- Speed
 - Smarter defaults
 - Better progress reporting
 - Image processing pipeline
@@ -53,7 +54,7 @@ Just loading images is a little bit boring. Instead of just passing the URL you 
 ```swift
 func someFunc() {
   let url = URL(string: "…")
-  imageView.setImage(url, placeHolder: UIImage(named: "placeholder"), progress: { received, total in
+  imageView.setImage(url, placeholder: UIImage(named: "placeholder"), progress: { received, total in
     // Report progress
   }, completion: { [weak self] image in
     // Do something else with the image

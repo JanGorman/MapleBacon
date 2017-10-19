@@ -7,6 +7,8 @@ import XCTest
 import Hippolyte
 
 class DownloaderTests: XCTestCase {
+  
+  private let helper = TestHelper()
 
   override func setUp() {
     super.setUp()
@@ -22,7 +24,7 @@ class DownloaderTests: XCTestCase {
     let expectation = self.expectation(description: "Download image")
     let downloader = Downloader()
     let url = URL(string: "https://www.apple.com/mapleBacon.png")!
-    Hippolyte.shared.add(stubbedRequest: request(url: url, response: imageResponse()))
+    Hippolyte.shared.add(stubbedRequest: helper.request(url: url, response: helper.imageResponse()))
 
     downloader.download(url) { image in
       XCTAssertNotNil(image)
@@ -37,8 +39,8 @@ class DownloaderTests: XCTestCase {
     let downloader = Downloader()
     let url1 = URL(string: "https://www.apple.com/mapleBacon.png")!
     let url2 = URL(string: "https://www.apple.com/moreBacon.png")!
-    Hippolyte.shared.add(stubbedRequest: request(url: url1, response: imageResponse()))
-    Hippolyte.shared.add(stubbedRequest: request(url: url2, response: imageResponse()))
+    Hippolyte.shared.add(stubbedRequest: helper.request(url: url1, response: helper.imageResponse()))
+    Hippolyte.shared.add(stubbedRequest: helper.request(url: url2, response: helper.imageResponse()))
 
     downloader.download(url1) { image in
       XCTAssertNotNil(image)
@@ -49,21 +51,6 @@ class DownloaderTests: XCTestCase {
     }
 
     wait(for: [expectation], timeout: 1)
-  }
-
-  private func request(url: URL, response: StubResponse) -> StubRequest {
-    return StubRequest.Builder()
-      .stubRequest(withMethod: .GET, url: url)
-      .addResponse(response)
-      .build()
-  }
-
-  private func imageResponse() -> StubResponse {
-    return StubResponse.Builder()
-      .stubResponse(withStatusCode: 200)
-      .addBody(UIImagePNGRepresentation(UIImage(named: "MapleBacon", in: Bundle(for: type(of: self).self), compatibleWith: nil)!)!)
-      .addHeader(withKey: "Content-Type", value: "image/png")
-      .build()
   }
 
 }

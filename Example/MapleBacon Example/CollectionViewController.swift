@@ -5,7 +5,7 @@
 import UIKit
 import MapleBacon
 
-final class ViewController: UICollectionViewController {
+final class CollectionViewController: UICollectionViewController {
 
   private var imageUrls: [URL] = []
 

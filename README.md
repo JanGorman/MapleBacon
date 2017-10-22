@@ -37,6 +37,8 @@ pod "MapleBacon"
 
 ## Usage
 
+### UIImageView
+
 The most basic usage is via an extension on `UIImageView`. You pass it a URL:
 
 ```swift
@@ -64,9 +66,24 @@ func someFunc() {
 }
 ```
 
-## Author
+### UIButton
 
-JanGorman
+MapleBacon also comes with an extension on `UIButton` that works similar to the image view. The only additional parameter is the `UIControlState` that the images is for:
+
+```swift
+import MapleBacon
+
+@IBOutlet private var button: UIButton! {
+  didSet {
+    let normalUrl = URL(string: "…")
+    button.setImage(with: normalUrl, for: .normal)
+    let selectedUrl = URL(string: "…")
+    button.setImage(with: selectedUrl, for: .selected)
+  }
+}
+```
+
+And just like the `UIImageView` extension you can also pass in a progress and completion handler.
 
 ## License
 

@@ -25,7 +25,13 @@ public final class MapleBacon {
     let key = url.absoluteString
     cache.retrieveImage(forKey: key) { image, _ in
       guard let image = image else {
-        self.downloader.download(url, progress: progress, completion: completion)
+        self.downloader.download(url, progress: progress, completion: { [weak self] image in
+          defer {
+            completion(image)
+          }
+          guard let image = image else { return }
+          self?.cache.store(image, forKey: url.absoluteString)
+        })
         return
       }
       completion(image)

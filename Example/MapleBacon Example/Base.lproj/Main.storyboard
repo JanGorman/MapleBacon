@@ -60,13 +60,25 @@
                                             <segue destination="zYX-ld-7TO" kind="show" id="cRU-CE-zez"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="VE9-nu-xho">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="UVn-63-yTT" style="IBUITableViewCellStyleDefault" id="VE9-nu-xho">
                                         <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VE9-nu-xho" id="tiT-8v-CLY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="UIImageView" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UVn-63-yTT">
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="hVG-yP-6j7" kind="show" id="daU-Sj-KdF"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -164,6 +176,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gU3-VY-R7P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1548" y="56"/>
+        </scene>
+        <!--Image-->
+        <scene sceneID="15x-Zn-01e">
+            <objects>
+                <viewController title="Image" id="hVG-yP-6j7" customClass="ImageViewController" customModule="MapleBacon_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wIu-az-9sa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rz0-z0-36o">
+                                <rect key="frame" x="127" y="305.5" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="FWP-aL-pEU"/>
+                                    <constraint firstAttribute="width" constant="120" id="Rhf-Ut-hpX"/>
+                                </constraints>
+                            </imageView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cEO-LO-g4O">
+                                <rect key="frame" x="127" y="459" width="120" height="2"/>
+                            </progressView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Rz0-z0-36o" firstAttribute="centerX" secondItem="BT9-ci-lSO" secondAttribute="centerX" id="ARR-7l-1rM"/>
+                            <constraint firstItem="Rz0-z0-36o" firstAttribute="centerY" secondItem="BT9-ci-lSO" secondAttribute="centerY" id="Abv-JR-XwG"/>
+                            <constraint firstItem="cEO-LO-g4O" firstAttribute="leading" secondItem="Rz0-z0-36o" secondAttribute="leading" id="Jix-QM-4ED"/>
+                            <constraint firstItem="cEO-LO-g4O" firstAttribute="top" secondItem="Rz0-z0-36o" secondAttribute="bottom" constant="33.5" id="qc5-oF-UAO"/>
+                            <constraint firstItem="cEO-LO-g4O" firstAttribute="centerX" secondItem="BT9-ci-lSO" secondAttribute="centerX" id="zDS-9G-lbC"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="BT9-ci-lSO"/>
+                    </view>
+                    <connections>
+                        <outlet property="downloadProgressView" destination="cEO-LO-g4O" id="v1h-hr-8KN"/>
+                        <outlet property="imageView" destination="Rz0-z0-36o" id="9rw-KJ-Jx2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CLd-l1-l9k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1548" y="780"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E1E-BP-Xdx">

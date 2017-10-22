@@ -17,9 +17,7 @@ extension UIImageView {
                        placeholder: UIImage? = nil,
                        progress: DownloadProgress? = nil,
                        completion: DownloadCompletion? = nil) {
-    defer {
-      image = placeholder
-    }
+    image = placeholder
     guard let url = url else {
       completion?(nil)
       return

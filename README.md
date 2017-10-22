@@ -1,6 +1,7 @@
 # MapleBacon
 
 [![Build Status](https://travis-ci.org/JanGorman/MapleBacon.svg?branch=reboot)](https://travis-ci.org/JanGorman/MapleBacon)
+[![codecov.io](https://codecov.io/github/JanGorman/MapleBacon/coverage.svg?branch=master)](https://codecov.io/github/JanGorman/MapleBacon?branch=reboot)
 [![Version](https://img.shields.io/cocoapods/v/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![License](https://img.shields.io/cocoapods/l/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![Platform](https://img.shields.io/cocoapods/p/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)

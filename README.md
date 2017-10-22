@@ -8,6 +8,8 @@
 
 ## Reboot
 
+Migrating from an older version? Check out the [Migration Guide](https://github.com/JanGorman/MapleBacon/wiki/Migration-Guide-Version-4-→-Version-5).
+
 This branch is work in progress. 
 
 - Reduces the API surface area of MapleBacon

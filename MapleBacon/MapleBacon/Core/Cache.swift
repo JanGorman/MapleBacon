@@ -13,12 +13,14 @@ public final class Cache {
   private static let prefix = "com.schnaub.Cache."
   
   public static let `default` = Cache(name: "default")
-  
+
   public let cachePath: String
   
   private let memory = NSCache<NSString, AnyObject>()
   private let fileManager = FileManager.default
   private let diskQueue: DispatchQueue
+
+  open var maxCacheAgeSeconds: TimeInterval = 60 * 60 * 60 * 24
   
   public init(name: String) {
     let cacheName = Cache.prefix + name
@@ -31,6 +33,8 @@ public final class Cache {
 
     NotificationCenter.default.addObserver(self, selector: #selector(clearMemory),
                                            name: .UIApplicationDidReceiveMemoryWarning, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: .UIApplicationWillTerminate,
+                                           object: nil)
   }
   
   public func store(_ image: UIImage, forKey key: String, completion: (() -> Void)? = nil) {
@@ -89,5 +93,30 @@ public final class Cache {
       self.createCacheDirectoryIfNeeded()
     }
   }
-    
+
+  @objc private func cleanDisk() {
+    diskQueue.async {
+      for url in self.expiredFileUrls() {
+        _ = try? self.fileManager.removeItem(at: url)
+      }
+    }
+  }
+
+  public func expiredFileUrls() -> [URL] {
+    let cacheDirectory = URL(fileURLWithPath: cachePath)
+    let keys: Set<URLResourceKey> = [.isDirectoryKey, .contentAccessDateKey, .totalFileAllocatedSizeKey]
+    let contents = try? fileManager.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: Array(keys),
+                                                        options: .skipsHiddenFiles)
+    guard let files = contents else { return [] }
+
+    let expirationDate = Date(timeIntervalSinceNow: -maxCacheAgeSeconds)
+    let expiredFileUrls = files.filter { url in
+      let resource = try? url.resourceValues(forKeys: keys)
+      let isDirectory = resource?.isDirectory
+      let lastAccessDate = resource?.contentAccessDate
+      return isDirectory == false && (lastAccessDate as NSDate?)?.laterDate(expirationDate) == expirationDate
+    }
+    return expiredFileUrls
+  }
+
 }

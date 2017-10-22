@@ -3,7 +3,7 @@
 //
 
 import XCTest
-@testable import MapleBacon
+import MapleBacon
 import Hippolyte
 
 class DownloaderTests: XCTestCase {

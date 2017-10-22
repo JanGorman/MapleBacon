@@ -4,7 +4,7 @@
 
 import XCTest
 import UIKit
-@testable import MapleBacon
+import MapleBacon
 
 class CacheTests: XCTestCase {
   
@@ -98,6 +98,22 @@ class CacheTests: XCTestCase {
           expectation.fulfill()
         }
       }
+    }
+
+    wait(for: [expectation], timeout: 10)
+  }
+
+  func testItReturnsExpiredFileUrlsForDeletion() {
+    let expectation = self.expectation(description: "Expired Urls")
+    let cache = Cache(name: #function)
+    cache.maxCacheAgeSeconds = 0
+    let image = helper.testImage()
+    let key = #function
+
+    cache.store(image, forKey: key) {
+      let urls = cache.expiredFileUrls()
+      XCTAssertFalse(urls.isEmpty)
+      expectation.fulfill()
     }
 
     wait(for: [expectation], timeout: 10)

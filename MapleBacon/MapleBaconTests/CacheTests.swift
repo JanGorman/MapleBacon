@@ -119,4 +119,28 @@ class CacheTests: XCTestCase {
     wait(for: [expectation], timeout: 10)
   }
 
+  func testCacheWithIdentifierIsCachedAsSeparateImage() {
+    let expectation = self.expectation(description: "Retrieve image from cache")
+    let cache = Cache.default
+    let image = helper.testImage()
+    let alternateImage = UIImage(data: UIImageJPEGRepresentation(image, 0.2)!)!
+    let key = #function
+    let transformerId = "transformer"
+
+    cache.store(image, forKey: key) {
+      cache.store(alternateImage, forKey: key, transformerId: transformerId) {
+        cache.retrieveImage(forKey: key) { image, _ in
+          cache.retrieveImage(forKey: key, transformerId: transformerId) { transformerImage, _ in
+            XCTAssertNotNil(image)
+            XCTAssertNotNil(transformerImage)
+            XCTAssertNotEqual(image, transformerImage)
+            expectation.fulfill()
+          }
+        }
+      }
+    }
+
+    wait(for: [expectation], timeout: 10)
+  }
+
 }

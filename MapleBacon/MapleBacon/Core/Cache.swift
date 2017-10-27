@@ -37,16 +37,22 @@ public final class Cache {
                                            object: nil)
   }
   
-  public func store(_ image: UIImage, forKey key: String, completion: (() -> Void)? = nil) {
-    memory.setObject(image, forKey: key as NSString)
+  public func store(_ image: UIImage, forKey key: String, transformerId: String? = nil, completion: (() -> Void)? = nil) {
+    let cacheKey = makeCacheKey(key, identifier: transformerId)
+    memory.setObject(image, forKey: cacheKey as NSString)
     diskQueue.async { [unowned self] in
       defer {
         DispatchQueue.main.async {
           completion?()
         }
       }
-      self.storeImageToDisk(image, key: key)
+      self.storeImageToDisk(image, key: cacheKey)
     }
+  }
+
+  private func makeCacheKey(_ key: String, identifier: String?) -> String {
+    guard let identifier = identifier, !identifier.isEmpty else { return key }
+    return key + "-" + identifier
   }
   
   private func storeImageToDisk(_ image: UIImage, key: String) {
@@ -61,12 +67,13 @@ public final class Cache {
     _ = try? fileManager.createDirectory(atPath: self.cachePath, withIntermediateDirectories: true, attributes: nil)
   }
   
-  public func retrieveImage(forKey key: String, completion: (UIImage?, CacheType) -> Void) {
-    if let image = memory.object(forKey: key as NSString) as? UIImage {
+  public func retrieveImage(forKey key: String, transformerId: String? = nil, completion: (UIImage?, CacheType) -> Void) {
+    let cacheKey = makeCacheKey(key, identifier: transformerId)
+    if let image = memory.object(forKey: cacheKey as NSString) as? UIImage {
       completion(image, .memory)
       return
     }
-    if let image = retrieveImageFromDisk(forKey: key) {
+    if let image = retrieveImageFromDisk(forKey: cacheKey) {
       completion(image, .disk)
       return
     }

@@ -2,7 +2,7 @@
 //  Copyright © 2017 Jan Gorman. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Hippolyte
 
 final class TestHelper {

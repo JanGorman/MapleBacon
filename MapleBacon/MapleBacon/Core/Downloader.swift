@@ -2,7 +2,7 @@
 //  Copyright © 2017 Jan Gorman. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public typealias DownloadProgress = (_ received: Int64, _ total: Int64) -> Void
 public typealias DownloadCompletion = (UIImage?) -> Void

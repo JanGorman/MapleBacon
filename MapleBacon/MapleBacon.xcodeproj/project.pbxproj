@@ -20,6 +20,8 @@
 		77B73D611F553AE800874885 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B73D601F553AE800874885 /* Cache.swift */; };
 		77B73D661F553F4800874885 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77B73D651F553F4800874885 /* Assets.xcassets */; };
 		77C5BECA1F798C5F00B762A0 /* Hippolyte.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C5BEC41F798B7E00B762A0 /* Hippolyte.framework */; };
+		77CA13111FA233260017C949 /* ImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13101FA233260017C949 /* ImageTransformer.swift */; };
+		77CA13151FA2391B0017C949 /* ImageTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		77B73D601F553AE800874885 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		77B73D651F553F4800874885 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Hippolyte.xcodeproj; path = Frameworks/Hippolyte/Hippolyte.xcodeproj; sourceTree = "<group>"; };
+		77CA13101FA233260017C949 /* ImageTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformer.swift; sourceTree = "<group>"; };
+		77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,7 @@
 			children = (
 				77B73D601F553AE800874885 /* Cache.swift */,
 				777691561F5C237A00BCDFF9 /* Downloader.swift */,
+				77CA13101FA233260017C949 /* ImageTransformer.swift */,
 				7760852E1F8A51BB000CF974 /* MapleBacon.swift */,
 			);
 			path = Core;
@@ -142,6 +147,7 @@
 			children = (
 				77B73D541F553A8700874885 /* CacheTests.swift */,
 				777691581F5C238F00BCDFF9 /* DownloaderTests.swift */,
+				77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */,
 				775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */,
 				775FE0BB1F98EA3900D548E1 /* TestHelper.swift */,
 				77B73D561F553A8700874885 /* Info.plist */,
@@ -302,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				775FE0B61F98E7A600D548E1 /* UIButton+MapleBacon.swift in Sources */,
+				77CA13111FA233260017C949 /* ImageTransformer.swift in Sources */,
 				777691571F5C237A00BCDFF9 /* Downloader.swift in Sources */,
 				7760852F1F8A51BB000CF974 /* MapleBacon.swift in Sources */,
 				7760852B1F8A50DB000CF974 /* UIImageView+MapleBacon.swift in Sources */,
@@ -314,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				777691591F5C238F00BCDFF9 /* DownloaderTests.swift in Sources */,
+				77CA13151FA2391B0017C949 /* ImageTransformerTests.swift in Sources */,
 				77B73D551F553A8700874885 /* CacheTests.swift in Sources */,
 				775FE0BA1F98E9E600D548E1 /* MapleBaconTests.swift in Sources */,
 				775FE0BC1F98EA3900D548E1 /* TestHelper.swift in Sources */,

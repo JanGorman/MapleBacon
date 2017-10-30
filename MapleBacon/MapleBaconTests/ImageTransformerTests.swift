@@ -5,12 +5,6 @@
 import XCTest
 import MapleBacon
 
-private protocol CallCounting {
-
-  var callCount: Int { get }
-
-}
-
 class ImageTransformerTests: XCTestCase {
 
   private class FirstDummyTransformer: ImageTransformer, CallCounting {

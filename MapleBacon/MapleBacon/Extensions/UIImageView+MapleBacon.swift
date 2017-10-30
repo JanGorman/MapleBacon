@@ -11,10 +11,12 @@ extension UIImageView {
   /// - Parameters:
   ///     - url: The URL to load an image from
   ///     - placeholder: An optional placeholder image to set while loading
+  ///     - transformer: An optional transformer or transformer chain to apply to the image
   ///     - progress: An optional closure to track the download progress
   ///     - completion: An optional closure to call once the download is done
   public func setImage(with url: URL?,
                        placeholder: UIImage? = nil,
+                       transformer: ImageTransformer? = nil,
                        progress: DownloadProgress? = nil,
                        completion: DownloadCompletion? = nil) {
     image = placeholder
@@ -23,7 +25,7 @@ extension UIImageView {
       return
     }
 
-    MapleBacon.shared.image(with: url, progress: progress) { [weak self] image in
+    MapleBacon.shared.image(with: url, transformer: transformer, progress: progress) { [weak self] image in
       self?.image = image
       completion?(image)
     }

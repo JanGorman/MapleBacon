@@ -20,17 +20,32 @@ public final class MapleBacon {
     self.cache = cache
     self.downloader = downloader
   }
-  
-  public func image(with url: URL, progress: DownloadProgress?, completion: @escaping DownloadCompletion) {
+
+  /// Download or retrieve an image from cache
+  ///
+  /// - Parameters:
+  ///     - url: The URL to load an image from
+  ///     - transformer: An optional transformer or transformer chain to apply to the image
+  ///     - progress: An optional closure to track the download progress
+  ///     - completion: The closure to call once the download is done
+  public func image(with url: URL,
+                    transformer: ImageTransformer? = nil,
+                    progress: DownloadProgress?,
+                    completion: @escaping DownloadCompletion) {
     let key = url.absoluteString
-    cache.retrieveImage(forKey: key) { image, _ in
+    cache.retrieveImage(forKey: key, transformerId: transformer?.identifier) { image, _ in
       guard let image = image else {
         self.downloader.download(url, progress: progress, completion: { [weak self] image in
+          var finalImage = image
           defer {
-            completion(image)
+            completion(finalImage)
           }
           guard let image = image else { return }
-          self?.cache.store(image, forKey: url.absoluteString)
+
+          if let transformer = transformer {
+            finalImage = transformer.transform(image: image)
+          }
+          self?.cache.store(finalImage ?? image, forKey: url.absoluteString, transformerId: transformer?.identifier)
         })
         return
       }

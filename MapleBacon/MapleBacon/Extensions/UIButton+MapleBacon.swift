@@ -12,11 +12,13 @@ extension UIButton {
   ///     - url: The URL to load an image from
   ///     - state: The `UIControlState` for which this image should be set
   ///     - placeholder: An optional placeholder image to set while loading
+  ///     - transformer: An optional transformer or transformer chain to apply to the image
   ///     - progress: An optional closure to track the download progress
   ///     - completion: An optional closure to call once the download is done
   public func setImage(with url: URL?,
                        for state: UIControlState,
                        placeholder: UIImage? = nil,
+                       transformer: ImageTransformer? = nil,
                        progress: DownloadProgress? = nil,
                        completion: DownloadCompletion? = nil) {
     setImage(placeholder, for: state)
@@ -25,7 +27,7 @@ extension UIButton {
       return
     }
     
-    MapleBacon.shared.image(with: url, progress: progress) { [weak self] image in
+    MapleBacon.shared.image(with: url, transformer: transformer, progress: progress) { [weak self] image in
       self?.setImage(image, for: state)
       completion?(image)
     }

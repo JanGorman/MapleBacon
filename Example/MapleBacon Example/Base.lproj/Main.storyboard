@@ -80,6 +80,26 @@
                                             <segue destination="hVG-yP-6j7" kind="show" id="daU-Sj-KdF"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="WEE-ta-Ly7" style="IBUITableViewCellStyleDefault" id="El0-Xh-3f5">
+                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="El0-Xh-3f5" id="DES-oC-t80">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Image Transformer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WEE-ta-Ly7">
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="H4p-Ai-6V4" kind="show" id="jOM-bb-L0d"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -214,6 +234,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CLd-l1-l9k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1548" y="780"/>
+        </scene>
+        <!--Image Transformer-->
+        <scene sceneID="mpS-24-Q4k">
+            <objects>
+                <viewController title="Image Transformer" id="H4p-Ai-6V4" customClass="ImageTransformerViewController" customModule="MapleBacon_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8W9-gc-5ys">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dd8-ME-k3s">
+                                <rect key="frame" x="127" y="273" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="SC8-Ee-kfU"/>
+                                    <constraint firstAttribute="width" constant="120" id="adH-nE-Amt"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dd8-ME-k3s" firstAttribute="centerY" secondItem="8W9-gc-5ys" secondAttribute="centerY" id="6cH-wu-9GH"/>
+                            <constraint firstItem="dd8-ME-k3s" firstAttribute="centerX" secondItem="8W9-gc-5ys" secondAttribute="centerX" id="gzt-nc-iXa"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Cct-mo-MDd"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="dd8-ME-k3s" id="A1t-ri-rPu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eXz-Fa-XDE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1548" y="1539"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E1E-BP-Xdx">

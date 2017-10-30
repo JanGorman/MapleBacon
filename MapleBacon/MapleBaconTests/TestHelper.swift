@@ -5,6 +5,12 @@
 import UIKit
 import Hippolyte
 
+protocol CallCounting {
+
+  var callCount: Int { get }
+
+}
+
 final class TestHelper {
   
   func testImage() -> UIImage {

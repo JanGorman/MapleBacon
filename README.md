@@ -7,6 +7,8 @@
 [![Platform](https://img.shields.io/cocoapods/p/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
+<p align="center"><img src="https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1" height="210"/></p>
+
 ## Reboot
 
 Migrating from an older version? Check out the [Migration Guide](https://github.com/JanGorman/MapleBacon/wiki/Migration-Guide-Version-4-→-Version-5).
@@ -30,7 +32,7 @@ it, simply add the following line to your Podfile:
 pod "MapleBacon"
 ```
 
-As well as Carthage
+As well as [Carthage](https://github.com/Carthage/Carthage) / [punic](https://github.com/schwa/punic):
 
 ```ogdl
 github "JanGorman/MapleBacon"
@@ -131,6 +133,10 @@ let chainedTransformer = SepiaImageTransformer()
 (Keep in mind that if you are using Core Image it might not be optimal to chain individual transformers but rather create one transformer that applies multiple `CIFilter`s in one pass. See the [Core Image Programming Guide](https://developer.apple.com/library/content/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_intro/ci_intro.html#//apple_ref/doc/uid/TP30001185).)
 
 And just like the `UIImageView` extension you can also pass in a progress and completion handler.
+
+### Tests
+
+MapleBacon uses [Hippolyte](https://github.com/JanGorman/Hippolyte) for stubbing network requests so if you'd like to run the tests yourself, after checking out the repository, run `git submodule init` to fetch the dependency.
 
 ## License
 

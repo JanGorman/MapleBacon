@@ -20,7 +20,7 @@ The folder `Example` contains a sample project for you to try.
 ## Requirements
 
 - Swift 4
-- iOS 9.3+
+- iOS 9.0+
 - Xcode 9+
 
 ## Installation

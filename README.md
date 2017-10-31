@@ -134,6 +134,17 @@ let chainedTransformer = SepiaImageTransformer()
 
 And just like the `UIImageView` extension you can also pass in a progress and completion handler.
 
+### Caching
+
+MapleBacon will cache your images both in memory and on disk. Disk storage is automatically pruned after a week (taking into account the last access date as well) but you can control the maximum cache time yourself too:
+
+```swift
+let oneDaySeconds: TimeInterval = 60 * 60 * 24
+Cache.shared.maxCacheAgeSeconds = oneDaySeconds
+```
+
+MapleBacon handles clearing the in memory cache by itself should your app come under memory pressure.
+
 ### Tests
 
 MapleBacon uses [Hippolyte](https://github.com/JanGorman/Hippolyte) for stubbing network requests so if you'd like to run the tests yourself, after checking out the repository, run `git submodule init` to fetch the dependency.

@@ -23,7 +23,7 @@ public final class Cache {
   private let diskQueue: DispatchQueue
 
   /// The max age to cache images on disk in seconds. Defaults to 7 days.
-  public var maxCacheAgeSeconds: TimeInterval = 60 * 60 * 60 * 24 * 7
+  public var maxCacheAgeSeconds: TimeInterval = 60 * 60 * 24 * 7
 
   /// Construct a new instance of the cache
   ///

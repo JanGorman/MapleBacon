@@ -1,3 +1,7 @@
+# MapleBacon
+
+[![Build Status](https://travis-ci.org/JanGorman/MapleBacon.svg)](https://travis-ci.org/JanGorman/MapleBacon)
+[![codecov.io](https://codecov.io/github/JanGorman/MapleBacon/coverage.svg)](https://codecov.io/github/JanGorman/MapleBacon)
 [![Version](https://img.shields.io/cocoapods/v/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![License](https://img.shields.io/cocoapods/l/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![Platform](https://img.shields.io/cocoapods/p/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
@@ -5,180 +9,146 @@
 
 <p align="center"><img src="https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1" height="210"/></p>
 
+## Reboot
 
-MapleBacon is a Swift image download and caching library. The future is happening right now in the [reboot](https://github.com/JanGorman/MapleBacon/tree/reboot) branch.
+Migrating from an older version? Check out the [Migration Guide](https://github.com/JanGorman/MapleBacon/wiki/Migration-Guide-Version-4-→-Version-5).
+
+## Example
+
+The folder `Example` contains a sample project for you to try.
 
 ## Requirements
 
 - Swift 4
-- iOS 8.0+
-- Xcode 9.0+
+- iOS 9.0+
+- Xcode 9+
 
 ## Installation
 
-The easiest way is either through [CocoaPods](http://cocoapods.org) or [Carthage](https://github.com/Carthage/Carthage). 
-
-For the CocoaPods option, simply add the dependency to your `Podfile`, then `pod install`:
+MapleBacon is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'MapleBacon'
+pod "MapleBacon"
 ```
 
-For the Carthage option, add the following to your `Cartfile`, then run `carthage update`:
+As well as [Carthage](https://github.com/Carthage/Carthage) / [punic](https://github.com/schwa/punic):
 
 ```ogdl
-github "zalando/MapleBacon"
+github "JanGorman/MapleBacon"
 ```
 
-If you don't like either of those options, you can add the dependency as a git submodule:
+## Usage
 
-1. Add MapleBacon as a git submodule: open your project directory in the Terminal and `git submodule add https://github.com/zalando/MapleBacon.git`
-2. Open the resulting `MapleBacon` directory and drag the `Library/MapleBacon/MapleBacon.xcodeproj` file into your Xcode project
-3. In the "Build Phases" tab add MapleBacon as target dependency
-4. Add a "New Copy Files Phase" and rename it to "Copy Frameworks". In the "Destination" dropdown select "Frameworks" and add "MapleBacon.framework" in the list of files to copy.
+### UIImageView
 
----
-
-## Using MapleBacon
-
-### Downloading an image
-
-The most straightforward way is the `UIImageView` extension:
+The most basic usage is via an extension on `UIImageView`. You pass it a URL:
 
 ```swift
 import MapleBacon
 
-…
+private var imageView: UIImageView!
 
-if let imageUrl = URL(string: "…") {
-	imageView.setImage(withUrl: imageUrl)
+func someFunc() {
+  let url = URL(string: "…")
+  imageView.setImage(url)
 }
 ```
 
-or with an optional closure, if you want to check for a possible error:
+Just loading images is a little bit boring. Instead of just passing the URL you can also provide a placeholder, a progress handler that informs you about the download progress and a completion handler for any additional processing. Each of these parameters is optional, opt in to what you need:
 
 ```swift
-if let imageUrl = URL(string: "…") {
-	imageView.setImage(withUrl: imageUrl) { instance, error in
-		…
-	}
+func someFunc() {
+  let url = URL(string: "…")
+  imageView.setImage(url, placeholder: UIImage(named: "placeholder"), progress: { received, total in
+    // Report progress
+  }, completion: { [weak self] image in
+    // Do something else with the image
+  })
+
 }
 ```
 
-There's also support for a placeholder image with optional (enabled by default) cross fading to the proper image once it's been downloaded:
+### UIButton
+
+MapleBacon also comes with an extension on `UIButton` that works similar to the image view. The only additional parameter is the `UIControlState` that the images is for:
 
 ```swift
-if let imageUrl = URL(string: "…"), placeholder = UIImage(named: "placeholder") {
-	imageView.setImage(withUrl: imageUrl, placeholder: placeholder)
+import MapleBacon
+
+@IBOutlet private var button: UIButton! {
+  didSet {
+    let normalUrl = URL(string: "…")
+    button.setImage(with: normalUrl, for: .normal)
+    let selectedUrl = URL(string: "…")
+    button.setImage(with: selectedUrl, for: .selected)
+  }
 }
-
-// or
-
-if let imageUrl = URL(string: "…"), placeholder = UIImage(named: "placeholder") {
-	imageView.setImage(withUrl: imageUrl, placeholder: placeholder, crossFadePlaceholder: false)
-}
-
 ```
 
-### Using the ImageManager directly
+### Image Transformers
 
-You can also access the underlying handler directly for more advanced usage:
+MapleBacon allows you to apply transformations to images and have the results cached so that you app doesn't need to perform the same work over and over. To make your own transformer, create a class conforming to the `ImageTransformer` protocol. A transform can be anything you like, let's create one that applies a Core Image sepia filter:
 
 ```swift
-if let imageUrl = URL(string: "…") {
-	let manager = ImageManager.sharedManager
-	
-	manager.downloadImageAtURL(imageUrl, completion: { imageInstance, error in
-		…
-	})
+private class SepiaImageTransformer: ImageTransformer {
+
+  // The identifier is used as part of the cache key. Make sure it's something unique
+  let identifier = "com.schnaub.SepiaImageTransformer"
+
+  func transform(image: UIImage) -> UIImage? {
+    guard let filter = CIFilter(name: "CISepiaTone") else { return image }
+
+    let ciImage = CIImage(image: image)
+    filter.setValue(ciImage, forKey: kCIInputImageKey)
+    filter.setValue(0.5, forKey: kCIInputIntensityKey)
+
+    let context = CIContext()
+    guard let outputImage = filter.outputImage,
+          let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
+
+    // Return the transformed image which will be cached (or used by another transformer)
+    return UIImage(cgImage: cgImage)
+  }
+
 }
 ```
 
-### Scaling images
-
-For the quality conscious among you, MapleBacon also allows for more advanced (and more expensive) scaling of downloaded images. Under the hood this uses Core Graphics. The simplest way to use this mode is to pass in a `cacheScaled: true` Bool into the `UIImageView` extension:
+You then pass this filter to MapleBacon in one of the convenience methods:
 
 ```swift
-imageView.setImage(withUrl: imageURL, cacheScaled: true)
-
-// Or the call back way
-imageView.setImage(withUrl: imageURL, cacheScaled: true) { imageInstance, error in
-…
-}
-
+let url = URL(string: "…")
+let transformer = SepiaImageTransformer()
+imageView.setImage(with: url, transformer: transformer)
 ```
 
-This will cache the scaled version of the image in the background, so the whole computation is done only once. It respects both the size and contentMode of the imageView that you call this method on.
+If you want to apply multiple transforms to an image, you can chain your transformers:
 
-Alternatively, you can also access the `Resizer` class directly (and use it independently of downloading images).
+```swift
+let chainedTransformer = SepiaImageTransformer()
+  .appending(transformer: DifferentTransformer())
+  .appending(transformer: AnotherTransformer())
+```
 
+(Keep in mind that if you are using Core Image it might not be optimal to chain individual transformers but rather create one transformer that applies multiple `CIFilter`s in one pass. See the [Core Image Programming Guide](https://developer.apple.com/library/content/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_intro/ci_intro.html#//apple_ref/doc/uid/TP30001185).)
+
+And just like the `UIImageView` extension you can also pass in a progress and completion handler.
 
 ### Caching
 
-MapleBacon will cache your images both in memory and on disk. Disk storage is automatically pruned after a week but you can control the maximum cache time yourself too:
+MapleBacon will cache your images both in memory and on disk. Disk storage is automatically pruned after a week (taking into account the last access date as well) but you can control the maximum cache time yourself too:
 
 ```swift
-let maxAgeOneDay: NSTimeInterval = 60 * 60 * 24
-DiskStorage.sharedStorage.maxAge = maxAgeOneDay
+let oneDaySeconds: TimeInterval = 60 * 60 * 24
+Cache.shared.maxCacheAgeSeconds = oneDaySeconds
 ```
 
-You can also wipe the storage completely:
+MapleBacon handles clearing the in memory cache by itself should your app come under memory pressure.
 
-```swift
-MapleBaconStorage.sharedStorage.clearStorage()
-```
+### Tests
 
-Or, should the app come under memory pressure, clear the in memory images only:
-
-```swift
-override func didReceiveMemoryWarning() {
-	MapleBaconStorage.sharedStorage.clearMemoryStorage()
-}
-```
-
-MapleBacon supports multiple cache regions:
-
-```swift
-let storage = DiskStorage(name: "…")
-```
-
-This requires a little more effort on your end. In this case you'll need to use the `ImageManager` directly as described above and inject your custom storage instance there:
-
-```swift
-let storage = DiskStorage(name: "…")
-
-if let imageUrl = URL(string: "…") {
-	ImageManager.sharedManager.downloadImage(atUrl: imageUrl, storage: storage) {
-		imageInstance, error in
-		…
-	}
-}
-```
-
-
-
-## Contributors
-
-- [Dimitrios Georgakopoulos](https://github.com/gdj4ever) ([@DimitrisGeorgak](https://twitter.com/DimitrisGeorgak))
-- [Jan Gorman](https://github.com/JanGorman) ([@JanGorman](https://twitter.com/JanGorman))
-- [Ramy Kfoury](https://github.com/ramy-kfoury) ([@ramy_kfoury](https://twitter.com/ramy_kfoury))
-
-## Acknowledgements
-
-- [Resize a UIImage the right way](http://vocaro.com/trevor/blog/2009/10/12/resize-a-uiimage-the-right-way/)
-
-## Misc
-
-Find out a bit more on how MapleBacon came to be on the [Zalando Tech Blog](https://jobs.zalando.com/tech/blog/maple-bacon/)
+MapleBacon uses [Hippolyte](https://github.com/JanGorman/Hippolyte) for stubbing network requests so if you'd like to run the tests yourself, after checking out the repository, run `git submodule init` to fetch the dependency.
 
 ## License
- 
-The MIT License (MIT)
 
-Copyright (c) 2017 Jan Gorman
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+MapleBacon is available under the MIT license. See the LICENSE file for more info.

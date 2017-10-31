@@ -1,4 +1,4 @@
-### https://raw.github.com/github/gitignore//Global/Xcode.gitignore
+### https://raw.github.com/github/gitignore/d5ce0fc1d4a677eaa60d5b8e01ac9e42ec7cfcd1/Global/Xcode.gitignore
 
 # Xcode
 #
@@ -23,4 +23,5 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+
 

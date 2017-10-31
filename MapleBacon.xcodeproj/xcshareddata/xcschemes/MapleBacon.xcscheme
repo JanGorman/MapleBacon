@@ -14,24 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F2520C471A3EDAFE0061BB33"
+               BlueprintIdentifier = "77B73D451F553A8700874885"
                BuildableName = "MapleBacon.framework"
                BlueprintName = "MapleBacon"
                ReferencedContainer = "container:MapleBacon.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F2AB72821A40395200CCE62B"
-               BuildableName = "MapleBaconExampleTests.xctest"
-               BlueprintName = "MapleBaconExampleTests"
-               ReferencedContainer = "container:../../MapleBaconExample/MapleBaconExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -41,36 +27,27 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       language = ""
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F2520C521A3EDAFF0061BB33"
+               BlueprintIdentifier = "77B73D4E1F553A8700874885"
                BuildableName = "MapleBaconTests.xctest"
                BlueprintName = "MapleBaconTests"
                ReferencedContainer = "container:MapleBacon.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F2AB72821A40395200CCE62B"
-               BuildableName = "MapleBaconExampleTests.xctest"
-               BlueprintName = "MapleBaconExampleTests"
-               ReferencedContainer = "container:../../MapleBaconExample/MapleBaconExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F2AB726D1A40395200CCE62B"
-            BuildableName = "MapleBaconExample.app"
-            BlueprintName = "MapleBaconExample"
-            ReferencedContainer = "container:MapleBaconExample/MapleBaconExample.xcodeproj">
+            BlueprintIdentifier = "77B73D451F553A8700874885"
+            BuildableName = "MapleBacon.framework"
+            BlueprintName = "MapleBacon"
+            ReferencedContainer = "container:MapleBacon.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -87,16 +64,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F2AB726D1A40395200CCE62B"
-            BuildableName = "MapleBaconExample.app"
-            BlueprintName = "MapleBaconExample"
-            ReferencedContainer = "container:MapleBaconExample/MapleBaconExample.xcodeproj">
+            BlueprintIdentifier = "77B73D451F553A8700874885"
+            BuildableName = "MapleBacon.framework"
+            BlueprintName = "MapleBacon"
+            ReferencedContainer = "container:MapleBacon.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -109,7 +85,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F2520C471A3EDAFE0061BB33"
+            BlueprintIdentifier = "77B73D451F553A8700874885"
             BuildableName = "MapleBacon.framework"
             BlueprintName = "MapleBacon"
             ReferencedContainer = "container:MapleBacon.xcodeproj">

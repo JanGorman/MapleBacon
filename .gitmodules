@@ -1,3 +1,3 @@
 [submodule "MapleBacon/Frameworks/Hippolyte"]
-	path = MapleBacon/Frameworks/Hippolyte
+	path = Frameworks/Hippolyte
 	url = https://github.com/JanGorman/Hippolyte.git

@@ -2,6 +2,6 @@ language: objective-c
 osx_image: xcode9
 script:
   - git submodule init
-  - bundle exec fastlane scan --code_coverage true --project MapleBacon/MapleBacon.xcodeproj --scheme MapleBacon
+  - bundle exec fastlane scan --code_coverage true --project MapleBacon.xcodeproj --scheme MapleBacon
 after_success:
   - bash <(curl -s https://codecov.io/bash)

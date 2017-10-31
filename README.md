@@ -1,22 +1,15 @@
 # MapleBacon
 
-[![Build Status](https://travis-ci.org/JanGorman/MapleBacon.svg?branch=reboot)](https://travis-ci.org/JanGorman/MapleBacon)
-[![codecov.io](https://codecov.io/github/JanGorman/MapleBacon/coverage.svg?branch=master)](https://codecov.io/github/JanGorman/MapleBacon?branch=reboot)
+[![Build Status](https://travis-ci.org/JanGorman/MapleBacon.svg)](https://travis-ci.org/JanGorman/MapleBacon)
+[![codecov.io](https://codecov.io/github/JanGorman/MapleBacon/coverage.svg)](https://codecov.io/github/JanGorman/MapleBacon)
 [![Version](https://img.shields.io/cocoapods/v/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![License](https://img.shields.io/cocoapods/l/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![Platform](https://img.shields.io/cocoapods/p/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 ## Reboot
 
 Migrating from an older version? Check out the [Migration Guide](https://github.com/JanGorman/MapleBacon/wiki/Migration-Guide-Version-4-→-Version-5).
-
-This branch is work in progress. 
-
-- Reduces the API surface area of MapleBacon
-- Speed
-- Smarter defaults
-- Better progress reporting
-- Image processing pipeline
 
 ## Example
 
@@ -35,6 +28,12 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod "MapleBacon"
+```
+
+As well as Carthage
+
+```ogdl
+github "JanGorman/MapleBacon"
 ```
 
 ## Usage
@@ -84,6 +83,52 @@ import MapleBacon
   }
 }
 ```
+
+### Image Transformers
+
+MapleBacon allows you to apply transformations to images and have the results cached so that you app doesn't need to perform the same work over and over. To make your own transformer, create a class conforming to the `ImageTransformer` protocol. A transform can be anything you like, let's create one that applies a Core Image sepia filter:
+
+```swift
+private class SepiaImageTransformer: ImageTransformer {
+
+  // The identifier is used as part of the cache key. Make sure it's something unique
+  let identifier = "com.schnaub.SepiaImageTransformer"
+
+  func transform(image: UIImage) -> UIImage? {
+    guard let filter = CIFilter(name: "CISepiaTone") else { return image }
+
+    let ciImage = CIImage(image: image)
+    filter.setValue(ciImage, forKey: kCIInputImageKey)
+    filter.setValue(0.5, forKey: kCIInputIntensityKey)
+
+    let context = CIContext()
+    guard let outputImage = filter.outputImage,
+          let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
+
+    // Return the transformed image which will be cached (or used by another transformer)
+    return UIImage(cgImage: cgImage)
+  }
+
+}
+```
+
+You then pass this filter to MapleBacon in one of the convenience methods:
+
+```swift
+let url = URL(string: "…")
+let transformer = SepiaImageTransformer()
+imageView.setImage(with: url, transformer: transformer)
+```
+
+If you want to apply multiple transforms to an image, you can chain your transformers:
+
+```swift
+let chainedTransformer = SepiaImageTransformer()
+  .appending(transformer: DifferentTransformer())
+  .appending(transformer: AnotherTransformer())
+```
+
+(Keep in mind that if you are using Core Image it might not be optimal to chain individual transformers but rather create one transformer that applies multiple `CIFilter`s in one pass. See the [Core Image Programming Guide](https://developer.apple.com/library/content/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_intro/ci_intro.html#//apple_ref/doc/uid/TP30001185).)
 
 And just like the `UIImageView` extension you can also pass in a progress and completion handler.
 

@@ -84,6 +84,26 @@ class CacheTests: XCTestCase {
     wait(for: [expectation], timeout: 10)
   }
 
+  func testImagesOnDiskAreMovedToMemory() {
+    let expectation = self.expectation(description: "Retrieve image from cache")
+    let cache = Cache.default
+    let image = helper.testImage()
+    let key = #function
+
+    cache.store(image, forKey: key) {
+      cache.clearMemory()
+      cache.retrieveImage(forKey: key) { _, _ in
+        cache.retrieveImage(forKey: key) { image, type in
+          XCTAssertNotNil(image)
+          XCTAssertEqual(type, .memory)
+          expectation.fulfill()
+        }
+      }
+    }
+
+    wait(for: [expectation], timeout: 10)
+  }
+
   func testItClearsDiskCache() {
     let expectation = self.expectation(description: "Clear disk cache")
     let cache = Cache.default

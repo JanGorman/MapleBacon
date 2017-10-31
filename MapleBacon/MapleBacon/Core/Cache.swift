@@ -8,10 +8,12 @@ public enum CacheType {
   case none, memory, disk
 }
 
+/// The class responsible for caching images. Images will be cached both in memory and on disk.
 public final class Cache {
   
   private static let prefix = "com.schnaub.Cache."
-  
+
+  /// The default `Cache` singleton
   public static let `default` = Cache(name: "default")
 
   public let cachePath: String
@@ -20,8 +22,12 @@ public final class Cache {
   private let fileManager = FileManager.default
   private let diskQueue: DispatchQueue
 
-  open var maxCacheAgeSeconds: TimeInterval = 60 * 60 * 60 * 24
-  
+  /// The max age to cache images on disk in seconds. Defaults to 7 days.
+  public var maxCacheAgeSeconds: TimeInterval = 60 * 60 * 60 * 24 * 7
+
+  /// Construct a new instance of the cache
+  ///
+  /// - Parameter name: The name of the cache. Used to construct a unique path on disk to store images in
   public init(name: String) {
     let cacheName = Cache.prefix + name
     memory.name = cacheName
@@ -36,7 +42,14 @@ public final class Cache {
     NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: .UIApplicationWillTerminate,
                                            object: nil)
   }
-  
+
+  /// Stores an image in the cache. Images will be added to both memory and disk.
+  ///
+  /// - Parameters
+  ///     - image: The image to cache
+  ///     - key: The unique identifier of the image
+  ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the image
+  ///     - completion: An optional closure called once the image has been persisted to disk. Runs on the main queue.
   public func store(_ image: UIImage, forKey key: String, transformerId: String? = nil, completion: (() -> Void)? = nil) {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
     memory.setObject(image, forKey: cacheKey as NSString)
@@ -66,7 +79,14 @@ public final class Cache {
     guard !fileManager.fileExists(atPath: self.cachePath) else { return }
     _ = try? fileManager.createDirectory(atPath: self.cachePath, withIntermediateDirectories: true, attributes: nil)
   }
-  
+
+  /// Retrieve an image from cache. Will look in both memory and on disk. When the image is only available on disk
+  /// it will be stored again in memory for faster access.
+  ///
+  /// - Parameters
+  ///     - key: The unique identifier of the image
+  ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the image
+  ///     - completion: The completion called once the image has been retrieved from the cache
   public func retrieveImage(forKey key: String, transformerId: String? = nil, completion: (UIImage?, CacheType) -> Void) {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
     if let image = memory.object(forKey: cacheKey as NSString) as? UIImage {
@@ -74,6 +94,7 @@ public final class Cache {
       return
     }
     if let image = retrieveImageFromDisk(forKey: cacheKey) {
+      store(image, forKey: cacheKey)
       completion(image, .disk)
       return
     }
@@ -90,10 +111,15 @@ public final class Cache {
     memory.removeAllObjects()
   }
 
+  /// Clear the disk cache.
+  ///
+  /// - Parameter completion: An optional closure called once the cache has been cleared. Runs on the main queue.
   public func clearDisk(_ completion: (() -> Void)? = nil) {
     diskQueue.async { [unowned self] in
       defer {
-        completion?()
+        DispatchQueue.main.async {
+          completion?()
+        }
       }
 
       _ = try? self.fileManager.removeItem(atPath: self.cachePath)

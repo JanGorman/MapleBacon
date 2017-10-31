@@ -9,7 +9,7 @@ import UIKit
 /// `appending(transformer:)` function. This will give you a new processor which can then be used.
 public protocol ImageTransformer {
 
-  /// The transformer's identifier. Can be any unique string.
+  /// The transformer's identifier. Any unique string.
   var identifier: String { get }
 
   /// The transform function to apply
@@ -22,8 +22,13 @@ public protocol ImageTransformer {
 
 public extension ImageTransformer {
 
+  /// Appends one transformer to another
+  ///
+  /// - Parameter transformer: The transformer to append
+  /// - Returns: A new transformer that will run both transformers after one another
   public func appending(transformer: ImageTransformer) -> ImageTransformer {
     let chainIdentifier = identifier.appending(" -> \(transformer.identifier)")
+
     return BaseComposableImageTransformer(identifier: chainIdentifier) { image in
       guard let image = self.transform(image: image) else { return nil }
       return transformer.transform(image: image)

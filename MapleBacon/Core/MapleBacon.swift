@@ -52,6 +52,5 @@ public final class MapleBacon {
       completion(image)
     }
   }
-
   
 }

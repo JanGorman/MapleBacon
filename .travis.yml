@@ -1,7 +1,10 @@
 language: objective-c
 osx_image: xcode9
+before_script:
+  - brew update && brew upgrade swiftlint
 script:
   - git submodule init
   - bundle exec fastlane scan --code_coverage true --project MapleBacon.xcodeproj --scheme MapleBacon
+  - bundle exec danger
 after_success:
   - bash <(curl -s https://codecov.io/bash)

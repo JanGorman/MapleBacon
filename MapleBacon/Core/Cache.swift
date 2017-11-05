@@ -107,7 +107,8 @@ public final class Cache {
     return image
   }
   
-  @objc public func clearMemory() {
+  @objc
+  public func clearMemory() {
     memory.removeAllObjects()
   }
 
@@ -127,7 +128,8 @@ public final class Cache {
     }
   }
 
-  @objc private func cleanDisk() {
+  @objc
+  private func cleanDisk() {
     diskQueue.async {
       for url in self.expiredFileUrls() {
         _ = try? self.fileManager.removeItem(at: url)

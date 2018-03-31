@@ -6,5 +6,6 @@ script:
   - git submodule init
   - bundle exec fastlane scan --code_coverage true --project MapleBacon.xcodeproj --scheme MapleBacon
   - bundle exec danger
+  - swiftlint
 after_success:
   - bash <(curl -s https://codecov.io/bash)

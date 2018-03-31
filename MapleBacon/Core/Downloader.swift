@@ -66,10 +66,10 @@ public class Downloader {
       if let download = downloads[url] {
         task = download.task
       } else {
-        let t = session.dataTask(with: url)
-        let download = Download(task: t, progress: progress, completion: completion, data: Data())
+        let newTask = session.dataTask(with: url)
+        let download = Download(task: newTask, progress: progress, completion: completion, data: Data())
         downloads[url] = download
-        task = t
+        task = newTask
       }
 
       task.resume()

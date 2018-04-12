@@ -10,7 +10,7 @@ public typealias DownloadCompletion = (UIImage?) -> Void
 protocol DownloadStateDelegate: class {
 
   func progress(for url: URL) -> DownloadProgress?
-  func completion(for url: URL) -> DownloadCompletion?
+  func completions(for url: URL) -> [DownloadCompletion]?
   func clearDownload(for url: URL?)
   func download(for url: URL) -> Download?
 
@@ -20,14 +20,14 @@ class Download {
 
   let task: URLSessionDataTask
   let progress: DownloadProgress?
-  let completion: DownloadCompletion
+  var completions: [DownloadCompletion]
   var data: Data
 
   init(task: URLSessionDataTask, progress: DownloadProgress?, completion: @escaping DownloadCompletion,
        data: Data) {
     self.task = task
     self.progress = progress
-    self.completion = completion
+    self.completions = [completion]
     self.data = data
   }
 
@@ -65,6 +65,7 @@ public class Downloader {
       let task: URLSessionDataTask
       if let download = downloads[url] {
         task = download.task
+        download.completions.append(completion)
       } else {
         let newTask = session.dataTask(with: url)
         let download = Download(task: newTask, progress: progress, completion: completion, data: Data())
@@ -84,8 +85,8 @@ extension Downloader: DownloadStateDelegate {
     return downloads[url]?.progress
   }
 
-  func completion(for url: URL) -> DownloadCompletion? {
-    return downloads[url]?.completion
+  func completions(for url: URL) -> [DownloadCompletion]? {
+    return downloads[url]?.completions
   }
 
   func clearDownload(for url: URL?) {
@@ -126,7 +127,9 @@ private class SessionDelegate: NSObject, URLSessionDataDelegate {
           let download = delegate?.download(for: requestUrl),
           let image = UIImage(data: download.data), error == nil else { return }
     url = requestUrl
-    delegate?.completion(for: requestUrl)?(image)
+    delegate?.completions(for: requestUrl)?.forEach { completion in
+      completion(image)
+    }
   }
 
 }

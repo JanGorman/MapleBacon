@@ -64,8 +64,9 @@ public final class Cache {
   }
 
   private func makeCacheKey(_ key: String, identifier: String?) -> String {
-    guard let identifier = identifier, !identifier.isEmpty else { return key }
-    return key + "-" + identifier
+    let fileSafeKey = key.replacingOccurrences(of: "/", with: "-")
+    guard let identifier = identifier, !identifier.isEmpty else { return fileSafeKey }
+    return fileSafeKey + "-" + identifier
   }
   
   private func storeImageToDisk(_ image: UIImage, key: String) {

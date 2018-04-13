@@ -21,7 +21,7 @@ class CacheTests: XCTestCase {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
     let image = helper.testImage()
-    let key = #function
+    let key = "http://\(#function)"
     
     cache.store(image, forKey: key) {
       cache.retrieveImage(forKey: key) { image, _ in

@@ -7,7 +7,7 @@ import UIKit
 public typealias DownloadProgress = (_ received: Int64, _ total: Int64) -> Void
 public typealias DownloadCompletion = (UIImage?) -> Void
 
-protocol DownloadStateDelegate: class {
+protocol DownloadStateDelegate: AnyObject {
 
   func progress(for url: URL) -> DownloadProgress?
   func completions(for url: URL) -> [DownloadCompletion]?

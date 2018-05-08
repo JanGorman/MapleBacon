@@ -130,6 +130,12 @@ let chainedTransformer = SepiaImageTransformer()
   .appending(transformer: AnotherTransformer())
 ```
 
+Or if you prefer, using the custom `>>>` operator:
+
+```swift
+let chainedTransformer = SepiaImageTransformer() >>> DifferentTransformer() >>> AnotherTransformer()
+```
+
 (Keep in mind that if you are using Core Image it might not be optimal to chain individual transformers but rather create one transformer that applies multiple `CIFilter`s in one pass. See the [Core Image Programming Guide](https://developer.apple.com/library/content/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_intro/ci_intro.html#//apple_ref/doc/uid/TP30001185).)
 
 And just like the `UIImageView` extension you can also pass in a progress and completion handler.

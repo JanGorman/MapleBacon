@@ -58,6 +58,18 @@ class ImageTransformerTests: XCTestCase {
     XCTAssertTrue(composed.identifier.contains(third.identifier))
   }
 
+  func testItsComposableWithCustomOperator() {
+    let first = FirstDummyTransformer()
+    let second = SecondDummyTransformer()
+    let third = ThirdDummyTransformer()
+
+    let composed = first >>> second >>> third
+
+    XCTAssertTrue(composed.identifier.contains(first.identifier))
+    XCTAssertTrue(composed.identifier.contains(second.identifier))
+    XCTAssertTrue(composed.identifier.contains(third.identifier))
+  }
+
   func testItCallsAllTransformers() {
     let first = FirstDummyTransformer()
     let second = SecondDummyTransformer()

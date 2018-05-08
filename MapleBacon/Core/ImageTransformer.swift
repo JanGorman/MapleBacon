@@ -20,6 +20,12 @@ public protocol ImageTransformer {
 
 }
 
+infix operator >>>: AdditionPrecedence
+
+public func >>>(transformer1: ImageTransformer, transformer2: ImageTransformer) -> ImageTransformer {
+  return transformer1.appending(transformer: transformer2)
+}
+
 public extension ImageTransformer {
 
   /// Appends one transformer to another

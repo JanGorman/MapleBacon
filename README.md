@@ -60,7 +60,7 @@ Just loading images is a little bit boring. Instead of just passing the URL you 
 ```swift
 func someFunc() {
   let url = URL(string: "…")
-  imageView.setImage(url, placeholder: UIImage(named: "placeholder"), progress: { received, total in
+  imageView.setImage(with: url, placeholder: UIImage(named: "placeholder"), progress: { received, total in
     // Report progress
   }, completion: { [weak self] image in
     // Do something else with the image

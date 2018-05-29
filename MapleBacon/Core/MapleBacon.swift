@@ -4,8 +4,10 @@
 
 import UIKit
 
+public typealias ImageDownloadCompletion = (UIImage?) -> Void
+
 public final class MapleBacon {
-  
+
   /// The shared instance of MapleBacon
   public static let shared = MapleBacon()
   
@@ -31,21 +33,22 @@ public final class MapleBacon {
   public func image(with url: URL,
                     transformer: ImageTransformer? = nil,
                     progress: DownloadProgress?,
-                    completion: @escaping DownloadCompletion) {
+                    completion: @escaping ImageDownloadCompletion) {
     let key = url.absoluteString
     cache.retrieveImage(forKey: key, transformerId: transformer?.identifier) { image, _ in
       guard let image = image else {
-        self.downloader.download(url, progress: progress, completion: { [weak self] image in
-          var finalImage = image
-          defer {
-            completion(finalImage)
+        self.downloader.download(url, progress: progress, completion: { [weak self] data in
+          guard let data = data, let image = UIImage(data: data) else {
+            completion(nil)
+            return
           }
-          guard let image = image else { return }
 
-          if let transformer = transformer {
-            finalImage = transformer.transform(image: image)
-          }
-          self?.cache.store(finalImage ?? image, forKey: url.absoluteString, transformerId: transformer?.identifier)
+          let transformedImage = transformer?.transform(image: image)
+          let finalImage = transformedImage ?? image
+          let finalData = transformedImage == nil ? data : nil
+
+          self?.cache.store(finalImage, data: finalData, forKey: url.absoluteString, transformerId: transformer?.identifier)
+          completion(finalImage)
         })
         return
       }

@@ -20,7 +20,7 @@ extension UIButton {
                        placeholder: UIImage? = nil,
                        transformer: ImageTransformer? = nil,
                        progress: DownloadProgress? = nil,
-                       completion: DownloadCompletion? = nil) {
+                       completion: ImageDownloadCompletion? = nil) {
     setImage(placeholder, for: state)
     guard let url = url else {
       completion?(nil)

@@ -18,7 +18,8 @@ extension UIImageView {
                        placeholder: UIImage? = nil,
                        transformer: ImageTransformer? = nil,
                        progress: DownloadProgress? = nil,
-                       completion: DownloadCompletion? = nil) {
+                       completion: ImageDownloadCompletion? = nil) {
+    baconImageUrl = url
     image = placeholder
     guard let url = url else {
       completion?(nil)
@@ -26,9 +27,23 @@ extension UIImageView {
     }
 
     MapleBacon.shared.image(with: url, transformer: transformer, progress: progress) { [weak self] image in
+      guard self?.baconImageUrl == url else { return }
       self?.image = image
       completion?(image)
     }
   }
-  
+
+  private var baconImageUrl: URL? {
+    get {
+      return objc_getAssociatedObject(self, &baconImageUrlKey) as? URL
+    }
+    set {
+      objc_setAssociatedObject(self,
+                               &baconImageUrlKey,
+                               newValue,
+                               .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+  }
 }
+
+private var baconImageUrlKey: UInt8 = 0

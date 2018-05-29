@@ -31,7 +31,7 @@ public final class Cache {
   public init(name: String) {
     let cacheName = Cache.prefix + name
     memory.name = cacheName
-    
+
     diskQueue = DispatchQueue(label: cacheName, qos: .background)
     
     let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
@@ -50,17 +50,24 @@ public final class Cache {
   ///     - key: The unique identifier of the image
   ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the image
   ///     - completion: An optional closure called once the image has been persisted to disk. Runs on the main queue.
-  public func store(_ image: UIImage, forKey key: String, transformerId: String? = nil, completion: (() -> Void)? = nil) {
+  public func store(_ image: UIImage, data: Data? = nil, forKey key: String, transformerId: String? = nil, completion: (() -> Void)? = nil) {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
     memory.setObject(image, forKey: cacheKey as NSString)
-    diskQueue.async { [unowned self] in
+    diskQueue.async {
       defer {
         DispatchQueue.main.async {
           completion?()
         }
       }
-      self.storeImageToDisk(image, key: cacheKey)
+      if let data = data ?? UIImagePNGRepresentation(image) {
+        self.storeDataToDisk(data, key: cacheKey)
+      }
     }
+  }
+
+  private func storeToMemory(_ image: UIImage, forKey key: String, transformerId: String? = nil) {
+    let cacheKey = makeCacheKey(key, identifier: transformerId)
+    memory.setObject(image, forKey: cacheKey as NSString)
   }
 
   private func makeCacheKey(_ key: String, identifier: String?) -> String {
@@ -69,16 +76,15 @@ public final class Cache {
     return fileSafeKey + "-" + identifier
   }
   
-  private func storeImageToDisk(_ image: UIImage, key: String) {
-    guard let data = UIImagePNGRepresentation(image) else { return }
+  private func storeDataToDisk(_ data: Data, key: String) {
     createCacheDirectoryIfNeeded()
     let path = (cachePath as NSString).appendingPathComponent(key)
     fileManager.createFile(atPath: path, contents: data, attributes: nil)
   }
   
   private func createCacheDirectoryIfNeeded() {
-    guard !fileManager.fileExists(atPath: self.cachePath) else { return }
-    _ = try? fileManager.createDirectory(atPath: self.cachePath, withIntermediateDirectories: true, attributes: nil)
+    guard !fileManager.fileExists(atPath: cachePath) else { return }
+    _ = try? fileManager.createDirectory(atPath: cachePath, withIntermediateDirectories: true, attributes: nil)
   }
 
   /// Retrieve an image from cache. Will look in both memory and on disk. When the image is only available on disk
@@ -95,7 +101,7 @@ public final class Cache {
       return
     }
     if let image = retrieveImageFromDisk(forKey: cacheKey) {
-      store(image, forKey: cacheKey)
+      storeToMemory(image, forKey: cacheKey, transformerId: transformerId)
       completion(image, .disk)
       return
     }
@@ -103,7 +109,7 @@ public final class Cache {
   }
   
   private func retrieveImageFromDisk(forKey key: String) -> UIImage? {
-    let url = URL(fileURLWithPath: (cachePath as NSString).appendingPathComponent(key))
+    let url = URL(fileURLWithPath: cachePath).appendingPathComponent(key)
     guard let data = try? Data(contentsOf: url), let image = UIImage(data: data) else { return nil }
     return image
   }
@@ -117,7 +123,7 @@ public final class Cache {
   ///
   /// - Parameter completion: An optional closure called once the cache has been cleared. Runs on the main queue.
   public func clearDisk(_ completion: (() -> Void)? = nil) {
-    diskQueue.async { [unowned self] in
+    diskQueue.async {
       defer {
         DispatchQueue.main.async {
           completion?()
@@ -140,7 +146,7 @@ public final class Cache {
 
   public func expiredFileUrls() -> [URL] {
     let cacheDirectory = URL(fileURLWithPath: cachePath)
-    let keys: Set<URLResourceKey> = [.isDirectoryKey, .contentAccessDateKey, .totalFileAllocatedSizeKey]
+    let keys: Set<URLResourceKey> = [.isDirectoryKey, .contentAccessDateKey]
     let contents = try? fileManager.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: Array(keys),
                                                         options: .skipsHiddenFiles)
     guard let files = contents else { return [] }
@@ -149,8 +155,8 @@ public final class Cache {
     let expiredFileUrls = files.filter { url in
       let resource = try? url.resourceValues(forKeys: keys)
       let isDirectory = resource?.isDirectory
-      let lastAccessDate = resource?.contentAccessDate
-      return isDirectory == false && (lastAccessDate as NSDate?)?.laterDate(expirationDate) == expirationDate
+      guard let lastAccessDate = resource?.contentAccessDate else { return true }
+      return isDirectory == false && lastAccessDate < expirationDate
     }
     return expiredFileUrls
   }

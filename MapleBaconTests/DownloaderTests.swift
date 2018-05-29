@@ -26,8 +26,8 @@ class DownloaderTests: XCTestCase {
     let url = URL(string: "https://www.apple.com/mapleBacon.png")!
     Hippolyte.shared.add(stubbedRequest: helper.request(url: url, response: helper.imageResponse()))
 
-    downloader.download(url) { image in
-      XCTAssertNotNil(image)
+    downloader.download(url) { data in
+      XCTAssertNotNil(data)
       expectation.fulfill()
     }
 
@@ -42,15 +42,29 @@ class DownloaderTests: XCTestCase {
     Hippolyte.shared.add(stubbedRequest: helper.request(url: url1, response: helper.imageResponse()))
     Hippolyte.shared.add(stubbedRequest: helper.request(url: url2, response: helper.imageResponse()))
 
-    downloader.download(url1) { image in
-      XCTAssertNotNil(image)
+    downloader.download(url1) { data in
+      XCTAssertNotNil(data)
     }
-    downloader.download(url2) { image in
-      XCTAssertNotNil(image)
+    downloader.download(url2) { data in
+      XCTAssertNotNil(data)
       expectation.fulfill()
     }
 
     wait(for: [expectation], timeout: 1)
   }
 
+  func testFailedDownload() {
+    let expectation = self.expectation(description: "Download image")
+    let downloader = Downloader()
+    let url = URL(string: "https://www.apple.com/mapleBacon.png")!
+    let anyError = NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
+    Hippolyte.shared.add(stubbedRequest: helper.request(url: url, response: StubResponse(error: anyError)))
+
+    downloader.download(url) { data in
+      XCTAssertNil(data)
+      expectation.fulfill()
+    }
+
+    wait(for: [expectation], timeout: 1)
+  }
 }

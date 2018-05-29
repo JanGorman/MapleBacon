@@ -5,7 +5,7 @@
 import UIKit
 
 public typealias DownloadProgress = (_ received: Int64, _ total: Int64) -> Void
-public typealias DownloadCompletion = (UIImage?) -> Void
+public typealias DownloadCompletion = (Data?) -> Void
 
 protocol DownloadStateDelegate: AnyObject {
 
@@ -33,7 +33,7 @@ class Download {
 
 }
 
-/// The class responsible for downloading images. Access it through the `default` singleton.
+/// The class responsible for downloading data. Access it through the `default` singleton.
 public class Downloader {
 
   /// The default `Downloader` singleton
@@ -119,17 +119,14 @@ private class SessionDelegate: NSObject, URLSessionDataDelegate {
   }
 
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-    var url: URL? = nil
-    defer {
-      delegate?.clearDownload(for: url)
-    }
     guard let requestUrl = task.originalRequest?.url,
-          let download = delegate?.download(for: requestUrl),
-          let image = UIImage(data: download.data), error == nil else { return }
-    url = requestUrl
+          let download = delegate?.download(for: requestUrl) else { return }
+
+    let data = error == nil ? download.data : nil
     delegate?.completions(for: requestUrl)?.forEach { completion in
-      completion(image)
+      completion(data)
     }
+    delegate?.clearDownload(for: requestUrl)
   }
 
 }

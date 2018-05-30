@@ -38,12 +38,10 @@ extension UIImageView {
       return objc_getAssociatedObject(self, &baconImageUrlKey) as? URL
     }
     set {
-      objc_setAssociatedObject(self,
-                               &baconImageUrlKey,
-                               newValue,
-                               .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+      objc_setAssociatedObject(self, &baconImageUrlKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
   }
+
 }
 
 private var baconImageUrlKey: UInt8 = 0

@@ -51,7 +51,7 @@ private var imageView: UIImageView!
 
 func someFunc() {
   let url = URL(string: "…")
-  imageView.setImage(url)
+  imageView.setImage(with: url)
 }
 ```
 

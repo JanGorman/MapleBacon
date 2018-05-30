@@ -28,9 +28,21 @@ extension UIButton {
     }
     
     MapleBacon.shared.image(with: url, transformer: transformer, progress: progress) { [weak self] image in
+      guard self?.baconImageUrl != url else { return }
       self?.setImage(image, for: state)
       completion?(image)
     }
   }
+
+  private var baconImageUrl: URL? {
+    get {
+      return objc_getAssociatedObject(self, &baconImageUrlKey) as? URL
+    }
+    set {
+      objc_setAssociatedObject(self, &baconImageUrlKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+  }
   
 }
+
+private var baconImageUrlKey: UInt8 = 0

@@ -34,12 +34,19 @@ public final class MapleBacon {
                     transformer: ImageTransformer? = nil,
                     progress: DownloadProgress?,
                     completion: @escaping ImageDownloadCompletion) {
+    fetchImage(with: url, transformer: transformer, progress: progress, completion: completion)
+  }
+
+  private func fetchImage(with url: URL,
+                          transformer: ImageTransformer?,
+                          progress: DownloadProgress?,
+                          completion: ImageDownloadCompletion?) {
     let key = url.absoluteString
     cache.retrieveImage(forKey: key, transformerId: transformer?.identifier) { image, _ in
       guard let image = image else {
         self.downloader.download(url, progress: progress, completion: { [weak self] data in
           guard let data = data, let image = UIImage(data: data) else {
-            completion(nil)
+            completion?(nil)
             return
           }
 
@@ -48,12 +55,19 @@ public final class MapleBacon {
           let finalData = transformedImage == nil ? data : nil
 
           self?.cache.store(finalImage, data: finalData, forKey: url.absoluteString, transformerId: transformer?.identifier)
-          completion(finalImage)
+          completion?(finalImage)
         })
         return
       }
-      completion(image)
+      completion?(image)
     }
+  }
+
+  /// Pre-warms the image cache. Downloads the image if needed or loads it into memory.
+  ///
+  /// - Parameter url: The URL to load an image from
+  public func preWarmCache(for url: URL) {
+    fetchImage(with: url, transformer: nil, progress: nil, completion: nil)
   }
   
 }

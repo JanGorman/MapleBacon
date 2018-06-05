@@ -38,8 +38,8 @@ public final class Cache {
     cachePath = (path as NSString).appendingPathComponent(name)
 
     NotificationCenter.default.addObserver(self, selector: #selector(clearMemory),
-                                           name: .UIApplicationDidReceiveMemoryWarning, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: .UIApplicationWillTerminate,
+                                           name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: UIApplication.willTerminateNotification,
                                            object: nil)
   }
 
@@ -59,7 +59,7 @@ public final class Cache {
           completion?()
         }
       }
-      if let data = data ?? UIImagePNGRepresentation(image) {
+      if let data = data ?? image.pngData() {
         self.storeDataToDisk(data, key: cacheKey)
       }
     }

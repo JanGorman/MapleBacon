@@ -27,7 +27,7 @@ final class TestHelper {
   func imageResponse() -> StubResponse {
     return StubResponse.Builder()
       .stubResponse(withStatusCode: 200)
-      .addBody(UIImagePNGRepresentation(testImage())!)
+      .addBody(testImage().pngData()!)
       .addHeader(withKey: "Content-Type", value: "image/png")
       .build()
   }

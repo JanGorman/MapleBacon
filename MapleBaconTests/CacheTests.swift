@@ -143,7 +143,7 @@ class CacheTests: XCTestCase {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
     let image = helper.testImage()
-    let alternateImage = UIImage(data: UIImageJPEGRepresentation(image, 0.2)!)!
+    let alternateImage = UIImage(data: image.jpegData(compressionQuality: 0.2)!)!
     let key = #function
     let transformerId = "transformer"
 

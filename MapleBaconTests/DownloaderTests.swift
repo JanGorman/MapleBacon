@@ -4,28 +4,20 @@
 
 import XCTest
 import MapleBacon
-import Hippolyte
 
 class DownloaderTests: XCTestCase {
   
   private let helper = TestHelper()
 
-  override func setUp() {
-    super.setUp()
-    Hippolyte.shared.start()
-  }
-
-  override func tearDown() {
-    super.tearDown()
-    Hippolyte.shared.stop()
-  }
-
   func testDownload() {
-    let expectation = self.expectation(description: "Download image")
-    let downloader = Downloader()
-    let url = URL(string: "https://www.apple.com/mapleBacon.png")!
-    Hippolyte.shared.add(stubbedRequest: helper.request(url: url, response: helper.imageResponse()))
+    MockURLProtocol.requestHandler = { request in
+      return (HTTPURLResponse(), self.helper.imageResponseData())
+    }
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
 
+    let expectation = self.expectation(description: "Download image")
+    let url = URL(string: "https://www.apple.com/mapleBacon.png")!
     downloader.download(url) { data in
       XCTAssertNotNil(data)
       expectation.fulfill()
@@ -35,16 +27,19 @@ class DownloaderTests: XCTestCase {
   }
 
   func testMultipleDownloads() {
-    let expectation = self.expectation(description: "Download image")
-    let downloader = Downloader()
-    let url1 = URL(string: "https://www.apple.com/mapleBacon.png")!
-    let url2 = URL(string: "https://www.apple.com/moreBacon.png")!
-    Hippolyte.shared.add(stubbedRequest: helper.request(url: url1, response: helper.imageResponse()))
-    Hippolyte.shared.add(stubbedRequest: helper.request(url: url2, response: helper.imageResponse()))
+    MockURLProtocol.requestHandler = { request in
+      return (HTTPURLResponse(), self.helper.imageResponseData())
+    }
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
 
+    let expectation = self.expectation(description: "Download image")
+
+    let url1 = URL(string: "https://www.apple.com/mapleBacon.png")!
     downloader.download(url1) { data in
       XCTAssertNotNil(data)
     }
+    let url2 = URL(string: "https://www.apple.com/moreBacon.png")!
     downloader.download(url2) { data in
       XCTAssertNotNil(data)
       expectation.fulfill()
@@ -54,12 +49,15 @@ class DownloaderTests: XCTestCase {
   }
 
   func testFailedDownload() {
-    let expectation = self.expectation(description: "Download image")
-    let downloader = Downloader()
-    let url = URL(string: "https://www.apple.com/mapleBacon.png")!
-    let anyError = NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
-    Hippolyte.shared.add(stubbedRequest: helper.request(url: url, response: StubResponse(error: anyError)))
+    MockURLProtocol.requestHandler = { request in
+      let anyError = NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
+      throw anyError
+    }
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
 
+    let expectation = self.expectation(description: "Download image")
+    let url = URL(string: "https://www.apple.com/badBacon.png")!
     downloader.download(url) { data in
       XCTAssertNil(data)
       expectation.fulfill()

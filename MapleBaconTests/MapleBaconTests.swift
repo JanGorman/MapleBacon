@@ -4,7 +4,6 @@
 
 import XCTest
 import MapleBacon
-import Hippolyte
 
 class MapleBaconTests: XCTestCase {
 
@@ -22,25 +21,21 @@ class MapleBaconTests: XCTestCase {
   }
   
   private let helper = TestHelper()
-    
-  override func setUp() {
-    super.setUp()
-    Hippolyte.shared.start()
-  }
-  
+
   override func tearDown() {
     super.tearDown()
-    Hippolyte.shared.stop()
     Cache.default.clearMemory()
     Cache.default.clearDisk()
   }
   
   func testIntegration() {
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
+    let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
+
     let expectation = self.expectation(description: "Download image")
     let url = URL(string: "https://www.apple.com/mapleBacon.png")!
-    Hippolyte.shared.add(stubbedRequest: helper.request(url: url, response: helper.imageResponse()))
-    
-    MapleBacon.shared.image(with: url, progress: nil) { image in
+    mapleBacon.image(with: url, progress: nil) { image in
       XCTAssertNotNil(image)
       expectation.fulfill()
     }
@@ -49,12 +44,14 @@ class MapleBaconTests: XCTestCase {
   }
 
   func testTransformerIntegration() {
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
+    let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
+
     let expectation = self.expectation(description: "Download image")
     let url = URL(string: "https://www.apple.com/mapleBacon.png")!
-    Hippolyte.shared.add(stubbedRequest: helper.request(url: url, response: helper.imageResponse()))
-
     let transformer = DummyTransformer()
-    MapleBacon.shared.image(with: url, transformer: transformer, progress: nil) { image in
+    mapleBacon.image(with: url, transformer: transformer, progress: nil) { image in
       XCTAssertNotNil(image)
       XCTAssertEqual(transformer.callCount, 1)
       expectation.fulfill()
@@ -64,12 +61,14 @@ class MapleBaconTests: XCTestCase {
   }
 
   func testTransformerResultIsCached() {
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
+    let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
+
     let expectation = self.expectation(description: "Download image")
     let url = URL(string: "https://www.apple.com/mapleBacon.png")!
-    Hippolyte.shared.add(stubbedRequest: helper.request(url: url, response: helper.imageResponse()))
-
     let transformer = DummyTransformer()
-    MapleBacon.shared.image(with: url, transformer: transformer, progress: nil) { _ in
+    mapleBacon.image(with: url, transformer: transformer, progress: nil) { _ in
       XCTAssertEqual(transformer.callCount, 1)
 
       MapleBacon.shared.image(with: url, transformer: transformer, progress: nil) { image in
@@ -81,5 +80,5 @@ class MapleBaconTests: XCTestCase {
 
     wait(for: [expectation], timeout: 1)
   }
-    
+
 }

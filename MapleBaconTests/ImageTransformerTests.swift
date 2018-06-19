@@ -53,9 +53,9 @@ class ImageTransformerTests: XCTestCase {
 
     let composed = first.appending(transformer: second).appending(transformer: third)
 
-    XCTAssertTrue(composed.identifier.contains(first.identifier))
+    XCTAssertTrue(composed.identifier.hasPrefix(first.identifier))
     XCTAssertTrue(composed.identifier.contains(second.identifier))
-    XCTAssertTrue(composed.identifier.contains(third.identifier))
+    XCTAssertTrue(composed.identifier.hasSuffix(third.identifier))
   }
 
   func testItsComposableWithCustomOperator() {
@@ -65,9 +65,9 @@ class ImageTransformerTests: XCTestCase {
 
     let composed = first >>> second >>> third
 
-    XCTAssertTrue(composed.identifier.contains(first.identifier))
+    XCTAssertTrue(composed.identifier.hasPrefix(first.identifier))
     XCTAssertTrue(composed.identifier.contains(second.identifier))
-    XCTAssertTrue(composed.identifier.contains(third.identifier))
+    XCTAssertTrue(composed.identifier.hasSuffix(third.identifier))
   }
 
   func testItCallsAllTransformers() {

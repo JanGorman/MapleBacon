@@ -151,10 +151,6 @@ Cache.shared.maxCacheAgeSeconds = oneDaySeconds
 
 MapleBacon handles clearing the in memory cache by itself should your app come under memory pressure.
 
-### Tests
-
-MapleBacon uses [Hippolyte](https://github.com/JanGorman/Hippolyte) for stubbing network requests so if you'd like to run the tests yourself, after checking out the repository, run `git submodule init` to fetch the dependency.
-
 ## License
 
 MapleBacon is available under the MIT license. See the LICENSE file for more info.

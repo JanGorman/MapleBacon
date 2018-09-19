@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		774654BC20D93FD6007DA2AC /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774654BB20D93FD6007DA2AC /* MockURLProtocol.swift */; };
 		775FE0B61F98E7A600D548E1 /* UIButton+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775FE0B51F98E7A600D548E1 /* UIButton+MapleBacon.swift */; };
 		775FE0BA1F98E9E600D548E1 /* MapleBaconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */; };
 		775FE0BC1F98EA3900D548E1 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775FE0BB1F98EA3900D548E1 /* TestHelper.swift */; };
@@ -19,7 +20,6 @@
 		77B73D571F553A8700874885 /* MapleBacon.h in Headers */ = {isa = PBXBuildFile; fileRef = 77B73D491F553A8700874885 /* MapleBacon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		77B73D611F553AE800874885 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B73D601F553AE800874885 /* Cache.swift */; };
 		77B73D661F553F4800874885 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77B73D651F553F4800874885 /* Assets.xcassets */; };
-		77C5BECA1F798C5F00B762A0 /* Hippolyte.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C5BEC41F798B7E00B762A0 /* Hippolyte.framework */; };
 		77CA13111FA233260017C949 /* ImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13101FA233260017C949 /* ImageTransformer.swift */; };
 		77CA13151FA2391B0017C949 /* ImageTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */; };
 /* End PBXBuildFile section */
@@ -32,23 +32,10 @@
 			remoteGlobalIDString = 77B73D451F553A8700874885;
 			remoteInfo = MapleBacon;
 		};
-		77C5BEC31F798B7E00B762A0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 77A290CE1F62EADF001E70FA;
-			remoteInfo = Hippolyte;
-		};
-		77C5BEC51F798B7E00B762A0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 77A290D71F62EADF001E70FA;
-			remoteInfo = HippolyteTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		774654BB20D93FD6007DA2AC /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		775FE0B51F98E7A600D548E1 /* UIButton+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+MapleBacon.swift"; sourceTree = "<group>"; };
 		775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconTests.swift; sourceTree = "<group>"; };
 		775FE0BB1F98EA3900D548E1 /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
@@ -64,7 +51,6 @@
 		77B73D561F553A8700874885 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77B73D601F553AE800874885 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		77B73D651F553F4800874885 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Hippolyte.xcodeproj; path = Frameworks/Hippolyte/Hippolyte.xcodeproj; sourceTree = "<group>"; };
 		77CA13101FA233260017C949 /* ImageTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformer.swift; sourceTree = "<group>"; };
 		77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,7 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77C5BECA1F798C5F00B762A0 /* Hippolyte.framework in Frameworks */,
 				77B73D501F553A8700874885 /* MapleBacon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,7 +97,6 @@
 		77B73D3C1F553A8700874885 = {
 			isa = PBXGroup;
 			children = (
-				77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */,
 				77B73D481F553A8700874885 /* MapleBacon */,
 				77B73D531F553A8700874885 /* MapleBaconTests */,
 				77B73D471F553A8700874885 /* Products */,
@@ -145,24 +129,16 @@
 		77B73D531F553A8700874885 /* MapleBaconTests */ = {
 			isa = PBXGroup;
 			children = (
+				77B73D651F553F4800874885 /* Assets.xcassets */,
 				77B73D541F553A8700874885 /* CacheTests.swift */,
 				777691581F5C238F00BCDFF9 /* DownloaderTests.swift */,
 				77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */,
-				775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */,
-				775FE0BB1F98EA3900D548E1 /* TestHelper.swift */,
 				77B73D561F553A8700874885 /* Info.plist */,
-				77B73D651F553F4800874885 /* Assets.xcassets */,
+				775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */,
+				774654BB20D93FD6007DA2AC /* MockURLProtocol.swift */,
+				775FE0BB1F98EA3900D548E1 /* TestHelper.swift */,
 			);
 			path = MapleBaconTests;
-			sourceTree = "<group>";
-		};
-		77C5BEBF1F798B7E00B762A0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				77C5BEC41F798B7E00B762A0 /* Hippolyte.framework */,
-				77C5BEC61F798B7E00B762A0 /* HippolyteTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		77C5BEC91F798C5F00B762A0 /* Frameworks */ = {
@@ -255,12 +231,6 @@
 			mainGroup = 77B73D3C1F553A8700874885;
 			productRefGroup = 77B73D471F553A8700874885 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 77C5BEBF1F798B7E00B762A0 /* Products */;
-					ProjectRef = 77C5BEBE1F798B7E00B762A0 /* Hippolyte.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				77B73D451F553A8700874885 /* MapleBacon */,
@@ -268,23 +238,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		77C5BEC41F798B7E00B762A0 /* Hippolyte.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Hippolyte.framework;
-			remoteRef = 77C5BEC31F798B7E00B762A0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		77C5BEC61F798B7E00B762A0 /* HippolyteTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = HippolyteTests.xctest;
-			remoteRef = 77C5BEC51F798B7E00B762A0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		77B73D441F553A8700874885 /* Resources */ = {
@@ -342,6 +295,7 @@
 				777691591F5C238F00BCDFF9 /* DownloaderTests.swift in Sources */,
 				77CA13151FA2391B0017C949 /* ImageTransformerTests.swift in Sources */,
 				77B73D551F553A8700874885 /* CacheTests.swift in Sources */,
+				774654BC20D93FD6007DA2AC /* MockURLProtocol.swift in Sources */,
 				775FE0BA1F98E9E600D548E1 /* MapleBaconTests.swift in Sources */,
 				775FE0BC1F98EA3900D548E1 /* TestHelper.swift in Sources */,
 			);

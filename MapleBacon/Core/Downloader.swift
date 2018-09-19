@@ -45,10 +45,10 @@ public class Downloader {
 
   private var downloads: [URL: Download]
 
-  public init() {
+  public init(sessionConfiguration: URLSessionConfiguration = .default) {
     mutex = DispatchQueue(label: "com.schnaub.Downloader.mutex", attributes: .concurrent)
     sessionDelegate = SessionDelegate()
-    session = URLSession(configuration: .default, delegate: sessionDelegate, delegateQueue: .main)
+    session = URLSession(configuration: sessionConfiguration, delegate: sessionDelegate, delegateQueue: .main)
     downloads = [:]
   }
 

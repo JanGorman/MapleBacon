@@ -1,7 +1,5 @@
 language: objective-c
 osx_image: xcode10
-before_script:
-  - brew update && brew upgrade swiftlint
 script:
   - bundle exec fastlane scan --code_coverage true --project MapleBacon.xcodeproj --scheme MapleBacon
   - bundle exec danger

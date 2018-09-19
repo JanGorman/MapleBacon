@@ -20,7 +20,7 @@ class CacheTests: XCTestCase {
   func testItStoresImageInMemory() {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
-    let image = helper.testImage()
+    let image = helper.image
     let key = "http://\(#function)"
     
     cache.store(image, forKey: key) {
@@ -37,7 +37,7 @@ class CacheTests: XCTestCase {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let defaultCache = Cache.default
     let namedCache = Cache(name: "named")
-    let image = helper.testImage()
+    let image = helper.image
     let key = #function
 
     defaultCache.store(image, forKey: key) {
@@ -53,7 +53,7 @@ class CacheTests: XCTestCase {
   func testUnknownCacheKeyReturnsNoImage() {
     let expectation = self.expectation(description: "Retrieve no image from cache")
     let cache = Cache.default
-    let image = helper.testImage()
+    let image = helper.image
     
     cache.store(image, forKey: "key1") {
       cache.retrieveImage(forKey: "key2") { image, type in
@@ -69,7 +69,7 @@ class CacheTests: XCTestCase {
   func testItStoresImagesToDisk() {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
-    let image = helper.testImage()
+    let image = helper.image
     let key = #function
     
     cache.store(image, forKey: key) {
@@ -87,7 +87,7 @@ class CacheTests: XCTestCase {
   func testImagesOnDiskAreMovedToMemory() {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
-    let image = helper.testImage()
+    let image = helper.image
     let key = #function
 
     cache.store(image, forKey: key) {
@@ -107,7 +107,7 @@ class CacheTests: XCTestCase {
   func testItClearsDiskCache() {
     let expectation = self.expectation(description: "Clear disk cache")
     let cache = Cache.default
-    let image = helper.testImage()
+    let image = helper.image
     let key = #function
 
     cache.store(image, forKey: key) {
@@ -127,7 +127,7 @@ class CacheTests: XCTestCase {
     let expectation = self.expectation(description: "Expired Urls")
     let cache = Cache(name: #function)
     cache.maxCacheAgeSeconds = 0
-    let image = helper.testImage()
+    let image = helper.image
     let key = #function
 
     cache.store(image, forKey: key) {
@@ -142,7 +142,7 @@ class CacheTests: XCTestCase {
   func testCacheWithIdentifierIsCachedAsSeparateImage() {
     let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
-    let image = helper.testImage()
+    let image = helper.image
     let alternateImage = UIImage(data: image.jpegData(compressionQuality: 0.2)!)!
     let key = #function
     let transformerId = "transformer"

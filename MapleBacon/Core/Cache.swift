@@ -50,7 +50,8 @@ public final class Cache {
   ///     - key: The unique identifier of the image
   ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the image
   ///     - completion: An optional closure called once the image has been persisted to disk. Runs on the main queue.
-  public func store(_ image: UIImage, data: Data? = nil, forKey key: String, transformerId: String? = nil, completion: (() -> Void)? = nil) {
+  public func store(_ image: UIImage, data: Data? = nil, forKey key: String, transformerId: String? = nil,
+                    completion: (() -> Void)? = nil) {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
     memory.setObject(image, forKey: cacheKey as NSString)
     diskQueue.async {

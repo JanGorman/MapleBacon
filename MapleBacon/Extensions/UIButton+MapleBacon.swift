@@ -16,7 +16,7 @@ extension UIButton {
   ///     - progress: An optional closure to track the download progress
   ///     - completion: An optional closure to call once the download is done
   public func setImage(with url: URL?,
-                       for state: UIControlState,
+                       for state: UIControl.State,
                        placeholder: UIImage? = nil,
                        transformer: ImageTransformer? = nil,
                        progress: DownloadProgress? = nil,

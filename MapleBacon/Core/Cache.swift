@@ -38,8 +38,8 @@ public final class Cache {
     cachePath = (path as NSString).appendingPathComponent(name)
 
     NotificationCenter.default.addObserver(self, selector: #selector(clearMemory),
-                                           name: .UIApplicationDidReceiveMemoryWarning, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: .UIApplicationWillTerminate,
+                                           name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: UIApplication.willTerminateNotification,
                                            object: nil)
   }
 
@@ -50,7 +50,8 @@ public final class Cache {
   ///     - key: The unique identifier of the image
   ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the image
   ///     - completion: An optional closure called once the image has been persisted to disk. Runs on the main queue.
-  public func store(_ image: UIImage, data: Data? = nil, forKey key: String, transformerId: String? = nil, completion: (() -> Void)? = nil) {
+  public func store(_ image: UIImage, data: Data? = nil, forKey key: String, transformerId: String? = nil,
+                    completion: (() -> Void)? = nil) {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
     memory.setObject(image, forKey: cacheKey as NSString)
     diskQueue.async {
@@ -59,7 +60,7 @@ public final class Cache {
           completion?()
         }
       }
-      if let data = data ?? UIImagePNGRepresentation(image) {
+      if let data = data ?? image.pngData() {
         self.storeDataToDisk(data, key: cacheKey)
       }
     }

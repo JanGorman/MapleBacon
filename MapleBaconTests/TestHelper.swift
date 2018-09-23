@@ -11,13 +11,13 @@ protocol CallCounting {
 }
 
 final class TestHelper {
-  
-  func testImage() -> UIImage {
+
+  var image: UIImage {
     return UIImage(named: "MapleBacon", in: Bundle(for: type(of: self).self), compatibleWith: nil)!
   }
-  
+
   func imageResponseData() -> Data {
-    return UIImagePNGRepresentation(testImage())!
+    return image.pngData()!
   }
   
 }

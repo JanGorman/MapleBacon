@@ -40,7 +40,7 @@ class MapleBaconTests: XCTestCase {
       expectation.fulfill()
     }
     
-    wait(for: [expectation], timeout: 1)
+    wait(for: [expectation], timeout: 5)
   }
 
   func testTransformerIntegration() {
@@ -57,7 +57,7 @@ class MapleBaconTests: XCTestCase {
       expectation.fulfill()
     }
 
-    wait(for: [expectation], timeout: 1)
+    wait(for: [expectation], timeout: 5)
   }
 
   func testTransformerResultIsCached() {
@@ -78,7 +78,7 @@ class MapleBaconTests: XCTestCase {
       }
     }
 
-    wait(for: [expectation], timeout: 1)
+    wait(for: [expectation], timeout: 5)
   }
 
 }

@@ -1,9 +1,7 @@
 language: objective-c
-osx_image: xcode9.3
-before_script:
-  - brew update && brew upgrade swiftlint
+osx_image: xcode10
 script:
-  - bundle exec fastlane scan --code_coverage true --project MapleBacon.xcodeproj --scheme MapleBacon
+  - bundle exec fastlane scan --code_coverage true --device 'iPhone 8' --project MapleBacon.xcodeproj --scheme MapleBacon
   - bundle exec danger
   - swiftlint
 after_success:

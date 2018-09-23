@@ -76,7 +76,7 @@ class ImageTransformerTests: XCTestCase {
     let third = ThirdDummyTransformer()
 
     let composed = first.appending(transformer: second).appending(transformer: third)
-    let image = TestHelper().testImage()
+    let image = TestHelper().image
     _ = composed.transform(image: image)
 
     XCTAssertEqual(first.callCount, 1)

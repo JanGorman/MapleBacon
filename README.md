@@ -71,7 +71,7 @@ func someFunc() {
 
 ### UIButton
 
-MapleBacon also comes with an extension on `UIButton` that works similar to the image view. The only additional parameter is the `UIControlState` that the images is for:
+MapleBacon also comes with an extension on `UIButton` that works similar to the image view. The only additional parameter is the `UIControlState` that the image is for:
 
 ```swift
 import MapleBacon

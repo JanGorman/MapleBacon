@@ -42,9 +42,11 @@ public final class MapleBacon {
                           progress: DownloadProgress?,
                           completion: ImageDownloadCompletion?) {
     let key = url.absoluteString
-    cache.retrieveImage(forKey: key, transformerId: transformer?.identifier) { image, _ in
+    cache.retrieveImage(forKey: key, transformerId: transformer?.identifier) { [weak self] image, _ in
+      guard let self = self else { return }
       guard let image = image else {
         self.downloader.download(url, progress: progress, completion: { [weak self] data in
+          guard let self = self else { return }
           guard let data = data, let image = UIImage(data: data) else {
             completion?(nil)
             return
@@ -54,7 +56,7 @@ public final class MapleBacon {
           let finalImage = transformedImage ?? image
           let finalData = transformedImage == nil ? data : nil
 
-          self?.cache.store(finalImage, data: finalData, forKey: url.absoluteString, transformerId: transformer?.identifier)
+          self.cache.store(finalImage, data: finalData, forKey: url.absoluteString, transformerId: transformer?.identifier)
           completion?(finalImage)
         })
         return

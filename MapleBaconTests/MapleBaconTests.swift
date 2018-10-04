@@ -21,6 +21,13 @@ class MapleBaconTests: XCTestCase {
   }
   
   private let helper = TestHelper()
+  
+  override func setUp() {
+    super.setUp()
+    MockURLProtocol.requestHandler = { request in
+      return (HTTPURLResponse(), self.helper.imageResponseData())
+    }
+  }
 
   override func tearDown() {
     super.tearDown()

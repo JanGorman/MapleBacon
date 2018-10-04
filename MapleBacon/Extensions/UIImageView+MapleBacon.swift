@@ -27,8 +27,8 @@ extension UIImageView {
     }
 
     MapleBacon.shared.image(with: url, transformer: transformer, progress: progress) { [weak self] image in
-      guard self?.baconImageUrl == url else { return }
-      self?.image = image
+      guard let self = self, self.baconImageUrl == url else { return }
+      self.image = image
       completion?(image)
     }
   }

@@ -3,6 +3,7 @@
 //
 
 import XCTest
+import Nimble
 import MapleBacon
 
 class ImageTransformerTests: XCTestCase {
@@ -53,9 +54,9 @@ class ImageTransformerTests: XCTestCase {
 
     let composed = first.appending(transformer: second).appending(transformer: third)
 
-    XCTAssertTrue(composed.identifier.hasPrefix(first.identifier))
-    XCTAssertTrue(composed.identifier.contains(second.identifier))
-    XCTAssertTrue(composed.identifier.hasSuffix(third.identifier))
+    expect(composed.identifier).to(beginWith(first.identifier))
+    expect(composed.identifier).to(contain(second.identifier))
+    expect(composed.identifier).to(endWith(third.identifier))
   }
 
   func testItsComposableWithCustomOperator() {
@@ -65,9 +66,9 @@ class ImageTransformerTests: XCTestCase {
 
     let composed = first >>> second >>> third
 
-    XCTAssertTrue(composed.identifier.hasPrefix(first.identifier))
-    XCTAssertTrue(composed.identifier.contains(second.identifier))
-    XCTAssertTrue(composed.identifier.hasSuffix(third.identifier))
+    expect(composed.identifier).to(beginWith(first.identifier))
+    expect(composed.identifier).to(contain(second.identifier))
+    expect(composed.identifier).to(endWith(third.identifier))
   }
 
   func testItCallsAllTransformers() {
@@ -78,10 +79,10 @@ class ImageTransformerTests: XCTestCase {
     let composed = first.appending(transformer: second).appending(transformer: third)
     let image = TestHelper().image
     _ = composed.transform(image: image)
-
-    XCTAssertEqual(first.callCount, 1)
-    XCTAssertEqual(second.callCount, 1)
-    XCTAssertEqual(third.callCount, 1)
+    
+    expect(first.callCount) == 1
+    expect(second.callCount) == 1
+    expect(third.callCount) == 1
   }
 
 }

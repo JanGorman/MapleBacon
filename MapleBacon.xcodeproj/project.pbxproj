@@ -22,6 +22,7 @@
 		77B73D661F553F4800874885 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77B73D651F553F4800874885 /* Assets.xcassets */; };
 		77CA13111FA233260017C949 /* ImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13101FA233260017C949 /* ImageTransformer.swift */; };
 		77CA13151FA2391B0017C949 /* ImageTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */; };
+		F26EECAE21BD9A4500454B3E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F26EECAD21BD9A4500454B3E /* Nimble.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		77B73D651F553F4800874885 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77CA13101FA233260017C949 /* ImageTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformer.swift; sourceTree = "<group>"; };
 		77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformerTests.swift; sourceTree = "<group>"; };
+		F26EECAD21BD9A4500454B3E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77B73D501F553A8700874885 /* MapleBacon.framework in Frameworks */,
+				F26EECAE21BD9A4500454B3E /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +147,7 @@
 		77C5BEC91F798C5F00B762A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F26EECAD21BD9A4500454B3E /* Nimble.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -188,6 +192,7 @@
 				77B73D4B1F553A8700874885 /* Sources */,
 				77B73D4C1F553A8700874885 /* Frameworks */,
 				77B73D4D1F553A8700874885 /* Resources */,
+				F26EECAF21BD9A4B00454B3E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -271,6 +276,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#if which swiftlint >/dev/null; then\n#  swiftlint\n#fi";
+		};
+		F26EECAF21BD9A4B00454B3E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -481,6 +504,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = MapleBaconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.schnaub.MapleBaconTests;
@@ -495,6 +522,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = MapleBaconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.schnaub.MapleBaconTests;

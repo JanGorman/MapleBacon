@@ -4,6 +4,7 @@
 
 import XCTest
 import UIKit
+import Nimble
 import MapleBacon
 
 class CacheTests: XCTestCase {
@@ -18,149 +19,142 @@ class CacheTests: XCTestCase {
   }
   
   func testItStoresImageInMemory() {
-    let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
     let image = helper.image
     let key = "http://\(#function)"
     
-    cache.store(image, forKey: key) {
-      cache.retrieveImage(forKey: key) { image, _ in
-        XCTAssertNotNil(image)
-        expectation.fulfill()
+    waitUntil { done in
+      cache.store(image, forKey: key) {
+        cache.retrieveImage(forKey: key) { image, _ in
+          expect(image).toNot(beNil())
+          done()
+        }
       }
     }
-    
-    wait(for: [expectation], timeout: 10)
   }
 
   func testNamedCachesAreDistinct() {
-    let expectation = self.expectation(description: "Retrieve image from cache")
     let defaultCache = Cache.default
     let namedCache = Cache(name: "named")
     let image = helper.image
     let key = #function
 
-    defaultCache.store(image, forKey: key) {
-      namedCache.retrieveImage(forKey: key, completion: { image, _ in
-        XCTAssertNil(image)
-        expectation.fulfill()
-      })
+    waitUntil { done in
+      defaultCache.store(image, forKey: key) {
+        namedCache.retrieveImage(forKey: key, completion: { image, _ in
+          expect(image).to(beNil())
+          done()
+        })
+      }
     }
-
-    wait(for: [expectation], timeout: 10)
   }
   
   func testUnknownCacheKeyReturnsNoImage() {
-    let expectation = self.expectation(description: "Retrieve no image from cache")
     let cache = Cache.default
     let image = helper.image
-    
-    cache.store(image, forKey: "key1") {
-      cache.retrieveImage(forKey: "key2") { image, type in
-        XCTAssertNil(image)
-        XCTAssertEqual(type, .none)
-        expectation.fulfill()
+
+    waitUntil { done in
+      cache.store(image, forKey: "key1") {
+        cache.retrieveImage(forKey: "key2") { image, type in
+          expect(image).to(beNil())
+          expect(type == .none) == true
+          done()
+        }
       }
     }
-    
-    wait(for: [expectation], timeout: 10)
   }
   
   func testItStoresImagesToDisk() {
-    let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
     let image = helper.image
     let key = #function
-    
-    cache.store(image, forKey: key) {
-      cache.clearMemory()
-      cache.retrieveImage(forKey: key) { image, type in
-        XCTAssertNotNil(image)
-        XCTAssertEqual(type, .disk)
-        expectation.fulfill()
+
+    waitUntil { done in
+      cache.store(image, forKey: key) {
+        cache.clearMemory()
+        cache.retrieveImage(forKey: key) { image, type in
+          expect(image).toNot(beNil())
+          expect(type) == .disk
+          done()
+        }
       }
     }
-    
-    wait(for: [expectation], timeout: 10)
   }
 
   func testImagesOnDiskAreMovedToMemory() {
-    let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
     let image = helper.image
     let key = #function
 
-    cache.store(image, forKey: key) {
-      cache.clearMemory()
-      cache.retrieveImage(forKey: key) { _, _ in
-        cache.retrieveImage(forKey: key) { image, type in
-          XCTAssertNotNil(image)
-          XCTAssertEqual(type, .memory)
-          expectation.fulfill()
+    waitUntil { done in
+      cache.store(image, forKey: key) {
+        cache.clearMemory()
+        cache.retrieveImage(forKey: key) { _, _ in
+          cache.retrieveImage(forKey: key) { image, type in
+            expect(image).toNot(beNil())
+            expect(type) == .memory
+            done()
+          }
         }
       }
     }
-
-    wait(for: [expectation], timeout: 10)
   }
 
   func testItClearsDiskCache() {
-    let expectation = self.expectation(description: "Clear disk cache")
     let cache = Cache.default
     let image = helper.image
     let key = #function
 
-    cache.store(image, forKey: key) {
-      cache.clearMemory()
-      cache.clearDisk {
-        cache.retrieveImage(forKey: key) { image, _ in
-          XCTAssertNil(image)
-          expectation.fulfill()
+    waitUntil { done in
+      cache.store(image, forKey: key) {
+        cache.clearMemory()
+        cache.clearDisk {
+          cache.retrieveImage(forKey: key) { image, _ in
+            expect(image).to(beNil())
+            done()
+          }
         }
       }
     }
-
-    wait(for: [expectation], timeout: 10)
   }
 
   func testItReturnsExpiredFileUrlsForDeletion() {
-    let expectation = self.expectation(description: "Expired Urls")
     let cache = Cache(name: #function)
     cache.maxCacheAgeSeconds = 0
     let image = helper.image
     let key = #function
 
-    cache.store(image, forKey: key) {
-      let urls = cache.expiredFileUrls()
-      XCTAssertFalse(urls.isEmpty)
-      expectation.fulfill()
+    waitUntil { done in
+      cache.store(image, forKey: key) {
+        let urls = cache.expiredFileUrls()
+        expect(urls).toNot(beEmpty())
+        done()
+      }
     }
-
-    wait(for: [expectation], timeout: 10)
   }
 
   func testCacheWithIdentifierIsCachedAsSeparateImage() {
-    let expectation = self.expectation(description: "Retrieve image from cache")
     let cache = Cache.default
     let image = helper.image
     let alternateImage = UIImage(data: image.jpegData(compressionQuality: 0.2)!)!
     let key = #function
     let transformerId = "transformer"
 
-    cache.store(image, forKey: key) {
-      cache.store(alternateImage, forKey: key, transformerId: transformerId) {
-        cache.retrieveImage(forKey: key) { image, _ in
-          cache.retrieveImage(forKey: key, transformerId: transformerId) { transformerImage, _ in
-            XCTAssertNotNil(image)
-            XCTAssertNotNil(transformerImage)
-            XCTAssertNotEqual(image, transformerImage)
-            expectation.fulfill()
+    waitUntil { done in
+      cache.store(image, forKey: key) {
+        cache.store(alternateImage, forKey: key, transformerId: transformerId) {
+          cache.retrieveImage(forKey: key) { image, _ in
+            expect(image).toNot(beNil())
+            
+            cache.retrieveImage(forKey: key, transformerId: transformerId) { transformerImage, _ in
+              expect(transformerImage).toNot(beNil())
+              expect(image) != transformerImage
+              done()
+            }
           }
         }
       }
     }
-
-    wait(for: [expectation], timeout: 10)
   }
 
 }

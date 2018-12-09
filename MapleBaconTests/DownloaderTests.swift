@@ -3,10 +3,12 @@
 //
 
 import XCTest
+import Nimble
 import MapleBacon
 
 class DownloaderTests: XCTestCase {
   
+  private let url = URL(string: "https://www.apple.com/mapleBacon.png")!
   private let helper = TestHelper()
 
   func testDownload() {
@@ -16,14 +18,12 @@ class DownloaderTests: XCTestCase {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
-    let expectation = self.expectation(description: "Download image")
-    let url = URL(string: "https://www.apple.com/mapleBacon.png")!
-    downloader.download(url) { data in
-      XCTAssertNotNil(data)
-      expectation.fulfill()
+    waitUntil { done in
+      downloader.download(self.url) { data in
+        expect(data).toNot(beNil())
+        done()
+      }
     }
-
-    wait(for: [expectation], timeout: 1)
   }
 
   func testMultipleDownloads() {
@@ -33,19 +33,21 @@ class DownloaderTests: XCTestCase {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
-    let expectation = self.expectation(description: "Download image")
-
-    let url1 = URL(string: "https://www.apple.com/mapleBacon.png")!
-    downloader.download(url1) { data in
-      XCTAssertNotNil(data)
+    let url1 = url
+    waitUntil { done in
+      downloader.download(url1) { data in
+        expect(data).toNot(beNil())
+        done()
+      }
     }
-    let url2 = URL(string: "https://www.apple.com/moreBacon.png")!
-    downloader.download(url2) { data in
-      XCTAssertNotNil(data)
-      expectation.fulfill()
+    
+    let url2 = url
+    waitUntil { done in
+      downloader.download(url2) { data in
+        expect(data).toNot(beNil())
+        done()
+      }
     }
-
-    wait(for: [expectation], timeout: 1)
   }
 
   func testFailedDownload() {
@@ -56,13 +58,12 @@ class DownloaderTests: XCTestCase {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
-    let expectation = self.expectation(description: "Download image")
-    let url = URL(string: "https://www.apple.com/badBacon.png")!
-    downloader.download(url) { data in
-      XCTAssertNil(data)
-      expectation.fulfill()
+    waitUntil { done in
+      downloader.download(self.url) { data in
+        expect(data).to(beNil())
+        done()
+      }
     }
-
-    wait(for: [expectation], timeout: 1)
   }
+
 }

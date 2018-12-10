@@ -10,13 +10,6 @@ import MapleBacon
 final class CacheTests: XCTestCase {
   
   private let helper = TestHelper()
-
-  override func tearDown() {
-    super.tearDown()
-
-    Cache.default.clearMemory()
-    Cache.default.clearDisk()
-  }
   
   class MockStore: BackingStore {
     
@@ -69,7 +62,7 @@ final class CacheTests: XCTestCase {
     let image = helper.image
     let key = "http://\(#function)"
     
-    waitUntil { done in
+    waitUntil(timeout: 5) { done in
       cache.store(image, forKey: key) {
         cache.retrieveImage(forKey: key) { image, type in
           expect(image).toNot(beNil())
@@ -86,7 +79,7 @@ final class CacheTests: XCTestCase {
     let image = helper.image
     let key = #function
 
-    waitUntil { done in
+    waitUntil(timeout: 5) { done in
       mockCache.store(image, forKey: key) {
         namedCache.retrieveImage(forKey: key, completion: { image, _ in
           expect(image).to(beNil())
@@ -100,7 +93,7 @@ final class CacheTests: XCTestCase {
     let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
 
-    waitUntil { done in
+    waitUntil(timeout: 5) { done in
       cache.store(image, forKey: "key1") {
         cache.retrieveImage(forKey: "key2") { image, type in
           expect(image).to(beNil())
@@ -116,7 +109,7 @@ final class CacheTests: XCTestCase {
     let image = helper.image
     let key = #function
 
-    waitUntil { done in
+    waitUntil(timeout: 5) { done in
       cache.store(image, forKey: key) {
         cache.clearMemory()
         cache.retrieveImage(forKey: key) { image, type in
@@ -133,7 +126,7 @@ final class CacheTests: XCTestCase {
     let image = helper.image
     let key = #function
 
-    waitUntil { done in
+    waitUntil(timeout: 5) { done in
       cache.store(image, forKey: key) {
         cache.clearMemory()
         cache.retrieveImage(forKey: key) { _, _ in
@@ -152,7 +145,7 @@ final class CacheTests: XCTestCase {
     let image = helper.image
     let key = #function
 
-    waitUntil { done in
+    waitUntil(timeout: 5) { done in
       cache.store(image, forKey: key) {
         cache.clearMemory()
         cache.clearDisk {
@@ -171,7 +164,7 @@ final class CacheTests: XCTestCase {
     let image = helper.image
     let key = #function
 
-    waitUntil { done in
+    waitUntil(timeout: 5) { done in
       cache.store(image, forKey: key) {
         let urls = cache.expiredFileUrls()
         expect(urls).toNot(beEmpty())
@@ -187,7 +180,7 @@ final class CacheTests: XCTestCase {
     let key = #function
     let transformerId = "transformer"
 
-    waitUntil { done in
+    waitUntil(timeout: 5) { done in
       cache.store(image, forKey: key) {
         cache.store(alternateImage, forKey: key, transformerId: transformerId) {
           cache.retrieveImage(forKey: key) { image, _ in

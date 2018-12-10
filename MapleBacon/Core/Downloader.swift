@@ -97,7 +97,7 @@ extension Downloader: DownloadStateDelegate {
   }
 
   func download(for url: URL) -> Download? {
-    var download: Download? = nil
+    var download: Download?
     mutex.sync(flags: .barrier) {
       download = downloads[url]
     }

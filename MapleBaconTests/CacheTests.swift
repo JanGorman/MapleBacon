@@ -37,7 +37,6 @@ final class CacheTests: XCTestCase {
     
     func createDirectory(atPath path: String, withIntermediateDirectories createIntermediates: Bool,
                          attributes: [FileAttributeKey : Any]?) throws {
-      
     }
     
     func removeItem(atPath path: String) throws {
@@ -45,16 +44,14 @@ final class CacheTests: XCTestCase {
     }
     
     func removeItem(at URL: URL) throws {
-      
     }
-    
+
     func contentsOfDirectory(at url: URL, includingPropertiesForKeys keys: [URLResourceKey]?,
                              options mask: FileManager.DirectoryEnumerationOptions) throws -> [URL] {
       let urls = backingStore.keys.map { URL(fileURLWithPath: $0) }
       return urls
     }
-    
-    
+
   }
   
   func testItStoresImageInMemory() {

@@ -49,3 +49,4 @@ disabled_rules:
 excluded:
   - Frameworks
   - vendor
+  - Carthage

@@ -19,7 +19,7 @@ public final class Cache {
   public let cachePath: String
   
   private let memory = NSCache<NSString, AnyObject>()
-  private let fileManager = FileManager.default
+  private let backingStore: BackingStore
   private let diskQueue: DispatchQueue
 
   /// The max age to cache images on disk in seconds. Defaults to 7 days.
@@ -28,10 +28,12 @@ public final class Cache {
   /// Construct a new instance of the cache
   ///
   /// - Parameter name: The name of the cache. Used to construct a unique path on disk to store images in
-  public init(name: String) {
+  public init(name: String, backingStore: BackingStore = FileManager.default) {
     let cacheName = Cache.prefix + name
     memory.name = cacheName
 
+    self.backingStore = backingStore
+    
     diskQueue = DispatchQueue(label: cacheName, qos: .background)
     
     let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
@@ -80,12 +82,14 @@ public final class Cache {
   private func storeDataToDisk(_ data: Data, key: String) {
     createCacheDirectoryIfNeeded()
     let path = (cachePath as NSString).appendingPathComponent(key)
-    fileManager.createFile(atPath: path, contents: data, attributes: nil)
+    backingStore.createFile(atPath: path, contents: data, attributes: nil)
   }
   
   private func createCacheDirectoryIfNeeded() {
-    guard !fileManager.fileExists(atPath: cachePath) else { return }
-    _ = try? fileManager.createDirectory(atPath: cachePath, withIntermediateDirectories: true, attributes: nil)
+    guard !backingStore.fileExists(atPath: cachePath) else {
+      return
+    }
+    try? backingStore.createDirectory(atPath: cachePath, withIntermediateDirectories: true, attributes: nil)
   }
 
   /// Retrieve an image from cache. Will look in both memory and on disk. When the image is only available on disk
@@ -111,7 +115,9 @@ public final class Cache {
   
   private func retrieveImageFromDisk(forKey key: String) -> UIImage? {
     let url = URL(fileURLWithPath: cachePath).appendingPathComponent(key)
-    guard let data = try? Data(contentsOf: url), let image = UIImage(data: data) else { return nil }
+    guard let data = try? backingStore.fileContents(at: url), let image = UIImage(data: data) else {
+      return nil
+    }
     return image
   }
   
@@ -131,7 +137,7 @@ public final class Cache {
         }
       }
 
-      _ = try? self.fileManager.removeItem(atPath: self.cachePath)
+      try? self.backingStore.removeItem(atPath: self.cachePath)
       self.createCacheDirectoryIfNeeded()
     }
   }
@@ -140,7 +146,7 @@ public final class Cache {
   private func cleanDisk() {
     diskQueue.async {
       for url in self.expiredFileUrls() {
-        _ = try? self.fileManager.removeItem(at: url)
+        _ = try? self.backingStore.removeItem(at: url)
       }
     }
   }
@@ -148,9 +154,11 @@ public final class Cache {
   public func expiredFileUrls() -> [URL] {
     let cacheDirectory = URL(fileURLWithPath: cachePath)
     let keys: Set<URLResourceKey> = [.isDirectoryKey, .contentAccessDateKey]
-    let contents = try? fileManager.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: Array(keys),
-                                                        options: .skipsHiddenFiles)
-    guard let files = contents else { return [] }
+    let contents = try? backingStore.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: Array(keys),
+                                                         options: .skipsHiddenFiles)
+    guard let files = contents else {
+      return []
+    }
 
     let expirationDate = Date(timeIntervalSinceNow: -maxCacheAgeSeconds)
     let expiredFileUrls = files.filter { url in

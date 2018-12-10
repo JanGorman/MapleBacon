@@ -6,7 +6,7 @@ import XCTest
 import Nimble
 import MapleBacon
 
-class MapleBaconTests: XCTestCase {
+final class MapleBaconTests: XCTestCase {
 
   private class DummyTransformer: ImageTransformer, CallCounting {
 

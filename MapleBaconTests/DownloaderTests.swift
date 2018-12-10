@@ -6,7 +6,7 @@ import XCTest
 import Nimble
 import MapleBacon
 
-class DownloaderTests: XCTestCase {
+final class DownloaderTests: XCTestCase {
   
   private let url = URL(string: "https://www.apple.com/mapleBacon.png")!
   private let helper = TestHelper()

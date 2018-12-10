@@ -7,7 +7,7 @@ import UIKit
 import Nimble
 import MapleBacon
 
-class CacheTests: XCTestCase {
+final class CacheTests: XCTestCase {
   
   private let helper = TestHelper()
 
@@ -18,15 +18,62 @@ class CacheTests: XCTestCase {
     Cache.default.clearDisk()
   }
   
+  class MockStore: BackingStore {
+    
+    private var backingStore: [String: Data] = [:]
+    
+    func fileContents(at url: URL) throws -> Data {
+      let path = url.absoluteString.deletingPrefix("file://")
+      guard let data = backingStore[path] else {
+        return Data()
+      }
+      return data
+    }
+
+    func fileExists(atPath path: String) -> Bool {
+      return false
+    }
+    
+    func createFile(atPath path: String, contents data: Data?, attributes attr: [FileAttributeKey : Any]?) -> Bool {
+      guard let data = data else {
+        return false
+      }
+      backingStore[path] = data
+      return true
+    }
+    
+    func createDirectory(atPath path: String, withIntermediateDirectories createIntermediates: Bool,
+                         attributes: [FileAttributeKey : Any]?) throws {
+      
+    }
+    
+    func removeItem(atPath path: String) throws {
+      backingStore.removeAll()
+    }
+    
+    func removeItem(at URL: URL) throws {
+      
+    }
+    
+    func contentsOfDirectory(at url: URL, includingPropertiesForKeys keys: [URLResourceKey]?,
+                             options mask: FileManager.DirectoryEnumerationOptions) throws -> [URL] {
+      let urls = backingStore.keys.map { URL(fileURLWithPath: $0) }
+      return urls
+    }
+    
+    
+  }
+  
   func testItStoresImageInMemory() {
-    let cache = Cache.default
+    let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
     let key = "http://\(#function)"
     
     waitUntil { done in
       cache.store(image, forKey: key) {
-        cache.retrieveImage(forKey: key) { image, _ in
+        cache.retrieveImage(forKey: key) { image, type in
           expect(image).toNot(beNil())
+          expect(type) == .memory
           done()
         }
       }
@@ -34,13 +81,13 @@ class CacheTests: XCTestCase {
   }
 
   func testNamedCachesAreDistinct() {
-    let defaultCache = Cache.default
+    let mockCache = Cache(name: "mock", backingStore: MockStore())
     let namedCache = Cache(name: "named")
     let image = helper.image
     let key = #function
 
     waitUntil { done in
-      defaultCache.store(image, forKey: key) {
+      mockCache.store(image, forKey: key) {
         namedCache.retrieveImage(forKey: key, completion: { image, _ in
           expect(image).to(beNil())
           done()
@@ -50,7 +97,7 @@ class CacheTests: XCTestCase {
   }
   
   func testUnknownCacheKeyReturnsNoImage() {
-    let cache = Cache.default
+    let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
 
     waitUntil { done in
@@ -65,7 +112,7 @@ class CacheTests: XCTestCase {
   }
   
   func testItStoresImagesToDisk() {
-    let cache = Cache.default
+    let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
     let key = #function
 
@@ -82,7 +129,7 @@ class CacheTests: XCTestCase {
   }
 
   func testImagesOnDiskAreMovedToMemory() {
-    let cache = Cache.default
+    let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
     let key = #function
 
@@ -101,7 +148,7 @@ class CacheTests: XCTestCase {
   }
 
   func testItClearsDiskCache() {
-    let cache = Cache.default
+    let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
     let key = #function
 
@@ -119,7 +166,7 @@ class CacheTests: XCTestCase {
   }
 
   func testItReturnsExpiredFileUrlsForDeletion() {
-    let cache = Cache(name: #function)
+    let cache = Cache(name: "mock", backingStore: MockStore())
     cache.maxCacheAgeSeconds = 0
     let image = helper.image
     let key = #function
@@ -134,7 +181,7 @@ class CacheTests: XCTestCase {
   }
 
   func testCacheWithIdentifierIsCachedAsSeparateImage() {
-    let cache = Cache.default
+    let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
     let alternateImage = UIImage(data: image.jpegData(compressionQuality: 0.2)!)!
     let key = #function

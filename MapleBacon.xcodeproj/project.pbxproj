@@ -23,6 +23,7 @@
 		77CA13111FA233260017C949 /* ImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13101FA233260017C949 /* ImageTransformer.swift */; };
 		77CA13151FA2391B0017C949 /* ImageTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */; };
 		F26EECAE21BD9A4500454B3E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F26EECAD21BD9A4500454B3E /* Nimble.framework */; };
+		F2AC48C921BEF17D00AF2DA5 /* BackingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC48C821BEF17D00AF2DA5 /* BackingStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		77CA13101FA233260017C949 /* ImageTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformer.swift; sourceTree = "<group>"; };
 		77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformerTests.swift; sourceTree = "<group>"; };
 		F26EECAD21BD9A4500454B3E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		F2AC48C821BEF17D00AF2DA5 /* BackingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackingStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 			children = (
 				77B73D601F553AE800874885 /* Cache.swift */,
 				777691561F5C237A00BCDFF9 /* Downloader.swift */,
+				F2AC48C821BEF17D00AF2DA5 /* BackingStore.swift */,
 				77CA13101FA233260017C949 /* ImageTransformer.swift */,
 				7760852E1F8A51BB000CF974 /* MapleBacon.swift */,
 			);
@@ -307,6 +310,7 @@
 				777691571F5C237A00BCDFF9 /* Downloader.swift in Sources */,
 				7760852F1F8A51BB000CF974 /* MapleBacon.swift in Sources */,
 				7760852B1F8A50DB000CF974 /* UIImageView+MapleBacon.swift in Sources */,
+				F2AC48C921BEF17D00AF2DA5 /* BackingStore.swift in Sources */,
 				77B73D611F553AE800874885 /* Cache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

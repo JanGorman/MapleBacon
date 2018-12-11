@@ -90,7 +90,7 @@ final class CacheTests: XCTestCase {
     let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
 
-    waitUntil(timeout: 10) { done in
+    waitUntil(timeout: 5) { done in
       cache.store(image, forKey: "key1") {
         cache.retrieveImage(forKey: "key2") { image, type in
           expect(image).to(beNil())
@@ -177,7 +177,7 @@ final class CacheTests: XCTestCase {
     let key = #function
     let transformerId = "transformer"
 
-    waitUntil(timeout: 10) { done in
+    waitUntil(timeout: 5) { done in
       cache.store(image, forKey: key) {
         cache.store(alternateImage, forKey: key, transformerId: transformerId) {
           cache.retrieveImage(forKey: key) { image, _ in

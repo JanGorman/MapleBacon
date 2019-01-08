@@ -122,7 +122,7 @@ extension Downloader: DownloadStateDelegate {
 
 }
 
-private class SessionDelegate: NSObject, URLSessionDataDelegate {
+private final class SessionDelegate: NSObject, URLSessionDataDelegate {
 
   weak var delegate: DownloadStateDelegate?
 

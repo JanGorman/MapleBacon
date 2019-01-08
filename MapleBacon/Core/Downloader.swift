@@ -7,7 +7,7 @@ import UIKit
 public typealias DownloadProgress = (_ received: Int64, _ total: Int64) -> Void
 public typealias DownloadCompletion = (Data?) -> Void
 
-protocol DownloadStateDelegate: AnyObject {
+private protocol DownloadStateDelegate: AnyObject {
 
   func progress(for url: URL) -> DownloadProgress?
   func completions(for url: URL) -> [DownloadCompletion]?
@@ -16,12 +16,13 @@ protocol DownloadStateDelegate: AnyObject {
 
 }
 
-class Download {
+private final class Download {
 
   let task: URLSessionDataTask
   let progress: DownloadProgress?
   var completions: [DownloadCompletion]
   var data: Data
+  private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
 
   init(task: URLSessionDataTask, progress: DownloadProgress?, completion: @escaping DownloadCompletion,
        data: Data) {
@@ -31,10 +32,24 @@ class Download {
     self.data = data
   }
 
+  func start() {
+    backgroundTask = UIApplication.shared.beginBackgroundTask {
+      self.invalidateBackgroundTask()
+    }
+  }
+
+  func finish() {
+    invalidateBackgroundTask()
+  }
+
+  private func invalidateBackgroundTask() {
+    UIApplication.shared.endBackgroundTask(backgroundTask)
+    backgroundTask = .invalid
+  }
 }
 
 /// The class responsible for downloading data. Access it through the `default` singleton.
-public class Downloader {
+public final class Downloader {
 
   /// The default `Downloader` singleton
   public static let `default` = Downloader()
@@ -69,6 +84,7 @@ public class Downloader {
       } else {
         let newTask = session.dataTask(with: url)
         let download = Download(task: newTask, progress: progress, completion: completion, data: Data())
+        download.start()
         downloads[url] = download
         task = newTask
       }
@@ -81,22 +97,22 @@ public class Downloader {
 
 extension Downloader: DownloadStateDelegate {
 
-  func progress(for url: URL) -> DownloadProgress? {
+  fileprivate func progress(for url: URL) -> DownloadProgress? {
     return downloads[url]?.progress
   }
 
-  func completions(for url: URL) -> [DownloadCompletion]? {
+  fileprivate func completions(for url: URL) -> [DownloadCompletion]? {
     return downloads[url]?.completions
   }
 
-  func clearDownload(for url: URL?) {
+  fileprivate func clearDownload(for url: URL?) {
     guard let url = url else { return }
     mutex.sync(flags: .barrier) {
       downloads[url] = nil
     }
   }
 
-  func download(for url: URL) -> Download? {
+  fileprivate func download(for url: URL) -> Download? {
     var download: Download?
     mutex.sync(flags: .barrier) {
       download = downloads[url]
@@ -106,7 +122,7 @@ extension Downloader: DownloadStateDelegate {
 
 }
 
-private class SessionDelegate: NSObject, URLSessionDataDelegate {
+private final class SessionDelegate: NSObject, URLSessionDataDelegate {
 
   weak var delegate: DownloadStateDelegate?
 
@@ -127,6 +143,7 @@ private class SessionDelegate: NSObject, URLSessionDataDelegate {
       completion(data)
     }
     delegate?.clearDownload(for: requestUrl)
+    download.finish()
   }
 
 }

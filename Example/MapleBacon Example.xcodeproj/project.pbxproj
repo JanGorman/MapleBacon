@@ -18,6 +18,8 @@
 		77CC4C2F1F96884F000A0BB2 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4C2E1F96884F000A0BB2 /* ImageCell.swift */; };
 		77CC4C311F968D84000A0BB2 /* images.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77CC4C301F968D84000A0BB2 /* images.plist */; };
 		77E1862B1FA762BE003B2E45 /* ImageTransformerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E1862A1FA762BE003B2E45 /* ImageTransformerViewController.swift */; };
+		F22008B4221C898800A124E6 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7702F6F71FA876330055A0A4 /* MapleBacon.framework */; };
+		F22008B5221C898800A124E6 /* MapleBacon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7702F6F71FA876330055A0A4 /* MapleBacon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +37,35 @@
 			remoteGlobalIDString = 77B73D4F1F553A8700874885;
 			remoteInfo = MapleBaconTests;
 		};
+		F22008B1221C897900A124E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 77B73D451F553A8700874885;
+			remoteInfo = MapleBacon;
+		};
+		F22008B6221C898800A124E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 77B73D451F553A8700874885;
+			remoteInfo = MapleBacon;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F22008B8221C898800A124E6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F22008B5221C898800A124E6 /* MapleBacon.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = ../MapleBacon.xcodeproj; sourceTree = "<group>"; };
@@ -59,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F22008B4221C898800A124E6 /* MapleBacon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +110,7 @@
 			children = (
 				7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */,
 				77CC4C0C1F9686D4000A0BB2 /* MapleBacon Example */,
+				F22008AD221C892F00A124E6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,6 +151,13 @@
 			path = Boilerplate;
 			sourceTree = "<group>";
 		};
+		F22008AD221C892F00A124E6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -129,10 +168,13 @@
 				77CC4C061F9686D4000A0BB2 /* Sources */,
 				77CC4C071F9686D4000A0BB2 /* Frameworks */,
 				77CC4C081F9686D4000A0BB2 /* Resources */,
+				F22008B8221C898800A124E6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F22008B2221C897900A124E6 /* PBXTargetDependency */,
+				F22008B7221C898800A124E6 /* PBXTargetDependency */,
 			);
 			name = "MapleBacon Example";
 			productName = "MapleBacon Example";
@@ -146,11 +188,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Jan Gorman";
 				TargetAttributes = {
 					77CC4C091F9686D4000A0BB2 = {
 						CreatedOnToolsVersion = 9.0.1;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -227,6 +270,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F22008B2221C897900A124E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MapleBacon;
+			targetProxy = F22008B1221C897900A124E6 /* PBXContainerItemProxy */;
+		};
+		F22008B7221C898800A124E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MapleBacon;
+			targetProxy = F22008B6221C898800A124E6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		77CC4C111F9686D4000A0BB2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -261,6 +317,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -268,6 +325,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -318,6 +376,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -325,6 +384,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -366,7 +426,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.MapleBacon-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -383,7 +443,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.MapleBacon-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

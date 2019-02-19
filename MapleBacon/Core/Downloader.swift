@@ -129,21 +129,31 @@ private final class SessionDelegate: NSObject, URLSessionDataDelegate {
   func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
     guard let url = dataTask.originalRequest?.url,
           let download = delegate?.download(for: url),
-          let total = dataTask.response?.expectedContentLength else { return }
+          let total = dataTask.response?.expectedContentLength else {
+            return
+    }
     download.data.append(data)
     delegate?.progress(for: url)?(numericCast(download.data.count), total)
   }
 
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-    guard let requestUrl = task.originalRequest?.url,
-          let download = delegate?.download(for: requestUrl) else { return }
+    guard let url = task.originalRequest?.url,
+          let download = delegate?.download(for: url) else {
+            return
+    }
 
     let data = error == nil ? download.data : nil
-    delegate?.completions(for: requestUrl)?.forEach { completion in
+    delegate?.completions(for: url)?.forEach { completion in
       completion(data)
     }
-    delegate?.clearDownload(for: requestUrl)
+    delegate?.clearDownload(for: url)
     download.finish()
+  }
+
+  func urlSession(_ session: URLSession, dataTask: URLSessionDataTask,
+                  willCacheResponse proposedResponse: CachedURLResponse,
+                  completionHandler: @escaping (CachedURLResponse?) -> Void) {
+    completionHandler(nil)
   }
 
 }

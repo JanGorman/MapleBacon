@@ -19,9 +19,9 @@ The folder `Example` contains a sample project for you to try.
 
 ## Requirements
 
-- Swift 4.2
+- Swift 5.0
 - iOS 9.0+
-- Xcode 9+
+- Xcode 10.2+
 
 ## Installation
 

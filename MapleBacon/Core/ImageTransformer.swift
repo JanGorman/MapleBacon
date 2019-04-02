@@ -32,7 +32,7 @@ public extension ImageTransformer {
   ///
   /// - Parameter transformer: The transformer to append
   /// - Returns: A new transformer that will run both transformers after one another
-  public func appending(transformer: ImageTransformer) -> ImageTransformer {
+  func appending(transformer: ImageTransformer) -> ImageTransformer {
     let chainIdentifier = identifier.appending(" -> \(transformer.identifier)")
 
     return BaseComposableImageTransformer(identifier: chainIdentifier) { image in

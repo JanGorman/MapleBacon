@@ -9,10 +9,6 @@
 
 <p align="center"><img src="https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1" height="210"/></p>
 
-## Reboot
-
-Migrating from an older version? Check out the [Migration Guide](https://github.com/JanGorman/MapleBacon/wiki/Migration-Guide-Version-4-→-Version-5).
-
 ## Example
 
 The folder `Example` contains a sample project for you to try.
@@ -150,6 +146,10 @@ Cache.shared.maxCacheAgeSeconds = oneDaySeconds
 ```
 
 MapleBacon handles clearing the in memory cache by itself should your app come under memory pressure.
+
+### Contributing
+
+The test target uses [Nimble](https://github.com/Quick/Nimble). The project includes a `Cartfile.private`. To install the dependency run `carthage bootstrap --platform ios`. You're now ready to run tests.
 
 ## License
 

@@ -1,7 +1,7 @@
 language: objective-c
 osx_image: xcode10.2
 before_script:
-  - carthage update --platform ios
+  - carthage bootstrap --platform ios
 script:
   - bundle exec fastlane scan --code_coverage true --device 'iPhone 8' --project MapleBacon.xcodeproj --scheme MapleBacon
   - bundle exec danger

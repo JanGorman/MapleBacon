@@ -30,8 +30,14 @@ extension UIImageView {
       guard let self = self, self.baconImageUrl == url else {
         return
       }
-      self.image = self.resizedImage(from: image, for: self.frame.size)
-      completion?(image)
+      let size = self.frame.size
+      DispatchQueue.global(qos: .userInitiated).async {
+        let scaledImage = self.resizedImage(from: image, for: size)
+        DispatchQueue.main.async {
+          self.image = scaledImage
+          completion?(image)
+        }
+      }
     }
   }
 

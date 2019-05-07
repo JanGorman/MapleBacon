@@ -27,9 +27,21 @@ extension UIImageView {
     }
 
     MapleBacon.shared.image(with: url, transformer: transformer, progress: progress) { [weak self] image in
-      guard let self = self, self.baconImageUrl == url else { return }
-      self.image = image
+      guard let self = self, self.baconImageUrl == url else {
+        return
+      }
+      self.image = self.resizedImage(from: image, for: self.frame.size)
       completion?(image)
+    }
+  }
+
+  private func resizedImage(from image: UIImage?, for size: CGSize) -> UIImage? {
+    guard let image = image else {
+      return nil
+    }
+    let renderer = UIGraphicsImageRenderer(size: size)
+    return renderer.image { _ in
+      image.draw(in: CGRect(origin: .zero, size: size))
     }
   }
 

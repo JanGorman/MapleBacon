@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'MapleBacon'
-  s.version          = '5.3.0'
+  s.version          = '5.3.1'
   s.swift_version    = '5.0'
   s.summary          = 'A lightweight and fast image downloading library iOS.'
 
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
                          tag: s.version.to_s }
   s.social_media_url = 'https://twitter.com/JanGorman'
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'MapleBacon/**/*.swift'
 end

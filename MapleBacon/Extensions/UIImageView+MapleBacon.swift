@@ -34,8 +34,14 @@ extension UIImageView {
       DispatchQueue.global(qos: .userInitiated).async {
         let scaledImage = self.resizedImage(from: image, for: size)
         DispatchQueue.main.async {
-          self.image = scaledImage
-          completion?(image)
+          UIView.transition(with: self,
+                            duration: 0.3,
+                            options: [.curveEaseOut, .transitionCrossDissolve],
+                            animations: {
+                              self.image = scaledImage
+                            }, completion: { _ in
+                              completion?(image)
+                            })
         }
       }
     }

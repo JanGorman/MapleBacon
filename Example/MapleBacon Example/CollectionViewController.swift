@@ -28,7 +28,7 @@ final class CollectionViewController: UICollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: ImageCell = collectionView.dequeue(indexPath: indexPath)
-    cell.imageView.setImage(with: imageUrls[indexPath.item])
+    cell.imageView.setImage(with: imageUrls[indexPath.item], displayOptions: [.scaled, .withTransition])
     return cell
   }
 

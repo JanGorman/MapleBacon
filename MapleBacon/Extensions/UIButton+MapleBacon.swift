@@ -28,7 +28,9 @@ extension UIButton {
     }
     
     MapleBacon.shared.image(with: url, transformer: transformer, progress: progress) { [weak self] image in
-      guard let self = self, self.baconImageUrl != url else { return }
+      guard let self = self, self.baconImageUrl != url else {
+        return
+      }
       self.setImage(image, for: state)
       completion?(image)
     }

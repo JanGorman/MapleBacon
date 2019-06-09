@@ -1,0 +1,434 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F20AEFC222AD387B004C63FE /* UIButtonExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20AEFC122AD387B004C63FE /* UIButtonExample.swift */; };
+		F20AEFC422AD3936004C63FE /* MapleBaconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20AEFC322AD3936004C63FE /* MapleBaconButton.swift */; };
+		F20AEFC822AD3AF5004C63FE /* UIImageViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20AEFC722AD3AF5004C63FE /* UIImageViewExample.swift */; };
+		F20AEFCA22AD3B15004C63FE /* MapleBaconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20AEFC922AD3B15004C63FE /* MapleBaconImageView.swift */; };
+		F20AEFCC22AD3CE0004C63FE /* TransformerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20AEFCB22AD3CE0004C63FE /* TransformerExample.swift */; };
+		F2F1222422AD34ED00D871C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1222322AD34ED00D871C6 /* AppDelegate.swift */; };
+		F2F1222622AD34ED00D871C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1222522AD34ED00D871C6 /* SceneDelegate.swift */; };
+		F2F1222822AD34ED00D871C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1222722AD34ED00D871C6 /* ContentView.swift */; };
+		F2F1222A22AD34EF00D871C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2F1222922AD34EF00D871C6 /* Assets.xcassets */; };
+		F2F1222D22AD34EF00D871C6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2F1222C22AD34EF00D871C6 /* Preview Assets.xcassets */; };
+		F2F1223022AD34EF00D871C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F1222E22AD34EF00D871C6 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F20AEFBC22AD3608004C63FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F20AEFB722AD3608004C63FE /* MapleBacon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 77B73D461F553A8700874885;
+			remoteInfo = MapleBacon;
+		};
+		F20AEFBE22AD3608004C63FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F20AEFB722AD3608004C63FE /* MapleBacon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 77B73D4F1F553A8700874885;
+			remoteInfo = MapleBaconTests;
+		};
+		F20AEFC522AD3953004C63FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F20AEFB722AD3608004C63FE /* MapleBacon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 77B73D451F553A8700874885;
+			remoteInfo = MapleBacon;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F20AEFB722AD3608004C63FE /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = ../MapleBacon.xcodeproj; sourceTree = "<group>"; };
+		F20AEFC122AD387B004C63FE /* UIButtonExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExample.swift; sourceTree = "<group>"; };
+		F20AEFC322AD3936004C63FE /* MapleBaconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconButton.swift; sourceTree = "<group>"; };
+		F20AEFC722AD3AF5004C63FE /* UIImageViewExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExample.swift; sourceTree = "<group>"; };
+		F20AEFC922AD3B15004C63FE /* MapleBaconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconImageView.swift; sourceTree = "<group>"; };
+		F20AEFCB22AD3CE0004C63FE /* TransformerExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformerExample.swift; sourceTree = "<group>"; };
+		F2F1222022AD34ED00D871C6 /* MapleBaconExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapleBaconExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2F1222322AD34ED00D871C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F2F1222522AD34ED00D871C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		F2F1222722AD34ED00D871C6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F2F1222922AD34EF00D871C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F2F1222C22AD34EF00D871C6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F2F1222F22AD34EF00D871C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F2F1223122AD34EF00D871C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F2F1221D22AD34ED00D871C6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F20AEFB822AD3608004C63FE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F20AEFBD22AD3608004C63FE /* MapleBacon.framework */,
+				F20AEFBF22AD3608004C63FE /* MapleBaconTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F2F1221722AD34ED00D871C6 = {
+			isa = PBXGroup;
+			children = (
+				F20AEFB722AD3608004C63FE /* MapleBacon.xcodeproj */,
+				F2F1222222AD34ED00D871C6 /* MapleBaconExample */,
+				F2F1222122AD34ED00D871C6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F2F1222122AD34ED00D871C6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F2F1222022AD34ED00D871C6 /* MapleBaconExample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F2F1222222AD34ED00D871C6 /* MapleBaconExample */ = {
+			isa = PBXGroup;
+			children = (
+				F2F1222322AD34ED00D871C6 /* AppDelegate.swift */,
+				F2F1222522AD34ED00D871C6 /* SceneDelegate.swift */,
+				F2F1222722AD34ED00D871C6 /* ContentView.swift */,
+				F20AEFC122AD387B004C63FE /* UIButtonExample.swift */,
+				F20AEFC322AD3936004C63FE /* MapleBaconButton.swift */,
+				F20AEFC722AD3AF5004C63FE /* UIImageViewExample.swift */,
+				F20AEFC922AD3B15004C63FE /* MapleBaconImageView.swift */,
+				F20AEFCB22AD3CE0004C63FE /* TransformerExample.swift */,
+				F2F1222922AD34EF00D871C6 /* Assets.xcassets */,
+				F2F1222E22AD34EF00D871C6 /* LaunchScreen.storyboard */,
+				F2F1223122AD34EF00D871C6 /* Info.plist */,
+				F2F1222B22AD34EF00D871C6 /* Preview Content */,
+			);
+			path = MapleBaconExample;
+			sourceTree = "<group>";
+		};
+		F2F1222B22AD34EF00D871C6 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F2F1222C22AD34EF00D871C6 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F2F1221F22AD34ED00D871C6 /* MapleBaconExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2F1223422AD34EF00D871C6 /* Build configuration list for PBXNativeTarget "MapleBaconExample" */;
+			buildPhases = (
+				F2F1221C22AD34ED00D871C6 /* Sources */,
+				F2F1221D22AD34ED00D871C6 /* Frameworks */,
+				F2F1221E22AD34ED00D871C6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F20AEFC622AD3953004C63FE /* PBXTargetDependency */,
+			);
+			name = MapleBaconExample;
+			productName = MapleBaconExample;
+			productReference = F2F1222022AD34ED00D871C6 /* MapleBaconExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F2F1221822AD34ED00D871C6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = "Jan Gorman";
+				TargetAttributes = {
+					F2F1221F22AD34ED00D871C6 = {
+						CreatedOnToolsVersion = 11.0;
+					};
+				};
+			};
+			buildConfigurationList = F2F1221B22AD34ED00D871C6 /* Build configuration list for PBXProject "MapleBaconExample" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F2F1221722AD34ED00D871C6;
+			productRefGroup = F2F1222122AD34ED00D871C6 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F20AEFB822AD3608004C63FE /* Products */;
+					ProjectRef = F20AEFB722AD3608004C63FE /* MapleBacon.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F2F1221F22AD34ED00D871C6 /* MapleBaconExample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F20AEFBD22AD3608004C63FE /* MapleBacon.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MapleBacon.framework;
+			remoteRef = F20AEFBC22AD3608004C63FE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F20AEFBF22AD3608004C63FE /* MapleBaconTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MapleBaconTests.xctest;
+			remoteRef = F20AEFBE22AD3608004C63FE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F2F1221E22AD34ED00D871C6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2F1223022AD34EF00D871C6 /* LaunchScreen.storyboard in Resources */,
+				F2F1222D22AD34EF00D871C6 /* Preview Assets.xcassets in Resources */,
+				F2F1222A22AD34EF00D871C6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F2F1221C22AD34ED00D871C6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2F1222422AD34ED00D871C6 /* AppDelegate.swift in Sources */,
+				F2F1222622AD34ED00D871C6 /* SceneDelegate.swift in Sources */,
+				F20AEFCC22AD3CE0004C63FE /* TransformerExample.swift in Sources */,
+				F20AEFC422AD3936004C63FE /* MapleBaconButton.swift in Sources */,
+				F20AEFC222AD387B004C63FE /* UIButtonExample.swift in Sources */,
+				F2F1222822AD34ED00D871C6 /* ContentView.swift in Sources */,
+				F20AEFCA22AD3B15004C63FE /* MapleBaconImageView.swift in Sources */,
+				F20AEFC822AD3AF5004C63FE /* UIImageViewExample.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F20AEFC622AD3953004C63FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MapleBacon;
+			targetProxy = F20AEFC522AD3953004C63FE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F2F1222E22AD34EF00D871C6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F2F1222F22AD34EF00D871C6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F2F1223222AD34EF00D871C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F2F1223322AD34EF00D871C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F2F1223522AD34EF00D871C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "MapleBaconExample/Preview\\ Content";
+				DEVELOPMENT_TEAM = CPRVB9W254;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MapleBaconExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.schnaub.MapleBaconExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F2F1223622AD34EF00D871C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "MapleBaconExample/Preview\\ Content";
+				DEVELOPMENT_TEAM = CPRVB9W254;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MapleBaconExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.schnaub.MapleBaconExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F2F1221B22AD34ED00D871C6 /* Build configuration list for PBXProject "MapleBaconExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2F1223222AD34EF00D871C6 /* Debug */,
+				F2F1223322AD34EF00D871C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2F1223422AD34EF00D871C6 /* Build configuration list for PBXNativeTarget "MapleBaconExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2F1223522AD34EF00D871C6 /* Debug */,
+				F2F1223622AD34EF00D871C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F2F1221822AD34ED00D871C6 /* Project object */;
+}

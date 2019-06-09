@@ -19,7 +19,7 @@ final class CollectionViewController: UICollectionViewController {
   private func imageUrlsFromBundle() -> [URL] {
     guard let file = Bundle.main.path(forResource: "images", ofType: "plist"),
           let urlStrings = NSArray(contentsOfFile: file) as? [String] else { return [] }
-    return urlStrings.map { URL(string: $0)! }
+    return urlStrings.compactMap { URL(string: $0) }
   }
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

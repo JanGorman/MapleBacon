@@ -8,7 +8,9 @@ struct ContentView : View {
   var body: some View {
     NavigationView {
       List {
-        Text("UICollectionView")
+        NavigationButton(destination: UICollectionViewExample(imageURLs: imageURLsFromBundle())) {
+          Text("UICollectionView")
+        }
         NavigationButton(destination: UIButtonExample()) {
           Text("UIButton")
         }

@@ -54,8 +54,7 @@ public final class Cache {
   ///     - completion: An optional closure called once the image has been persisted to disk. Runs on the main queue.
   public func store(_ image: UIImage, data: Data? = nil, forKey key: String, transformerId: String? = nil,
                     completion: (() -> Void)? = nil) {
-    let cacheKey = makeCacheKey(key, identifier: transformerId)
-    memory.setObject(image, forKey: cacheKey as NSString)
+    let cacheKey = storeToMemory(image, forKey: key, transformerId: transformerId)
     diskQueue.async {
       defer {
         DispatchQueue.main.async {
@@ -68,9 +67,11 @@ public final class Cache {
     }
   }
 
-  private func storeToMemory(_ image: UIImage, forKey key: String, transformerId: String? = nil) {
+  @discardableResult
+  private func storeToMemory(_ image: UIImage, forKey key: String, transformerId: String?) -> String {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
     memory.setObject(image, forKey: cacheKey as NSString)
+    return cacheKey
   }
 
   private func makeCacheKey(_ key: String, identifier: String?) -> String {
@@ -106,7 +107,7 @@ public final class Cache {
       return
     }
     if let image = retrieveImageFromDisk(forKey: cacheKey) {
-      storeToMemory(image, forKey: cacheKey, transformerId: transformerId)
+      storeToMemory(image, forKey: key, transformerId: transformerId)
       completion(image, .disk)
       return
     }

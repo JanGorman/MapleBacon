@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import CryptoKit
 
 public enum CacheType {
   case none, memory, disk
@@ -54,8 +55,9 @@ public final class Cache {
   ///     - completion: An optional closure called once the image has been persisted to disk. Runs on the main queue.
   public func store(_ image: UIImage, data: Data? = nil, forKey key: String, transformerId: String? = nil,
                     completion: (() -> Void)? = nil) {
-    let cacheKey = makeCacheKey(key, identifier: transformerId)
-    memory.setObject(image, forKey: cacheKey as NSString)
+//    let cacheKey = makeCacheKey(key, identifier: transformerId)
+//    memory.setObject(image, forKey: cacheKey as NSString)
+    storeToMemory(image, forKey: key, transformerId: transformerId)
     diskQueue.async {
       defer {
         DispatchQueue.main.async {
@@ -63,19 +65,29 @@ public final class Cache {
         }
       }
       if let data = data ?? image.pngData() {
+        let cacheKey = self.makeCacheKey(key, identifier: transformerId)
         self.storeDataToDisk(data, key: cacheKey)
       }
     }
   }
 
-  private func storeToMemory(_ image: UIImage, forKey key: String, transformerId: String? = nil) {
+  private func storeToMemory(_ image: UIImage, forKey key: String, transformerId: String?) {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
     memory.setObject(image, forKey: cacheKey as NSString)
   }
 
   private func makeCacheKey(_ key: String, identifier: String?) -> String {
-    let fileSafeKey = key.replacingOccurrences(of: "/", with: "-")
-    guard let identifier = identifier, !identifier.isEmpty else { return fileSafeKey }
+    let fileSafeKey: String
+    if #available(iOS 13.0, *) {
+      let digest = Insecure.MD5.hash(data: Data(key.utf8))
+      let elements: [UInt8] = digest.reduce(into: [], { $0.append($1) })
+      fileSafeKey = elements.toHexString()
+    } else {
+      fileSafeKey = key.replacingOccurrences(of: "/", with: "-")
+    }
+    guard let identifier = identifier, !identifier.isEmpty else {
+      return fileSafeKey
+    }
     return fileSafeKey + "-" + identifier
   }
   
@@ -106,7 +118,7 @@ public final class Cache {
       return
     }
     if let image = retrieveImageFromDisk(forKey: cacheKey) {
-      storeToMemory(image, forKey: cacheKey, transformerId: transformerId)
+      storeToMemory(image, forKey: key, transformerId: transformerId)
       completion(image, .disk)
       return
     }
@@ -168,6 +180,20 @@ public final class Cache {
       return isDirectory == false && lastAccessDate < expirationDate
     }
     return expiredFileUrls
+  }
+
+}
+
+private extension Array where Element == UInt8 {
+
+  func toHexString() -> String {
+    return `lazy`.reduce("") {
+      var s = String($1, radix: 16)
+      if s.count == 1 {
+        s = "0" + s
+      }
+      return $0 + s
+    }
   }
 
 }

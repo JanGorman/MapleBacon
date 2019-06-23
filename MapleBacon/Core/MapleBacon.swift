@@ -2,7 +2,12 @@
 //  Copyright © 2017 Jan Gorman. All rights reserved.
 //
 
+import Combine
 import UIKit
+
+public enum MapleBaconError: Error {
+  case imageDecodingError
+}
 
 public typealias ImageDownloadCompletion = (UIImage?) -> Void
 
@@ -37,6 +42,12 @@ public final class MapleBacon {
     fetchImage(with: url, transformer: transformer, progress: progress, completion: completion)
   }
 
+  @available(iOS 13.0, *)
+  public func image(with url: URL,
+                    transformer: ImageTransformer? = nil) -> AnyPublisher<UIImage?, Error> {
+    return self.fetchImage(with: url, transfomer: transformer)
+  }
+
   private func fetchImage(with url: URL,
                           transformer: ImageTransformer?,
                           progress: DownloadProgress?,
@@ -61,6 +72,35 @@ public final class MapleBacon {
       }
       completion?(image)
     }
+  }
+
+  @available(iOS 13.0, *)
+  private func fetchImage(with url: URL, transfomer: ImageTransformer?) -> AnyPublisher<UIImage?, Error> {
+//    let key = url.absoluteString
+
+    return downloader.download(url)
+      .map { (data) -> UIImage? in
+        return UIImage(data: data)
+      }.eraseToAnyPublisher()
+
+//    let publisher = cache.retrieveImage(forKey: key, transformerId: transfomer?.identifier)
+//      .map { image, cacheType -> AnyPublisher<UIImage?, Error> in
+//        guard let cachedImage = image else {
+//          return self.downloader.download(url)
+//            .map { data -> UIImage? in
+//              guard let image = UIImage(data: data) else {
+//                return nil
+//              }
+//              return image
+//            }
+//            .eraseToAnyPublisher()
+//          }
+//          return Publishers.Once(cachedImage).eraseToAnyPublisher()
+//        }
+//      .flatMap { publisher in
+//        return Publishers.Once(publisher.output)
+//      }
+//    return publisher
   }
 
   /// Pre-warms the image cache. Downloads the image if needed or loads it into memory.

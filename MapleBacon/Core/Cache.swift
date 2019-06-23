@@ -2,8 +2,13 @@
 //  Copyright © 2017 Jan Gorman. All rights reserved.
 //
 
-import UIKit
+import Combine
 import CryptoKit
+import UIKit
+
+public enum MapleBaconCacheError: Error {
+  case imageNotFound
+}
 
 public enum CacheType {
   case none, memory, disk
@@ -55,9 +60,7 @@ public final class Cache {
   ///     - completion: An optional closure called once the image has been persisted to disk. Runs on the main queue.
   public func store(_ image: UIImage, data: Data? = nil, forKey key: String, transformerId: String? = nil,
                     completion: (() -> Void)? = nil) {
-//    let cacheKey = makeCacheKey(key, identifier: transformerId)
-//    memory.setObject(image, forKey: cacheKey as NSString)
-    storeToMemory(image, forKey: key, transformerId: transformerId)
+    let cacheKey = storeToMemory(image, forKey: key, transformerId: transformerId)
     diskQueue.async {
       defer {
         DispatchQueue.main.async {
@@ -65,15 +68,16 @@ public final class Cache {
         }
       }
       if let data = data ?? image.pngData() {
-        let cacheKey = self.makeCacheKey(key, identifier: transformerId)
         self.storeDataToDisk(data, key: cacheKey)
       }
     }
   }
 
-  private func storeToMemory(_ image: UIImage, forKey key: String, transformerId: String?) {
+  @discardableResult
+  private func storeToMemory(_ image: UIImage, forKey key: String, transformerId: String?) -> String {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
     memory.setObject(image, forKey: cacheKey as NSString)
+    return cacheKey
   }
 
   private func makeCacheKey(_ key: String, identifier: String?) -> String {
@@ -123,6 +127,21 @@ public final class Cache {
       return
     }
     completion(nil, .none)
+  }
+
+  @available(iOS 13.0, *)
+  public func retrieveImage(forKey key: String, transformerId: String? = nil) -> AnyPublisher<(UIImage?, CacheType), Never> {
+    let cacheKey = makeCacheKey(key, identifier: transformerId)
+
+    if let image = memory.object(forKey: cacheKey as NSString) as? UIImage {
+      return Publishers.Once((image, .memory)).eraseToAnyPublisher()
+    }
+    if let image = retrieveImageFromDisk(forKey: cacheKey) {
+      storeToMemory(image, forKey: key, transformerId: transformerId)
+      return Publishers.Once((image, .disk)).eraseToAnyPublisher()
+    }
+
+    return Publishers.Once((nil, .none)).eraseToAnyPublisher()
   }
   
   private func retrieveImageFromDisk(forKey key: String) -> UIImage? {
@@ -194,6 +213,17 @@ private extension Array where Element == UInt8 {
       }
       return $0 + s
     }
+  }
+
+}
+
+@available(iOS 13.0, *)
+private class CacheImagePublisher: Publisher {
+
+  typealias Output = UIImage
+  typealias Failure = MapleBaconCacheError
+
+  func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
   }
 
 }

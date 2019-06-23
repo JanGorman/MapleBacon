@@ -2,7 +2,12 @@
 //  Copyright © 2017 Jan Gorman. All rights reserved.
 //
 
+import Combine
 import UIKit
+
+public enum MapleBaconDownloadError: Error {
+  case invalidServerResponse
+}
 
 public typealias DownloadProgress = (_ received: Int64, _ total: Int64) -> Void
 public typealias DownloadCompletion = (Data?) -> Void
@@ -91,6 +96,22 @@ public final class Downloader {
 
       task.resume()
     }
+  }
+
+  /// Download an asset
+  /// - Parameter url: The URL to download from
+  /// - Returns: A combine publisher
+  @available(iOS 13.0, *)
+  public func download(_ url: URL) -> AnyPublisher<Data, Error> {
+    let publisher = session.dataTaskPublisher(for: url)
+      .tryMap { data, response -> Data in
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+          throw MapleBaconDownloadError.invalidServerResponse
+        }
+        return data
+      }
+      .eraseToAnyPublisher()
+    return publisher
   }
 
 }

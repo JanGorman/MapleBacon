@@ -129,6 +129,10 @@ public final class Cache {
     completion(nil, .none)
   }
 
+  /// Retrieve an image from cache. Images are checked in memory and on disk in that order. If an image is only available on
+  /// it will be also be stored in memory again for faster future access.
+  /// - Parameter key: The unique identifier of the image
+  /// - Parameter transformerId: An optional transformer ID appended to the key ot uniquely identify the image
   @available(iOS 13.0, *)
   public func retrieveImage(forKey key: String, transformerId: String? = nil) -> AnyPublisher<(UIImage?, CacheType), Never> {
     let cacheKey = makeCacheKey(key, identifier: transformerId)

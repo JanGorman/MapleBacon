@@ -45,10 +45,19 @@ public final class Cache {
     let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
     cachePath = (path as NSString).appendingPathComponent(name)
 
-    NotificationCenter.default.addObserver(self, selector: #selector(clearMemory),
-                                           name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: UIApplication.willTerminateNotification,
-                                           object: nil)
+    if #available(iOS 13.0, *) {
+      _ = NotificationCenter.default.publisher(for: UIApplication.didReceiveMemoryWarningNotification).sink { _ in
+          self.clearMemory()
+      }
+      _ = NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification).sink { _ in
+        self.cleanDisk()
+      }
+    } else {
+      NotificationCenter.default.addObserver(self, selector: #selector(clearMemory),
+                                             name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
+      NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: UIApplication.willTerminateNotification,
+                                             object: nil)
+    }
   }
 
   /// Stores an image in the cache. Images will be added to both memory and disk.

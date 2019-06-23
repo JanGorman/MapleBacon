@@ -220,14 +220,3 @@ private extension Array where Element == UInt8 {
   }
 
 }
-
-@available(iOS 13.0, *)
-private class CacheImagePublisher: Publisher {
-
-  typealias Output = UIImage
-  typealias Failure = MapleBaconCacheError
-
-  func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
-  }
-
-}

@@ -46,7 +46,7 @@ import MapleBacon
 func someFunc() {
   let url = URL(string: "…")
   _ = MapleBacon.shared.image(url: url).sink { image in
-    // Do something with the iamge
+    // Do something with the image
   }
 }
 ```

@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct UIImageViewExample : View {
+struct UIImageViewExample: View {
   var body: some View {
     let url = URL(string: "https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1")
     return MapleBaconImageView(url: url)

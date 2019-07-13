@@ -42,6 +42,11 @@ public final class MapleBacon {
     return fetchImage(with: url, transformer: transformer, progress: progress, completion: completion)
   }
 
+  /// Download or retrieve an image from cache
+  /// - Parameter url: The URL to load an image from
+  /// - Parameter transformer: An optional transformer or transformer chain to apply to the image
+  /// - Parameter progress: An optional closure to track the download progress
+  /// - Returns: A Publisher of type `AnyPublisher<UIImage?, Never>`
   @available(iOS 13.0, *)
   public func image(with url: URL,
                     transformer: ImageTransformer? = nil,

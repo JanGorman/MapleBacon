@@ -6,7 +6,7 @@ import SwiftUI
 import MapleBacon
 import UIKit
 
-struct MapleBaconImageView : UIViewRepresentable {
+struct MapleBaconImageView: UIViewRepresentable {
 
   let url: URL?
   let transformer: ImageTransformer?

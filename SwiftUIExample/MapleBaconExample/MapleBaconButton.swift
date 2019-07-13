@@ -6,7 +6,7 @@ import SwiftUI
 import MapleBacon
 import UIKit
 
-struct MapleBaconButton : UIViewRepresentable {
+struct MapleBaconButton: UIViewRepresentable {
   
   func makeUIView(context: Context) -> UIButton {
     let button = UIButton()

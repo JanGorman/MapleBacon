@@ -6,7 +6,7 @@ import UIKit
 
 func imageURLsFromBundle() -> [URL] {
   guard let file = Bundle.main.path(forResource: "images", ofType: "plist"),
-    let urlStrings = NSArray(contentsOfFile: file) as? [String] else {
+        let urlStrings = NSArray(contentsOfFile: file) as? [String] else {
       return []
   }
   return urlStrings.compactMap { URL(string: $0) }

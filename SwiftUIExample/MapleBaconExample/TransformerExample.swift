@@ -7,7 +7,7 @@ import MapleBacon
 import CoreImage
 import UIKit
 
-struct TransformerExample : View {
+struct TransformerExample: View {
   var body: some View {
     let url = URL(string: "https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1")
     let transformer = SepiaImageTransformer().appending(transformer: VignetteImageTransformer())

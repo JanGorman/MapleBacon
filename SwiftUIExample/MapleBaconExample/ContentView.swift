@@ -4,20 +4,26 @@
 
 import SwiftUI
 
-struct ContentView : View {
+struct ContentView: View {
+
+  private static let url = URL(string: "https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1")!
+
   var body: some View {
     NavigationView {
       List {
-        NavigationButton(destination: UICollectionViewExample(imageURLs: imageURLsFromBundle())) {
+        NavigationLink(destination: UICollectionViewExample(imageURLs: imageURLsFromBundle())) {
           Text("UICollectionView")
         }
-        NavigationButton(destination: UIButtonExample()) {
+        NavigationLink(destination: UIButtonExample()) {
           Text("UIButton")
         }
-        NavigationButton(destination: UIImageViewExample()) {
+        NavigationLink(destination: UIImageViewExample()) {
           Text("UIImageView")
         }
-        NavigationButton(destination: TransformerExample()) {
+        NavigationLink(destination: ImageExampleView(image: MapleBaconImage(url: Self.url))) {
+          Text("Image")
+        }
+        NavigationLink(destination: TransformerExample()) {
           Text("Image Transformer")
         }
       }.navigationBarTitle(Text("Examples"))

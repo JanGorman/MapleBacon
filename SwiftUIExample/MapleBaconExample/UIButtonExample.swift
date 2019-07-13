@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct UIButtonExample : View {
+struct UIButtonExample: View {
   var body: some View {
     MapleBaconButton()
   }

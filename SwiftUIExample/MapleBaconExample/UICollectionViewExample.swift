@@ -6,7 +6,7 @@ import SwiftUI
 import MapleBacon
 import UIKit
 
-struct UICollectionViewExample : View {
+struct UICollectionViewExample: View {
 
   let imageURLs: [URL]
 

@@ -11,11 +11,11 @@
 
 ## Example
 
-The folder `Example` contains a sample project for you to try.
+The folders `Example` and `SwiftUIExample` contain sample projects for you to try.
 
 ## Requirements
 
-- Swift 5.0
+- Swift 5.1
 - iOS 9.0+
 - Xcode 10.2+
 
@@ -35,6 +35,77 @@ github "JanGorman/MapleBacon"
 ```
 
 ## Usage
+
+### Combine
+
+MapleBacon can be used with `Combine`. To let the library decide between fetching from cache or remotely, access it like this:
+
+```swift
+import MapleBacon
+
+func someFunc() {
+  let url = URL(string: "…")
+  _ = MapleBacon.shared.image(url: url).sink { image in
+    // Do something with the iamge
+  }
+}
+```
+
+This method returns a `AnyPublisher<UIImage?, Never>`. You can also access publishers on the cache or the downloader.
+
+### SwiftUI
+
+There is a sample project that shows how to fetch an image for SwiftUI's `Image` class. _Currently_ this is an extra step but we'll see how things progress in the beta phase and how to best integrate it into the library. As of now, create a class that conforms to `BindableObject`:
+
+```swift
+final class MapleBaconImage: BindableObject {
+
+  private let url: URL
+
+  var didChange = PassthroughSubject<UIImage?, Never>()
+
+  private(set) var image: UIImage? {
+    didSet {
+      didChange.send(image)
+    }
+  }
+
+  init(url: URL) {
+    self.url = url
+  }
+
+  func fetch() {
+    _ = MapleBacon.shared.image(with: url).sink { image in
+      self.image = image
+    }
+  }
+
+}
+```
+
+Usage:
+
+```swift
+struct MyView: View {
+
+  @ObjectBinding var image: MapleBaconImage
+
+  var body: some View {
+    VStack {
+      VStack {
+      if image.image != nil {
+        Image(uiImage: image.image!)
+      } else {
+        Text("Loading")
+      }
+    }
+    .onAppear {
+      self.image.fetch()
+    }
+  }
+
+}
+```
 
 ### UIImageView
 

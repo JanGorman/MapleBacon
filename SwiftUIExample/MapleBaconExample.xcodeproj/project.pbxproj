@@ -18,6 +18,8 @@
 		F20AEFD422AD430F004C63FE /* UICollectionViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20AEFD322AD430F004C63FE /* UICollectionViewWrapper.swift */; };
 		F20AEFD622AD4496004C63FE /* ImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F20AEFD522AD4496004C63FE /* ImageViewCell.xib */; };
 		F20AEFD822AD44B0004C63FE /* ImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20AEFD722AD44B0004C63FE /* ImageViewCell.swift */; };
+		F20CF1C622DA169900367629 /* ImageExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20CF1C522DA169900367629 /* ImageExampleView.swift */; };
+		F20CF1C922DA1AC700367629 /* MapleBaconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20CF1C822DA1AC700367629 /* MapleBaconImage.swift */; };
 		F2F1222422AD34ED00D871C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1222322AD34ED00D871C6 /* AppDelegate.swift */; };
 		F2F1222622AD34ED00D871C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1222522AD34ED00D871C6 /* SceneDelegate.swift */; };
 		F2F1222822AD34ED00D871C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1222722AD34ED00D871C6 /* ContentView.swift */; };
@@ -63,6 +65,8 @@
 		F20AEFD322AD430F004C63FE /* UICollectionViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewWrapper.swift; sourceTree = "<group>"; };
 		F20AEFD522AD4496004C63FE /* ImageViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageViewCell.xib; sourceTree = "<group>"; };
 		F20AEFD722AD44B0004C63FE /* ImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCell.swift; sourceTree = "<group>"; };
+		F20CF1C522DA169900367629 /* ImageExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExampleView.swift; sourceTree = "<group>"; };
+		F20CF1C822DA1AC700367629 /* MapleBaconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconImage.swift; sourceTree = "<group>"; };
 		F2F1222022AD34ED00D871C6 /* MapleBaconExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapleBaconExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F1222322AD34ED00D871C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2F1222522AD34ED00D871C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -114,23 +118,25 @@
 			isa = PBXGroup;
 			children = (
 				F2F1222322AD34ED00D871C6 /* AppDelegate.swift */,
-				F2F1222522AD34ED00D871C6 /* SceneDelegate.swift */,
-				F2F1222722AD34ED00D871C6 /* ContentView.swift */,
-				F20AEFD322AD430F004C63FE /* UICollectionViewWrapper.swift */,
-				F20AEFCD22AD3FA8004C63FE /* UICollectionViewExample.swift */,
-				F20AEFC122AD387B004C63FE /* UIButtonExample.swift */,
-				F20AEFC322AD3936004C63FE /* MapleBaconButton.swift */,
-				F20AEFC722AD3AF5004C63FE /* UIImageViewExample.swift */,
-				F20AEFC922AD3B15004C63FE /* MapleBaconImageView.swift */,
-				F20AEFCB22AD3CE0004C63FE /* TransformerExample.swift */,
-				F20AEFD122AD40C1004C63FE /* Helpers.swift */,
 				F2F1222922AD34EF00D871C6 /* Assets.xcassets */,
-				F2F1222E22AD34EF00D871C6 /* LaunchScreen.storyboard */,
-				F2F1223122AD34EF00D871C6 /* Info.plist */,
+				F2F1222722AD34ED00D871C6 /* ContentView.swift */,
+				F20AEFD122AD40C1004C63FE /* Helpers.swift */,
+				F20CF1C522DA169900367629 /* ImageExampleView.swift */,
 				F20AEFCF22AD408F004C63FE /* images.plist */,
-				F2F1222B22AD34EF00D871C6 /* Preview Content */,
-				F20AEFD522AD4496004C63FE /* ImageViewCell.xib */,
 				F20AEFD722AD44B0004C63FE /* ImageViewCell.swift */,
+				F20AEFD522AD4496004C63FE /* ImageViewCell.xib */,
+				F2F1223122AD34EF00D871C6 /* Info.plist */,
+				F2F1222E22AD34EF00D871C6 /* LaunchScreen.storyboard */,
+				F20AEFC322AD3936004C63FE /* MapleBaconButton.swift */,
+				F20AEFC922AD3B15004C63FE /* MapleBaconImageView.swift */,
+				F2F1222B22AD34EF00D871C6 /* Preview Content */,
+				F2F1222522AD34ED00D871C6 /* SceneDelegate.swift */,
+				F20AEFCB22AD3CE0004C63FE /* TransformerExample.swift */,
+				F20CF1C822DA1AC700367629 /* MapleBaconImage.swift */,
+				F20AEFC122AD387B004C63FE /* UIButtonExample.swift */,
+				F20AEFCD22AD3FA8004C63FE /* UICollectionViewExample.swift */,
+				F20AEFD322AD430F004C63FE /* UICollectionViewWrapper.swift */,
+				F20AEFC722AD3AF5004C63FE /* UIImageViewExample.swift */,
 			);
 			path = MapleBaconExample;
 			sourceTree = "<group>";
@@ -249,7 +255,9 @@
 				F20AEFC422AD3936004C63FE /* MapleBaconButton.swift in Sources */,
 				F20AEFC222AD387B004C63FE /* UIButtonExample.swift in Sources */,
 				F2F1222822AD34ED00D871C6 /* ContentView.swift in Sources */,
+				F20CF1C922DA1AC700367629 /* MapleBaconImage.swift in Sources */,
 				F20AEFD422AD430F004C63FE /* UICollectionViewWrapper.swift in Sources */,
+				F20CF1C622DA169900367629 /* ImageExampleView.swift in Sources */,
 				F20AEFCA22AD3B15004C63FE /* MapleBaconImageView.swift in Sources */,
 				F20AEFC822AD3AF5004C63FE /* UIImageViewExample.swift in Sources */,
 			);

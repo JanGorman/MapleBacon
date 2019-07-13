@@ -5,7 +5,7 @@
 import SwiftUI
 import UIKit
 
-struct UICollectionViewWrapper : UIViewRepresentable {
+struct UICollectionViewWrapper: UIViewRepresentable {
 
   private enum Section {
     case main
@@ -43,7 +43,6 @@ struct UICollectionViewWrapper : UIViewRepresentable {
   }
 
   func updateUIView(_ uiView: UICollectionView, context: Context) {
-
   }
 
   private static func createLayout() -> UICollectionViewLayout {

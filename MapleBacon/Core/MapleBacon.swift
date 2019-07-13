@@ -37,7 +37,7 @@ public final class MapleBacon {
   ///     - completion: The closure to call once the download is done
   public func image(with url: URL,
                     transformer: ImageTransformer? = nil,
-                    progress: DownloadProgress?,
+                    progress: DownloadProgress? = nil,
                     completion: @escaping ImageDownloadCompletion) {
     return fetchImage(with: url, transformer: transformer, progress: progress, completion: completion)
   }

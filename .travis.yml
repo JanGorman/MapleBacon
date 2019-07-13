@@ -5,6 +5,6 @@ before_script:
 script:
   - bundle exec fastlane scan --code_coverage true --device 'iPhone 8' --project MapleBacon.xcodeproj --scheme MapleBacon
   - bundle exec danger
-  - swiftlint
+  # - swiftlint
 after_success:
   - bash <(curl -s https://codecov.io/bash)

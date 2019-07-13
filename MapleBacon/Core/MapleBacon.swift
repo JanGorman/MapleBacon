@@ -39,13 +39,14 @@ public final class MapleBacon {
                     transformer: ImageTransformer? = nil,
                     progress: DownloadProgress?,
                     completion: @escaping ImageDownloadCompletion) {
-    fetchImage(with: url, transformer: transformer, progress: progress, completion: completion)
+    return fetchImage(with: url, transformer: transformer, progress: progress, completion: completion)
   }
 
   @available(iOS 13.0, *)
   public func image(with url: URL,
-                    transformer: ImageTransformer? = nil) -> AnyPublisher<UIImage?, Error> {
-    return self.fetchImage(with: url, transfomer: transformer)
+                    transformer: ImageTransformer? = nil,
+                    progress: DownloadProgress? = nil) -> AnyPublisher<UIImage?, Never> {
+    return fetchImage(with: url, transfomer: transformer, progress: progress)
   }
 
   private func fetchImage(with url: URL,
@@ -75,32 +76,13 @@ public final class MapleBacon {
   }
 
   @available(iOS 13.0, *)
-  private func fetchImage(with url: URL, transfomer: ImageTransformer?) -> AnyPublisher<UIImage?, Error> {
-//    let key = url.absoluteString
-
-    return downloader.download(url)
-      .map { (data) -> UIImage? in
-        return UIImage(data: data)
-      }.eraseToAnyPublisher()
-
-//    let publisher = cache.retrieveImage(forKey: key, transformerId: transfomer?.identifier)
-//      .map { image, cacheType -> AnyPublisher<UIImage?, Error> in
-//        guard let cachedImage = image else {
-//          return self.downloader.download(url)
-//            .map { data -> UIImage? in
-//              guard let image = UIImage(data: data) else {
-//                return nil
-//              }
-//              return image
-//            }
-//            .eraseToAnyPublisher()
-//          }
-//          return Publishers.Once(cachedImage).eraseToAnyPublisher()
-//        }
-//      .flatMap { publisher in
-//        return Publishers.Once(publisher.output)
-//      }
-//    return publisher
+  private func fetchImage(with url: URL, transfomer: ImageTransformer?, progress: DownloadProgress?) -> AnyPublisher<UIImage?, Never> {
+    return Future { resolver in
+      self.fetchImage(with: url, transformer: transfomer, progress: progress) { image in
+        resolver(.success(image))
+      }
+    }
+    .eraseToAnyPublisher()
   }
 
   /// Pre-warms the image cache. Downloads the image if needed or loads it into memory.

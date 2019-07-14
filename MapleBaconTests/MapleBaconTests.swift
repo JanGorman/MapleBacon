@@ -3,6 +3,9 @@
 //
 
 import XCTest
+#if canImport(Combine)
+import Combine
+#endif
 import Nimble
 import MapleBacon
 
@@ -43,7 +46,7 @@ final class MapleBaconTests: XCTestCase {
     let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
 
     waitUntil { done in
-      mapleBacon.image(with: self.url, progress: nil) { image in
+      mapleBacon.image(with: self.url) { image in
         expect(image).toNot(beNil())
         done()
       }
@@ -57,7 +60,7 @@ final class MapleBaconTests: XCTestCase {
 
     let transformer = DummyTransformer()
     waitUntil { done in
-      mapleBacon.image(with: self.url, transformer: transformer, progress: nil) { image in
+      mapleBacon.image(with: self.url, transformer: transformer) { image in
         expect(image).toNot(beNil())
         expect(transformer.callCount) == 1
         done()
@@ -72,10 +75,10 @@ final class MapleBaconTests: XCTestCase {
 
     let transformer = DummyTransformer()
     waitUntil { done in
-      mapleBacon.image(with: self.url, transformer: transformer, progress: nil) { _ in
+      mapleBacon.image(with: self.url, transformer: transformer) { _ in
         expect(transformer.callCount) == 1
         
-        MapleBacon.shared.image(with: self.url, transformer: transformer, progress: nil) { image in
+        MapleBacon.shared.image(with: self.url, transformer: transformer) { image in
           expect(image).toNot(beNil())
           expect(transformer.callCount) == 1
           done()
@@ -85,3 +88,23 @@ final class MapleBaconTests: XCTestCase {
   }
 
 }
+
+#if canImport(Combine)
+extension MapleBaconTests {
+
+  @available(iOS 13.0, *)
+  func testPublisherIntegration() {
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
+    let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
+
+    waitUntil { done in
+      _ = mapleBacon.image(with: self.url).sink { image in
+        expect(image).toNot(beNil())
+        done()
+      }
+    }
+  }
+
+}
+#endif

@@ -1,10 +1,24 @@
-language: objective-c
-osx_image: xcode10.2
-before_script:
-  - carthage bootstrap --platform ios
-script:
-  - bundle exec fastlane scan --code_coverage true --device 'iPhone 8' --project MapleBacon.xcodeproj --scheme MapleBacon
-  - bundle exec danger
-  - swiftlint
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+matrix:
+  include:
+    - os: osx
+      language: objective-c
+      osx_image: xcode10.2
+      before_script:
+        - carthage bootstrap --platform ios
+      script:
+        - bundle exec fastlane scan --code_coverage true --device 'iPhone 8' --project MapleBacon.xcodeproj --scheme MapleBacon
+        - bundle exec danger
+        # - swiftlint
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
+    - os: osx
+      language: objective-c
+      osx_image: xcode11
+      before_script:
+        - carthage bootstrap --platform ios
+      script:
+        - bundle exec fastlane scan --code_coverage true --device 'iPhone 8' --project MapleBacon.xcodeproj --scheme MapleBacon
+        - bundle exec danger
+        # - swiftlint
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)

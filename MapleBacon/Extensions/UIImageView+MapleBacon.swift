@@ -2,7 +2,6 @@
 //  Copyright © 2017 Jan Gorman. All rights reserved.
 //
 
-import Combine
 import UIKit
 
 public struct DisplayOptions: OptionSet {
@@ -49,22 +48,6 @@ extension UIImageView {
       }
       self.setImage(image, displayOptions: displayOptions, completion: completion)
     }
-  }
-
-  @available(iOS 13.0, *)
-  public func setImage(with url: URL?,
-                       placeholder: UIImage? = nil,
-                       transformer: ImageTransformer? = nil) {
-    baconImageUrl = url
-    image = placeholder
-    guard let url = url else {
-//      return Publishers.Once(placeholder).eraseToAnyPublisher()
-      return
-    }
-    _ = MapleBacon.shared.image(with: url, transformer: transformer)
-      .sink { image in
-        self.setImage(image, displayOptions: [.scaled], completion: nil)
-      }
   }
 
   private func setImage(_ image: UIImage?, displayOptions: DisplayOptions, completion: ImageDownloadCompletion?) {

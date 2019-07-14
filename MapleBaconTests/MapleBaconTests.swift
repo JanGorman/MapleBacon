@@ -3,6 +3,9 @@
 //
 
 import XCTest
+#if canImport(Combine)
+import Combine
+#endif
 import Nimble
 import MapleBacon
 
@@ -84,6 +87,11 @@ final class MapleBaconTests: XCTestCase {
     }
   }
 
+}
+
+#if canImport(Combine)
+extension MapleBaconTests {
+
   @available(iOS 13.0, *)
   func testPublisherIntegration() {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
@@ -99,3 +107,4 @@ final class MapleBaconTests: XCTestCase {
   }
 
 }
+#endif

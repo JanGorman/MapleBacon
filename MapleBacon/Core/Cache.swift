@@ -2,8 +2,12 @@
 //  Copyright © 2017 Jan Gorman. All rights reserved.
 //
 
+#if canImport(Combine)
 import Combine
+#endif
+#if canImport(CryptoKit)
 import CryptoKit
+#endif
 import UIKit
 
 public enum MapleBaconCacheError: Error {
@@ -45,19 +49,10 @@ public final class Cache {
     let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
     cachePath = (path as NSString).appendingPathComponent(name)
 
-    if #available(iOS 13.0, *) {
-      _ = NotificationCenter.default.publisher(for: UIApplication.didReceiveMemoryWarningNotification).sink { _ in
-          self.clearMemory()
-      }
-      _ = NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification).sink { _ in
-        self.cleanDisk()
-      }
-    } else {
-      NotificationCenter.default.addObserver(self, selector: #selector(clearMemory),
-                                             name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
-      NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: UIApplication.willTerminateNotification,
-                                             object: nil)
-    }
+    NotificationCenter.default.addObserver(self, selector: #selector(clearMemory),
+                                           name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: UIApplication.willTerminateNotification,
+                                           object: nil)
   }
 
   /// Stores an image in the cache. Images will be added to both memory and disk.
@@ -92,9 +87,13 @@ public final class Cache {
   private func makeCacheKey(_ key: String, identifier: String?) -> String {
     let fileSafeKey: String
     if #available(iOS 13.0, *) {
+      #if canImport(CryptoKit)
       let digest = Insecure.MD5.hash(data: Data(key.utf8))
       let elements: [UInt8] = digest.reduce(into: [], { $0.append($1) })
       fileSafeKey = elements.toHexString()
+      #else
+      fileSafeKey = key.replacingOccurrences(of: "/", with: "-")
+      #endif
     } else {
       fileSafeKey = key.replacingOccurrences(of: "/", with: "-")
     }
@@ -138,25 +137,6 @@ public final class Cache {
     completion(nil, .none)
   }
 
-  /// Retrieve an image from cache. Images are checked in memory and on disk in that order. If an image is only available on
-  /// it will be also be stored in memory again for faster future access.
-  /// - Parameter key: The unique identifier of the image
-  /// - Parameter transformerId: An optional transformer ID appended to the key ot uniquely identify the image
-  @available(iOS 13.0, *)
-  public func retrieveImage(forKey key: String, transformerId: String? = nil) -> AnyPublisher<(UIImage?, CacheType), Never> {
-    let cacheKey = makeCacheKey(key, identifier: transformerId)
-
-    if let image = memory.object(forKey: cacheKey as NSString) as? UIImage {
-      return Publishers.Once((image, .memory)).eraseToAnyPublisher()
-    }
-    if let image = retrieveImageFromDisk(forKey: cacheKey) {
-      storeToMemory(image, forKey: key, transformerId: transformerId)
-      return Publishers.Once((image, .disk)).eraseToAnyPublisher()
-    }
-
-    return Publishers.Once((nil, .none)).eraseToAnyPublisher()
-  }
-  
   private func retrieveImageFromDisk(forKey key: String) -> UIImage? {
     let url = URL(fileURLWithPath: cachePath).appendingPathComponent(key)
     guard let data = try? backingStore.fileContents(at: url), let image = UIImage(data: data) else {
@@ -215,6 +195,31 @@ public final class Cache {
   }
 
 }
+
+#if canImport(Combine)
+extension Cache {
+
+  /// Retrieve an image from cache. Images are checked in memory and on disk in that order. If an image is only available on
+  /// it will be also be stored in memory again for faster future access.
+  /// - Parameter key: The unique identifier of the image
+  /// - Parameter transformerId: An optional transformer ID appended to the key ot uniquely identify the image
+  @available(iOS 13.0, *)
+  public func retrieveImage(forKey key: String, transformerId: String? = nil) -> AnyPublisher<(UIImage?, CacheType), Never> {
+    let cacheKey = makeCacheKey(key, identifier: transformerId)
+
+    if let image = memory.object(forKey: cacheKey as NSString) as? UIImage {
+      return Publishers.Once((image, .memory)).eraseToAnyPublisher()
+    }
+    if let image = retrieveImageFromDisk(forKey: cacheKey) {
+      storeToMemory(image, forKey: key, transformerId: transformerId)
+      return Publishers.Once((image, .disk)).eraseToAnyPublisher()
+    }
+
+    return Publishers.Once((nil, .none)).eraseToAnyPublisher()
+  }
+
+}
+#endif
 
 private extension Array where Element == UInt8 {
 

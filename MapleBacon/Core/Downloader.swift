@@ -2,7 +2,9 @@
 //  Copyright © 2017 Jan Gorman. All rights reserved.
 //
 
+#if canImport(Combine)
 import Combine
+#endif
 import UIKit
 
 public enum MapleBaconDownloadError: Error {
@@ -98,6 +100,11 @@ public final class Downloader {
     }
   }
 
+}
+
+#if canImport(Combine)
+extension Downloader {
+
   /// Download an asset
   /// - Parameter url: The URL to download from
   /// - Returns: A combine publisher
@@ -115,6 +122,7 @@ public final class Downloader {
   }
 
 }
+#endif
 
 extension Downloader: DownloadStateDelegate {
 

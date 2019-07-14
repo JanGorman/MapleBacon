@@ -3,6 +3,9 @@
 //
 
 import XCTest
+#if canImport(Combine)
+import Combine
+#endif
 import UIKit
 import Nimble
 import MapleBacon
@@ -70,23 +73,6 @@ final class CacheTests: XCTestCase {
     }
   }
 
-  @available(iOS 13.0, *)
-  func testItStoresImageInMemoryCombine() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
-    let image = helper.image
-    let key = "http://\(#function)"
-
-    waitUntil(timeout: 5) { done in
-      cache.store(image, forKey: key) {
-        _ = cache.retrieveImage(forKey: key).sink { image, type in
-            expect(image).toNot(beNil())
-            expect(type) == .memory
-            done()
-        }
-      }
-    }
-  }
-
   func testNamedCachesAreDistinct() {
     let mockCache = Cache(name: "mock", backingStore: MockStore())
     let namedCache = Cache(name: "named")
@@ -102,24 +88,8 @@ final class CacheTests: XCTestCase {
       }
     }
   }
-  
-  @available(iOS 13.0, *)
+
   func testUnknownCacheKeyReturnsNoImage() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
-    let image = helper.image
-
-    waitUntil(timeout: 5) { done in
-      cache.store(image, forKey: "key1") {
-        _ = cache.retrieveImage(forKey: "key2").sink { image, type in
-          expect(image).to(beNil())
-          expect(type == .none) == true
-          done()
-        }
-      }
-    }
-  }
-
-  func testUnknownCacheKeyReturnsNoImageCombine() {
     let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
 
@@ -151,24 +121,6 @@ final class CacheTests: XCTestCase {
     }
   }
 
-  @available(iOS 13.0, *)
-  func testItStoresImagesToDiskCombine() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
-    let image = helper.image
-    let key = #function
-
-    waitUntil(timeout: 5) { done in
-      cache.store(image, forKey: key) {
-        cache.clearMemory()
-        _ = cache.retrieveImage(forKey: key).sink { image, type in
-          expect(image).toNot(beNil())
-          expect(type) == .disk
-          done()
-        }
-      }
-    }
-  }
-
   func testImagesOnDiskAreMovedToMemory() {
     let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
@@ -179,26 +131,6 @@ final class CacheTests: XCTestCase {
         cache.clearMemory()
         cache.retrieveImage(forKey: key) { _, _ in
           cache.retrieveImage(forKey: key) { image, type in
-            expect(image).toNot(beNil())
-            expect(type) == .memory
-            done()
-          }
-        }
-      }
-    }
-  }
-
-  @available(iOS 13.0, *)
-  func testImagesOnDiskAreMovedToMemoryCombine() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
-    let image = helper.image
-    let key = #function
-
-    waitUntil(timeout: 5) { done in
-      cache.store(image, forKey: key) {
-        cache.clearMemory()
-        _ = cache.retrieveImage(forKey: key).sink { _, _ in
-          _ = cache.retrieveImage(forKey: key).sink { image, type in
             expect(image).toNot(beNil())
             expect(type) == .memory
             done()
@@ -265,8 +197,84 @@ final class CacheTests: XCTestCase {
     }
   }
 
+}
+
+#if canImport(Combine)
+extension CacheTests {
+
   @available(iOS 13.0, *)
-  func testCacheWithIdentifierIsCachedAsSeparateImageCombine() {
+  func testItStoresImageInMemoryUsingPublisher() {
+    let cache = Cache(name: "mock", backingStore: MockStore())
+    let image = helper.image
+    let key = "http://\(#function)"
+
+    waitUntil(timeout: 5) { done in
+      cache.store(image, forKey: key) {
+        _ = cache.retrieveImage(forKey: key).sink { image, type in
+          expect(image).toNot(beNil())
+          expect(type) == .memory
+          done()
+        }
+      }
+    }
+  }
+
+  @available(iOS 13.0, *)
+  func testUnknownCacheKeyReturnsNoImageUsingPublisher() {
+    let cache = Cache(name: "mock", backingStore: MockStore())
+    let image = helper.image
+
+    waitUntil(timeout: 5) { done in
+      cache.store(image, forKey: "key1") {
+        _ = cache.retrieveImage(forKey: "key2").sink { image, type in
+          expect(image).to(beNil())
+          expect(type == .none) == true
+          done()
+        }
+      }
+    }
+  }
+
+  @available(iOS 13.0, *)
+  func testItStoresImagesToDiskUsingPublisher() {
+    let cache = Cache(name: "mock", backingStore: MockStore())
+    let image = helper.image
+    let key = #function
+
+    waitUntil(timeout: 5) { done in
+      cache.store(image, forKey: key) {
+        cache.clearMemory()
+        _ = cache.retrieveImage(forKey: key).sink { image, type in
+          expect(image).toNot(beNil())
+          expect(type) == .disk
+          done()
+        }
+      }
+    }
+  }
+
+  @available(iOS 13.0, *)
+  func testImagesOnDiskAreMovedToMemoryUsingPublisher() {
+    let cache = Cache(name: "mock", backingStore: MockStore())
+    let image = helper.image
+    let key = #function
+
+    waitUntil(timeout: 5) { done in
+      cache.store(image, forKey: key) {
+        cache.clearMemory()
+        _ = cache.retrieveImage(forKey: key).sink { _, _ in
+          _ = cache.retrieveImage(forKey: key).sink { image, type in
+            expect(image).toNot(beNil())
+            expect(type) == .memory
+            done()
+          }
+        }
+      }
+    }
+  }
+
+  @available(iOS 13.0, *)
+  func testCacheWithIdentifierIsCachedAsSeparateImageUsingPublisher() {
     let cache = Cache(name: "mock", backingStore: MockStore())
     let image = helper.image
     let alternateImage = UIImage(data: image.jpegData(compressionQuality: 0.2)!)!
@@ -291,3 +299,4 @@ final class CacheTests: XCTestCase {
   }
 
 }
+#endif

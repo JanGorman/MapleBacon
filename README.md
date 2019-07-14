@@ -92,7 +92,6 @@ struct MyView: View {
 
   var body: some View {
     VStack {
-      VStack {
       if image.image != nil {
         Image(uiImage: image.image!)
       } else {

@@ -8,7 +8,7 @@ import MapleBacon
 
 final class DownloaderTests: XCTestCase {
   
-  private let url = URL(string: "https://www.apple.com/mapleBacon.png")!
+  private let url: URL = "https://www.apple.com/mapleBacon.png"
   private let helper = TestHelper()
 
   func testDownload() {

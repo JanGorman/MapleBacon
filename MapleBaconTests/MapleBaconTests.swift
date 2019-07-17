@@ -24,7 +24,7 @@ final class MapleBaconTests: XCTestCase {
 
   }
 
-  private let url = URL(string: "https://www.apple.com/mapleBacon.png")!
+  private let url: URL = "https://www.apple.com/mapleBacon.png"
   private let helper = TestHelper()
   
   override func setUp() {

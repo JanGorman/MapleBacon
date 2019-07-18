@@ -109,20 +109,37 @@ public final class MapleBaconCache {
   ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the image
   ///     - completion: The completion called once the image has been retrieved from the cache
   public func retrieveImage(forKey key: String, transformerId: String? = nil, completion: (UIImage?, CacheType) -> Void) {
+    retrieveData(forKey: key, transformerId: transformerId) { data, cacheType in
+      guard let data = data else {
+        completion(nil, .none)
+        return
+      }
+      completion(UIImage(data: data), cacheType)
+    }
+  }
+
+  /// Retrieve raw `Data` from cache. Will look in both memory and on disk. When the data is only available on disk
+  /// it will be stored again in memory for faster access.
+  ///
+  /// - Parameters
+  ///     - key: The unique identifier of the data
+  ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the data
+  ///     - completion: The completion called once the image has been retrieved from the cache
+  public func retrieveData(forKey key: String, transformerId: String? = nil, completion: (Data?, CacheType) -> Void) {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
-    if let dataWrapper = memory.object(forKey: cacheKey as NSString), let image = UIImage(data: dataWrapper.data) {
-      completion(image, .memory)
+    if let dataWrapper = memory.object(forKey: cacheKey as NSString) {
+      completion(dataWrapper.data, .memory)
       return
     }
-    if let data = retrieveImageFromDisk(forKey: cacheKey), let image = UIImage(data: data) {
+    if let data = retrieveDataFromDisk(forKey: cacheKey), !data.isEmpty {
       storeToMemory(data: data, forKey: key, transformerId: transformerId)
-      completion(image, .disk)
+      completion(data, .disk)
       return
     }
     completion(nil, .none)
   }
 
-  private func retrieveImageFromDisk(forKey key: String) -> Data? {
+  private func retrieveDataFromDisk(forKey key: String) -> Data? {
     let url = URL(fileURLWithPath: cachePath).appendingPathComponent(key)
     return try? backingStore.fileContents(at: url)
   }

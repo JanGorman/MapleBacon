@@ -111,7 +111,7 @@ public final class MapleBaconCache {
   public func retrieveImage(forKey key: String, transformerId: String? = nil, completion: (UIImage?, CacheType) -> Void) {
     retrieveData(forKey: key, transformerId: transformerId) { data, cacheType in
       guard let data = data else {
-        completion(nil, .none)
+        completion(nil, cacheType)
         return
       }
       completion(UIImage(data: data), cacheType)

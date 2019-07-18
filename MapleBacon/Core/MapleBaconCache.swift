@@ -13,16 +13,16 @@ public enum CacheType {
 }
 
 /// The class responsible for caching images. Images will be cached both in memory and on disk.
-public final class Cache {
+public final class MapleBaconCache {
   
   private static let prefix = "com.schnaub.Cache."
 
   /// The default `Cache` singleton
-  public static let `default` = Cache(name: "default")
+  public static let `default` = MapleBaconCache(name: "default")
 
   public let cachePath: String
   
-  private let memory = NSCache<NSString, AnyObject>()
+  private let memory = NSCache<NSString, DataWrapper>()
   private let backingStore: BackingStore
   private let diskQueue: DispatchQueue
 
@@ -33,7 +33,7 @@ public final class Cache {
   ///
   /// - Parameter name: The name of the cache. Used to construct a unique path on disk to store images in
   public init(name: String, backingStore: BackingStore = FileManager.default) {
-    let cacheName = Cache.prefix + name
+    let cacheName = MapleBaconCache.prefix + name
     memory.name = cacheName
 
     self.backingStore = backingStore
@@ -43,8 +43,6 @@ public final class Cache {
     let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
     cachePath = (path as NSString).appendingPathComponent(name)
 
-    NotificationCenter.default.addObserver(self, selector: #selector(clearMemory),
-                                           name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: UIApplication.willTerminateNotification,
                                            object: nil)
   }
@@ -52,29 +50,33 @@ public final class Cache {
   /// Stores an image in the cache. Images will be added to both memory and disk.
   ///
   /// - Parameters
-  ///     - image: The image to cache
+  ///     - data: The image data to cache
   ///     - key: The unique identifier of the image
   ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the image
   ///     - completion: An optional closure called once the image has been persisted to disk. Runs on the main queue.
-  public func store(_ image: UIImage, data: Data? = nil, forKey key: String, transformerId: String? = nil,
+  public func store(data: Data? = nil, forKey key: String, transformerId: String? = nil,
                     completion: (() -> Void)? = nil) {
-    let cacheKey = storeToMemory(image, forKey: key, transformerId: transformerId)
+    let cacheKey = storeToMemory(data: data, forKey: key, transformerId: transformerId)
     diskQueue.async {
       defer {
         DispatchQueue.main.async {
           completion?()
         }
       }
-      if let data = data ?? image.pngData() {
+      if let data = data {
         self.storeDataToDisk(data, key: cacheKey)
       }
     }
   }
 
   @discardableResult
-  private func storeToMemory(_ image: UIImage, forKey key: String, transformerId: String?) -> String {
+  private func storeToMemory(data: Data?, forKey key: String, transformerId: String?) -> String {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
-    memory.setObject(image, forKey: cacheKey as NSString)
+    if let data = data {
+      memory.setObject(DataWrapper(data: data), forKey: cacheKey as NSString)
+    } else {
+      memory.removeObject(forKey: cacheKey as NSString)
+    }
     return cacheKey
   }
 
@@ -107,28 +109,41 @@ public final class Cache {
   ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the image
   ///     - completion: The completion called once the image has been retrieved from the cache
   public func retrieveImage(forKey key: String, transformerId: String? = nil, completion: (UIImage?, CacheType) -> Void) {
+    retrieveData(forKey: key, transformerId: transformerId) { data, cacheType in
+      guard let data = data else {
+        completion(nil, cacheType)
+        return
+      }
+      completion(UIImage(data: data), cacheType)
+    }
+  }
+
+  /// Retrieve raw `Data` from cache. Will look in both memory and on disk. When the data is only available on disk
+  /// it will be stored again in memory for faster access.
+  ///
+  /// - Parameters
+  ///     - key: The unique identifier of the data
+  ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the data
+  ///     - completion: The completion called once the image has been retrieved from the cache
+  public func retrieveData(forKey key: String, transformerId: String? = nil, completion: (Data?, CacheType) -> Void) {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
-    if let image = memory.object(forKey: cacheKey as NSString) as? UIImage {
-      completion(image, .memory)
+    if let dataWrapper = memory.object(forKey: cacheKey as NSString) {
+      completion(dataWrapper.data, .memory)
       return
     }
-    if let image = retrieveImageFromDisk(forKey: cacheKey) {
-      storeToMemory(image, forKey: key, transformerId: transformerId)
-      completion(image, .disk)
+    if let data = retrieveDataFromDisk(forKey: cacheKey), !data.isEmpty {
+      storeToMemory(data: data, forKey: key, transformerId: transformerId)
+      completion(data, .disk)
       return
     }
     completion(nil, .none)
   }
 
-  private func retrieveImageFromDisk(forKey key: String) -> UIImage? {
+  private func retrieveDataFromDisk(forKey key: String) -> Data? {
     let url = URL(fileURLWithPath: cachePath).appendingPathComponent(key)
-    guard let data = try? backingStore.fileContents(at: url), let image = UIImage(data: data) else {
-      return nil
-    }
-    return image
+    return try? backingStore.fileContents(at: url)
   }
-  
-  @objc
+
   public func clearMemory() {
     memory.removeAllObjects()
   }
@@ -175,6 +190,16 @@ public final class Cache {
       return isDirectory == false && lastAccessDate < expirationDate
     }
     return expiredFileUrls
+  }
+
+}
+
+private final class DataWrapper {
+
+  let data: Data
+
+  init(data: Data) {
+    self.data = data
   }
 
 }

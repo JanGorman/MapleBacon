@@ -9,20 +9,21 @@ public enum MapleBaconError: Error {
 }
 
 public typealias ImageDownloadCompletion = (UIImage?) -> Void
+public typealias DataDownloadCompletion = (Data?) -> Void
 
 public final class MapleBacon {
 
   /// The shared instance of MapleBacon
   public static let shared = MapleBacon()
   
-  public let cache: Cache
+  public let cache: MapleBaconCache
   public let downloader: Downloader
   
   /// Initialize a new instance of MapleBacon.
   ///
   /// - Parameter cache: The cache to use. Uses the `default` instance if nothing is passed
   /// - Parameter downloader: The downloader to use. Users the `default` instance if nothing is passed
-  public init(cache: Cache = .default, downloader: Downloader = .default) {
+  public init(cache: MapleBaconCache = .default, downloader: Downloader = .default) {
     self.cache = cache
     self.downloader = downloader
   }
@@ -38,32 +39,65 @@ public final class MapleBacon {
                     transformer: ImageTransformer? = nil,
                     progress: DownloadProgress? = nil,
                     completion: @escaping ImageDownloadCompletion) {
-    return fetchImage(with: url, transformer: transformer, progress: progress, completion: completion)
+    fetchImage(with: url, transformer: transformer, progress: progress, completion: completion)
+  }
+
+  /// Download or retrieve an data from cache
+  ///
+  /// - Parameters:
+  ///     - url: The URL to load (image) data from
+  ///     - progress: An optional closure to track the download progress
+  ///     - completion: The closure to call once the download is done
+  public func data(with url: URL,
+                   progress: DownloadProgress? = nil,
+                   completion: @escaping DataDownloadCompletion) {
+    fetchData(with: url, transformer: nil, progress: progress) { data, _ in
+      completion(data)
+    }
   }
 
   private func fetchImage(with url: URL,
                           transformer: ImageTransformer?,
                           progress: DownloadProgress?,
                           completion: ImageDownloadCompletion?) {
+    fetchData(with: url, transformer: transformer, progress: progress) { [weak self] data, cacheType in
+      guard let self = self, let data = data, let image = UIImage(data: data) else {
+        completion?(nil)
+        return
+      }
+
+      if cacheType == .none, let transformer = transformer {
+        let transformedImage = transformer.transform(image: image)
+        let cacheData = transformedImage?.pngData()
+        self.cache.store(data: cacheData, forKey: url.absoluteString, transformerId: transformer.identifier)
+        completion?(transformedImage)
+      } else {
+        completion?(image)
+      }
+    }
+  }
+
+  private func fetchData(with url: URL,
+                         transformer: ImageTransformer?,
+                         progress: DownloadProgress?,
+                         completion: ((Data?, CacheType) -> Void)?) {
     let key = url.absoluteString
-    cache.retrieveImage(forKey: key, transformerId: transformer?.identifier) { [weak self] image, _ in
-      guard let image = image else {
+    cache.retrieveData(forKey: key, transformerId: transformer?.identifier) { [weak self] data, cacheType in
+      guard let data = data else {
         self?.downloader.download(url, progress: progress, completion: { data in
-          guard let self = self, let data = data, let image = UIImage(data: data) else {
-            completion?(nil)
+          guard let self = self, let data = data else {
+            completion?(nil, cacheType)
             return
           }
-
-          let transformedImage = transformer?.transform(image: image)
-          let finalImage = transformedImage ?? image
-          let finalData = transformedImage == nil ? data : nil
-
-          self.cache.store(finalImage, data: finalData, forKey: url.absoluteString, transformerId: transformer?.identifier)
-          completion?(finalImage)
+          // Only store in cache when there is no transformation step that will follow or we'd be caching twice
+          if transformer?.identifier == nil {
+            self.cache.store(data: data, forKey: url.absoluteString)
+          }
+          completion?(data, cacheType)
         })
         return
       }
-      completion?(image)
+      completion?(data, cacheType)
     }
   }
 

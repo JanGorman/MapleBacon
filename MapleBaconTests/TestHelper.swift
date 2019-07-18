@@ -16,6 +16,10 @@ final class TestHelper {
     return UIImage(named: "MapleBacon", in: Bundle(for: type(of: self).self), compatibleWith: nil)!
   }
 
+  var imageData: Data {
+    return image.pngData()!
+  }
+
   func imageResponseData() -> Data {
     return image.pngData()!
   }

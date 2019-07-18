@@ -208,14 +208,14 @@ extension Cache {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
 
     if let image = memory.object(forKey: cacheKey as NSString) as? UIImage {
-      return Publishers.Once((image, .memory)).eraseToAnyPublisher()
+      return Just((image, .memory)).eraseToAnyPublisher()
     }
     if let image = retrieveImageFromDisk(forKey: cacheKey) {
       storeToMemory(image, forKey: key, transformerId: transformerId)
-      return Publishers.Once((image, .disk)).eraseToAnyPublisher()
+      return Just((image, .disk)).eraseToAnyPublisher()
     }
 
-    return Publishers.Once((nil, .none)).eraseToAnyPublisher()
+    return Just((nil, .none)).eraseToAnyPublisher()
   }
 
 }

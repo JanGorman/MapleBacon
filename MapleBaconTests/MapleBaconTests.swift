@@ -3,9 +3,6 @@
 //
 
 import XCTest
-#if canImport(Combine)
-import Combine
-#endif
 import Nimble
 import MapleBacon
 
@@ -88,23 +85,3 @@ final class MapleBaconTests: XCTestCase {
   }
 
 }
-
-#if canImport(Combine)
-extension MapleBaconTests {
-
-  @available(iOS 13.0, *)
-  func testPublisherIntegration() {
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let downloader = Downloader(sessionConfiguration: configuration)
-    let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
-
-    waitUntil { done in
-      _ = mapleBacon.image(with: self.url).sink { image in
-        expect(image).toNot(beNil())
-        done()
-      }
-    }
-  }
-
-}
-#endif

@@ -2,9 +2,6 @@
 //  Copyright © 2017 Jan Gorman. All rights reserved.
 //
 
-#if canImport(Combine)
-import Combine
-#endif
 import UIKit
 
 public enum MapleBaconError: Error {
@@ -78,31 +75,3 @@ public final class MapleBacon {
   }
   
 }
-
-#if canImport(Combine)
-extension MapleBacon {
-
-  /// Download or retrieve an image from cache
-  /// - Parameter url: The URL to load an image from
-  /// - Parameter transformer: An optional transformer or transformer chain to apply to the image
-  /// - Parameter progress: An optional closure to track the download progress
-  /// - Returns: A Publisher of type `AnyPublisher<UIImage?, Never>`
-  @available(iOS 13.0, *)
-  public func image(with url: URL,
-                    transformer: ImageTransformer? = nil,
-                    progress: DownloadProgress? = nil) -> AnyPublisher<UIImage?, Never> {
-    return fetchImage(with: url, transfomer: transformer, progress: progress)
-  }
-
-  @available(iOS 13.0, *)
-  private func fetchImage(with url: URL, transfomer: ImageTransformer?, progress: DownloadProgress?) -> AnyPublisher<UIImage?, Never> {
-    return Future { resolver in
-      self.fetchImage(with: url, transformer: transfomer, progress: progress) { image in
-        resolver(.success(image))
-      }
-      }
-      .eraseToAnyPublisher()
-  }
-
-}
-#endif

@@ -2,12 +2,6 @@
 //  Copyright © 2017 Jan Gorman. All rights reserved.
 //
 
-#if canImport(Combine)
-import Combine
-#endif
-#if canImport(CryptoKit)
-import CryptoKit
-#endif
 import UIKit
 
 public enum MapleBaconCacheError: Error {
@@ -85,18 +79,7 @@ public final class Cache {
   }
 
   private func makeCacheKey(_ key: String, identifier: String?) -> String {
-    let fileSafeKey: String
-    if #available(iOS 13.0, *) {
-      #if canImport(CryptoKit)
-      let digest = Insecure.MD5.hash(data: Data(key.utf8))
-      let elements: [UInt8] = digest.reduce(into: [], { $0.append($1) })
-      fileSafeKey = elements.toHexString()
-      #else
-      fileSafeKey = key.replacingOccurrences(of: "/", with: "-")
-      #endif
-    } else {
-      fileSafeKey = key.replacingOccurrences(of: "/", with: "-")
-    }
+    let fileSafeKey = key.replacingOccurrences(of: "/", with: "-")
     guard let identifier = identifier, !identifier.isEmpty else {
       return fileSafeKey
     }
@@ -192,45 +175,6 @@ public final class Cache {
       return isDirectory == false && lastAccessDate < expirationDate
     }
     return expiredFileUrls
-  }
-
-}
-
-#if canImport(Combine)
-extension Cache {
-
-  /// Retrieve an image from cache. Images are checked in memory and on disk in that order. If an image is only available on
-  /// it will be also be stored in memory again for faster future access.
-  /// - Parameter key: The unique identifier of the image
-  /// - Parameter transformerId: An optional transformer ID appended to the key ot uniquely identify the image
-  @available(iOS 13.0, *)
-  public func retrieveImage(forKey key: String, transformerId: String? = nil) -> AnyPublisher<(UIImage?, CacheType), Never> {
-    let cacheKey = makeCacheKey(key, identifier: transformerId)
-
-    if let image = memory.object(forKey: cacheKey as NSString) as? UIImage {
-      return Just((image, .memory)).eraseToAnyPublisher()
-    }
-    if let image = retrieveImageFromDisk(forKey: cacheKey) {
-      storeToMemory(image, forKey: key, transformerId: transformerId)
-      return Just((image, .disk)).eraseToAnyPublisher()
-    }
-
-    return Just((nil, .none)).eraseToAnyPublisher()
-  }
-
-}
-#endif
-
-private extension Array where Element == UInt8 {
-
-  func toHexString() -> String {
-    return `lazy`.reduce("") {
-      var s = String($1, radix: 16)
-      if s.count == 1 {
-        s = "0" + s
-      }
-      return $0 + s
-    }
   }
 
 }

@@ -55,11 +55,10 @@ public final class MapleBacon {
           }
 
           let transformedImage = transformer?.transform(image: image)
-          let finalImage = transformedImage ?? image
-          let finalData = transformedImage == nil ? data : nil
+          let cacheData = transformedImage?.pngData() ?? data
 
-          self.cache.store(finalImage, data: finalData, forKey: url.absoluteString, transformerId: transformer?.identifier)
-          completion?(finalImage)
+          self.cache.store(data: cacheData, forKey: url.absoluteString, transformerId: transformer?.identifier)
+          completion?(transformedImage ?? image)
         })
         return
       }

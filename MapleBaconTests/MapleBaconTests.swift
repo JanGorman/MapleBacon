@@ -75,7 +75,7 @@ final class MapleBaconTests: XCTestCase {
       mapleBacon.image(with: self.url, transformer: transformer) { _ in
         expect(transformer.callCount) == 1
         
-        MapleBacon.shared.image(with: self.url, transformer: transformer) { image in
+        mapleBacon.image(with: self.url, transformer: transformer) { image in
           expect(image).toNot(beNil())
           expect(transformer.callCount) == 1
           done()

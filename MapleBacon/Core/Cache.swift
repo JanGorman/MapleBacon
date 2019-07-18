@@ -22,7 +22,7 @@ public final class Cache {
 
   public let cachePath: String
   
-  private let memory = NSCache<NSString, AnyObject>()
+  private let memory = NSCache<NSString, DataWrapper>()
   private let backingStore: BackingStore
   private let diskQueue: DispatchQueue
 
@@ -52,29 +52,33 @@ public final class Cache {
   /// Stores an image in the cache. Images will be added to both memory and disk.
   ///
   /// - Parameters
-  ///     - image: The image to cache
+  ///     - data: The image data to cache
   ///     - key: The unique identifier of the image
   ///     - transformerId: An optional transformer ID appended to the key to uniquely identify the image
   ///     - completion: An optional closure called once the image has been persisted to disk. Runs on the main queue.
-  public func store(_ image: UIImage, data: Data? = nil, forKey key: String, transformerId: String? = nil,
+  public func store(data: Data? = nil, forKey key: String, transformerId: String? = nil,
                     completion: (() -> Void)? = nil) {
-    let cacheKey = storeToMemory(image, forKey: key, transformerId: transformerId)
+    let cacheKey = storeToMemory(data: data, forKey: key, transformerId: transformerId)
     diskQueue.async {
       defer {
         DispatchQueue.main.async {
           completion?()
         }
       }
-      if let data = data ?? image.pngData() {
+      if let data = data {
         self.storeDataToDisk(data, key: cacheKey)
       }
     }
   }
 
   @discardableResult
-  private func storeToMemory(_ image: UIImage, forKey key: String, transformerId: String?) -> String {
+  private func storeToMemory(data: Data?, forKey key: String, transformerId: String?) -> String {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
-    memory.setObject(image, forKey: cacheKey as NSString)
+    if let data = data {
+      memory.setObject(DataWrapper(data: data), forKey: cacheKey as NSString)
+    } else {
+      memory.removeObject(forKey: cacheKey as NSString)
+    }
     return cacheKey
   }
 
@@ -108,24 +112,21 @@ public final class Cache {
   ///     - completion: The completion called once the image has been retrieved from the cache
   public func retrieveImage(forKey key: String, transformerId: String? = nil, completion: (UIImage?, CacheType) -> Void) {
     let cacheKey = makeCacheKey(key, identifier: transformerId)
-    if let image = memory.object(forKey: cacheKey as NSString) as? UIImage {
+    if let dataWrapper = memory.object(forKey: cacheKey as NSString), let image = UIImage(data: dataWrapper.data) {
       completion(image, .memory)
       return
     }
-    if let image = retrieveImageFromDisk(forKey: cacheKey) {
-      storeToMemory(image, forKey: key, transformerId: transformerId)
+    if let data = retrieveImageFromDisk(forKey: cacheKey), let image = UIImage(data: data) {
+      storeToMemory(data: data, forKey: key, transformerId: transformerId)
       completion(image, .disk)
       return
     }
     completion(nil, .none)
   }
 
-  private func retrieveImageFromDisk(forKey key: String) -> UIImage? {
+  private func retrieveImageFromDisk(forKey key: String) -> Data? {
     let url = URL(fileURLWithPath: cachePath).appendingPathComponent(key)
-    guard let data = try? backingStore.fileContents(at: url), let image = UIImage(data: data) else {
-      return nil
-    }
-    return image
+    return try? backingStore.fileContents(at: url)
   }
   
   @objc
@@ -175,6 +176,16 @@ public final class Cache {
       return isDirectory == false && lastAccessDate < expirationDate
     }
     return expiredFileUrls
+  }
+
+}
+
+private final class DataWrapper {
+
+  let data: Data
+
+  init(data: Data) {
+    self.data = data
   }
 
 }

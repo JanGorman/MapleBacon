@@ -12,7 +12,7 @@ final class MapleBaconTests: XCTestCase {
 
     let identifier = "com.schnaub.DummyTransformer"
 
-    var callCount = 0
+    private(set) var callCount = 0
 
     func transform(image: UIImage) -> UIImage? {
       callCount += 1
@@ -80,6 +80,36 @@ final class MapleBaconTests: XCTestCase {
           expect(transformer.callCount) == 1
           done()
         }
+      }
+    }
+  }
+
+  func testDataDownloadIntegration() {
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
+    let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
+
+    waitUntil { done in
+      mapleBacon.data(with: self.url) { data in
+        expect(data).toNot(beNil())
+        done()
+      }
+    }
+  }
+
+  func testFailedDownloadIntegration() {
+    MockURLProtocol.requestHandler = { request in
+      return (HTTPURLResponse(), Data())
+    }
+
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
+    let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
+
+    waitUntil { done in
+      mapleBacon.image(with: self.url) { image in
+        expect(image).to(beNil())
+        done()
       }
     }
   }

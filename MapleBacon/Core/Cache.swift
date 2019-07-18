@@ -43,8 +43,6 @@ public final class Cache {
     let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
     cachePath = (path as NSString).appendingPathComponent(name)
 
-    NotificationCenter.default.addObserver(self, selector: #selector(clearMemory),
-                                           name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(cleanDisk), name: UIApplication.willTerminateNotification,
                                            object: nil)
   }
@@ -128,8 +126,7 @@ public final class Cache {
     let url = URL(fileURLWithPath: cachePath).appendingPathComponent(key)
     return try? backingStore.fileContents(at: url)
   }
-  
-  @objc
+
   public func clearMemory() {
     memory.removeAllObjects()
   }

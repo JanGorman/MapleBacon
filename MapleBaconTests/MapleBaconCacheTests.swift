@@ -7,7 +7,7 @@ import UIKit
 import Nimble
 import MapleBacon
 
-final class CacheTests: XCTestCase {
+final class MapleBaconCacheTests: XCTestCase {
   
   private let helper = TestHelper()
   
@@ -55,7 +55,7 @@ final class CacheTests: XCTestCase {
   }
   
   func testItStoresImageInMemory() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
+    let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
     let imageData = helper.imageData
     let key = "http://\(#function)"
     
@@ -71,8 +71,8 @@ final class CacheTests: XCTestCase {
   }
 
   func testNamedCachesAreDistinct() {
-    let mockCache = Cache(name: "mock", backingStore: MockStore())
-    let namedCache = Cache(name: "named")
+    let mockCache = MapleBaconCache(name: "mock", backingStore: MockStore())
+    let namedCache = MapleBaconCache(name: "named")
     let imageData = helper.imageData
     let key = #function
 
@@ -87,7 +87,7 @@ final class CacheTests: XCTestCase {
   }
 
   func testUnknownCacheKeyReturnsNoImage() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
+    let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
     let imageData = helper.imageData
 
     waitUntil(timeout: 5) { done in
@@ -102,7 +102,7 @@ final class CacheTests: XCTestCase {
   }
   
   func testItStoresImagesToDisk() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
+    let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
     let imageData = helper.imageData
     let key = #function
 
@@ -119,7 +119,7 @@ final class CacheTests: XCTestCase {
   }
 
   func testImagesOnDiskAreMovedToMemory() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
+    let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
     let imageData = helper.imageData
     let key = #function
 
@@ -138,7 +138,7 @@ final class CacheTests: XCTestCase {
   }
 
   func testItClearsDiskCache() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
+    let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
     let imageData = helper.imageData
     let key = #function
 
@@ -156,7 +156,7 @@ final class CacheTests: XCTestCase {
   }
 
   func testItReturnsExpiredFileUrlsForDeletion() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
+    let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
     cache.maxCacheAgeSeconds = 0
     let imageData = helper.imageData
     let key = #function
@@ -171,7 +171,7 @@ final class CacheTests: XCTestCase {
   }
 
   func testCacheWithIdentifierIsCachedAsSeparateImage() {
-    let cache = Cache(name: "mock", backingStore: MockStore())
+    let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
     let imageData = helper.imageData
     let alternateImageData = helper.image.jpegData(compressionQuality: 0.2)!
     let key = #function

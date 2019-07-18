@@ -13,12 +13,12 @@ public enum CacheType {
 }
 
 /// The class responsible for caching images. Images will be cached both in memory and on disk.
-public final class Cache {
+public final class MapleBaconCache {
   
   private static let prefix = "com.schnaub.Cache."
 
   /// The default `Cache` singleton
-  public static let `default` = Cache(name: "default")
+  public static let `default` = MapleBaconCache(name: "default")
 
   public let cachePath: String
   
@@ -33,7 +33,7 @@ public final class Cache {
   ///
   /// - Parameter name: The name of the cache. Used to construct a unique path on disk to store images in
   public init(name: String, backingStore: BackingStore = FileManager.default) {
-    let cacheName = Cache.prefix + name
+    let cacheName = MapleBaconCache.prefix + name
     memory.name = cacheName
 
     self.backingStore = backingStore

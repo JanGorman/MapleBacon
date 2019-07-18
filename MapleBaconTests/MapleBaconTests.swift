@@ -33,8 +33,8 @@ final class MapleBaconTests: XCTestCase {
 
   override func tearDown() {
     super.tearDown()
-    Cache.default.clearMemory()
-    Cache.default.clearDisk()
+    MapleBaconCache.default.clearMemory()
+    MapleBaconCache.default.clearDisk()
   }
   
   func testIntegration() {

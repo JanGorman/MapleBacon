@@ -139,10 +139,10 @@
 			isa = PBXGroup;
 			children = (
 				77B73D651F553F4800874885 /* Assets.xcassets */,
-				77B73D541F553A8700874885 /* MapleBaconCacheTests.swift */,
 				777691581F5C238F00BCDFF9 /* DownloaderTests.swift */,
 				77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */,
 				77B73D561F553A8700874885 /* Info.plist */,
+				77B73D541F553A8700874885 /* MapleBaconCacheTests.swift */,
 				775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */,
 				774654BB20D93FD6007DA2AC /* MockURLProtocol.swift */,
 				775FE0BB1F98EA3900D548E1 /* TestHelper.swift */,

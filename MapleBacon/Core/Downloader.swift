@@ -23,6 +23,7 @@ private protocol DownloadStateDelegate: AnyObject {
 private final class Download {
 
   let task: URLSessionDataTask
+  let token: UUID
   let progress: DownloadProgress?
   var completions: [DownloadCompletion]
   var data: Data
@@ -34,6 +35,7 @@ private final class Download {
     self.progress = progress
     self.completions = [completion]
     self.data = data
+    self.token = UUID()
   }
 
   func start() {
@@ -77,24 +79,41 @@ public final class Downloader {
   ///     - url: The URL to download from
   ///     - progress: An optional download progress closure
   ///     - completion: The completion closure called once the download is done
-  public func download(_ url: URL, progress: DownloadProgress? = nil, completion: @escaping DownloadCompletion) {
+  /// - Returns: A download token `UUID`
+  public func download(_ url: URL, progress: DownloadProgress? = nil, completion: @escaping DownloadCompletion) -> UUID {
     sessionDelegate.delegate = self
 
+    var token: UUID!
     mutex.sync(flags: .barrier) {
       let task: URLSessionDataTask
       if let download = downloads[url] {
         task = download.task
         download.completions.append(completion)
+        token = download.token
       } else {
         let newTask = session.dataTask(with: url)
         let download = Download(task: newTask, progress: progress, completion: completion, data: Data())
         download.start()
         downloads[url] = download
         task = newTask
+        token = download.token
       }
 
       task.resume()
     }
+    return token
+  }
+
+  /// Cancel a running download
+  ///
+  /// - Parameter token: The token identifier of the the download
+  public func cancel(withToken token: UUID) {
+    guard let (url, download) = downloads.first(where: { $1.token == token }) else {
+      return
+    }
+    download.task.cancel()
+    download.finish()
+    clearDownload(for: url)
   }
 
 }
@@ -110,7 +129,9 @@ extension Downloader: DownloadStateDelegate {
   }
 
   fileprivate func clearDownload(for url: URL?) {
-    guard let url = url else { return }
+    guard let url = url else {
+      return
+    }
     mutex.sync(flags: .barrier) {
       downloads[url] = nil
     }

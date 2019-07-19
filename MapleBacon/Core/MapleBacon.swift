@@ -35,11 +35,13 @@ public final class MapleBacon {
   ///     - transformer: An optional transformer or transformer chain to apply to the image
   ///     - progress: An optional closure to track the download progress
   ///     - completion: The closure to call once the download is done. The completion is called on a background thread
+  /// - Returns: An optional download token `UUID` – if the image can be fetched from cache there won't be a token
+  @discardableResult
   public func image(with url: URL,
                     transformer: ImageTransformer? = nil,
                     progress: DownloadProgress? = nil,
-                    completion: @escaping ImageDownloadCompletion) {
-    fetchImage(with: url, transformer: transformer, progress: progress, completion: completion)
+                    completion: @escaping ImageDownloadCompletion) -> UUID? {
+    return fetchImage(with: url, transformer: transformer, progress: progress, completion: completion)
   }
 
   /// Download or retrieve an data from cache
@@ -48,19 +50,35 @@ public final class MapleBacon {
   ///     - url: The URL to load (image) data from
   ///     - progress: An optional closure to track the download progress
   ///     - completion: The closure to call once the download is done. The completion is called on a background thread
+  /// - Returns: An optional download token `UUID` – if the data can be fetched from cache there won't be a token
+  @discardableResult
   public func data(with url: URL,
                    progress: DownloadProgress? = nil,
-                   completion: @escaping DataDownloadCompletion) {
-    fetchData(with: url, transformer: nil, progress: progress) { data, _ in
+                   completion: @escaping DataDownloadCompletion) -> UUID? {
+    return fetchData(with: url, transformer: nil, progress: progress) { data, _ in
       completion(data)
     }
+  }
+
+  /// Pre-warms the image cache. Downloads the image if needed or loads it into memory.
+  ///
+  /// - Parameter url: The URL to load an image from
+  public func preWarmCache(for url: URL) {
+    _ = fetchImage(with: url, transformer: nil, progress: nil, completion: nil)
+  }
+
+  /// Cancel a running download
+  ///
+  /// - Parameter token: The token identifier of the the download
+  public func cancelDownload(withToken token: UUID) {
+    downloader.cancel(withToken: token)
   }
 
   private func fetchImage(with url: URL,
                           transformer: ImageTransformer?,
                           progress: DownloadProgress?,
-                          completion: ImageDownloadCompletion?) {
-    fetchData(with: url, transformer: transformer, progress: progress) { [weak self] data, cacheType in
+                          completion: ImageDownloadCompletion?) -> UUID? {
+    return fetchData(with: url, transformer: transformer, progress: progress) { [weak self] data, cacheType in
       guard let self = self, let data = data, let image = UIImage(data: data) else {
         completion?(nil)
         return
@@ -82,11 +100,12 @@ public final class MapleBacon {
   private func fetchData(with url: URL,
                          transformer: ImageTransformer?,
                          progress: DownloadProgress?,
-                         completion: ((Data?, CacheType) -> Void)?) {
+                         completion: ((Data?, CacheType) -> Void)?) -> UUID? {
     let key = url.absoluteString
+    var token: UUID?
     cache.retrieveData(forKey: key, transformerId: transformer?.identifier) { [weak self] data, cacheType in
       guard let data = data else {
-        self?.downloader.download(url, progress: progress, completion: { data in
+        let downloadToken = self?.downloader.download(url, progress: progress, completion: { data in
           guard let self = self, let data = data else {
             completion?(nil, cacheType)
             return
@@ -97,17 +116,12 @@ public final class MapleBacon {
           }
           completion?(data, cacheType)
         })
+        token = downloadToken
         return
       }
       completion?(data, cacheType)
     }
+    return token
   }
 
-  /// Pre-warms the image cache. Downloads the image if needed or loads it into memory.
-  ///
-  /// - Parameter url: The URL to load an image from
-  public func preWarmCache(for url: URL) {
-    fetchImage(with: url, transformer: nil, progress: nil, completion: nil)
-  }
-  
 }

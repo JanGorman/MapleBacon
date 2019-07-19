@@ -114,4 +114,21 @@ final class MapleBaconTests: XCTestCase {
     }
   }
 
+  func testCancel() {
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
+    let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
+
+    var imageData: Data?
+    let token = mapleBacon.data(with: url) { data in
+      imageData = data
+    }
+    mapleBacon.cancelDownload(withToken: token!)
+
+    waitUntil { done in
+      expect(imageData).to(beNil())
+      done()
+    }
+  }
+
 }

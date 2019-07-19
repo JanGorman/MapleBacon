@@ -11,31 +11,33 @@ final class DownloaderTests: XCTestCase {
   private let url: URL = "https://www.apple.com/mapleBacon.png"
   private let helper = TestHelper()
 
-  func testDownload() {
+  override func setUp() {
     MockURLProtocol.requestHandler = { request in
       return (HTTPURLResponse(), self.helper.imageResponseData())
     }
+    super.setUp()
+  }
+
+  func testDownload() {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
     waitUntil { done in
-      downloader.download(self.url) { data in
+      let token = downloader.download(self.url) { data in
         expect(data).toNot(beNil())
         done()
       }
+      expect(token).toNot(beNil())
     }
   }
 
   func testMultipleDownloads() {
-    MockURLProtocol.requestHandler = { request in
-      return (HTTPURLResponse(), self.helper.imageResponseData())
-    }
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
     let url1 = url
     waitUntil { done in
-      downloader.download(url1) { data in
+      _ = downloader.download(url1) { data in
         expect(data).toNot(beNil())
         done()
       }
@@ -43,7 +45,22 @@ final class DownloaderTests: XCTestCase {
     
     let url2 = url
     waitUntil { done in
-      downloader.download(url2) { data in
+      _ = downloader.download(url2) { data in
+        expect(data).toNot(beNil())
+        done()
+      }
+    }
+  }
+
+  func testSynchronousMultipleDownloadsOfSameURL() {
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
+
+    waitUntil { done in
+      _ = downloader.download(self.url) { data in
+        expect(data).toNot(beNil())
+      }
+      _ = downloader.download(self.url) { data in
         expect(data).toNot(beNil())
         done()
       }
@@ -59,10 +76,26 @@ final class DownloaderTests: XCTestCase {
     let downloader = Downloader(sessionConfiguration: configuration)
 
     waitUntil { done in
-      downloader.download(self.url) { data in
+      _ = downloader.download(self.url) { data in
         expect(data).to(beNil())
         done()
       }
+    }
+  }
+
+  func testCancel() {
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
+
+    var imageData: Data?
+    let token = downloader.download(url) { data in
+      imageData = data
+    }
+    downloader.cancel(withToken: token)
+
+    waitUntil { done in
+      expect(imageData).to(beNil())
+      done()
     }
   }
 

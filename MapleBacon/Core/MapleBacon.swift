@@ -34,7 +34,7 @@ public final class MapleBacon {
   ///     - url: The URL to load an image from
   ///     - transformer: An optional transformer or transformer chain to apply to the image
   ///     - progress: An optional closure to track the download progress
-  ///     - completion: The closure to call once the download is done
+  ///     - completion: The closure to call once the download is done. The completion is called on a background thread
   public func image(with url: URL,
                     transformer: ImageTransformer? = nil,
                     progress: DownloadProgress? = nil,
@@ -47,7 +47,7 @@ public final class MapleBacon {
   /// - Parameters:
   ///     - url: The URL to load (image) data from
   ///     - progress: An optional closure to track the download progress
-  ///     - completion: The closure to call once the download is done
+  ///     - completion: The closure to call once the download is done. The completion is called on a background thread
   public func data(with url: URL,
                    progress: DownloadProgress? = nil,
                    completion: @escaping DataDownloadCompletion) {
@@ -67,10 +67,12 @@ public final class MapleBacon {
       }
 
       if cacheType == .none, let transformer = transformer {
-        let transformedImage = transformer.transform(image: image)
-        let cacheData = transformedImage?.pngData()
-        self.cache.store(data: cacheData, forKey: url.absoluteString, transformerId: transformer.identifier)
-        completion?(transformedImage)
+        DispatchQueue.global(qos: .userInitiated).async {
+          let transformedImage = transformer.transform(image: image)
+          let cacheData = transformedImage?.pngData()
+          self.cache.store(data: cacheData, forKey: url.absoluteString, transformerId: transformer.identifier)
+          completion?(transformedImage)
+        }
       } else {
         completion?(image)
       }

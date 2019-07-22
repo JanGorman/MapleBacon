@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "77B73D4E1F553A8700874885"
+               BuildableName = "MapleBaconTests.xctest"
+               BlueprintName = "MapleBaconTests"
+               ReferencedContainer = "container:MapleBacon.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "77B73D451F553A8700874885"
+            BuildableName = "MapleBacon.framework"
+            BlueprintName = "MapleBacon"
+            ReferencedContainer = "container:MapleBacon.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

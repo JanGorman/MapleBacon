@@ -29,20 +29,22 @@ extension UIImageView {
   ///     - transformer: An optional transformer or transformer chain to apply to the image
   ///     - progress: An optional closure to track the download progress
   ///     - completion: An optional closure to call once the download is done
+  /// - Returns: An optional download token `UUID`
+  @discardableResult
   public func setImage(with url: URL?,
                        placeholder: UIImage? = nil,
                        displayOptions: DisplayOptions = [],
                        transformer: ImageTransformer? = nil,
                        progress: DownloadProgress? = nil,
-                       completion: ImageDownloadCompletion? = nil) {
+                       completion: ImageDownloadCompletion? = nil) -> UUID? {
     baconImageUrl = url
     image = placeholder
     guard let url = url else {
       completion?(nil)
-      return
+      return nil
     }
 
-    MapleBacon.shared.image(with: url, transformer: transformer, progress: progress) { [weak self] image in
+    return MapleBacon.shared.image(with: url, transformer: transformer, progress: progress) { [weak self] image in
       guard let self = self, self.baconImageUrl == url else {
         return
       }

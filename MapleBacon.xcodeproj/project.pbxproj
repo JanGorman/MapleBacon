@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7737F6B72282BA120022159A /* Resizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737F6B62282BA120022159A /* Resizing.swift */; };
 		774654BC20D93FD6007DA2AC /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774654BB20D93FD6007DA2AC /* MockURLProtocol.swift */; };
+		774F7C3922E5CB8D0006BE5E /* DispatchQueue+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774F7C3822E5CB8D0006BE5E /* DispatchQueue+MapleBacon.swift */; };
 		775FE0B61F98E7A600D548E1 /* UIButton+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775FE0B51F98E7A600D548E1 /* UIButton+MapleBacon.swift */; };
 		775FE0BA1F98E9E600D548E1 /* MapleBaconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */; };
 		775FE0BC1F98EA3900D548E1 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775FE0BB1F98EA3900D548E1 /* TestHelper.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		7737F6B62282BA120022159A /* Resizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resizing.swift; sourceTree = "<group>"; };
 		774654BB20D93FD6007DA2AC /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		774F7C3822E5CB8D0006BE5E /* DispatchQueue+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+MapleBacon.swift"; sourceTree = "<group>"; };
 		775FE0B51F98E7A600D548E1 /* UIButton+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+MapleBacon.swift"; sourceTree = "<group>"; };
 		775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconTests.swift; sourceTree = "<group>"; };
 		775FE0BB1F98EA3900D548E1 /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			children = (
 				7760852A1F8A50DB000CF974 /* UIImageView+MapleBacon.swift */,
 				775FE0B51F98E7A600D548E1 /* UIButton+MapleBacon.swift */,
+				774F7C3822E5CB8D0006BE5E /* DispatchQueue+MapleBacon.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				7760852B1F8A50DB000CF974 /* UIImageView+MapleBacon.swift in Sources */,
 				F2AC48C921BEF17D00AF2DA5 /* BackingStore.swift in Sources */,
 				77B73D611F553AE800874885 /* MapleBaconCache.swift in Sources */,
+				774F7C3922E5CB8D0006BE5E /* DispatchQueue+MapleBacon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

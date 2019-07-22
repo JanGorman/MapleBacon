@@ -25,7 +25,9 @@ private class SepiaImageTransformer: ImageTransformer {
   let identifier = "com.schnaub.SepiaImageTransformer"
 
   func transform(image: UIImage) -> UIImage? {
-    guard let filter = CIFilter(name: "CISepiaTone") else { return image }
+    guard let filter = CIFilter(name: "CISepiaTone") else {
+      return image
+    }
 
     let ciImage = CIImage(image: image)
     filter.setValue(ciImage, forKey: kCIInputImageKey)
@@ -33,7 +35,9 @@ private class SepiaImageTransformer: ImageTransformer {
 
     let context = CIContext()
     guard let outputImage = filter.outputImage,
-          let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
+          let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+    }
 
     return UIImage(cgImage: cgImage)
   }
@@ -45,14 +49,18 @@ private class VignetteImageTransformer: ImageTransformer {
   let identifier = "com.schnaub.VignetteImageTransformer"
 
   func transform(image: UIImage) -> UIImage? {
-    guard let filter = CIFilter(name: "CIVignette") else { return image }
+    guard let filter = CIFilter(name: "CIVignette") else {
+      return image
+    }
 
     let ciImage = CIImage(image: image)
     filter.setValue(ciImage, forKey: kCIInputImageKey)
 
     let context = CIContext()
     guard let outputImage = filter.outputImage,
-          let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
+          let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+    }
 
     return UIImage(cgImage: cgImage)
   }

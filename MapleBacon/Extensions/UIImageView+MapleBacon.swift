@@ -71,8 +71,10 @@ extension UIImageView {
       if displayOptions.contains(.withTransition) {
         setImageWithTransition(image, completion: completion)
       } else {
-        self.image = image
-        completion?(image)
+        DispatchQueue.main.async {
+          self.image = image
+          completion?(image)
+        }
       }
     }
   }

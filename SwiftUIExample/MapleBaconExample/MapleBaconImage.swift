@@ -7,17 +7,11 @@ import Foundation
 import Combine
 import MapleBacon
 
-final class MapleBaconImage: BindableObject {
+final class MapleBaconImage: ObservableObject {
 
   private let url: URL
 
-  var didChange = PassthroughSubject<UIImage?, Never>()
-
-  private(set) var image: UIImage? {
-    didSet {
-      didChange.send(image)
-    }
-  }
+  @Published var image: UIImage? = nil
 
   init(url: URL) {
     self.url = url

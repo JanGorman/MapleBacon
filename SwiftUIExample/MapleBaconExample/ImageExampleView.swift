@@ -7,7 +7,7 @@ import MapleBacon
 
 struct ImageExampleView : View {
 
-  @ObjectBinding var image: MapleBaconImage
+  @ObservedObject var image: MapleBaconImage
 
   var body: some View {
     VStack {

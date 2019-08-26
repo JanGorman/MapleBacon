@@ -26,6 +26,11 @@
 		77CA13151FA2391B0017C949 /* ImageTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */; };
 		F26EECAE21BD9A4500454B3E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F26EECAD21BD9A4500454B3E /* Nimble.framework */; };
 		F2AC48C921BEF17D00AF2DA5 /* BackingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC48C821BEF17D00AF2DA5 /* BackingStore.swift */; };
+		F2CEA5502314526C00FB03EF /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CEA54F2314526C00FB03EF /* MemoryCache.swift */; };
+		F2CEA552231457FC00FB03EF /* DiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CEA551231457FC00FB03EF /* DiskCache.swift */; };
+		F2CEA554231458CC00FB03EF /* MemoryCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CEA553231458CC00FB03EF /* MemoryCacheTests.swift */; };
+		F2CEA55623145DE300FB03EF /* DiskCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CEA55523145DE300FB03EF /* DiskCacheTests.swift */; };
+		F2CEA55823145E5200FB03EF /* MockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CEA55723145E5200FB03EF /* MockStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +66,11 @@
 		77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformerTests.swift; sourceTree = "<group>"; };
 		F26EECAD21BD9A4500454B3E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		F2AC48C821BEF17D00AF2DA5 /* BackingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackingStore.swift; sourceTree = "<group>"; };
+		F2CEA54F2314526C00FB03EF /* MemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
+		F2CEA551231457FC00FB03EF /* DiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCache.swift; sourceTree = "<group>"; };
+		F2CEA553231458CC00FB03EF /* MemoryCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCacheTests.swift; sourceTree = "<group>"; };
+		F2CEA55523145DE300FB03EF /* DiskCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCacheTests.swift; sourceTree = "<group>"; };
+		F2CEA55723145E5200FB03EF /* MockStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				77B73D601F553AE800874885 /* MapleBaconCache.swift */,
+				F2CEA551231457FC00FB03EF /* DiskCache.swift */,
+				F2CEA54F2314526C00FB03EF /* MemoryCache.swift */,
 				777691561F5C237A00BCDFF9 /* Downloader.swift */,
 				F2AC48C821BEF17D00AF2DA5 /* BackingStore.swift */,
 				77CA13101FA233260017C949 /* ImageTransformer.swift */,
@@ -146,6 +158,9 @@
 				77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */,
 				77B73D561F553A8700874885 /* Info.plist */,
 				77B73D541F553A8700874885 /* MapleBaconCacheTests.swift */,
+				F2CEA55723145E5200FB03EF /* MockStore.swift */,
+				F2CEA55523145DE300FB03EF /* DiskCacheTests.swift */,
+				F2CEA553231458CC00FB03EF /* MemoryCacheTests.swift */,
 				775FE0B91F98E9E600D548E1 /* MapleBaconTests.swift */,
 				774654BB20D93FD6007DA2AC /* MockURLProtocol.swift */,
 				775FE0BB1F98EA3900D548E1 /* TestHelper.swift */,
@@ -313,12 +328,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				775FE0B61F98E7A600D548E1 /* UIButton+MapleBacon.swift in Sources */,
+				F2CEA5502314526C00FB03EF /* MemoryCache.swift in Sources */,
 				77CA13111FA233260017C949 /* ImageTransformer.swift in Sources */,
 				777691571F5C237A00BCDFF9 /* Downloader.swift in Sources */,
 				7760852F1F8A51BB000CF974 /* MapleBacon.swift in Sources */,
 				7737F6B72282BA120022159A /* Resizing.swift in Sources */,
 				7760852B1F8A50DB000CF974 /* UIImageView+MapleBacon.swift in Sources */,
 				F2AC48C921BEF17D00AF2DA5 /* BackingStore.swift in Sources */,
+				F2CEA552231457FC00FB03EF /* DiskCache.swift in Sources */,
 				77B73D611F553AE800874885 /* MapleBaconCache.swift in Sources */,
 				774F7C3922E5CB8D0006BE5E /* DispatchQueue+MapleBacon.swift in Sources */,
 			);
@@ -328,12 +345,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2CEA554231458CC00FB03EF /* MemoryCacheTests.swift in Sources */,
+				F2CEA55623145DE300FB03EF /* DiskCacheTests.swift in Sources */,
 				777691591F5C238F00BCDFF9 /* DownloaderTests.swift in Sources */,
 				77CA13151FA2391B0017C949 /* ImageTransformerTests.swift in Sources */,
 				77B73D551F553A8700874885 /* MapleBaconCacheTests.swift in Sources */,
 				774654BC20D93FD6007DA2AC /* MockURLProtocol.swift in Sources */,
 				775FE0BA1F98E9E600D548E1 /* MapleBaconTests.swift in Sources */,
 				775FE0BC1F98EA3900D548E1 /* TestHelper.swift in Sources */,
+				F2CEA55823145E5200FB03EF /* MockStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

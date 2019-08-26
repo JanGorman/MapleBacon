@@ -146,7 +146,7 @@ MapleBacon will cache your images both in memory and on disk. Disk storage is au
 
 ```swift
 let oneDaySeconds: TimeInterval = 60 * 60 * 24
-Cache.default.maxCacheAgeSeconds = oneDaySeconds
+MapleBaconCache.default.maxCacheAgeSeconds = oneDaySeconds
 ```
 
 MapleBacon handles clearing the in memory cache by itself should your app come under memory pressure.

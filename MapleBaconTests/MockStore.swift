@@ -21,7 +21,7 @@ final class MockStore: BackingStore {
   }
 
   func fileExists(atPath path: String) -> Bool {
-    return false
+    false
   }
 
   func createFile(atPath path: String, contents data: Data?, attributes attr: [FileAttributeKey : Any]?) -> Bool {

@@ -121,11 +121,11 @@ public final class Downloader {
 extension Downloader: DownloadStateDelegate {
 
   fileprivate func progress(for url: URL) -> DownloadProgress? {
-    return downloads[url]?.progress
+    downloads[url]?.progress
   }
 
   fileprivate func completions(for url: URL) -> [DownloadCompletion]? {
-    return downloads[url]?.completions
+    downloads[url]?.completions
   }
 
   fileprivate func clearDownload(for url: URL?) {

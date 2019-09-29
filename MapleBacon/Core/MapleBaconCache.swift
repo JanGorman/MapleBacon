@@ -21,7 +21,7 @@ public final class MapleBaconCache {
   public static let `default` = MapleBaconCache(name: "default")
 
   public lazy var cachePath: String = {
-    return disk.cachePath
+    disk.cachePath
   }()
   
   private let memory: MemoryCache<String, Data>

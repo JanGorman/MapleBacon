@@ -11,7 +11,7 @@ final class MemoryCache<Key: Hashable, Value> {
     private let key: Key
 
     override var hash: Int {
-      return key.hashValue
+      key.hashValue
     }
 
     init(key: Key) {

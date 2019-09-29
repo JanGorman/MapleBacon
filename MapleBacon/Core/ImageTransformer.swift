@@ -23,7 +23,7 @@ public protocol ImageTransformer {
 infix operator >>>: AdditionPrecedence
 
 public func >>>(transformer1: ImageTransformer, transformer2: ImageTransformer) -> ImageTransformer {
-  return transformer1.appending(transformer: transformer2)
+  transformer1.appending(transformer: transformer2)
 }
 
 public extension ImageTransformer {
@@ -54,11 +54,11 @@ private class BaseComposableImageTransformer: ImageTransformer {
   }
 
   func transform(image: UIImage) -> UIImage? {
-    return call(image)
+    call(image)
   }
 
 }
 
 func ==(lhs: ImageTransformer, rhs: ImageTransformer) -> Bool {
-  return lhs.identifier == rhs.identifier
+  lhs.identifier == rhs.identifier
 }

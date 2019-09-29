@@ -25,7 +25,7 @@ public protocol BackingStore {
 extension FileManager: BackingStore {
   
   public func fileContents(at url: URL) throws -> Data {
-    return try Data(contentsOf: url, options: .mappedIfSafe)
+    try Data(contentsOf: url, options: .mappedIfSafe)
   }
   
 }

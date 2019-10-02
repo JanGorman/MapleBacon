@@ -33,7 +33,7 @@ class DiskCacheTests: XCTestCase {
 
     waitUntil(timeout: 5) { done in
       cache.insert(imageData, forKey: key) {
-        cache.cleanDisk() {
+        cache.cleanDisk {
           let urls = cache.expiredFileUrls()
           expect(urls).to(beEmpty())
           done()

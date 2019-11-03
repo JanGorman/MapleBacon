@@ -4,10 +4,6 @@
 
 import UIKit
 
-public enum MapleBaconError: Error {
-  case imageDecodingError
-}
-
 public typealias ImageDownloadCompletion = (UIImage?) -> Void
 public typealias DataDownloadCompletion = (Data?) -> Void
 
@@ -125,3 +121,21 @@ public final class MapleBacon {
   }
 
 }
+
+#if canImport(Combine)
+import Combine
+
+@available(iOS 13.0, *)
+extension MapleBacon {
+
+  public func image(with url: URL, transformer: ImageTransformer? = nil) -> AnyPublisher<UIImage?, Never> {
+    Future { resolve in
+      _ = self.fetchImage(with: url, transformer: transformer, progress: nil) { image in
+        resolve(.success(image))
+      }
+    }.eraseToAnyPublisher()
+  }
+
+}
+
+#endif

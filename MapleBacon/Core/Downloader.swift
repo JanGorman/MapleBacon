@@ -66,6 +66,9 @@ public final class Downloader {
 
   private var downloads: [URL: Download]
 
+  private lazy var downloadQueue = DispatchQueue(label: "com.schnaub.MapleBacon.Download", qos: .default,
+                                                 attributes: .concurrent)
+
   public init(sessionConfiguration: URLSessionConfiguration = .default) {
     mutex = DispatchQueue(label: "com.schnaub.Downloader.mutex", attributes: .concurrent)
     sessionDelegate = SessionDelegate()
@@ -146,6 +149,25 @@ extension Downloader: DownloadStateDelegate {
   }
 
 }
+
+#if canImport(Combine)
+import Combine
+
+extension Downloader {
+
+  @available(iOS 13.0, *)
+  public func download(_ url: URL) -> AnyPublisher<Data?, MapleBaconDownloadError> {
+    session
+      .dataTaskPublisher(for: url)
+      .receive(on: downloadQueue)
+      .map { $0.0 }
+      .mapError { _ in MapleBaconDownloadError.invalidServerResponse }
+      .eraseToAnyPublisher()
+  }
+
+}
+
+#endif
 
 private final class SessionDelegate: NSObject, URLSessionDataDelegate {
 

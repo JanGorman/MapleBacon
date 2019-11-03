@@ -36,10 +36,6 @@ github "JanGorman/MapleBacon"
 
 ## Usage
 
-### Combine & SwiftUI
-
-Check the `iOS13` branch of this project to try out Combine and SwiftUI support.
-
 ### UIImageView
 
 The most basic usage is via an extension on `UIImageView`. You pass it a URL:
@@ -149,7 +145,35 @@ let oneDaySeconds: TimeInterval = 60 * 60 * 24
 MapleBaconCache.default.maxCacheAgeSeconds = oneDaySeconds
 ```
 
-MapleBacon handles clearing the in memory cache by itself should your app come under memory pressure.
+### Combine
+
+On iOS13 and above, you can use `Combine` to call methods to retrieve from cache and download.
+
+```swift
+// Retrieve an image either from cache or download as needed
+MapleBacon.shared.image(with: url)
+  .receive(on: DispatchQueue.main) // Dispatch to the right queue if updating the UI
+  .sink(receiveValue: { image in
+    // Do something with your image
+  })
+  .store(in: &subscriptions) // Hold on to and dispose your subscriptions
+
+// Retrieve only from cache
+MapleBaconCache.default.retrieveImage(forKey: "myKey")
+  .sink { image, _ in
+    // Do something with your image
+  }
+  .store(in: &subscriptions)
+
+// Download an image
+Download.default.download(url)
+  .sink(receiveCompletion: { completion in
+    // Inspect the completion
+  }, receiveValue: { data in 
+    // Do something with the raw data
+  })
+  .store(in: &subscriptions)
+```
 
 ### Contributing
 

@@ -169,8 +169,8 @@ extension MapleBaconCacheTests {
               expect(image).toNot(beNil())
               expect(type) == .memory
               done()
-          }
-          .store(in: &self.subscriptions)
+            }
+            .store(in: &self.subscriptions)
         }
         .store(in: &self.subscriptions)
     }
@@ -189,8 +189,8 @@ extension MapleBaconCacheTests {
               expect(data).toNot(beNil())
               expect(type) == .memory
               done()
-          }
-          .store(in: &self.subscriptions)
+            }
+            .store(in: &self.subscriptions)
         }
         .store(in: &self.subscriptions)
     }

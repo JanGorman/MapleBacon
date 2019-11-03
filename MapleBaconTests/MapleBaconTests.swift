@@ -5,6 +5,9 @@
 import XCTest
 import Nimble
 import MapleBacon
+#if canImport(Combine)
+import Combine
+#endif
 
 final class MapleBaconTests: XCTestCase {
 
@@ -23,6 +26,9 @@ final class MapleBaconTests: XCTestCase {
 
   private let url: URL = "https://www.apple.com/mapleBacon.png"
   private let helper = TestHelper()
+
+  @available(iOS 13.0, *)
+  private lazy var subscriptions: Set<AnyCancellable> = []
   
   override func setUp() {
     super.setUp()
@@ -35,6 +41,9 @@ final class MapleBaconTests: XCTestCase {
     super.tearDown()
     MapleBaconCache.default.clearMemory()
     MapleBaconCache.default.clearDisk()
+    if #available(iOS 13.0, *) {
+      subscriptions.removeAll()
+    }
   }
   
   func testIntegration() {
@@ -132,3 +141,28 @@ final class MapleBaconTests: XCTestCase {
   }
 
 }
+
+#if canImport(Combine)
+
+@available(iOS 13.0, *)
+extension MapleBaconTests {
+
+  func testIntegrationPublisher() {
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader(sessionConfiguration: configuration)
+    let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
+
+    waitUntil { done in
+      mapleBacon.image(with: self.url)
+        .sink(receiveCompletion: { _ in
+          done()
+        }, receiveValue: { image in
+          expect(image).toNot(beNil())
+        })
+        .store(in: &self.subscriptions)
+    }
+  }
+
+}
+
+#endif

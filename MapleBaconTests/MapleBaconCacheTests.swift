@@ -18,6 +18,7 @@ final class MapleBaconCacheTests: XCTestCase {
   private lazy var subscriptions: Set<AnyCancellable> = []
 
   override func tearDown() {
+    super.tearDown()
     if #available(iOS 13.0, *) {
       subscriptions.removeAll()
     }

@@ -4,10 +4,6 @@
 
 import UIKit
 
-public enum MapleBaconError: Error {
-  case imageDecodingError
-}
-
 public typealias ImageDownloadCompletion = (UIImage?) -> Void
 public typealias DataDownloadCompletion = (Data?) -> Void
 
@@ -125,3 +121,39 @@ public final class MapleBacon {
   }
 
 }
+
+#if canImport(Combine)
+import Combine
+
+@available(iOS 13.0, *)
+extension MapleBacon {
+
+  public func image(with url: URL, transformer: ImageTransformer? = nil) -> AnyPublisher<UIImage?, Never> {
+    return fetchImage(with: url, transformer: transformer)
+  }
+
+  private func fetchImage(with url: URL,
+                          transformer: ImageTransformer?) -> AnyPublisher<UIImage?, Never> {
+    return fetchData(with: url, transformer: transformer)
+      .map { data in
+        guard let data = data else {
+          return nil
+        }
+        return UIImage(data: data)
+      }
+      .eraseToAnyPublisher()
+  }
+
+  private func fetchData(with url: URL,
+                         transformer: ImageTransformer?) -> AnyPublisher<Data?, Never> {
+    let key = url.absoluteString
+    return cache.retrieveData(forKey: key, transformerId: transformer?.identifier)
+      .map { data, _ in
+        data
+      }
+      .eraseToAnyPublisher()
+  }
+
+}
+
+#endif

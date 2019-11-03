@@ -24,6 +24,12 @@ final class DownloaderTests: XCTestCase {
     super.setUp()
   }
 
+  override func tearDown() {
+    if #available(iOS 13.0, *) {
+      subscriptions.removeAll()
+    }
+  }
+
   func testDownload() {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)

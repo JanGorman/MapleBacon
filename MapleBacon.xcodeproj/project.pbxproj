@@ -96,13 +96,13 @@
 		775FE0B11F98E78C00D548E1 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				77B73D601F553AE800874885 /* MapleBaconCache.swift */,
-				F2CEA551231457FC00FB03EF /* DiskCache.swift */,
-				F2CEA54F2314526C00FB03EF /* MemoryCache.swift */,
-				777691561F5C237A00BCDFF9 /* Downloader.swift */,
 				F2AC48C821BEF17D00AF2DA5 /* BackingStore.swift */,
+				F2CEA551231457FC00FB03EF /* DiskCache.swift */,
+				777691561F5C237A00BCDFF9 /* Downloader.swift */,
 				77CA13101FA233260017C949 /* ImageTransformer.swift */,
 				7760852E1F8A51BB000CF974 /* MapleBacon.swift */,
+				77B73D601F553AE800874885 /* MapleBaconCache.swift */,
+				F2CEA54F2314526C00FB03EF /* MemoryCache.swift */,
 				7737F6B62282BA120022159A /* Resizing.swift */,
 			);
 			path = Core;

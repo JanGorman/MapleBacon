@@ -14,7 +14,7 @@ public enum CacheType {
 
 /// The class responsible for caching images. Images will be cached both in memory and on disk.
 public final class MapleBaconCache {
-  
+
   private static let prefix = "com.schnaub.Cache."
 
   /// The default `Cache` singleton
@@ -38,7 +38,7 @@ public final class MapleBaconCache {
   ///   - name: The name of the cache. Used to construct a unique cache path
   ///   - backingStore: The backing store – defaults to `FileManager.default`
   public init(name: String, backingStore: BackingStore = FileManager.default) {
-    let cacheName = MapleBaconCache.prefix + name
+    let cacheName = Self.prefix + name
 
     memory = MemoryCache<String, Data>(name: cacheName)
     disk = DiskCache(name: name, backingStore: backingStore)
@@ -122,3 +122,41 @@ public final class MapleBaconCache {
   }
 
 }
+
+#if canImport(Combine)
+import Combine
+
+@available(iOS 13.0, *)
+extension MapleBaconCache {
+
+  public func storeAndPublish(data: Data? = nil, forKey key: String, transformerId: String? = nil) -> AnyPublisher<Void, Never> {
+    let cacheKey = storeToMemory(data: data, forKey: key, transformerId: transformerId)
+    return Future { resolve in
+      self.disk.insert(data, forKey: cacheKey) {
+        resolve(.success(()))
+      }
+    }.eraseToAnyPublisher()
+  }
+
+  public func retrieveImage(forKey key: String, transformerId: String? = nil) -> AnyPublisher<(UIImage?, CacheType), Never> {
+    Future { resolve in
+      self.retrieveData(forKey: key, transformerId: transformerId) { data, cacheType in
+        guard let data = data else {
+          return resolve(.success((nil, cacheType)))
+        }
+        return resolve(.success((UIImage(data: data), cacheType)))
+      }
+    }.eraseToAnyPublisher()
+  }
+
+  public func retrieveData(forKey key: String, transformerId: String? = nil) -> AnyPublisher<(Data?, CacheType), Never> {
+    Future { resolve in
+      self.retrieveData(forKey: key, transformerId: transformerId) { data, cacheType in
+        resolve(.success((data, cacheType)))
+      }
+    }.eraseToAnyPublisher()
+  }
+
+}
+
+#endif

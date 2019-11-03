@@ -6,10 +6,22 @@ import XCTest
 import UIKit
 import Nimble
 import MapleBacon
+#if canImport(Combine)
+import Combine
+#endif
 
 final class MapleBaconCacheTests: XCTestCase {
   
   private let helper = TestHelper()
+
+  @available(iOS 13.0, *)
+  private lazy var subscriptions: Set<AnyCancellable> = []
+
+  override func tearDown() {
+    if #available(iOS 13.0, *) {
+      subscriptions.removeAll()
+    }
+  }
   
   func testItStoresImageInMemory() {
     let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
@@ -137,3 +149,69 @@ final class MapleBaconCacheTests: XCTestCase {
   }
 
 }
+
+#if canImport(Combine)
+
+@available(iOS 13.0, *)
+extension MapleBaconCacheTests {
+
+  func testItStoresImagesInMemoryPublisher() {
+    let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
+    let imageData = helper.imageData
+    let key = "http://\(#function)"
+
+    waitUntil(timeout: 5) { done in
+      cache.storeAndPublish(data: imageData, forKey: key)
+        .sink { _ in
+          cache.retrieveImage(forKey: key)
+            .sink { image, type in
+              expect(image).toNot(beNil())
+              expect(type) == .memory
+              done()
+          }
+          .store(in: &self.subscriptions)
+        }
+        .store(in: &self.subscriptions)
+    }
+  }
+
+  func testItStoresDataInMemoryPublisher() {
+    let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
+    let imageData = helper.imageData
+    let key = "http://\(#function)"
+
+    waitUntil(timeout: 5) { done in
+      cache.storeAndPublish(data: imageData, forKey: key)
+        .sink { _ in
+          cache.retrieveData(forKey: key)
+            .sink { data, type in
+              expect(data).toNot(beNil())
+              expect(type) == .memory
+              done()
+          }
+          .store(in: &self.subscriptions)
+        }
+        .store(in: &self.subscriptions)
+    }
+  }
+
+  func testUnknownCacheKeyReturnsNoImagePublisher() {
+    let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
+    let imageData = helper.imageData
+
+    waitUntil(timeout: 5) { done in
+      cache.store(data: imageData, forKey: "key1") {
+        cache.retrieveImage(forKey: "key2")
+          .sink { image, type in
+            expect(image).to(beNil())
+            expect(type == .none) == true
+            done()
+          }
+          .store(in: &self.subscriptions)
+      }
+    }
+  }
+
+}
+
+#endif

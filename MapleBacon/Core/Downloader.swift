@@ -156,11 +156,11 @@ import Combine
 extension Downloader {
 
   @available(iOS 13.0, *)
-  public func download(_ url: URL) -> AnyPublisher<Data?, MapleBaconDownloadError> {
+  public func download(_ url: URL) -> AnyPublisher<Data, MapleBaconDownloadError> {
     session
       .dataTaskPublisher(for: url)
       .receive(on: downloadQueue)
-      .map { $0.0 }
+      .map(\.data)
       .mapError { _ in MapleBaconDownloadError.invalidServerResponse }
       .eraseToAnyPublisher()
   }

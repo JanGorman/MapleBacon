@@ -3,6 +3,9 @@
 //
 
 import UIKit
+#if canImport(CryptoKit)
+import CryptoKit
+#endif
 
 public enum MapleBaconCacheError: Error {
   case imageNotFound
@@ -65,11 +68,21 @@ public final class MapleBaconCache {
   }
 
   private func makeCacheKey(_ key: String, identifier: String?) -> String {
+    if #available(iOS 13.0, *) {
+      return makeMD5CacheKey(key, identifier: identifier)
+    }
     let fileSafeKey = key.replacingOccurrences(of: "/", with: "-")
     guard let identifier = identifier, !identifier.isEmpty else {
       return fileSafeKey
     }
     return fileSafeKey + "-" + identifier
+  }
+
+  @available(iOS 13.0, *)
+  private func makeMD5CacheKey(_ key: String, identifier: String?) -> String {
+    let key = key + (identifier ?? "")
+    let digest = Insecure.MD5.hash(data: Data(key.utf8))
+    return digest.map { String(format: "%02hhx", $0) }.joined()
   }
 
   /// Retrieve an image from cache. Will look in both memory and on disk. When the image is only available on disk

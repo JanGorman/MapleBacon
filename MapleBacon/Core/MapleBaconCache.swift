@@ -3,9 +3,6 @@
 //
 
 import UIKit
-#if canImport(CryptoKit)
-import CryptoKit
-#endif
 
 public enum MapleBaconCacheError: Error {
   case imageNotFound
@@ -76,13 +73,6 @@ public final class MapleBaconCache {
       return fileSafeKey
     }
     return fileSafeKey + "-" + identifier
-  }
-
-  @available(iOS 13.0, *)
-  private func makeMD5CacheKey(_ key: String, identifier: String?) -> String {
-    let key = key + (identifier ?? "")
-    let digest = Insecure.MD5.hash(data: Data(key.utf8))
-    return digest.map { String(format: "%02hhx", $0) }.joined()
   }
 
   /// Retrieve an image from cache. Will look in both memory and on disk. When the image is only available on disk
@@ -168,6 +158,22 @@ extension MapleBaconCache {
         resolve(.success((data, cacheType)))
       }
     }.eraseToAnyPublisher()
+  }
+
+}
+
+#endif
+
+#if canImport(CryptoKit)
+import CryptoKit
+
+@available(iOS 13.0, *)
+private extension MapleBaconCache {
+
+  private func makeMD5CacheKey(_ key: String, identifier: String?) -> String {
+    let key = key + (identifier ?? "")
+    let digest = Insecure.MD5.hash(data: Data(key.utf8))
+    return digest.map { String(format: "%02hhx", $0) }.joined()
   }
 
 }

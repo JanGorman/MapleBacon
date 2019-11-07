@@ -16,7 +16,7 @@ final class DiskCache {
 
   init(name: String, backingStore: BackingStore = FileManager.default) {
     self.backingStore = backingStore
-    let queueLabel = DiskCache.prefix + name
+    let queueLabel = Self.prefix + name
     self.diskQueue = DispatchQueue(label: queueLabel, qos: .background)
 
     let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!

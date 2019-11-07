@@ -27,6 +27,7 @@ private final class Download {
   let progress: DownloadProgress?
   var completions: [DownloadCompletion]
   var data: Data
+
   private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
 
   init(task: URLSessionDataTask, progress: DownloadProgress?, completion: @escaping DownloadCompletion,
@@ -57,6 +58,8 @@ private final class Download {
 /// The class responsible for downloading data. Access it through the `default` singleton.
 public final class Downloader {
 
+  private static let queueLabel = "com.schnaub.MapleBacon.Download"
+
   /// The default `Downloader` singleton
   public static let `default` = Downloader()
 
@@ -66,8 +69,7 @@ public final class Downloader {
 
   private var downloads: [URL: Download]
 
-  private lazy var downloadQueue = DispatchQueue(label: "com.schnaub.MapleBacon.Download", qos: .default,
-                                                 attributes: .concurrent)
+  private lazy var downloadQueue = DispatchQueue(label: Self.queueLabel, qos: .default, attributes: .concurrent)
 
   public init(sessionConfiguration: URLSessionConfiguration = .default) {
     mutex = DispatchQueue(label: "com.schnaub.Downloader.mutex", attributes: .concurrent)

@@ -19,7 +19,7 @@ final class DownloaderTests: XCTestCase {
 
   override func setUp() {
     MockURLProtocol.requestHandler = { request in
-      return (HTTPURLResponse(), self.helper.imageResponseData())
+      return (HTTPURLResponse(), self.helper.imageData)
     }
     super.setUp()
   }

@@ -2,7 +2,7 @@
 //  Copyright © 2019 Jan Gorman. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 final class DiskCache {
 

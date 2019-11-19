@@ -12,14 +12,8 @@ let package = Package(
     .library(name: "MapleBacon",
              targets: ["MapleBacon"])
   ],
-  dependencies: [
-    .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "8.0.1")),
-  ],
   targets: [
     .target(name: "MapleBacon",
-            path: "MapleBacon"),
-    .testTarget(name: "MapleBaconTests",
-                dependencies: ["MapleBacon", "Nimble"],
-                path: "MapleBaconTests")
+            path: "MapleBacon")
   ]
 )

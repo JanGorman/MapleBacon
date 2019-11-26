@@ -6,6 +6,7 @@
 [![License](https://img.shields.io/cocoapods/l/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![Platform](https://img.shields.io/cocoapods/p/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![SPM](https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
 
 <p align="center"><img src="https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1" height="210"/></p>
 
@@ -21,18 +22,19 @@ The folder `Example` contains a sample projects for you to try.
 
 ## Installation
 
-MapleBacon is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+MapleBacon is available through [CocoaPods](http://cocoapods.org). To install add it to your Podfile:
 
 ```ruby
 pod "MapleBacon"
 ```
 
-As well as [Carthage](https://github.com/Carthage/Carthage) / [punic](https://github.com/schwa/punic):
+[Carthage](https://github.com/Carthage/Carthage) / [punic](https://github.com/schwa/punic):
 
 ```ogdl
 github "JanGorman/MapleBacon"
 ```
+
+and [Swift Package Manager](https://swift.org/package-manager).
 
 ## Usage
 

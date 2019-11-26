@@ -10,17 +10,17 @@ protocol CallCounting {
 
 }
 
-final class TestHelper {
+struct TestHelper {
 
   var image: UIImage {
-    UIImage(named: "MapleBacon", in: Bundle(for: type(of: self).self), compatibleWith: nil)!
+    let renderer = UIGraphicsImageRenderer(size: .init(width: 10, height: 10))
+    return renderer.image { context in
+      UIColor.black.setFill()
+      context.fill(renderer.format.bounds)
+    }
   }
 
   var imageData: Data {
-    image.pngData()!
-  }
-
-  func imageResponseData() -> Data {
     image.pngData()!
   }
   

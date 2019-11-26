@@ -21,7 +21,6 @@
 		77B73D551F553A8700874885 /* MapleBaconCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B73D541F553A8700874885 /* MapleBaconCacheTests.swift */; };
 		77B73D571F553A8700874885 /* MapleBacon.h in Headers */ = {isa = PBXBuildFile; fileRef = 77B73D491F553A8700874885 /* MapleBacon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		77B73D611F553AE800874885 /* MapleBaconCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B73D601F553AE800874885 /* MapleBaconCache.swift */; };
-		77B73D661F553F4800874885 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77B73D651F553F4800874885 /* Assets.xcassets */; };
 		77CA13111FA233260017C949 /* ImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13101FA233260017C949 /* ImageTransformer.swift */; };
 		77CA13151FA2391B0017C949 /* ImageTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */; };
 		F26EECAE21BD9A4500454B3E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F26EECAD21BD9A4500454B3E /* Nimble.framework */; };
@@ -61,7 +60,6 @@
 		77B73D541F553A8700874885 /* MapleBaconCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconCacheTests.swift; sourceTree = "<group>"; };
 		77B73D561F553A8700874885 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77B73D601F553AE800874885 /* MapleBaconCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconCache.swift; sourceTree = "<group>"; };
-		77B73D651F553F4800874885 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77CA13101FA233260017C949 /* ImageTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformer.swift; sourceTree = "<group>"; };
 		77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformerTests.swift; sourceTree = "<group>"; };
 		F26EECAD21BD9A4500454B3E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 		77B73D531F553A8700874885 /* MapleBaconTests */ = {
 			isa = PBXGroup;
 			children = (
-				77B73D651F553F4800874885 /* Assets.xcassets */,
 				777691581F5C238F00BCDFF9 /* DownloaderTests.swift */,
 				77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */,
 				77B73D561F553A8700874885 /* Info.plist */,
@@ -281,7 +278,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77B73D661F553F4800874885 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

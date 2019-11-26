@@ -23,7 +23,6 @@
 		77B73D611F553AE800874885 /* MapleBaconCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B73D601F553AE800874885 /* MapleBaconCache.swift */; };
 		77CA13111FA233260017C949 /* ImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13101FA233260017C949 /* ImageTransformer.swift */; };
 		77CA13151FA2391B0017C949 /* ImageTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */; };
-		F2573EF023833CA400214891 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2573EEF23833CA400214891 /* Package.swift */; };
 		F26EECAE21BD9A4500454B3E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F26EECAD21BD9A4500454B3E /* Nimble.framework */; };
 		F2AC48C921BEF17D00AF2DA5 /* BackingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC48C821BEF17D00AF2DA5 /* BackingStore.swift */; };
 		F2CEA5502314526C00FB03EF /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CEA54F2314526C00FB03EF /* MemoryCache.swift */; };
@@ -63,7 +62,6 @@
 		77B73D601F553AE800874885 /* MapleBaconCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconCache.swift; sourceTree = "<group>"; };
 		77CA13101FA233260017C949 /* ImageTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformer.swift; sourceTree = "<group>"; };
 		77CA13141FA2391B0017C949 /* ImageTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformerTests.swift; sourceTree = "<group>"; };
-		F2573EEF23833CA400214891 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		F26EECAD21BD9A4500454B3E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		F2AC48C821BEF17D00AF2DA5 /* BackingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackingStore.swift; sourceTree = "<group>"; };
 		F2CEA54F2314526C00FB03EF /* MemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
@@ -121,7 +119,6 @@
 		77B73D3C1F553A8700874885 = {
 			isa = PBXGroup;
 			children = (
-				F2573EEF23833CA400214891 /* Package.swift */,
 				77B73D481F553A8700874885 /* MapleBacon */,
 				77B73D531F553A8700874885 /* MapleBaconTests */,
 				77B73D471F553A8700874885 /* Products */,
@@ -326,7 +323,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2573EF023833CA400214891 /* Package.swift in Sources */,
 				775FE0B61F98E7A600D548E1 /* UIButton+MapleBacon.swift in Sources */,
 				F2CEA5502314526C00FB03EF /* MemoryCache.swift in Sources */,
 				77CA13111FA233260017C949 /* ImageTransformer.swift in Sources */,

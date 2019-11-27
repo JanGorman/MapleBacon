@@ -38,7 +38,7 @@ extension UIButton {
 
   private var baconImageUrl: URL? {
     get {
-      return objc_getAssociatedObject(self, &baconImageUrlKey) as? URL
+      objc_getAssociatedObject(self, &baconImageUrlKey) as? URL
     }
     set {
       objc_setAssociatedObject(self, &baconImageUrlKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)

@@ -48,10 +48,10 @@ final class MapleBaconCacheTests: XCTestCase {
 
     waitUntil(timeout: 5) { done in
       mockCache.store(data: imageData, forKey: key) {
-        namedCache.retrieveImage(forKey: key, completion: { image, _ in
+        namedCache.retrieveImage(forKey: key) { image, _ in
           expect(image).to(beNil())
           done()
-        })
+        }
       }
     }
   }

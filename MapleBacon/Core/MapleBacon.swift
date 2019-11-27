@@ -51,7 +51,7 @@ public final class MapleBacon {
   public func data(with url: URL,
                    progress: DownloadProgress? = nil,
                    completion: @escaping DataDownloadCompletion) -> UUID? {
-    return fetchData(with: url, transformer: nil, progress: progress) { data, _ in
+    fetchData(with: url, transformer: nil, progress: progress) { data, _ in
       completion(data)
     }
   }
@@ -74,7 +74,7 @@ public final class MapleBacon {
                           transformer: ImageTransformer?,
                           progress: DownloadProgress?,
                           completion: ImageDownloadCompletion?) -> UUID? {
-    return fetchData(with: url, transformer: transformer, progress: progress) { [weak self] data, cacheType in
+    fetchData(with: url, transformer: transformer, progress: progress) { [weak self] data, cacheType in
       guard let self = self, let data = data, let image = UIImage(data: data) else {
         completion?(nil)
         return

@@ -33,7 +33,7 @@ final class MapleBaconTests: XCTestCase {
   override func setUp() {
     super.setUp()
     MockURLProtocol.requestHandler = { request in
-      return (HTTPURLResponse(), self.helper.imageData)
+      (HTTPURLResponse(), self.helper.imageData)
     }
   }
 

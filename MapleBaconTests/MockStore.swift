@@ -17,7 +17,7 @@ final class MockStore: BackingStore {
   }
 
   private func path(from url: URL) -> String {
-    return url.absoluteString.deletingPrefix("file://")
+    url.absoluteString.deletingPrefix("file://")
   }
 
   func fileExists(atPath path: String) -> Bool {

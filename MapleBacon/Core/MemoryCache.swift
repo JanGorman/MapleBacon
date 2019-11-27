@@ -45,7 +45,7 @@ final class MemoryCache<Key: Hashable, Value> {
 
   subscript(key: Key) -> Value? {
     get {
-      return value(forKey: key)
+      value(forKey: key)
     }
     set {
       guard let value = newValue else {

@@ -12,10 +12,13 @@ jobs:
     - uses: actions/setup-ruby@v1
       with:
         ruby-version: '2.x'
-    - name: Run tests
+    - name: Dependencies
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
+        carthage bootstrap --platform ios
+    - name: Run tests
+      run: |
         bundle exec fastlane scan --code_coverage true --project MapleBacon.xcodeproj --scheme MapleBacon
         bundle exec danger
         swiftlint

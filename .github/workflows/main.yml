@@ -1,0 +1,25 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.x'
+    - name: Run tests
+      run: |
+        gem install bundler
+        bundle install --jobs 4 --retry 3
+        bundle exec fastlane scan --code_coverage true --project MapleBacon.xcodeproj --scheme MapleBacon
+        bundle exec danger
+        swiftlint
+    - name: Upload Coverage
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}

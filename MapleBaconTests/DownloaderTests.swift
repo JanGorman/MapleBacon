@@ -3,7 +3,6 @@
 //
 
 import XCTest
-import Nimble
 import MapleBacon
 #if canImport(Combine)
 import Combine
@@ -35,49 +34,55 @@ final class DownloaderTests: XCTestCase {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
-    waitUntil { done in
-      let token = downloader.download(self.url) { data in
-        expect(data).toNot(beNil())
-        done()
-      }
-      expect(token).toNot(beNil())
+    let expectation = self.expectation(description: #function)
+
+    let token = downloader.download(self.url) { data in
+      XCTAssertNotNil(data)
+      expectation.fulfill()
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
+    XCTAssertNotNil(token)
   }
 
   func testMultipleDownloads() {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
+    let firstExpectation = expectation(description: "first")
+
     let url1 = url
-    waitUntil { done in
-      _ = downloader.download(url1) { data in
-        expect(data).toNot(beNil())
-        done()
-      }
+    _ = downloader.download(url1) { data in
+      XCTAssertNotNil(data)
+      firstExpectation.fulfill()
     }
+
+    let secondExpectation = expectation(description: "second")
     
     let url2 = url
-    waitUntil { done in
-      _ = downloader.download(url2) { data in
-        expect(data).toNot(beNil())
-        done()
-      }
+    _ = downloader.download(url2) { data in
+      XCTAssertNotNil(data)
+      secondExpectation.fulfill()
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testSynchronousMultipleDownloadsOfSameURL() {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
-    waitUntil { done in
-      _ = downloader.download(self.url) { data in
-        expect(data).toNot(beNil())
-      }
-      _ = downloader.download(self.url) { data in
-        expect(data).toNot(beNil())
-        done()
-      }
+    let expectation = self.expectation(description: #function)
+
+    _ = downloader.download(self.url) { data in
+      XCTAssertNotNil(data)
     }
+    _ = downloader.download(self.url) { data in
+      XCTAssertNotNil(data)
+      expectation.fulfill()
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testFailedDownload() {
@@ -88,28 +93,29 @@ final class DownloaderTests: XCTestCase {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
-    waitUntil { done in
-      _ = downloader.download(self.url) { data in
-        expect(data).to(beNil())
-        done()
-      }
+    let expectation = self.expectation(description: #function)
+
+    _ = downloader.download(self.url) { data in
+      XCTAssertNil(data)
+      expectation.fulfill()
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testCancel() {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
-    var imageData: Data?
+    let expectation = self.expectation(description: #function)
+
     let token = downloader.download(url) { data in
-      imageData = data
+      XCTAssertNil(data)
+      expectation.fulfill()
     }
     downloader.cancel(withToken: token)
 
-    waitUntil { done in
-      expect(imageData).to(beNil())
-      done()
-    }
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
 }
@@ -123,15 +129,17 @@ extension DownloaderTests {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
-    waitUntil { done in
-      downloader.download(self.url)
-        .sink(receiveCompletion: { _ in
-          done()
-        }, receiveValue: { data in
-          expect(data).toNot(beNil())
-        })
-        .store(in: &self.subscriptions)
-    }
+    let expectation = self.expectation(description: #function)
+
+    downloader.download(self.url)
+      .sink(receiveCompletion: { _ in
+        expectation.fulfill()
+      }, receiveValue: { data in
+        XCTAssertNotNil(data)
+      })
+      .store(in: &self.subscriptions)
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testFailedDownloadWithPublisher() {
@@ -142,18 +150,20 @@ extension DownloaderTests {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
 
-    waitUntil { done in
-      downloader.download(self.url)
-        .sink(receiveCompletion: { completion in
-          if case .failure(let error) = completion {
-            expect(error) == .invalidServerResponse
-            done()
-          }
-        }, receiveValue: { data in
-          expect(data).to(beNil())
-        })
-        .store(in: &self.subscriptions)
-    }
+    let expectation = self.expectation(description: #function)
+
+    downloader.download(self.url)
+      .sink(receiveCompletion: { completion in
+        if case .failure(let error) = completion {
+          XCTAssertEqual(error, .invalidServerResponse)
+          expectation.fulfill()
+        }
+      }, receiveValue: { data in
+        XCTAssertNotNil(data)
+      })
+      .store(in: &self.subscriptions)
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
 }

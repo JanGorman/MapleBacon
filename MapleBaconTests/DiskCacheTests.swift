@@ -3,7 +3,6 @@
 //
 
 import XCTest
-import Nimble
 @testable import MapleBacon
 
 class DiskCacheTests: XCTestCase {
@@ -16,13 +15,15 @@ class DiskCacheTests: XCTestCase {
     let imageData = helper.imageData
     let key = #function
 
-    waitUntil(timeout: 5) { done in
-      cache.insert(imageData, forKey: key) {
-        let urls = cache.expiredFileUrls()
-        expect(urls).toNot(beEmpty())
-        done()
-      }
+    let expectation = self.expectation(description: #function)
+
+    cache.insert(imageData, forKey: key) {
+      let urls = cache.expiredFileUrls()
+      XCTAssertFalse(urls.isEmpty)
+      expectation.fulfill()
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testItCleansExpiredFiles() {
@@ -31,15 +32,17 @@ class DiskCacheTests: XCTestCase {
     let imageData = helper.imageData
     let key = #function
 
-    waitUntil(timeout: 5) { done in
-      cache.insert(imageData, forKey: key) {
-        cache.cleanDisk {
-          let urls = cache.expiredFileUrls()
-          expect(urls).to(beEmpty())
-          done()
-        }
+    let expectation = self.expectation(description: #function)
+
+    cache.insert(imageData, forKey: key) {
+      cache.cleanDisk {
+        let urls = cache.expiredFileUrls()
+        XCTAssertTrue(urls.isEmpty)
+        expectation.fulfill()
       }
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
 }

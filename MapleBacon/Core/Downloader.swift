@@ -117,6 +117,7 @@ public final class Downloader {
       return
     }
     download.task.cancel()
+    download.completions.forEach { $0(nil) }
     download.finish()
     clearDownload(for: url)
   }
@@ -186,9 +187,8 @@ private final class SessionDelegate: NSObject, URLSessionDataDelegate {
   }
 
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-    guard let url = task.originalRequest?.url,
-          let download = delegate?.download(for: url) else {
-            return
+    guard let url = task.originalRequest?.url, let download = delegate?.download(for: url) else {
+      return
     }
 
     let data = error == nil ? download.data : nil

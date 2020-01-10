@@ -177,10 +177,6 @@ Download.default.download(url)
   .store(in: &subscriptions)
 ```
 
-### Contributing
-
-The test target uses [Nimble](https://github.com/Quick/Nimble). The project includes a `Cartfile.private`. To install the dependency run `carthage bootstrap --platform ios`. You're now ready to run tests.
-
 ## License
 
 MapleBacon is available under the MIT license. See the LICENSE file for more info.

@@ -4,7 +4,6 @@
 
 import XCTest
 import UIKit
-import Nimble
 import MapleBacon
 #if canImport(Combine)
 import Combine
@@ -28,16 +27,18 @@ final class MapleBaconCacheTests: XCTestCase {
     let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
     let imageData = helper.imageData
     let key = "http://\(#function)"
+
+    let expectation = self.expectation(description: #function)
     
-    waitUntil(timeout: 5) { done in
-      cache.store(data: imageData, forKey: key) {
-        cache.retrieveImage(forKey: key) { image, type in
-          expect(image).toNot(beNil())
-          expect(type) == .memory
-          done()
-        }
+    cache.store(data: imageData, forKey: key) {
+      cache.retrieveImage(forKey: key) { image, type in
+        XCTAssertNotNil(image)
+        XCTAssertEqual(type, .memory)
+        expectation.fulfill()
       }
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testNamedCachesAreDistinct() {
@@ -46,29 +47,33 @@ final class MapleBaconCacheTests: XCTestCase {
     let imageData = helper.imageData
     let key = #function
 
-    waitUntil(timeout: 5) { done in
-      mockCache.store(data: imageData, forKey: key) {
-        namedCache.retrieveImage(forKey: key) { image, _ in
-          expect(image).to(beNil())
-          done()
-        }
+    let expectation = self.expectation(description: #function)
+
+    mockCache.store(data: imageData, forKey: key) {
+      namedCache.retrieveImage(forKey: key) { image, _ in
+        XCTAssertNil(image)
+        expectation.fulfill()
       }
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testUnknownCacheKeyReturnsNoImage() {
     let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
     let imageData = helper.imageData
 
-    waitUntil(timeout: 5) { done in
-      cache.store(data: imageData, forKey: "key1") {
-        cache.retrieveImage(forKey: "key2") { image, type in
-          expect(image).to(beNil())
-          expect(type == .none) == true
-          done()
-        }
+    let expectation = self.expectation(description: #function)
+
+    cache.store(data: imageData, forKey: "key1") {
+      cache.retrieveImage(forKey: "key2") { image, type in
+        XCTAssertNil(image)
+        XCTAssertEqual(type, .none)
+        expectation.fulfill()
       }
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
   
   func testItStoresImagesToDisk() {
@@ -76,16 +81,18 @@ final class MapleBaconCacheTests: XCTestCase {
     let imageData = helper.imageData
     let key = #function
 
-    waitUntil(timeout: 5) { done in
-      cache.store(data: imageData, forKey: key) {
-        cache.clearMemory()
-        cache.retrieveImage(forKey: key) { image, type in
-          expect(image).toNot(beNil())
-          expect(type) == .disk
-          done()
-        }
+    let expectation = self.expectation(description: #function)
+
+    cache.store(data: imageData, forKey: key) {
+      cache.clearMemory()
+      cache.retrieveImage(forKey: key) { image, type in
+        XCTAssertNotNil(image)
+        XCTAssertEqual(type, .disk)
+        expectation.fulfill()
       }
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testImagesOnDiskAreMovedToMemory() {
@@ -93,18 +100,20 @@ final class MapleBaconCacheTests: XCTestCase {
     let imageData = helper.imageData
     let key = #function
 
-    waitUntil(timeout: 5) { done in
-      cache.store(data: imageData, forKey: key) {
-        cache.clearMemory()
-        cache.retrieveImage(forKey: key) { _, _ in
-          cache.retrieveImage(forKey: key) { image, type in
-            expect(image).toNot(beNil())
-            expect(type) == .memory
-            done()
-          }
+    let expectation = self.expectation(description: #function)
+
+    cache.store(data: imageData, forKey: key) {
+      cache.clearMemory()
+      cache.retrieveImage(forKey: key) { _, _ in
+        cache.retrieveImage(forKey: key) { image, type in
+          XCTAssertNotNil(image)
+          XCTAssertEqual(type, .memory)
+          expectation.fulfill()
         }
       }
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testItClearsDiskCache() {
@@ -112,17 +121,19 @@ final class MapleBaconCacheTests: XCTestCase {
     let imageData = helper.imageData
     let key = #function
 
-    waitUntil(timeout: 5) { done in
-      cache.store(data: imageData, forKey: key) {
-        cache.clearMemory()
-        cache.clearDisk {
-          cache.retrieveImage(forKey: key) { image, _ in
-            expect(image).to(beNil())
-            done()
-          }
+    let expectation = self.expectation(description: #function)
+
+    cache.store(data: imageData, forKey: key) {
+      cache.clearMemory()
+      cache.clearDisk {
+        cache.retrieveImage(forKey: key) { image, _ in
+          XCTAssertNil(image)
+          expectation.fulfill()
         }
       }
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testCacheWithIdentifierIsCachedAsSeparateImage() {
@@ -132,21 +143,23 @@ final class MapleBaconCacheTests: XCTestCase {
     let key = #function
     let transformerId = "transformer"
 
-    waitUntil(timeout: 5) { done in
-      cache.store(data: imageData, forKey: key) {
-        cache.store(data: alternateImageData, forKey: key, transformerId: transformerId) {
-          cache.retrieveImage(forKey: key) { image, _ in
-            expect(image).toNot(beNil())
-            
-            cache.retrieveImage(forKey: key, transformerId: transformerId) { transformerImage, _ in
-              expect(transformerImage).toNot(beNil())
-              expect(image) != transformerImage
-              done()
-            }
+    let expectation = self.expectation(description: #function)
+
+    cache.store(data: imageData, forKey: key) {
+      cache.store(data: alternateImageData, forKey: key, transformerId: transformerId) {
+        cache.retrieveImage(forKey: key) { image, _ in
+          XCTAssertNotNil(image)
+
+          cache.retrieveImage(forKey: key, transformerId: transformerId) { transformerImage, _ in
+            XCTAssertNotNil(transformerImage)
+            XCTAssertNotEqual(image, transformerImage)
+            expectation.fulfill()
           }
         }
       }
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
 }
@@ -161,19 +174,21 @@ extension MapleBaconCacheTests {
     let imageData = helper.imageData
     let key = "http://\(#function)"
 
-    waitUntil(timeout: 5) { done in
-      cache.storeAndPublish(data: imageData, forKey: key)
-        .sink { _ in
-          cache.retrieveImage(forKey: key)
-            .sink { image, type in
-              expect(image).toNot(beNil())
-              expect(type) == .memory
-              done()
-            }
-            .store(in: &self.subscriptions)
-        }
-        .store(in: &self.subscriptions)
-    }
+    let expectation = self.expectation(description: #function)
+
+    cache.storeAndPublish(data: imageData, forKey: key)
+      .sink { _ in
+        cache.retrieveImage(forKey: key)
+          .sink { image, type in
+            XCTAssertNotNil(image)
+            XCTAssertEqual(type, .memory)
+            expectation.fulfill()
+          }
+          .store(in: &self.subscriptions)
+      }
+      .store(in: &self.subscriptions)
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testItStoresDataInMemoryPublisher() {
@@ -181,36 +196,40 @@ extension MapleBaconCacheTests {
     let imageData = helper.imageData
     let key = "http://\(#function)"
 
-    waitUntil(timeout: 5) { done in
-      cache.storeAndPublish(data: imageData, forKey: key)
-        .sink { _ in
-          cache.retrieveData(forKey: key)
-            .sink { data, type in
-              expect(data).toNot(beNil())
-              expect(type) == .memory
-              done()
-            }
-            .store(in: &self.subscriptions)
-        }
-        .store(in: &self.subscriptions)
-    }
+    let expectation = self.expectation(description: #function)
+
+    cache.storeAndPublish(data: imageData, forKey: key)
+      .sink { _ in
+        cache.retrieveData(forKey: key)
+          .sink { data, type in
+            XCTAssertNotNil(data)
+            XCTAssertEqual(type, .memory)
+            expectation.fulfill()
+          }
+          .store(in: &self.subscriptions)
+      }
+      .store(in: &self.subscriptions)
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testUnknownCacheKeyReturnsNoImagePublisher() {
     let cache = MapleBaconCache(name: "mock", backingStore: MockStore())
     let imageData = helper.imageData
 
-    waitUntil(timeout: 5) { done in
-      cache.store(data: imageData, forKey: "key1") {
-        cache.retrieveImage(forKey: "key2")
-          .sink { image, type in
-            expect(image).to(beNil())
-            expect(type == .none) == true
-            done()
-          }
-          .store(in: &self.subscriptions)
-      }
+    let expectation = self.expectation(description: #function)
+
+    cache.store(data: imageData, forKey: "key1") {
+      cache.retrieveImage(forKey: "key2")
+        .sink { image, type in
+          XCTAssertNil(image)
+          XCTAssertEqual(type, .none)
+          expectation.fulfill()
+        }
+        .store(in: &self.subscriptions)
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
 }

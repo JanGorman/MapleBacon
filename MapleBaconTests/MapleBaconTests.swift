@@ -3,7 +3,6 @@
 //
 
 import XCTest
-import Nimble
 import MapleBacon
 #if canImport(Combine)
 import Combine
@@ -51,12 +50,14 @@ final class MapleBaconTests: XCTestCase {
     let downloader = Downloader(sessionConfiguration: configuration)
     let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
 
-    waitUntil { done in
-      mapleBacon.image(with: self.url) { image in
-        expect(image).toNot(beNil())
-        done()
-      }
+    let expectation = self.expectation(description: #function)
+
+    mapleBacon.image(with: self.url) { image in
+      XCTAssertNotNil(image)
+      expectation.fulfill()
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testTransformerIntegration() {
@@ -64,14 +65,16 @@ final class MapleBaconTests: XCTestCase {
     let downloader = Downloader(sessionConfiguration: configuration)
     let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
 
+    let expectation = self.expectation(description: #function)
+
     let transformer = DummyTransformer()
-    waitUntil { done in
-      mapleBacon.image(with: self.url, transformer: transformer) { image in
-        expect(image).toNot(beNil())
-        expect(transformer.callCount) == 1
-        done()
-      }
+    mapleBacon.image(with: self.url, transformer: transformer) { image in
+      XCTAssertNotNil(image)
+      XCTAssertEqual(transformer.callCount, 1)
+      expectation.fulfill()
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testTransformerResultIsCached() {
@@ -79,18 +82,20 @@ final class MapleBaconTests: XCTestCase {
     let downloader = Downloader(sessionConfiguration: configuration)
     let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
 
+    let expectation = self.expectation(description: #function)
+
     let transformer = DummyTransformer()
-    waitUntil { done in
-      mapleBacon.image(with: self.url, transformer: transformer) { _ in
-        expect(transformer.callCount) == 1
-        
-        mapleBacon.image(with: self.url, transformer: transformer) { image in
-          expect(image).toNot(beNil())
-          expect(transformer.callCount) == 1
-          done()
-        }
+    mapleBacon.image(with: self.url, transformer: transformer) { _ in
+      XCTAssertEqual(transformer.callCount, 1)
+
+      mapleBacon.image(with: self.url, transformer: transformer) { image in
+        XCTAssertNotNil(image)
+        XCTAssertEqual(transformer.callCount, 1)
+        expectation.fulfill()
       }
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testDataDownloadIntegration() {
@@ -98,29 +103,34 @@ final class MapleBaconTests: XCTestCase {
     let downloader = Downloader(sessionConfiguration: configuration)
     let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
 
-    waitUntil { done in
-      mapleBacon.data(with: self.url) { data in
-        expect(data).toNot(beNil())
-        done()
-      }
+    let expectation = self.expectation(description: #function)
+
+    mapleBacon.data(with: self.url) { data in
+      XCTAssertNotNil(data)
+      expectation.fulfill()
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testFailedDownloadIntegration() {
     MockURLProtocol.requestHandler = { request in
-      return (HTTPURLResponse(), Data())
+      (HTTPURLResponse(), Data())
     }
 
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader(sessionConfiguration: configuration)
     let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
 
-    waitUntil { done in
-      mapleBacon.image(with: self.url) { image in
-        expect(image).to(beNil())
-        done()
-      }
+    let expectation = self.expectation(description: #function)
+
+    mapleBacon.image(with: self.url) { image in
+      XCTAssertNil(image)
+
+      expectation.fulfill()
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
   func testCancel() {
@@ -128,16 +138,15 @@ final class MapleBaconTests: XCTestCase {
     let downloader = Downloader(sessionConfiguration: configuration)
     let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
 
-    var imageData: Data?
+    let expectation = self.expectation(description: #function)
+
     let token = mapleBacon.data(with: url) { data in
-      imageData = data
+      XCTAssertNil(data)
+      expectation.fulfill()
     }
     mapleBacon.cancelDownload(withToken: token!)
 
-    waitUntil { done in
-      expect(imageData).to(beNil())
-      done()
-    }
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
 }
@@ -152,15 +161,17 @@ extension MapleBaconTests {
     let downloader = Downloader(sessionConfiguration: configuration)
     let mapleBacon = MapleBacon(cache: .default, downloader: downloader)
 
-    waitUntil { done in
-      mapleBacon.image(with: self.url)
-        .sink(receiveCompletion: { _ in
-          done()
-        }, receiveValue: { image in
-          expect(image).toNot(beNil())
-        })
-        .store(in: &self.subscriptions)
-    }
+    let expectation = self.expectation(description: #function)
+
+    mapleBacon.image(with: self.url)
+      .sink(receiveCompletion: { _ in
+        expectation.fulfill()
+      }, receiveValue: { image in
+        XCTAssertNotNil(image)
+      })
+      .store(in: &self.subscriptions)
+
+    waitForExpectations(timeout: 5, handler: nil)
   }
 
 }

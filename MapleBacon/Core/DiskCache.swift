@@ -22,10 +22,10 @@ final class DiskCache {
     let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
     cachePath = (path as NSString).appendingPathComponent(name)
 
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(cleanDiskOnTermination),
-                                           name: UIApplication.willTerminateNotification,
-                                           object: nil)
+    let notifications = [UIApplication.willTerminateNotification, UIApplication.didEnterBackgroundNotification]
+    notifications.forEach { notification in
+      NotificationCenter.default.addObserver(self, selector: #selector(cleanDiskOnNotification), name: notification, object: nil)
+    }
   }
 
   func insert(_ value: Data?, forKey key: String, completion: (() -> Void)?) {
@@ -73,7 +73,7 @@ final class DiskCache {
   }
 
   @objc
-  private func cleanDiskOnTermination() {
+  private func cleanDiskOnNotification() {
     cleanDisk(completion: nil)
   }
 
@@ -90,7 +90,7 @@ final class DiskCache {
 
   func expiredFileUrls() -> [URL] {
     let cacheDirectory = URL(fileURLWithPath: cachePath)
-    let keys: Set<URLResourceKey> = [.isDirectoryKey, .contentAccessDateKey]
+    let keys: Set<URLResourceKey> = [.isDirectoryKey, .contentModificationDateKey]
     let contents = try? backingStore.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: Array(keys),
                                                          options: .skipsHiddenFiles)
     guard let files = contents else {
@@ -101,7 +101,9 @@ final class DiskCache {
     let expiredFileUrls = files.filter { url in
       let resource = try? url.resourceValues(forKeys: keys)
       let isDirectory = resource?.isDirectory
-      guard let lastAccessDate = resource?.contentAccessDate else { return true }
+      guard let lastAccessDate = resource?.contentAccessDate else {
+        return true
+      }
       return isDirectory == false && lastAccessDate < expirationDate
     }
     return expiredFileUrls

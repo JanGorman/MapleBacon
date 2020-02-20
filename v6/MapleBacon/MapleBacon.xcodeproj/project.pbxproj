@@ -11,6 +11,8 @@
 		F247A24F23FF15410083DB03 /* MapleBacon.h in Headers */ = {isa = PBXBuildFile; fileRef = F247A24123FF15410083DB03 /* MapleBacon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F247A25A23FF15980083DB03 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F247A25923FF15980083DB03 /* MemoryCache.swift */; };
 		F247A25C23FF163F0083DB03 /* MemoryCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F247A25B23FF163F0083DB03 /* MemoryCacheTests.swift */; };
+		F247A25E23FF191C0083DB03 /* DiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F247A25D23FF191C0083DB03 /* DiskCache.swift */; };
+		F247A26023FF19300083DB03 /* DiskCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F247A25F23FF19300083DB03 /* DiskCacheTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +33,8 @@
 		F247A24E23FF15410083DB03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F247A25923FF15980083DB03 /* MemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
 		F247A25B23FF163F0083DB03 /* MemoryCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCacheTests.swift; sourceTree = "<group>"; };
+		F247A25D23FF191C0083DB03 /* DiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCache.swift; sourceTree = "<group>"; };
+		F247A25F23FF19300083DB03 /* DiskCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCacheTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				F247A25B23FF163F0083DB03 /* MemoryCacheTests.swift */,
+				F247A25F23FF19300083DB03 /* DiskCacheTests.swift */,
 				F247A24E23FF15410083DB03 /* Info.plist */,
 			);
 			path = MapleBaconTests;
@@ -95,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				F247A25923FF15980083DB03 /* MemoryCache.swift */,
+				F247A25D23FF191C0083DB03 /* DiskCache.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -210,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F247A25A23FF15980083DB03 /* MemoryCache.swift in Sources */,
+				F247A25E23FF191C0083DB03 /* DiskCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F247A25C23FF163F0083DB03 /* MemoryCacheTests.swift in Sources */,
+				F247A26023FF19300083DB03 /* DiskCacheTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

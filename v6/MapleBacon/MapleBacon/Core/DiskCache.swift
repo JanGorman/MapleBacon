@@ -21,43 +21,65 @@ struct DiskCache {
 
   func insert(_ data: Data, forKey key: String, completion: ((Error?) -> Void)? = nil) {
     diskQueue.async {
-      var writeError: Error?
+      var diskError: Error?
       defer {
         DispatchQueue.main.async {
-          completion?(writeError)
+          completion?(diskError)
         }
       }
       do {
         try self.store(data: data, key: key)
       } catch {
-        writeError = error
+        diskError = error
+      }
+    }
+  }
+
+  func value(forKey key: String, completion: ((Result<Data?, Error>) -> Void)? = nil) {
+    diskQueue.async {
+      var data: Data?
+      var diskError: Error?
+      defer {
+        DispatchQueue.main.async {
+          if let error = diskError {
+            completion?(.failure(error))
+          } else {
+            completion?(.success(data))
+          }
+        }
+      }
+      do {
+        let url = try self.cacheDirectory().appendingPathComponent(key)
+        data = try FileManager.default.fileContents(at: url)
+      } catch {
+        diskError = error
       }
     }
   }
 
   func clear(_ completion: ((Error?) -> Void)? = nil) {
     diskQueue.async {
-      var clearError: Error?
+      var diskError: Error?
       defer {
         DispatchQueue.main.async {
-          completion?(clearError)
+          completion?(diskError)
         }
       }
       do {
         let cacheDirectory = try self.cacheDirectory()
         try FileManager.default.removeItem(at: cacheDirectory)
       } catch {
-        clearError = error
+        diskError = error
       }
     }
   }
 
   func clearExpired(_ completion: ((Error?) -> Void)? = nil) {
     diskQueue.async {
-      var clearError: Error?
+      var diskError: Error?
       defer {
         DispatchQueue.main.async {
-          completion?(clearError)
+          completion?(diskError)
         }
       }
       do {
@@ -66,7 +88,7 @@ struct DiskCache {
           _ = try FileManager.default.removeItem(at: url)
         }
       } catch {
-        clearError = error
+        diskError = error
       }
     }
   }

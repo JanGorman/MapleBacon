@@ -30,6 +30,45 @@ final class DiskCacheTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
+  func testReadWrite() {
+    let expectation = self.expectation(description: #function)
+    let cache = DiskCache(name: Self.cacheName)
+    let key = "test"
+    let data = dummyData()
+
+    cache.insert(data, forKey: key) { _ in
+      cache.value(forKey: key) { result in
+        switch result {
+        case .success(let cacheData):
+          XCTAssertNotNil(cacheData)
+          XCTAssertEqual(cacheData, data)
+        case .failure:
+          XCTFail()
+        }
+        expectation.fulfill()
+      }
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
+  func testReadInvalid() {
+    let expectation = self.expectation(description: #function)
+    let cache = DiskCache(name: Self.cacheName)
+
+    cache.value(forKey: "test") { result in
+      switch result {
+      case .success:
+        XCTFail()
+      case .failure(let error):
+        XCTAssertNotNil(error)
+      }
+      expectation.fulfill()
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
   func testClear() {
     let expectation = self.expectation(description: #function)
     let cache = DiskCache(name: Self.cacheName)

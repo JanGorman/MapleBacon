@@ -18,6 +18,7 @@
 		F27CBA102402B2F0006CD529 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA0F2402B2F0006CD529 /* CacheTests.swift */; };
 		F27CBA122402B33E006CD529 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA112402B33E006CD529 /* TestHelpers.swift */; };
 		F27CBA162402BCDA006CD529 /* DataConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA152402BCDA006CD529 /* DataConvertible.swift */; };
+		F27CBA182402C551006CD529 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA172402C551006CD529 /* FileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		F27CBA0F2402B2F0006CD529 /* CacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
 		F27CBA112402B33E006CD529 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		F27CBA152402BCDA006CD529 /* DataConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConvertible.swift; sourceTree = "<group>"; };
+		F27CBA172402C551006CD529 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 			children = (
 				F27CBA0B2402B147006CD529 /* TimePeriod.swift */,
 				F27CBA152402BCDA006CD529 /* DataConvertible.swift */,
+				F27CBA172402C551006CD529 /* FileManager.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				F27CBA162402BCDA006CD529 /* DataConvertible.swift in Sources */,
 				F247A25A23FF15980083DB03 /* MemoryCache.swift in Sources */,
 				F247A25E23FF191C0083DB03 /* DiskCache.swift in Sources */,
+				F27CBA182402C551006CD529 /* FileManager.swift in Sources */,
 				F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */,
 				F27CBA0C2402B147006CD529 /* TimePeriod.swift in Sources */,
 			);

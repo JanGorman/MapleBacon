@@ -34,8 +34,8 @@ final class CacheTests: XCTestCase {
         switch result {
         case .success(let cacheData):
           XCTAssertNotNil(cacheData)
-          XCTAssertEqual(data, cacheData)
-        case .failure(_):
+          XCTAssertEqual(cacheData, data)
+        case .failure:
           XCTFail()
         }
         expectation.fulfill()

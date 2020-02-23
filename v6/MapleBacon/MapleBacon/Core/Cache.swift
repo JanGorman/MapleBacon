@@ -35,7 +35,7 @@ struct Cache<T: DataConvertible> where T.Result == T {
       }
       completion?(.success(targetType))
     } else {
-
+//      diskCache.v
     }
   }
 

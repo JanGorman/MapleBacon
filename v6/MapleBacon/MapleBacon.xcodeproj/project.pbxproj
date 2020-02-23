@@ -21,6 +21,9 @@
 		F27CBA182402C551006CD529 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA172402C551006CD529 /* FileManager.swift */; };
 		F27CBA1A2402CC13006CD529 /* CacheClearOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA192402CC13006CD529 /* CacheClearOptions.swift */; };
 		F27CBA1C2402CC28006CD529 /* CacheResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA1B2402CC28006CD529 /* CacheResult.swift */; };
+		F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA1D2402D9A8006CD529 /* Downloader.swift */; };
+		F27CBA222402DC0B006CD529 /* DownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA212402DC0B006CD529 /* DownloaderTests.swift */; };
+		F27CBA242402DC34006CD529 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA232402DC34006CD529 /* MockURLProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,9 @@
 		F27CBA172402C551006CD529 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		F27CBA192402CC13006CD529 /* CacheClearOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheClearOptions.swift; sourceTree = "<group>"; };
 		F27CBA1B2402CC28006CD529 /* CacheResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheResult.swift; sourceTree = "<group>"; };
+		F27CBA1D2402D9A8006CD529 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
+		F27CBA212402DC0B006CD529 /* DownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloaderTests.swift; sourceTree = "<group>"; };
+		F27CBA232402DC34006CD529 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +115,8 @@
 				F27CBA0F2402B2F0006CD529 /* CacheTests.swift */,
 				F247A25B23FF163F0083DB03 /* MemoryCacheTests.swift */,
 				F247A25F23FF19300083DB03 /* DiskCacheTests.swift */,
+				F27CBA212402DC0B006CD529 /* DownloaderTests.swift */,
+				F27CBA232402DC34006CD529 /* MockURLProtocol.swift */,
 				F27CBA112402B33E006CD529 /* TestHelpers.swift */,
 				F247A24E23FF15410083DB03 /* Info.plist */,
 			);
@@ -123,6 +131,7 @@
 				F27CBA1B2402CC28006CD529 /* CacheResult.swift */,
 				F247A25923FF15980083DB03 /* MemoryCache.swift */,
 				F247A25D23FF191C0083DB03 /* DiskCache.swift */,
+				F27CBA1D2402D9A8006CD529 /* Downloader.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -252,6 +261,7 @@
 				F247A25E23FF191C0083DB03 /* DiskCache.swift in Sources */,
 				F27CBA182402C551006CD529 /* FileManager.swift in Sources */,
 				F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */,
+				F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */,
 				F27CBA0C2402B147006CD529 /* TimePeriod.swift in Sources */,
 				F27CBA1A2402CC13006CD529 /* CacheClearOptions.swift in Sources */,
 				F27CBA1C2402CC28006CD529 /* CacheResult.swift in Sources */,
@@ -262,8 +272,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F27CBA222402DC0B006CD529 /* DownloaderTests.swift in Sources */,
 				F247A25C23FF163F0083DB03 /* MemoryCacheTests.swift in Sources */,
 				F247A26023FF19300083DB03 /* DiskCacheTests.swift in Sources */,
+				F27CBA242402DC34006CD529 /* MockURLProtocol.swift in Sources */,
 				F27CBA102402B2F0006CD529 /* CacheTests.swift in Sources */,
 				F27CBA122402B33E006CD529 /* TestHelpers.swift in Sources */,
 			);

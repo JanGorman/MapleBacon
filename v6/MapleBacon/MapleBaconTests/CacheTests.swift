@@ -9,10 +9,17 @@ final class CacheTests: XCTestCase {
 
   private static let cacheName = "CacheTests"
 
-  func testStorage() throws {
+  private let cache = Cache<Data>(name: CacheTests.cacheName)
+
+  override func tearDown() {
+    cache.clear(.all)
+
+    super.tearDown()
+  }
+
+  func testStorage() {
     let expectation = self.expectation(description: #function)
 
-    let cache = Cache<Data>(name: Self.cacheName)
     let data = dummyData()
 
     cache.store(value: data, forKey: #function) { error in
@@ -23,20 +30,40 @@ final class CacheTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
-  func testRetrieval() throws {
+  func testRetrieval() {
     let expectation = self.expectation(description: #function)
 
-    let cache = Cache<Data>(name: Self.cacheName)
     let data = dummyData()
 
     cache.store(value: data, forKey: #function) { _ in
-      cache.value(forKey: #function) { result in
+      self.cache.value(forKey: #function) { result in
         switch result {
         case .success(let cacheData):
-          XCTAssertNotNil(cacheData)
           XCTAssertEqual(cacheData, data)
         case .failure:
           XCTFail()
+        }
+        expectation.fulfill()
+      }
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
+  func testClearAll() {
+    let expectation = self.expectation(description: #function)
+
+    let data = dummyData()
+
+    cache.store(value: data, forKey: #function) { _ in
+      self.cache.clear(.all)
+
+      self.cache.value(forKey: #function) { result in
+        switch result {
+        case .success:
+          XCTFail()
+        case .failure(let error):
+          XCTAssertNotNil(error)
         }
         expectation.fulfill()
       }

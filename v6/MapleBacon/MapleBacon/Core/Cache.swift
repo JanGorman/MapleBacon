@@ -34,11 +34,22 @@ struct Cache<T: DataConvertible> where T.Result == T {
       diskCache.value(forKey: safeKey) { result in
         switch result {
         case .success(let data):
+          self.memoryCache[safeKey] = data
+
           completion?(self.convertToTargetType(data))
         case .failure(let error):
           completion?(.failure(error))
         }
       }
+    }
+  }
+
+  func clear(_ options: CacheClearOptions) {
+    if options.contains(.memory) {
+      memoryCache.clear()
+    }
+    if options.contains(.disk) {
+      diskCache.clear()
     }
   }
 
@@ -63,4 +74,13 @@ private extension Cache {
     return hash.compactMap { String.init(format: "%02x", $0) }.joined()
   }
 
+}
+
+struct CacheClearOptions: OptionSet {
+  let rawValue: Int
+
+  static let memory = CacheClearOptions(rawValue: 1 << 0)
+  static let disk = CacheClearOptions(rawValue: 1 << 1)
+
+  static let all: CacheClearOptions = [.memory, .disk]
 }

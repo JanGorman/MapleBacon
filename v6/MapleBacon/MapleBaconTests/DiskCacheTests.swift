@@ -9,9 +9,7 @@ final class DiskCacheTests: XCTestCase {
 
   private static let cacheName = "DiskCacheTests"
 
-  override class func tearDown() {
-    super.tearDown()
-
+  override func tearDown() {
     let cache = DiskCache(name: Self.cacheName)
     cache.clear()
 

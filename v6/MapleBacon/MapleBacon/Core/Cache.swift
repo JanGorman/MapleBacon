@@ -3,20 +3,27 @@
 //
 
 import CryptoKit
-import Foundation
+import UIKit
 
 enum CacheError: Error {
   case dataConversion
 }
 
-struct Cache<T: DataConvertible> where T.Result == T {
+final class Cache<T: DataConvertible> where T.Result == T {
 
   private let memoryCache: MemoryCache<String, Data>
   private let diskCache: DiskCache
 
+  private var observer: NSObjectProtocol!
+
   init(name: String) {
     self.memoryCache = MemoryCache(name: name)
     self.diskCache = DiskCache(name: name)
+
+    let notifications = [UIApplication.willTerminateNotification, UIApplication.didEnterBackgroundNotification]
+    notifications.forEach { notification in
+      NotificationCenter.default.addObserver(self, selector: #selector(cleanDiskOnNotification), name: notification, object: nil)
+    }
   }
 
   func store(value: T, forKey key: String, completion: ((Error?) -> Void)? = nil) {
@@ -31,7 +38,11 @@ struct Cache<T: DataConvertible> where T.Result == T {
     if let value = memoryCache[safeKey] {
       completion?(convertToTargetType(value, type: .memory))
     } else {
-      diskCache.value(forKey: safeKey) { result in
+      diskCache.value(forKey: safeKey) { [weak self] result in
+        guard let self = self else {
+          return
+        }
+
         switch result {
         case .success(let data):
           // Promote to in-memory cache for faster access the next time
@@ -66,6 +77,10 @@ struct Cache<T: DataConvertible> where T.Result == T {
       return cryptoSafeCacheKey(key)
     }
     return key.components(separatedBy: CharacterSet(charactersIn: "()/")).joined(separator: "-")
+  }
+
+  @objc private func cleanDiskOnNotification() {
+    clear(.disk)
   }
 
 }

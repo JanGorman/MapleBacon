@@ -72,4 +72,26 @@ final class CacheTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
+  func testClearMemory() {
+    let expectation = self.expectation(description: #function)
+
+    let data = dummyData()
+
+    cache.store(value: data, forKey: #function) { _ in
+      self.cache.clear(.memory)
+
+      self.cache.value(forKey: #function) { result in
+        switch result {
+        case .success(let cacheData):
+          XCTAssertEqual(cacheData, data)
+        case .failure:
+          XCTFail()
+        }
+        expectation.fulfill()
+      }
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
 }

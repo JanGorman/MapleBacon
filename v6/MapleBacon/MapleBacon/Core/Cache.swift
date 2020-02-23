@@ -19,7 +19,7 @@ struct Cache<T: DataConvertible> where T.Result == T {
     self.diskCache = DiskCache(name: name)
   }
 
-  func store<T: DataConvertible>(value: T, forKey key: String, completion: ((Error?) -> Void)? = nil) {
+  func store(value: T, forKey key: String, completion: ((Error?) -> Void)? = nil) {
     let safeKey = safeCacheKey(key)
     memoryCache[safeKey] = value.toData()
     diskCache.insert(value.toData(), forKey: safeKey, completion: completion)

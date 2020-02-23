@@ -35,22 +35,20 @@ struct DiskCache {
     }
   }
 
-  func value(forKey key: String, completion: ((Result<Data?, Error>) -> Void)? = nil) {
+  func value(forKey key: String, completion: ((Result<Data, Error>) -> Void)? = nil) {
     diskQueue.async {
-      var data: Data?
       var diskError: Error?
       defer {
         DispatchQueue.main.async {
           if let error = diskError {
             completion?(.failure(error))
-          } else {
-            completion?(.success(data))
           }
         }
       }
       do {
         let url = try self.cacheDirectory().appendingPathComponent(key)
-        data = try FileManager.default.fileContents(at: url)
+        let data = try FileManager.default.fileContents(at: url)
+        completion?(.success(data))
       } catch {
         diskError = error
       }

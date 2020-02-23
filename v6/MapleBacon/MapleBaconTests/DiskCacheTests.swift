@@ -40,7 +40,6 @@ final class DiskCacheTests: XCTestCase {
       cache.value(forKey: key) { result in
         switch result {
         case .success(let cacheData):
-          XCTAssertNotNil(cacheData)
           XCTAssertEqual(cacheData, data)
         case .failure:
           XCTFail()
@@ -56,7 +55,7 @@ final class DiskCacheTests: XCTestCase {
     let expectation = self.expectation(description: #function)
     let cache = DiskCache(name: Self.cacheName)
 
-    cache.value(forKey: "test") { result in
+    cache.value(forKey: #function) { result in
       switch result {
       case .success:
         XCTFail()

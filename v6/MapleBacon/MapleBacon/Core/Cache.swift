@@ -29,14 +29,24 @@ struct Cache<T: DataConvertible> where T.Result == T {
     let safeKey = safeCacheKey(key)
 
     if let value = memoryCache[safeKey] {
-      guard let targetType = T.convert(from: value) else {
-        completion?(.failure(CacheError.dataConversion))
-        return
-      }
-      completion?(.success(targetType))
+      completion?(convertToTargetType(value))
     } else {
-//      diskCache.v
+      diskCache.value(forKey: safeKey) { result in
+        switch result {
+        case .success(let data):
+          completion?(self.convertToTargetType(data))
+        case .failure(let error):
+          completion?(.failure(error))
+        }
+      }
     }
+  }
+
+  private func convertToTargetType(_ data: Data) -> Result<T, Error> {
+    guard let targetType = T.convert(from: data) else {
+      return .failure(CacheError.dataConversion)
+    }
+    return .success(targetType)
   }
 
   private func safeCacheKey(_ key: String) -> String {

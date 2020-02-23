@@ -5,7 +5,6 @@
 import Foundation
 
 enum TimePeriod {
-
     case seconds(Int)
     case minutes(Int)
     case hours(Int)
@@ -23,7 +22,6 @@ enum TimePeriod {
             return TimeInterval(value * 60 * 60 * 24)
         }
     }
-
 }
 
 extension Int {

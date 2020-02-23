@@ -66,9 +66,4 @@ final class DiskCacheTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
-  private func dummyData() -> Data {
-    let string = #function + #file
-    return Data(string.utf8)
-  }
-
 }

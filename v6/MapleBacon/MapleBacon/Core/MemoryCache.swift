@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct MemoryCache<Key: Hashable, Value> {
+final class MemoryCache<Key: Hashable, Value> {
 
   private let backingCache = NSCache<WrappedKey, Entry>()
 

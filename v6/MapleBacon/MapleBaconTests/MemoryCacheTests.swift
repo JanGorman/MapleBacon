@@ -8,7 +8,7 @@ import XCTest
 final class MemoryCacheTests: XCTestCase {
 
   func testStorage() {
-    var cache = MemoryCache<String, String>()
+    let cache = MemoryCache<String, String>()
 
     cache["foo"] = "bar"
     cache["baz"] = "bat"
@@ -19,7 +19,7 @@ final class MemoryCacheTests: XCTestCase {
   }
 
   func testRemoval() {
-    var cache = MemoryCache<String, String>()
+    let cache = MemoryCache<String, String>()
 
     cache["foo"] = "bar"
     cache["foo"] = nil
@@ -28,17 +28,17 @@ final class MemoryCacheTests: XCTestCase {
   }
 
   func testNamedCaches() {
-    var defaultCache = MemoryCache<String, String>()
+    let defaultCache = MemoryCache<String, String>()
     defaultCache["foo"] = "bar"
 
-    var bazCache = MemoryCache<String, String>(name: "baz")
+    let bazCache = MemoryCache<String, String>(name: "baz")
     bazCache["foo"] = "baz"
 
     XCTAssertNotEqual(defaultCache["foo"], bazCache["foo"])
   }
 
   func testClear() {
-    var cache = MemoryCache<String, String>()
+    let cache = MemoryCache<String, String>()
     cache["foo"] = "bar"
 
     cache.clear()

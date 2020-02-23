@@ -8,6 +8,8 @@ struct DiskCache {
 
   private static let domain = "com.schnaub.DiskCache"
 
+  var maxCacheAgeSeconds: TimeInterval = 60 * 60 * 24 * 7
+
   private let diskQueue: DispatchQueue
   private let cacheName: String
 
@@ -48,6 +50,47 @@ struct DiskCache {
         clearError = error
       }
     }
+  }
+
+  func clearExpired(_ completion: ((Error?) -> Void)? = nil) {
+    diskQueue.async {
+      var clearError: Error?
+      defer {
+        DispatchQueue.main.async {
+          completion?(clearError)
+        }
+      }
+      do {
+        let expiredFiles = try self.expiredFileURLs()
+        try expiredFiles.forEach { url in
+          _ = try FileManager.default.removeItem(at: url)
+        }
+      } catch {
+        clearError = error
+      }
+    }
+  }
+
+  func expiredFileURLs() throws -> [URL] {
+    let cacheDirectory = try self.cacheDirectory()
+
+    let keys: Set<URLResourceKey> = [.isDirectoryKey, .contentModificationDateKey]
+    let contents = try? FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: Array(keys),
+                                                                options: .skipsHiddenFiles)
+    guard let files = contents else {
+      return []
+    }
+
+    let expirationDate = Date(timeIntervalSinceNow: -maxCacheAgeSeconds)
+    let expiredFileUrls = files.filter { url in
+      let resource = try? url.resourceValues(forKeys: keys)
+      let isDirectory = resource?.isDirectory
+      guard let lastAccessDate = resource?.contentAccessDate else {
+        return true
+      }
+      return isDirectory == false && lastAccessDate < expirationDate
+    }
+    return expiredFileUrls
   }
 
   private func store(data: Data, key: String) throws {

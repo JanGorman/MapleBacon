@@ -7,11 +7,34 @@ import XCTest
 
 final class DiskCacheTests: XCTestCase {
 
-  func testFoo() {
+  private static let cacheName = "DiskCacheTests"
+
+  override class func tearDown() {
+    super.tearDown()
+
+    let cache = DiskCache(name: Self.cacheName)
+    cache.clear()
+
+    super.tearDown()
+  }
+
+  func testWrite() {
     let expectation = self.expectation(description: #function)
-    let cache = DiskCache(name: #function.replacingOccurrences(of: "()", with: ""))
+    let cache = DiskCache(name: Self.cacheName)
 
     cache.insert(dummyData(), forKey: "test") { error in
+      XCTAssertNil(error)
+      expectation.fulfill()
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
+  func testClear() {
+    let expectation = self.expectation(description: #function)
+    let cache = DiskCache(name: Self.cacheName)
+
+    cache.clear { error in
       XCTAssertNil(error)
       expectation.fulfill()
     }

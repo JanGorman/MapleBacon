@@ -21,7 +21,9 @@ struct DiskCache {
     diskQueue.async {
       var writeError: Error?
       defer {
-        completion?(writeError)
+        DispatchQueue.main.async {
+          completion?(writeError)
+        }
       }
       do {
         try self.store(data: data, key: key)
@@ -31,13 +33,30 @@ struct DiskCache {
     }
   }
 
+  func clear(_ completion: ((Error?) -> Void)? = nil) {
+    diskQueue.async {
+      var clearError: Error?
+      defer {
+        DispatchQueue.main.async {
+          completion?(clearError)
+        }
+      }
+      do {
+        let cacheDirectory = try self.cacheDirectory()
+        try FileManager.default.removeItem(at: cacheDirectory)
+      } catch {
+        clearError = error
+      }
+    }
+  }
+
   private func store(data: Data, key: String) throws {
-    let cacheDirectory = try createCacheDirectoryIfNeeded()
+    let cacheDirectory = try self.cacheDirectory()
     let fileURL = cacheDirectory.appendingPathComponent(key)
     try data.write(to: fileURL)
   }
 
-  private func createCacheDirectoryIfNeeded() throws -> URL {
+  private func cacheDirectory() throws -> URL {
     let fileManger = FileManager.default
 
     let folderURL = try FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)

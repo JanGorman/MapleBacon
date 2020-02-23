@@ -17,6 +17,7 @@
 		F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA0D2402B1FE006CD529 /* Cache.swift */; };
 		F27CBA102402B2F0006CD529 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA0F2402B2F0006CD529 /* CacheTests.swift */; };
 		F27CBA122402B33E006CD529 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA112402B33E006CD529 /* TestHelpers.swift */; };
+		F27CBA162402BCDA006CD529 /* DataConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA152402BCDA006CD529 /* DataConvertible.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		F27CBA0D2402B1FE006CD529 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		F27CBA0F2402B2F0006CD529 /* CacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
 		F27CBA112402B33E006CD529 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		F27CBA152402BCDA006CD529 /* DataConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConvertible.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,11 +100,11 @@
 		F247A24B23FF15410083DB03 /* MapleBaconTests */ = {
 			isa = PBXGroup;
 			children = (
+				F27CBA0F2402B2F0006CD529 /* CacheTests.swift */,
 				F247A25B23FF163F0083DB03 /* MemoryCacheTests.swift */,
 				F247A25F23FF19300083DB03 /* DiskCacheTests.swift */,
-				F27CBA0F2402B2F0006CD529 /* CacheTests.swift */,
-				F247A24E23FF15410083DB03 /* Info.plist */,
 				F27CBA112402B33E006CD529 /* TestHelpers.swift */,
+				F247A24E23FF15410083DB03 /* Info.plist */,
 			);
 			path = MapleBaconTests;
 			sourceTree = "<group>";
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				F27CBA0B2402B147006CD529 /* TimePeriod.swift */,
+				F27CBA152402BCDA006CD529 /* DataConvertible.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F27CBA162402BCDA006CD529 /* DataConvertible.swift in Sources */,
 				F247A25A23FF15980083DB03 /* MemoryCache.swift in Sources */,
 				F247A25E23FF191C0083DB03 /* DiskCache.swift in Sources */,
 				F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */,

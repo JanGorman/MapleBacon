@@ -8,7 +8,7 @@ struct DiskCache {
 
   private static let domain = "com.schnaub.DiskCache"
 
-  var maxCacheAgeSeconds: TimeInterval = 60 * 60 * 24 * 7
+  var maxCacheAgeSeconds: TimeInterval = 7.days
 
   private let diskQueue: DispatchQueue
   private let cacheName: String

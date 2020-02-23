@@ -45,7 +45,7 @@ final class DiskCacheTests: XCTestCase {
   func testClearExpired() {
     let expectation = self.expectation(description: #function)
     var cache = DiskCache(name: Self.cacheName)
-    cache.maxCacheAgeSeconds = 0
+    cache.maxCacheAgeSeconds = 0.seconds
 
     cache.insert(dummyData(), forKey: "test") { _ in
       // Tests that setting maxCacheAgeSeconds does work

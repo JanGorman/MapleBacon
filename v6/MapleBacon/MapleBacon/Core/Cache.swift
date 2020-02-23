@@ -25,18 +25,19 @@ struct Cache<T: DataConvertible> where T.Result == T {
     diskCache.insert(value.toData(), forKey: safeKey, completion: completion)
   }
 
-  func value(forKey key: String, completion: ((Result<T, Error>) -> Void)? = nil) {
+  func value(forKey key: String, completion: ((Result<CacheResult<T>, Error>) -> Void)? = nil) {
     let safeKey = safeCacheKey(key)
 
     if let value = memoryCache[safeKey] {
-      completion?(convertToTargetType(value))
+      completion?(convertToTargetType(value, type: .memory))
     } else {
       diskCache.value(forKey: safeKey) { result in
         switch result {
         case .success(let data):
+          // Promote to in-memory cache for faster access the next time
           self.memoryCache[safeKey] = data
 
-          completion?(self.convertToTargetType(data))
+          completion?(self.convertToTargetType(data, type: .disk))
         case .failure(let error):
           completion?(.failure(error))
         }
@@ -53,15 +54,18 @@ struct Cache<T: DataConvertible> where T.Result == T {
     }
   }
 
-  private func convertToTargetType(_ data: Data) -> Result<T, Error> {
+  private func convertToTargetType(_ data: Data, type: CacheType) -> Result<CacheResult<T>, Error> {
     guard let targetType = T.convert(from: data) else {
       return .failure(CacheError.dataConversion)
     }
-    return .success(targetType)
+    return .success(.init(value: targetType, type: type))
   }
 
   private func safeCacheKey(_ key: String) -> String {
-    key.components(separatedBy: CharacterSet(charactersIn: "()/")).joined(separator: "-")
+    if #available(iOS 13.0, *) {
+      return cryptoSafeCacheKey(key)
+    }
+    return key.components(separatedBy: CharacterSet(charactersIn: "()/")).joined(separator: "-")
   }
 
 }
@@ -69,18 +73,9 @@ struct Cache<T: DataConvertible> where T.Result == T {
 @available(iOS 13.0, *)
 private extension Cache {
 
-  func crytpoSafeCacheKey(_ key: String) -> String {
+  func cryptoSafeCacheKey(_ key: String) -> String {
     let hash = Insecure.MD5.hash(data: Data(key.utf8))
     return hash.compactMap { String.init(format: "%02x", $0) }.joined()
   }
 
-}
-
-struct CacheClearOptions: OptionSet {
-  let rawValue: Int
-
-  static let memory = CacheClearOptions(rawValue: 1 << 0)
-  static let disk = CacheClearOptions(rawValue: 1 << 1)
-
-  static let all: CacheClearOptions = [.memory, .disk]
 }

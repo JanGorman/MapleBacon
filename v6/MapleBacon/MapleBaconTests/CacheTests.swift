@@ -38,8 +38,9 @@ final class CacheTests: XCTestCase {
     cache.store(value: data, forKey: #function) { _ in
       self.cache.value(forKey: #function) { result in
         switch result {
-        case .success(let cacheData):
-          XCTAssertEqual(cacheData, data)
+        case .success(let cacheResult):
+          XCTAssertEqual(cacheResult.value, data)
+          XCTAssertEqual(cacheResult.type, .memory)
         case .failure:
           XCTFail()
         }
@@ -82,11 +83,39 @@ final class CacheTests: XCTestCase {
 
       self.cache.value(forKey: #function) { result in
         switch result {
-        case .success(let cacheData):
-          XCTAssertEqual(cacheData, data)
+        case .success(let cacheResult):
+          XCTAssertEqual(cacheResult.value, data)
+          XCTAssertEqual(cacheResult.type, .disk)
         case .failure:
           XCTFail()
         }
+        expectation.fulfill()
+      }
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
+  func testMemoryPromotion() {
+    let expectation = self.expectation(description: #function)
+
+    let data = dummyData()
+
+    cache.store(value: data, forKey: #function) { _ in
+      self.cache.clear(.memory)
+
+      self.cache.value(forKey: #function) { _ in
+        self.cache.value(forKey: #function) { result in
+          switch result {
+          case .success(let cacheResult):
+            XCTAssertEqual(cacheResult.value, data)
+            // Assert that upon second time access the data has been promoted into memory
+            XCTAssertEqual(cacheResult.type, .memory)
+          case .failure:
+            XCTFail()
+          }
+        }
+
         expectation.fulfill()
       }
     }

@@ -11,15 +11,16 @@ enum CacheError: Error {
 
 final class Cache<T: DataConvertible> where T.Result == T {
 
+  typealias CacheCompletion = (Result<CacheResult<T>, Error>) -> Void
+
   private let memoryCache: MemoryCache<String, Data>
   private let diskCache: DiskCache
-
-  private var observer: NSObjectProtocol!
 
   init(name: String) {
     self.memoryCache = MemoryCache(name: name)
     self.diskCache = DiskCache(name: name)
 
+    // TODO Rethink if this is the right place
     let notifications = [UIApplication.willTerminateNotification, UIApplication.didEnterBackgroundNotification]
     notifications.forEach { notification in
       NotificationCenter.default.addObserver(self, selector: #selector(cleanDiskOnNotification), name: notification, object: nil)
@@ -32,7 +33,7 @@ final class Cache<T: DataConvertible> where T.Result == T {
     diskCache.insert(value.toData(), forKey: safeKey, completion: completion)
   }
 
-  func value(forKey key: String, completion: ((Result<CacheResult<T>, Error>) -> Void)? = nil) {
+  func value(forKey key: String, completion: CacheCompletion? = nil) {
     let safeKey = safeCacheKey(key)
 
     if let value = memoryCache[safeKey] {

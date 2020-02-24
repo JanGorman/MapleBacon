@@ -7,12 +7,7 @@ import XCTest
 
 final class DownloaderTests: XCTestCase {
 
-  enum MockResponse {
-    case data(Data)
-    case error
-  }
-
-  private static let url = URL(string: "https://www.apple.com/mapleBacon.png")!
+  private static let url = URL(string: "https://example.com/mapleBacon.png")!
 
   func testDownload() {
     let expectation = self.expectation(description: #function)
@@ -74,20 +69,6 @@ final class DownloaderTests: XCTestCase {
     }
 
     waitForExpectations(timeout: 5, handler: nil)
-  }
-
-  private func setupMockResponse(_ response: MockResponse) {
-    switch response {
-    case .data(let data):
-      MockURLProtocol.requestHandler = { request in
-        return (HTTPURLResponse(), data)
-      }
-    case .error:
-      MockURLProtocol.requestHandler = { request in
-        let anyError = NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
-        throw anyError
-      }
-    }
   }
 
 }

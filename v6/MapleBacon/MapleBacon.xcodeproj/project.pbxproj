@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F2255E202404600D00193742 /* UIImageView+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2255E1F2404600D00193742 /* UIImageView+MapleBacon.swift */; };
+		F2255E222404606E00193742 /* MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2255E212404606E00193742 /* MapleBacon.swift */; };
+		F2255E24240462D800193742 /* MapleBaconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2255E23240462D800193742 /* MapleBaconTests.swift */; };
 		F247A24823FF15410083DB03 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F247A23E23FF15410083DB03 /* MapleBacon.framework */; };
 		F247A24F23FF15410083DB03 /* MapleBacon.h in Headers */ = {isa = PBXBuildFile; fileRef = F247A24123FF15410083DB03 /* MapleBacon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F247A25A23FF15980083DB03 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F247A25923FF15980083DB03 /* MemoryCache.swift */; };
@@ -37,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F2255E1F2404600D00193742 /* UIImageView+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+MapleBacon.swift"; sourceTree = "<group>"; };
+		F2255E212404606E00193742 /* MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBacon.swift; sourceTree = "<group>"; };
+		F2255E23240462D800193742 /* MapleBaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconTests.swift; sourceTree = "<group>"; };
 		F247A23E23FF15410083DB03 /* MapleBacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapleBacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F247A24123FF15410083DB03 /* MapleBacon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapleBacon.h; sourceTree = "<group>"; };
 		F247A24223FF15410083DB03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -113,12 +119,13 @@
 			isa = PBXGroup;
 			children = (
 				F27CBA0F2402B2F0006CD529 /* CacheTests.swift */,
-				F247A25B23FF163F0083DB03 /* MemoryCacheTests.swift */,
 				F247A25F23FF19300083DB03 /* DiskCacheTests.swift */,
 				F27CBA212402DC0B006CD529 /* DownloaderTests.swift */,
+				F247A24E23FF15410083DB03 /* Info.plist */,
+				F2255E23240462D800193742 /* MapleBaconTests.swift */,
+				F247A25B23FF163F0083DB03 /* MemoryCacheTests.swift */,
 				F27CBA232402DC34006CD529 /* MockURLProtocol.swift */,
 				F27CBA112402B33E006CD529 /* TestHelpers.swift */,
-				F247A24E23FF15410083DB03 /* Info.plist */,
 			);
 			path = MapleBaconTests;
 			sourceTree = "<group>";
@@ -129,9 +136,10 @@
 				F27CBA0D2402B1FE006CD529 /* Cache.swift */,
 				F27CBA192402CC13006CD529 /* CacheClearOptions.swift */,
 				F27CBA1B2402CC28006CD529 /* CacheResult.swift */,
-				F247A25923FF15980083DB03 /* MemoryCache.swift */,
 				F247A25D23FF191C0083DB03 /* DiskCache.swift */,
 				F27CBA1D2402D9A8006CD529 /* Downloader.swift */,
+				F247A25923FF15980083DB03 /* MemoryCache.swift */,
+				F2255E212404606E00193742 /* MapleBacon.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -139,9 +147,10 @@
 		F27CBA0A2402B124006CD529 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				F27CBA0B2402B147006CD529 /* TimePeriod.swift */,
 				F27CBA152402BCDA006CD529 /* DataConvertible.swift */,
 				F27CBA172402C551006CD529 /* FileManager.swift */,
+				F27CBA0B2402B147006CD529 /* TimePeriod.swift */,
+				F2255E1F2404600D00193742 /* UIImageView+MapleBacon.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -258,6 +267,7 @@
 			files = (
 				F27CBA162402BCDA006CD529 /* DataConvertible.swift in Sources */,
 				F247A25A23FF15980083DB03 /* MemoryCache.swift in Sources */,
+				F2255E202404600D00193742 /* UIImageView+MapleBacon.swift in Sources */,
 				F247A25E23FF191C0083DB03 /* DiskCache.swift in Sources */,
 				F27CBA182402C551006CD529 /* FileManager.swift in Sources */,
 				F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */,
@@ -265,6 +275,7 @@
 				F27CBA0C2402B147006CD529 /* TimePeriod.swift in Sources */,
 				F27CBA1A2402CC13006CD529 /* CacheClearOptions.swift in Sources */,
 				F27CBA1C2402CC28006CD529 /* CacheResult.swift in Sources */,
+				F2255E222404606E00193742 /* MapleBacon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +285,7 @@
 			files = (
 				F27CBA222402DC0B006CD529 /* DownloaderTests.swift in Sources */,
 				F247A25C23FF163F0083DB03 /* MemoryCacheTests.swift in Sources */,
+				F2255E24240462D800193742 /* MapleBaconTests.swift in Sources */,
 				F247A26023FF19300083DB03 /* DiskCacheTests.swift in Sources */,
 				F27CBA242402DC34006CD529 /* MockURLProtocol.swift in Sources */,
 				F27CBA102402B2F0006CD529 /* CacheTests.swift in Sources */,

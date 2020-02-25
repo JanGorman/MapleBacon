@@ -13,6 +13,8 @@ final class CacheTests: XCTestCase {
 
   override func tearDown() {
     cache.clear(.all)
+    // Clearing the disk is an async operation so we should wait
+    wait(for: 2.seconds)
 
     super.tearDown()
   }

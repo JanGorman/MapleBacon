@@ -14,7 +14,11 @@ public struct MapleBacon {
   private let downloader: Downloader<UIImage>
 
   public init(name: String = "", sessionConfiguration: URLSessionConfiguration = .default) {
-    self.cache = Cache(name: name)
+    self.init(cache: Cache(name: name), sessionConfiguration: sessionConfiguration)
+  }
+
+  init(cache: Cache<UIImage>, sessionConfiguration: URLSessionConfiguration) {
+    self.cache = cache
     self.downloader = Downloader(sessionConfiguration: sessionConfiguration)
   }
 

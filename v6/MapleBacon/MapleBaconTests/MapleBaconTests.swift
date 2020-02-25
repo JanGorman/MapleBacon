@@ -2,17 +2,27 @@
 //  Copyright © 2020 Schnaub. All rights reserved.
 //
 
-import MapleBacon
+@testable import MapleBacon
 import XCTest
 
 final class MapleBaconTests: XCTestCase {
 
   private static let url = URL(string: "https://example.com/mapleBacon.png")!
 
+  private let cache = Cache<UIImage>(name: "MapleBaconTests")
+
+  override func tearDown() {
+    cache.clear(.all)
+    // Clearing the disk is an async operation so we should wait
+    wait(for: 2.seconds)
+
+    super.tearDown()
+  }
+
   func testIntegration() {
     let expectation = self.expectation(description: #function)
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let mapleBacon = MapleBacon(sessionConfiguration: configuration)
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
 
     setupMockResponse(.data(makeImageData()))
 
@@ -28,4 +38,25 @@ final class MapleBaconTests: XCTestCase {
 
     waitForExpectations(timeout: 5, handler: nil)
   }
+
+  func testError() {
+    let expectation = self.expectation(description: #function)
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
+
+    setupMockResponse(.error)
+
+    mapleBacon.image(with: Self.url) { result in
+      switch result {
+      case .success:
+        XCTFail()
+      case .failure(let error):
+        XCTAssertNotNil(error)
+      }
+      expectation.fulfill()
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
 }

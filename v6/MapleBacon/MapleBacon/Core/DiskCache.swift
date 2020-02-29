@@ -48,7 +48,9 @@ struct DiskCache {
       do {
         let url = try self.cacheDirectory().appendingPathComponent(key)
         let data = try FileManager.default.fileContents(at: url)
-        completion?(.success(data))
+        DispatchQueue.main.async {
+          completion?(.success(data))
+        }
       } catch {
         diskError = error
       }

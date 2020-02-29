@@ -24,13 +24,11 @@ public struct MapleBacon {
 
   public func image(with url: URL, completion: @escaping ImageCompletion) {
     fetchImageFromCache(with: url) { result in
-      DispatchQueue.main.async {
       switch result {
       case .success(let image):
         completion(.success(image))
       case .failure:
         self.fetchImageFromNetworkAndCache(with: url, completion: completion)
-        }
       }
     }
   }

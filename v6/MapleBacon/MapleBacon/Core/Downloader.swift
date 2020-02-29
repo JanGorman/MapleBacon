@@ -20,15 +20,17 @@ final class Downloader<T: DataConvertible> {
 
   func fetch(_ url: URL, completion: @escaping (Result<T.Result, Error>) -> Void) {
     let task = session.dataTask(with: url) { data, _, error in
-      if let error = error {
-        completion(.failure(error))
-        return
+      DispatchQueue.main.async {
+        if let error = error {
+          completion(.failure(error))
+          return
+        }
+        guard let data = data, let value = T.convert(from: data) else {
+          completion(.failure(DownloaderError.dataConversion))
+          return
+        }
+        completion(.success(value))
       }
-      guard let data = data, let value = T.convert(from: data) else {
-        completion(.failure(DownloaderError.dataConversion))
-        return
-      }
-      completion(.success(value))
     }
     defer {
       task.resume()

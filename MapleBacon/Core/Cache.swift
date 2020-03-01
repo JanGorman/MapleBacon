@@ -96,6 +96,7 @@ final class Cache<T: DataConvertible> where T.Result == T {
 
 }
 
+#if canImport(CryptoKit)
 @available(iOS 13.0, *)
 private extension Cache {
 
@@ -105,3 +106,4 @@ private extension Cache {
   }
 
 }
+#endif

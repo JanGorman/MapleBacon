@@ -21,23 +21,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F29D6199240595DB00E85F11 /* PBXContainerItemProxy */ = {
+		F21B81D5240BF69400B8C514 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F29D6194240595DB00E85F11 /* MapleBacon.xcodeproj */;
+			containerPortal = F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = F247A23E23FF15410083DB03;
 			remoteInfo = MapleBacon;
 		};
-		F29D619B240595DB00E85F11 /* PBXContainerItemProxy */ = {
+		F21B81D7240BF69400B8C514 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F29D6194240595DB00E85F11 /* MapleBacon.xcodeproj */;
+			containerPortal = F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = F247A24723FF15410083DB03;
 			remoteInfo = MapleBaconTests;
 		};
-		F2CB22F0240A69AD009FB183 /* PBXContainerItemProxy */ = {
+		F21B81D9240BF69B00B8C514 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F29D6194240595DB00E85F11 /* MapleBacon.xcodeproj */;
+			containerPortal = F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = F247A23D23FF15410083DB03;
 			remoteInfo = MapleBacon;
@@ -45,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = ../MapleBacon.xcodeproj; sourceTree = "<group>"; };
 		F29D617D240595BA00E85F11 /* MapleBacon Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MapleBacon Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F29D6180240595BA00E85F11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F29D6182240595BA00E85F11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,7 +54,6 @@
 		F29D6189240595BB00E85F11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F29D618C240595BB00E85F11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F29D618E240595BB00E85F11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F29D6194240595DB00E85F11 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = ../MapleBacon/MapleBacon.xcodeproj; sourceTree = "<group>"; };
 		F2CB22EB240A68D1009FB183 /* UICollectionView+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+MapleBacon.swift"; sourceTree = "<group>"; };
 		F2CB22ED240A6953009FB183 /* images.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = images.plist; sourceTree = "<group>"; };
 		F2CB22F4240BB864009FB183 /* DownsamplingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownsamplingViewController.swift; sourceTree = "<group>"; };
@@ -72,10 +72,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F21B81D1240BF69400B8C514 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F21B81D6240BF69400B8C514 /* MapleBacon.framework */,
+				F21B81D8240BF69400B8C514 /* MapleBaconTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F29D6174240595BA00E85F11 = {
 			isa = PBXGroup;
 			children = (
-				F29D6194240595DB00E85F11 /* MapleBacon.xcodeproj */,
+				F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */,
 				F29D617F240595BA00E85F11 /* MapleBacon Example */,
 				F29D617E240595BA00E85F11 /* Products */,
 			);
@@ -105,15 +114,6 @@
 				F29D6182240595BA00E85F11 /* SceneDelegate.swift */,
 			);
 			path = "MapleBacon Example";
-			sourceTree = "<group>";
-		};
-		F29D6195240595DB00E85F11 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F29D619A240595DB00E85F11 /* MapleBacon.framework */,
-				F29D619C240595DB00E85F11 /* MapleBaconTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		F2CB22E9240A68A1009FB183 /* Controllers */ = {
@@ -149,7 +149,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				F2CB22F1240A69AD009FB183 /* PBXTargetDependency */,
+				F21B81DA240BF69B00B8C514 /* PBXTargetDependency */,
 			);
 			name = "MapleBacon Example";
 			productName = "MapleBacon Example";
@@ -184,8 +184,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = F29D6195240595DB00E85F11 /* Products */;
-					ProjectRef = F29D6194240595DB00E85F11 /* MapleBacon.xcodeproj */;
+					ProductGroup = F21B81D1240BF69400B8C514 /* Products */;
+					ProjectRef = F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -196,18 +196,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		F29D619A240595DB00E85F11 /* MapleBacon.framework */ = {
+		F21B81D6240BF69400B8C514 /* MapleBacon.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = MapleBacon.framework;
-			remoteRef = F29D6199240595DB00E85F11 /* PBXContainerItemProxy */;
+			remoteRef = F21B81D5240BF69400B8C514 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F29D619C240595DB00E85F11 /* MapleBaconTests.xctest */ = {
+		F21B81D8240BF69400B8C514 /* MapleBaconTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = MapleBaconTests.xctest;
-			remoteRef = F29D619B240595DB00E85F11 /* PBXContainerItemProxy */;
+			remoteRef = F21B81D7240BF69400B8C514 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -244,10 +244,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F2CB22F1240A69AD009FB183 /* PBXTargetDependency */ = {
+		F21B81DA240BF69B00B8C514 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MapleBacon;
-			targetProxy = F2CB22F0240A69AD009FB183 /* PBXContainerItemProxy */;
+			targetProxy = F21B81D9240BF69B00B8C514 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

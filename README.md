@@ -1,6 +1,6 @@
 # MapleBacon
 
-[![CI](https://github.com/JanGorman/MapleBacon/workflows/CI/badge.svg)](https://travis-ci.org/JanGorman/MapleBacon)
+[![CI](https://github.com/JanGorman/MapleBacon/workflows/CI/badge.svg)](https://github.com/JanGorman/MapleBacon/actions?query=workflow%3ACI)
 [![codecov.io](https://codecov.io/github/JanGorman/MapleBacon/coverage.svg)](https://codecov.io/github/JanGorman/MapleBacon)
 [![Version](https://img.shields.io/cocoapods/v/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)
 [![License](https://img.shields.io/cocoapods/l/MapleBacon.svg?style=flat)](http://cocoapods.org/pods/MapleBacon)

@@ -2,7 +2,9 @@
 //  Copyright © 2020 Schnaub. All rights reserved.
 //
 
+#if canImport(CryptoKit)
 import CryptoKit
+#endif
 import UIKit
 
 enum CacheError: Error {

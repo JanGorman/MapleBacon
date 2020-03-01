@@ -25,7 +25,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="UICollectionView" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3dz-Av-L6X">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="CollectionView" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3dz-Av-L6X">
                                                     <rect key="frame" x="20" y="0.0" width="355" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -45,7 +45,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DAV-T3-YbV">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Downsampling" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DAV-T3-YbV">
                                                     <rect key="frame" x="20" y="0.0" width="355" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -54,6 +54,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="f1O-OH-KAp" kind="show" id="IVR-M9-fVZ"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="cmP-GG-GyB" style="IBUITableViewCellStyleDefault" id="ZSK-pU-Xst">
                                         <rect key="frame" x="0.0" y="115" width="414" height="43.5"/>
@@ -86,10 +89,10 @@
             </objects>
             <point key="canvasLocation" x="289.85507246376812" y="-228.34821428571428"/>
         </scene>
-        <!--Collection View Sample View Controller-->
+        <!--Collection View Controller-->
         <scene sceneID="C6I-4T-v5J">
             <objects>
-                <collectionViewController id="Gm4-Kd-IZQ" customClass="CollectionViewSampleViewController" customModule="MapleBacon_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController id="Gm4-Kd-IZQ" customClass="CollectionViewController" customModule="MapleBacon_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="PRX-EI-fJL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -133,7 +136,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9AP-E3-Kno" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1216" y="-228"/>
+            <point key="canvasLocation" x="1135" y="-863"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UsZ-nm-Cts">
@@ -152,6 +155,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lux-vy-8eo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-620.28985507246387" y="-228.34821428571428"/>
+        </scene>
+        <!--Downsampling View Controller-->
+        <scene sceneID="4Ih-mP-f0K">
+            <objects>
+                <collectionViewController id="f1O-OH-KAp" customClass="DownsamplingViewController" customModule="MapleBacon_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="zMI-wK-3K3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yWl-W3-0km">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCollectionViewCell" id="nI0-B0-Cfb" customClass="ImageCollectionViewCell" customModule="MapleBacon_Example" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="5Pr-sa-red">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yzv-aB-P9J">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Yzv-aB-P9J" firstAttribute="leading" secondItem="5Pr-sa-red" secondAttribute="leading" id="KnQ-en-eLq"/>
+                                        <constraint firstAttribute="bottom" secondItem="Yzv-aB-P9J" secondAttribute="bottom" id="erE-2U-7KW"/>
+                                        <constraint firstAttribute="trailing" secondItem="Yzv-aB-P9J" secondAttribute="trailing" id="v2P-PM-2qb"/>
+                                        <constraint firstItem="Yzv-aB-P9J" firstAttribute="top" secondItem="5Pr-sa-red" secondAttribute="top" id="y3W-SF-2FN"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="imageView" destination="Yzv-aB-P9J" id="8yS-GZ-YTt"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="f1O-OH-KAp" id="xih-uV-CSK"/>
+                            <outlet property="delegate" destination="f1O-OH-KAp" id="5E2-CB-n07"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="8p6-E0-XOL"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r5n-3p-NPn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1135" y="-228"/>
         </scene>
     </scenes>
 </document>

@@ -5,7 +5,7 @@
 import MapleBacon
 import UIKit
 
-final class CollectionViewSampleViewController: UICollectionViewController {
+final class CollectionViewController: UICollectionViewController {
 
   private var imageURLs: [URL] = []
 
@@ -34,10 +34,3 @@ final class CollectionViewSampleViewController: UICollectionViewController {
   }
 
 }
-
-final class ImageCollectionViewCell: UICollectionViewCell {
-
-  @IBOutlet private(set) var imageView: UIImageView!
-
-}
-

@@ -22,7 +22,7 @@ public struct MapleBacon {
     self.downloader = Downloader(sessionConfiguration: sessionConfiguration)
   }
 
-  public func image(with url: URL, completion: @escaping ImageCompletion) {
+  public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) {
     fetchImageFromCache(with: url) { result in
       switch result {
       case .success(let image):

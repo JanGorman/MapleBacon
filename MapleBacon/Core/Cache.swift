@@ -84,9 +84,11 @@ final class Cache<T: DataConvertible> where T.Result == T {
   }
 
   private func safeCacheKey(_ key: String) -> String {
+    #if canImport(CryptoKit)
     if #available(iOS 13.0, *) {
       return cryptoSafeCacheKey(key)
     }
+    #endif
     return key.components(separatedBy: CharacterSet(charactersIn: "()/")).joined(separator: "-")
   }
 

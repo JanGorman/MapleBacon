@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import MapleBacon
 import XCTest
 
 enum MockResponse {
@@ -46,4 +47,43 @@ extension XCTestCase {
       let date = Date(timeIntervalSinceNow: interval)
       RunLoop.current.run(mode: RunLoop.Mode.default, before: date)
   }
+}
+
+final class FirstDummyTransformer: ImageTransforming {
+
+  let identifier = "com.schnaub.FirstDummyTransformer"
+
+  var callCount = 0
+
+  func transform(image: UIImage) -> UIImage? {
+    callCount += 1
+    return image
+  }
+
+}
+
+final class SecondDummyTransformer: ImageTransforming {
+
+  let identifier = "com.schnaub.SecondDummyTransformer"
+
+  var callCount = 0
+
+  func transform(image: UIImage) -> UIImage? {
+    callCount += 1
+    return image
+  }
+
+}
+
+final class ThirdDummyTransformer: ImageTransforming {
+
+  let identifier = "com.schnaub.ThirdDummyTransformer"
+
+  var callCount = 0
+
+  func transform(image: UIImage) -> UIImage? {
+    callCount += 1
+    return image
+  }
+
 }

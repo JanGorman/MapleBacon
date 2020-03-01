@@ -59,4 +59,26 @@ final class MapleBaconTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
+  func testTransformer() {
+    let expectation = self.expectation(description: #function)
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
+    let transformer = FirstDummyTransformer()
+
+    setupMockResponse(.data(makeImageData()))
+
+    mapleBacon.image(with: Self.url, imageTransformer: transformer) { result in
+      switch result {
+      case .success(let image):
+        XCTAssertEqual(image.pngData(), makeImageData())
+        XCTAssertEqual(transformer.callCount, 1)
+      case .failure:
+        XCTFail()
+      }
+      expectation.fulfill()
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
 }

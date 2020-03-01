@@ -29,7 +29,7 @@ final class DownsamplingViewController: UICollectionViewController {
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: ImageCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
     let url = imageURLs[indexPath.item]
-    cell.imageView.setImage(with: url)
+    cell.imageView.setImage(with: url, displayOptions: [.downsampled])
     return cell
   }
 

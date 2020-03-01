@@ -17,6 +17,7 @@
 		F2CB22EE240A6953009FB183 /* images.plist in Resources */ = {isa = PBXBuildFile; fileRef = F2CB22ED240A6953009FB183 /* images.plist */; };
 		F2CB22F5240BB864009FB183 /* DownsamplingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CB22F4240BB864009FB183 /* DownsamplingViewController.swift */; };
 		F2CB22F7240BB8DC009FB183 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CB22F6240BB8DC009FB183 /* ImageCollectionViewCell.swift */; };
+		F2EEE58F240BCDA60002C9CA /* ImageTransformerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE58E240BCDA60002C9CA /* ImageTransformerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		F2CB22ED240A6953009FB183 /* images.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = images.plist; sourceTree = "<group>"; };
 		F2CB22F4240BB864009FB183 /* DownsamplingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownsamplingViewController.swift; sourceTree = "<group>"; };
 		F2CB22F6240BB8DC009FB183 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		F2EEE58E240BCDA60002C9CA /* ImageTransformerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			children = (
 				F29D6184240595BA00E85F11 /* CollectionViewController.swift */,
 				F2CB22F4240BB864009FB183 /* DownsamplingViewController.swift */,
+				F2EEE58E240BCDA60002C9CA /* ImageTransformerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				F29D6185240595BA00E85F11 /* CollectionViewController.swift in Sources */,
 				F29D6181240595BA00E85F11 /* AppDelegate.swift in Sources */,
 				F2CB22EC240A68D1009FB183 /* UICollectionView+MapleBacon.swift in Sources */,
+				F2EEE58F240BCDA60002C9CA /* ImageTransformerViewController.swift in Sources */,
 				F29D6183240595BA00E85F11 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

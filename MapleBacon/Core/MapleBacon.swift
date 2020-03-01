@@ -8,7 +8,7 @@ public enum MapleBaconError: Error {
   case imageTransformingError
 }
 
-public struct MapleBacon {
+public final class MapleBacon {
 
   public typealias ImageCompletion = (Result<UIImage, Error>) -> Void
 
@@ -29,7 +29,7 @@ public struct MapleBacon {
   private let downloader: Downloader<UIImage>
   private let transformerQueue: DispatchQueue
 
-  public init(name: String = "", sessionConfiguration: URLSessionConfiguration = .default) {
+  public convenience init(name: String = "", sessionConfiguration: URLSessionConfiguration = .default) {
     self.init(cache: Cache(name: name), sessionConfiguration: sessionConfiguration)
   }
 

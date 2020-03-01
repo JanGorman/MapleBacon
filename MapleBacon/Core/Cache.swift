@@ -13,6 +13,15 @@ final class Cache<T: DataConvertible> where T.Result == T {
 
   typealias CacheCompletion = (Result<CacheResult<T>, Error>) -> Void
 
+  var maxCacheAgeSeconds: TimeInterval {
+    get {
+      diskCache.maxCacheAgeSeconds
+    }
+    set {
+      diskCache.maxCacheAgeSeconds = newValue
+    }
+  }
+
   private let memoryCache: MemoryCache<String, Data>
   private let diskCache: DiskCache
 
@@ -20,7 +29,6 @@ final class Cache<T: DataConvertible> where T.Result == T {
     self.memoryCache = MemoryCache(name: name)
     self.diskCache = DiskCache(name: name)
 
-    // TODO Rethink if this is the right place
     let notifications = [UIApplication.willTerminateNotification, UIApplication.didEnterBackgroundNotification]
     notifications.forEach { notification in
       NotificationCenter.default.addObserver(self, selector: #selector(cleanDiskOnNotification), name: notification, object: nil)

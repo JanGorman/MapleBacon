@@ -2,11 +2,11 @@
 //  MapleBacon.h
 //  MapleBacon
 //
-//  Created by Jan Gorman1 on 29.08.17.
-//  Copyright © 2017 Jan Gorman. All rights reserved.
+//  Created by Jan Gorman on 20.02.20.
+//  Copyright © 2020 Schnaub. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for MapleBacon.
 FOUNDATION_EXPORT double MapleBaconVersionNumber;

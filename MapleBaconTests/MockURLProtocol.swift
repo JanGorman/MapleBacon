@@ -1,5 +1,5 @@
 //
-//  Copyright © 2018 Jan Gorman. All rights reserved.
+//  Copyright © 2020 Schnaub. All rights reserved.
 //
 
 import Foundation

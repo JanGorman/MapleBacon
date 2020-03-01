@@ -1,98 +1,104 @@
 //
-//  Copyright © 2019 Jan Gorman. All rights reserved.
+//  Copyright © 2020 Schnaub. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 final class DiskCache {
 
-  private static let prefix = "com.schnaub.DiskCache."
+  private static let domain = "com.schnaub.DiskCache"
 
-  let cachePath: String
-  var maxCacheAgeSeconds: TimeInterval = 60 * 60 * 24 * 7
+  var maxCacheAgeSeconds: TimeInterval = 7.days
 
-  private let backingStore: BackingStore
   private let diskQueue: DispatchQueue
+  private let cacheName: String
 
-  init(name: String, backingStore: BackingStore = FileManager.default) {
-    self.backingStore = backingStore
-    let queueLabel = Self.prefix + name
+  init(name: String) {
+    let queueLabel = "\(Self.domain).\(name)"
     self.diskQueue = DispatchQueue(label: queueLabel, qos: .background)
-
-    let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
-    cachePath = (path as NSString).appendingPathComponent(name)
-
-    let notifications = [UIApplication.willTerminateNotification, UIApplication.didEnterBackgroundNotification]
-    notifications.forEach { notification in
-      NotificationCenter.default.addObserver(self, selector: #selector(cleanDiskOnNotification), name: notification, object: nil)
-    }
+    self.cacheName = "\(Self.domain).\(name)"
   }
 
-  func insert(_ value: Data?, forKey key: String, completion: (() -> Void)?) {
+  func insert(_ data: Data, forKey key: String, completion: ((Error?) -> Void)? = nil) {
     diskQueue.async {
+      var diskError: Error?
       defer {
         DispatchQueue.main.async {
-          completion?()
+          completion?(diskError)
         }
       }
-      if let value = value {
-        self.storeDataToDisk(value, key: key)
+      do {
+        try self.store(data: data, key: key)
+      } catch {
+        diskError = error
       }
     }
   }
 
-  func value(forKey key: String) -> Data? {
-    let url = URL(fileURLWithPath: cachePath).appendingPathComponent(key)
-    return try? backingStore.fileContents(at: url)
-  }
-
-  private func storeDataToDisk(_ data: Data, key: String) {
-    createCacheDirectoryIfNeeded()
-    let path = (cachePath as NSString).appendingPathComponent(key)
-    backingStore.createFile(atPath: path, contents: data, attributes: nil)
-  }
-
-  private func createCacheDirectoryIfNeeded() {
-    guard !backingStore.fileExists(atPath: cachePath) else {
-      return
-    }
-    try? backingStore.createDirectory(atPath: cachePath, withIntermediateDirectories: true, attributes: nil)
-  }
-
-  func clearDisk(_ completion: (() -> Void)?) {
+  func value(forKey key: String, completion: ((Result<Data, Error>) -> Void)? = nil) {
     diskQueue.async {
+      var diskError: Error?
       defer {
         DispatchQueue.main.async {
-          completion?()
+          if let error = diskError {
+            completion?(.failure(error))
+          }
         }
       }
-
-      try? self.backingStore.removeItem(atPath: self.cachePath)
-      self.createCacheDirectoryIfNeeded()
+      do {
+        let url = try self.cacheDirectory().appendingPathComponent(key)
+        let data = try FileManager.default.fileContents(at: url)
+        DispatchQueue.main.async {
+          completion?(.success(data))
+        }
+      } catch {
+        diskError = error
+      }
     }
   }
 
-  @objc
-  private func cleanDiskOnNotification() {
-    cleanDisk(completion: nil)
-  }
-
-  func cleanDisk(completion: (() -> Void)?) {
+  func clear(_ completion: ((Error?) -> Void)? = nil) {
     diskQueue.async {
-      for url in self.expiredFileUrls() {
-        _ = try? self.backingStore.removeItem(at: url)
+      var diskError: Error?
+      defer {
+        DispatchQueue.main.async {
+          completion?(diskError)
+        }
       }
-      DispatchQueue.main.async {
-        completion?()
+      do {
+        let cacheDirectory = try self.cacheDirectory()
+        try FileManager.default.removeItem(at: cacheDirectory)
+      } catch {
+        diskError = error
       }
     }
   }
 
-  func expiredFileUrls() -> [URL] {
-    let cacheDirectory = URL(fileURLWithPath: cachePath)
+  func clearExpired(_ completion: ((Error?) -> Void)? = nil) {
+    diskQueue.async {
+      var diskError: Error?
+      defer {
+        DispatchQueue.main.async {
+          completion?(diskError)
+        }
+      }
+      do {
+        let expiredFiles = try self.expiredFileURLs()
+        try expiredFiles.forEach { url in
+          _ = try FileManager.default.removeItem(at: url)
+        }
+      } catch {
+        diskError = error
+      }
+    }
+  }
+
+  func expiredFileURLs() throws -> [URL] {
+    let cacheDirectory = try self.cacheDirectory()
+
     let keys: Set<URLResourceKey> = [.isDirectoryKey, .contentModificationDateKey]
-    let contents = try? backingStore.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: Array(keys),
-                                                         options: .skipsHiddenFiles)
+    let contents = try? FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: Array(keys),
+                                                                options: .skipsHiddenFiles)
     guard let files = contents else {
       return []
     }
@@ -107,6 +113,24 @@ final class DiskCache {
       return isDirectory == false && lastAccessDate < expirationDate
     }
     return expiredFileUrls
+  }
+
+  private func store(data: Data, key: String) throws {
+    let cacheDirectory = try self.cacheDirectory()
+    let fileURL = cacheDirectory.appendingPathComponent(key)
+    try data.write(to: fileURL)
+  }
+
+  private func cacheDirectory() throws -> URL {
+    let fileManger = FileManager.default
+
+    let folderURL = try FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    let cacheDirectory = folderURL.appendingPathComponent(cacheName, isDirectory: true)
+    guard !fileManger.fileExists(atPath: cacheDirectory.absoluteString) else {
+      return cacheDirectory
+    }
+    try fileManger.createDirectory(at: cacheDirectory, withIntermediateDirectories: true, attributes: nil)
+    return cacheDirectory
   }
 
 }

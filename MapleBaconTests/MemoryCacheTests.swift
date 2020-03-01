@@ -1,14 +1,14 @@
 //
-//  Copyright © 2019 Jan Gorman. All rights reserved.
+//  Copyright © 2020 Schnaub. All rights reserved.
 //
 
-import XCTest
 @testable import MapleBacon
+import XCTest
 
-class MemoryCacheTests: XCTestCase {
+final class MemoryCacheTests: XCTestCase {
 
-  func testItStoresUniqueValues() {
-    let cache = MemoryCache<String, String>(name: "")
+  func testStorage() {
+    let cache = MemoryCache<String, String>()
 
     cache["foo"] = "bar"
     cache["baz"] = "bat"
@@ -18,13 +18,8 @@ class MemoryCacheTests: XCTestCase {
     XCTAssertNil(cache["nothing"])
   }
 
-  func testRemoveValues() {
-    let cache = MemoryCache<String, String>(name: "")
-
-    cache["foo"] = "bar"
-    cache.removeValue(forKey: "foo")
-
-    XCTAssertNil(cache["foo"])
+  func testRemoval() {
+    let cache = MemoryCache<String, String>()
 
     cache["foo"] = "bar"
     cache["foo"] = nil
@@ -32,15 +27,23 @@ class MemoryCacheTests: XCTestCase {
     XCTAssertNil(cache["foo"])
   }
 
-  func testNamespace() {
-    let cache0 = MemoryCache<String, String>(name: "cache0")
-    cache0["foo"] = "bar"
+  func testNamedCaches() {
+    let defaultCache = MemoryCache<String, String>()
+    defaultCache["foo"] = "bar"
 
-    let cache1 = MemoryCache<String, String>(name: "cache1")
-    cache1["foo"] = "baz"
+    let bazCache = MemoryCache<String, String>(name: "baz")
+    bazCache["foo"] = "baz"
 
-    XCTAssertEqual(cache0["foo"], "bar")
-    XCTAssertEqual(cache1["foo"], "baz")
+    XCTAssertNotEqual(defaultCache["foo"], bazCache["foo"])
+  }
+
+  func testClear() {
+    let cache = MemoryCache<String, String>()
+    cache["foo"] = "bar"
+
+    cache.clear()
+
+    XCTAssertNil(cache["foo"])
   }
 
 }

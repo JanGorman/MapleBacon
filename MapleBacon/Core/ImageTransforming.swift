@@ -31,7 +31,9 @@ public extension ImageTransforming {
     let chainIdentifier = identifier.appending(" -> \(transformer.identifier)")
 
     return BaseComposableImageTransformer(identifier: chainIdentifier) { image in
-      guard let image = self.transform(image: image) else { return nil }
+      guard let image = self.transform(image: image) else {
+        return nil
+      }
       return transformer.transform(image: image)
     }
   }

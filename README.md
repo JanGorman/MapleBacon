@@ -139,6 +139,10 @@ let oneDaySeconds: TimeInterval = 60 * 60 * 24
 MapleBacon.default.maxCacheAgeSeconds = oneDaySeconds
 ```
 
+## Migrating from 5.x
+
+There is a small [migration guide](https://github.com/JanGorman/MapleBacon/wiki/Migration-Guide-Version-5.x-→-6.x) in the wiki when moving from the 5.x branch to 6.x
+
 ## License
 
 MapleBacon is available under the MIT license. See the LICENSE file for more info.

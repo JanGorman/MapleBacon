@@ -1,10 +1,50 @@
 //
-//  Copyright © 2019 Jan Gorman. All rights reserved.
+//  Copyright © 2020 Schnaub. All rights reserved.
 //
 
 import Foundation
 
 final class MemoryCache<Key: Hashable, Value> {
+
+  private let backingCache = NSCache<WrappedKey, Entry>()
+
+  subscript(key: Key) -> Value? {
+    get {
+      value(forKey: key)
+    }
+    set {
+      guard let value = newValue else {
+        removeValue(forKey: key)
+        return
+      }
+      insert(value, forKey: key)
+    }
+  }
+
+  init(name: String = "") {
+    backingCache.name = name
+  }
+
+  func clear() {
+    backingCache.removeAllObjects()
+  }
+
+  private func insert(_ value: Value, forKey key: Key) {
+    backingCache.setObject(Entry(value: value), forKey: WrappedKey(key: key))
+  }
+
+  private func value(forKey key: Key) -> Value? {
+    let entry = backingCache.object(forKey: WrappedKey(key: key))
+    return entry?.value
+  }
+
+  private func removeValue(forKey key: Key) {
+    backingCache.removeObject(forKey: WrappedKey(key: key))
+  }
+
+}
+
+extension MemoryCache {
 
   private class WrappedKey: NSObject {
 
@@ -24,7 +64,6 @@ final class MemoryCache<Key: Hashable, Value> {
       }
       return value.key == key
     }
-
   }
 
   private class Entry {
@@ -35,43 +74,6 @@ final class MemoryCache<Key: Hashable, Value> {
       self.value = value
     }
 
-  }
-
-  private let wrapped = NSCache<WrappedKey, Entry>()
-
-  init(name: String) {
-    wrapped.name = name
-  }
-
-  subscript(key: Key) -> Value? {
-    get {
-      value(forKey: key)
-    }
-    set {
-      guard let value = newValue else {
-        removeValue(forKey: key)
-        return
-      }
-      insert(value, forKey: key)
-    }
-  }
-
-  func insert(_ value: Value, forKey key: Key) {
-    let entry = Entry(value: value)
-    wrapped.setObject(entry, forKey: WrappedKey(key: key))
-  }
-
-  func value(forKey key: Key) -> Value? {
-    let entry = wrapped.object(forKey: WrappedKey(key: key))
-    return entry?.value
-  }
-
-  func removeValue(forKey key: Key) {
-    wrapped.removeObject(forKey: WrappedKey(key: key))
-  }
-
-  func clear() {
-    wrapped.removeAllObjects()
   }
 
 }

@@ -1,52 +1,13 @@
 //
-//  Copyright © 2017 Jan Gorman. All rights reserved.
+//  Copyright © 2020 Schnaub. All rights reserved.
 //
 
-import XCTest
 import MapleBacon
+import XCTest
 
-final class ImageTransformerTests: XCTestCase {
+final class ImageTransformingTests: XCTestCase {
 
-  private class FirstDummyTransformer: ImageTransformer, CallCounting {
-
-    let identifier = "com.schnaub.FirstDummyTransformer"
-
-    var callCount = 0
-
-    func transform(image: UIImage) -> UIImage? {
-      callCount += 1
-      return image
-    }
-
-  }
-
-  private class SecondDummyTransformer: ImageTransformer, CallCounting {
-
-    let identifier = "com.schnaub.SecondDummyTransformer"
-
-    var callCount = 0
-
-    func transform(image: UIImage) -> UIImage? {
-      callCount += 1
-      return image
-    }
-
-  }
-
-  private class ThirdDummyTransformer: ImageTransformer, CallCounting {
-
-    let identifier = "com.schnaub.ThirdDummyTransformer"
-
-    var callCount = 0
-
-    func transform(image: UIImage) -> UIImage? {
-      callCount += 1
-      return image
-    }
-
-  }
-
-  func testItsComposable() {
+  func testComposition() throws {
     let first = FirstDummyTransformer()
     let second = SecondDummyTransformer()
     let third = ThirdDummyTransformer()
@@ -58,7 +19,7 @@ final class ImageTransformerTests: XCTestCase {
     XCTAssertTrue(composed.identifier.hasSuffix(third.identifier))
   }
 
-  func testItsComposableWithCustomOperator() {
+  func testOperatorComposition() {
     let first = FirstDummyTransformer()
     let second = SecondDummyTransformer()
     let third = ThirdDummyTransformer()
@@ -70,14 +31,13 @@ final class ImageTransformerTests: XCTestCase {
     XCTAssertTrue(composed.identifier.hasSuffix(third.identifier))
   }
 
-  func testItCallsAllTransformers() {
+  func testTransfomerCalling() {
     let first = FirstDummyTransformer()
     let second = SecondDummyTransformer()
     let third = ThirdDummyTransformer()
 
     let composed = first.appending(transformer: second).appending(transformer: third)
-    let image = TestHelper().image
-    _ = composed.transform(image: image)
+    _ = composed.transform(image: makeImage())
 
     XCTAssertEqual(first.callCount, 1)
     XCTAssertEqual(second.callCount, 1)

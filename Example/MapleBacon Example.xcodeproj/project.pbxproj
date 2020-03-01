@@ -3,299 +3,267 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		778F1F6C1F9CF9940076411E /* ButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778F1F6B1F9CF9940076411E /* ButtonViewController.swift */; };
-		778F1F711F9D19160076411E /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778F1F701F9D19160076411E /* ImageViewController.swift */; };
-		77CC4C0E1F9686D4000A0BB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4C0D1F9686D4000A0BB2 /* AppDelegate.swift */; };
-		77CC4C101F9686D4000A0BB2 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4C0F1F9686D4000A0BB2 /* CollectionViewController.swift */; };
-		77CC4C131F9686D4000A0BB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77CC4C111F9686D4000A0BB2 /* Main.storyboard */; };
-		77CC4C151F9686D4000A0BB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77CC4C141F9686D4000A0BB2 /* Assets.xcassets */; };
-		77CC4C181F9686D4000A0BB2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77CC4C161F9686D4000A0BB2 /* LaunchScreen.storyboard */; };
-		77CC4C2D1F96880D000A0BB2 /* UICollectionView+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4C2C1F96880D000A0BB2 /* UICollectionView+MapleBacon.swift */; };
-		77CC4C2F1F96884F000A0BB2 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4C2E1F96884F000A0BB2 /* ImageCell.swift */; };
-		77CC4C311F968D84000A0BB2 /* images.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77CC4C301F968D84000A0BB2 /* images.plist */; };
-		77E1862B1FA762BE003B2E45 /* ImageTransformerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E1862A1FA762BE003B2E45 /* ImageTransformerViewController.swift */; };
-		F22008B4221C898800A124E6 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7702F6F71FA876330055A0A4 /* MapleBacon.framework */; };
-		F22008B5221C898800A124E6 /* MapleBacon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7702F6F71FA876330055A0A4 /* MapleBacon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F29D6181240595BA00E85F11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29D6180240595BA00E85F11 /* AppDelegate.swift */; };
+		F29D6183240595BA00E85F11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29D6182240595BA00E85F11 /* SceneDelegate.swift */; };
+		F29D6185240595BA00E85F11 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29D6184240595BA00E85F11 /* CollectionViewController.swift */; };
+		F29D6188240595BA00E85F11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F29D6186240595BA00E85F11 /* Main.storyboard */; };
+		F29D618A240595BB00E85F11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29D6189240595BB00E85F11 /* Assets.xcassets */; };
+		F29D618D240595BB00E85F11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F29D618B240595BB00E85F11 /* LaunchScreen.storyboard */; };
+		F2CB22EC240A68D1009FB183 /* UICollectionView+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CB22EB240A68D1009FB183 /* UICollectionView+MapleBacon.swift */; };
+		F2CB22EE240A6953009FB183 /* images.plist in Resources */ = {isa = PBXBuildFile; fileRef = F2CB22ED240A6953009FB183 /* images.plist */; };
+		F2CB22F5240BB864009FB183 /* DownsamplingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CB22F4240BB864009FB183 /* DownsamplingViewController.swift */; };
+		F2CB22F7240BB8DC009FB183 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CB22F6240BB8DC009FB183 /* ImageCollectionViewCell.swift */; };
+		F2EEE58F240BCDA60002C9CA /* ImageTransformerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE58E240BCDA60002C9CA /* ImageTransformerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7702F6F61FA876330055A0A4 /* PBXContainerItemProxy */ = {
+		F21B81D5240BF69400B8C514 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */;
+			containerPortal = F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 77B73D461F553A8700874885;
+			remoteGlobalIDString = F247A23E23FF15410083DB03;
 			remoteInfo = MapleBacon;
 		};
-		7702F6F81FA876330055A0A4 /* PBXContainerItemProxy */ = {
+		F21B81D7240BF69400B8C514 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */;
+			containerPortal = F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 77B73D4F1F553A8700874885;
+			remoteGlobalIDString = F247A24723FF15410083DB03;
 			remoteInfo = MapleBaconTests;
 		};
-		F22008B1221C897900A124E6 /* PBXContainerItemProxy */ = {
+		F21B81D9240BF69B00B8C514 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */;
+			containerPortal = F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 77B73D451F553A8700874885;
-			remoteInfo = MapleBacon;
-		};
-		F22008B6221C898800A124E6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 77B73D451F553A8700874885;
+			remoteGlobalIDString = F247A23D23FF15410083DB03;
 			remoteInfo = MapleBacon;
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		F22008B8221C898800A124E6 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				F22008B5221C898800A124E6 /* MapleBacon.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = ../MapleBacon.xcodeproj; sourceTree = "<group>"; };
-		778F1F6B1F9CF9940076411E /* ButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewController.swift; sourceTree = "<group>"; };
-		778F1F701F9D19160076411E /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
-		77CC4C0A1F9686D4000A0BB2 /* MapleBacon Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MapleBacon Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		77CC4C0D1F9686D4000A0BB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		77CC4C0F1F9686D4000A0BB2 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
-		77CC4C121F9686D4000A0BB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		77CC4C141F9686D4000A0BB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		77CC4C171F9686D4000A0BB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		77CC4C191F9686D4000A0BB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		77CC4C2C1F96880D000A0BB2 /* UICollectionView+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+MapleBacon.swift"; sourceTree = "<group>"; };
-		77CC4C2E1F96884F000A0BB2 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
-		77CC4C301F968D84000A0BB2 /* images.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = images.plist; sourceTree = "<group>"; };
-		77E1862A1FA762BE003B2E45 /* ImageTransformerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformerViewController.swift; sourceTree = "<group>"; };
+		F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = ../MapleBacon.xcodeproj; sourceTree = "<group>"; };
+		F29D617D240595BA00E85F11 /* MapleBacon Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MapleBacon Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F29D6180240595BA00E85F11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F29D6182240595BA00E85F11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		F29D6184240595BA00E85F11 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		F29D6187240595BA00E85F11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F29D6189240595BB00E85F11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F29D618C240595BB00E85F11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F29D618E240595BB00E85F11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2CB22EB240A68D1009FB183 /* UICollectionView+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+MapleBacon.swift"; sourceTree = "<group>"; };
+		F2CB22ED240A6953009FB183 /* images.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = images.plist; sourceTree = "<group>"; };
+		F2CB22F4240BB864009FB183 /* DownsamplingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownsamplingViewController.swift; sourceTree = "<group>"; };
+		F2CB22F6240BB8DC009FB183 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		F2EEE58E240BCDA60002C9CA /* ImageTransformerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		77CC4C071F9686D4000A0BB2 /* Frameworks */ = {
+		F29D617A240595BA00E85F11 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F22008B4221C898800A124E6 /* MapleBacon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7702F6F11FA876330055A0A4 /* Products */ = {
+		F21B81D1240BF69400B8C514 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7702F6F71FA876330055A0A4 /* MapleBacon.framework */,
-				7702F6F91FA876330055A0A4 /* MapleBaconTests.xctest */,
+				F21B81D6240BF69400B8C514 /* MapleBacon.framework */,
+				F21B81D8240BF69400B8C514 /* MapleBaconTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		77CC4C011F9686D4000A0BB2 = {
+		F29D6174240595BA00E85F11 = {
 			isa = PBXGroup;
 			children = (
-				7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */,
-				77CC4C0C1F9686D4000A0BB2 /* MapleBacon Example */,
-				F22008AD221C892F00A124E6 /* Frameworks */,
+				F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */,
+				F29D617F240595BA00E85F11 /* MapleBacon Example */,
+				F29D617E240595BA00E85F11 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
-		77CC4C0B1F9686D4000A0BB2 /* Products */ = {
+		F29D617E240595BA00E85F11 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				77CC4C0A1F9686D4000A0BB2 /* MapleBacon Example.app */,
+				F29D617D240595BA00E85F11 /* MapleBacon Example.app */,
 			);
 			name = Products;
-			path = ..;
 			sourceTree = "<group>";
 		};
-		77CC4C0C1F9686D4000A0BB2 /* MapleBacon Example */ = {
+		F29D617F240595BA00E85F11 /* MapleBacon Example */ = {
 			isa = PBXGroup;
 			children = (
-				77CC4C2B1F9687DC000A0BB2 /* Boilerplate */,
-				77CC4C0D1F9686D4000A0BB2 /* AppDelegate.swift */,
-				77CC4C0F1F9686D4000A0BB2 /* CollectionViewController.swift */,
-				778F1F6B1F9CF9940076411E /* ButtonViewController.swift */,
-				778F1F701F9D19160076411E /* ImageViewController.swift */,
-				77E1862A1FA762BE003B2E45 /* ImageTransformerViewController.swift */,
-				77CC4C0B1F9686D4000A0BB2 /* Products */,
-				77CC4C111F9686D4000A0BB2 /* Main.storyboard */,
-				77CC4C141F9686D4000A0BB2 /* Assets.xcassets */,
-				77CC4C161F9686D4000A0BB2 /* LaunchScreen.storyboard */,
-				77CC4C191F9686D4000A0BB2 /* Info.plist */,
-				77CC4C301F968D84000A0BB2 /* images.plist */,
+				F29D6180240595BA00E85F11 /* AppDelegate.swift */,
+				F29D6189240595BB00E85F11 /* Assets.xcassets */,
+				F2CB22E9240A68A1009FB183 /* Controllers */,
+				F2CB22EA240A68AE009FB183 /* Helpers */,
+				F29D618E240595BB00E85F11 /* Info.plist */,
+				F2CB22ED240A6953009FB183 /* images.plist */,
+				F29D618B240595BB00E85F11 /* LaunchScreen.storyboard */,
+				F29D6186240595BA00E85F11 /* Main.storyboard */,
+				F29D6182240595BA00E85F11 /* SceneDelegate.swift */,
 			);
 			path = "MapleBacon Example";
 			sourceTree = "<group>";
 		};
-		77CC4C2B1F9687DC000A0BB2 /* Boilerplate */ = {
+		F2CB22E9240A68A1009FB183 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				77CC4C2C1F96880D000A0BB2 /* UICollectionView+MapleBacon.swift */,
-				77CC4C2E1F96884F000A0BB2 /* ImageCell.swift */,
+				F29D6184240595BA00E85F11 /* CollectionViewController.swift */,
+				F2CB22F4240BB864009FB183 /* DownsamplingViewController.swift */,
+				F2EEE58E240BCDA60002C9CA /* ImageTransformerViewController.swift */,
 			);
-			path = Boilerplate;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		F22008AD221C892F00A124E6 /* Frameworks */ = {
+		F2CB22EA240A68AE009FB183 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				F2CB22EB240A68D1009FB183 /* UICollectionView+MapleBacon.swift */,
+				F2CB22F6240BB8DC009FB183 /* ImageCollectionViewCell.swift */,
 			);
-			name = Frameworks;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		77CC4C091F9686D4000A0BB2 /* MapleBacon Example */ = {
+		F29D617C240595BA00E85F11 /* MapleBacon Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 77CC4C1C1F9686D4000A0BB2 /* Build configuration list for PBXNativeTarget "MapleBacon Example" */;
+			buildConfigurationList = F29D6191240595BB00E85F11 /* Build configuration list for PBXNativeTarget "MapleBacon Example" */;
 			buildPhases = (
-				77CC4C061F9686D4000A0BB2 /* Sources */,
-				77CC4C071F9686D4000A0BB2 /* Frameworks */,
-				77CC4C081F9686D4000A0BB2 /* Resources */,
-				F22008B8221C898800A124E6 /* Embed Frameworks */,
+				F29D6179240595BA00E85F11 /* Sources */,
+				F29D617A240595BA00E85F11 /* Frameworks */,
+				F29D617B240595BA00E85F11 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F22008B2221C897900A124E6 /* PBXTargetDependency */,
-				F22008B7221C898800A124E6 /* PBXTargetDependency */,
+				F21B81DA240BF69B00B8C514 /* PBXTargetDependency */,
 			);
 			name = "MapleBacon Example";
 			productName = "MapleBacon Example";
-			productReference = 77CC4C0A1F9686D4000A0BB2 /* MapleBacon Example.app */;
+			productReference = F29D617D240595BA00E85F11 /* MapleBacon Example.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		77CC4C021F9686D4000A0BB2 /* Project object */ = {
+		F29D6175240595BA00E85F11 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 1010;
-				ORGANIZATIONNAME = "Jan Gorman";
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = Schnaub;
 				TargetAttributes = {
-					77CC4C091F9686D4000A0BB2 = {
-						CreatedOnToolsVersion = 9.0.1;
-						LastSwiftMigration = 1100;
-						ProvisioningStyle = Automatic;
+					F29D617C240595BA00E85F11 = {
+						CreatedOnToolsVersion = 11.4;
 					};
 				};
 			};
-			buildConfigurationList = 77CC4C051F9686D4000A0BB2 /* Build configuration list for PBXProject "MapleBacon Example" */;
-			compatibilityVersion = "Xcode 10.0";
+			buildConfigurationList = F29D6178240595BA00E85F11 /* Build configuration list for PBXProject "MapleBacon Example" */;
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 77CC4C011F9686D4000A0BB2;
-			productRefGroup = 77CC4C0B1F9686D4000A0BB2 /* Products */;
+			mainGroup = F29D6174240595BA00E85F11;
+			productRefGroup = F29D617E240595BA00E85F11 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 7702F6F11FA876330055A0A4 /* Products */;
-					ProjectRef = 7702F6F01FA876330055A0A4 /* MapleBacon.xcodeproj */;
+					ProductGroup = F21B81D1240BF69400B8C514 /* Products */;
+					ProjectRef = F21B81D0240BF69400B8C514 /* MapleBacon.xcodeproj */;
 				},
 			);
 			projectRoot = "";
 			targets = (
-				77CC4C091F9686D4000A0BB2 /* MapleBacon Example */,
+				F29D617C240595BA00E85F11 /* MapleBacon Example */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		7702F6F71FA876330055A0A4 /* MapleBacon.framework */ = {
+		F21B81D6240BF69400B8C514 /* MapleBacon.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = MapleBacon.framework;
-			remoteRef = 7702F6F61FA876330055A0A4 /* PBXContainerItemProxy */;
+			remoteRef = F21B81D5240BF69400B8C514 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		7702F6F91FA876330055A0A4 /* MapleBaconTests.xctest */ = {
+		F21B81D8240BF69400B8C514 /* MapleBaconTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = MapleBaconTests.xctest;
-			remoteRef = 7702F6F81FA876330055A0A4 /* PBXContainerItemProxy */;
+			remoteRef = F21B81D7240BF69400B8C514 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-		77CC4C081F9686D4000A0BB2 /* Resources */ = {
+		F29D617B240595BA00E85F11 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77CC4C311F968D84000A0BB2 /* images.plist in Resources */,
-				77CC4C181F9686D4000A0BB2 /* LaunchScreen.storyboard in Resources */,
-				77CC4C151F9686D4000A0BB2 /* Assets.xcassets in Resources */,
-				77CC4C131F9686D4000A0BB2 /* Main.storyboard in Resources */,
+				F2CB22EE240A6953009FB183 /* images.plist in Resources */,
+				F29D618D240595BB00E85F11 /* LaunchScreen.storyboard in Resources */,
+				F29D618A240595BB00E85F11 /* Assets.xcassets in Resources */,
+				F29D6188240595BA00E85F11 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		77CC4C061F9686D4000A0BB2 /* Sources */ = {
+		F29D6179240595BA00E85F11 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77CC4C101F9686D4000A0BB2 /* CollectionViewController.swift in Sources */,
-				77CC4C2F1F96884F000A0BB2 /* ImageCell.swift in Sources */,
-				77CC4C2D1F96880D000A0BB2 /* UICollectionView+MapleBacon.swift in Sources */,
-				778F1F6C1F9CF9940076411E /* ButtonViewController.swift in Sources */,
-				778F1F711F9D19160076411E /* ImageViewController.swift in Sources */,
-				77E1862B1FA762BE003B2E45 /* ImageTransformerViewController.swift in Sources */,
-				77CC4C0E1F9686D4000A0BB2 /* AppDelegate.swift in Sources */,
+				F2CB22F7240BB8DC009FB183 /* ImageCollectionViewCell.swift in Sources */,
+				F2CB22F5240BB864009FB183 /* DownsamplingViewController.swift in Sources */,
+				F29D6185240595BA00E85F11 /* CollectionViewController.swift in Sources */,
+				F29D6181240595BA00E85F11 /* AppDelegate.swift in Sources */,
+				F2CB22EC240A68D1009FB183 /* UICollectionView+MapleBacon.swift in Sources */,
+				F2EEE58F240BCDA60002C9CA /* ImageTransformerViewController.swift in Sources */,
+				F29D6183240595BA00E85F11 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F22008B2221C897900A124E6 /* PBXTargetDependency */ = {
+		F21B81DA240BF69B00B8C514 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MapleBacon;
-			targetProxy = F22008B1221C897900A124E6 /* PBXContainerItemProxy */;
-		};
-		F22008B7221C898800A124E6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MapleBacon;
-			targetProxy = F22008B6221C898800A124E6 /* PBXContainerItemProxy */;
+			targetProxy = F21B81D9240BF69B00B8C514 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		77CC4C111F9686D4000A0BB2 /* Main.storyboard */ = {
+		F29D6186240595BA00E85F11 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				77CC4C121F9686D4000A0BB2 /* Base */,
+				F29D6187240595BA00E85F11 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		77CC4C161F9686D4000A0BB2 /* LaunchScreen.storyboard */ = {
+		F29D618B240595BB00E85F11 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				77CC4C171F9686D4000A0BB2 /* Base */,
+				F29D618C240595BB00E85F11 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -303,7 +271,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		77CC4C1A1F9686D4000A0BB2 /* Debug */ = {
+		F29D618F240595BB00E85F11 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -313,6 +281,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -334,7 +303,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -353,8 +321,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -362,7 +331,7 @@
 			};
 			name = Debug;
 		};
-		77CC4C1B1F9686D4000A0BB2 /* Release */ = {
+		F29D6190240595BB00E85F11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -372,6 +341,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -393,7 +363,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -406,8 +375,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -415,14 +385,12 @@
 			};
 			name = Release;
 		};
-		77CC4C1D1F9686D4000A0BB2 /* Debug */ = {
+		F29D6192240595BB00E85F11 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CPRVB9W254;
-				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "MapleBacon Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -435,14 +403,12 @@
 			};
 			name = Debug;
 		};
-		77CC4C1E1F9686D4000A0BB2 /* Release */ = {
+		F29D6193240595BB00E85F11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CPRVB9W254;
-				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "MapleBacon Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -458,25 +424,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		77CC4C051F9686D4000A0BB2 /* Build configuration list for PBXProject "MapleBacon Example" */ = {
+		F29D6178240595BA00E85F11 /* Build configuration list for PBXProject "MapleBacon Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				77CC4C1A1F9686D4000A0BB2 /* Debug */,
-				77CC4C1B1F9686D4000A0BB2 /* Release */,
+				F29D618F240595BB00E85F11 /* Debug */,
+				F29D6190240595BB00E85F11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		77CC4C1C1F9686D4000A0BB2 /* Build configuration list for PBXNativeTarget "MapleBacon Example" */ = {
+		F29D6191240595BB00E85F11 /* Build configuration list for PBXNativeTarget "MapleBacon Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				77CC4C1D1F9686D4000A0BB2 /* Debug */,
-				77CC4C1E1F9686D4000A0BB2 /* Release */,
+				F29D6192240595BB00E85F11 /* Debug */,
+				F29D6193240595BB00E85F11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 77CC4C021F9686D4000A0BB2 /* Project object */;
+	rootObject = F29D6175240595BA00E85F11 /* Project object */;
 }

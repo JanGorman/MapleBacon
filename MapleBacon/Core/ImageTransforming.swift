@@ -1,14 +1,10 @@
 //
-//  Copyright © 2017 Jan Gorman. All rights reserved.
+//  Copyright © 2020 Schnaub. All rights reserved.
 //
 
 import UIKit
 
-/// The ImageTransformer protocol. Custom image transforms may conform to this protocol and register with MapleBacon.
-/// To apply multiple transformers to an image you can chain them together into a pipeline using the
-/// `appending(transformer:)` function. This will give you a new processor which can then be used.
-public protocol ImageTransformer {
-
+public protocol ImageTransforming {
   /// The transformer's identifier. Any unique string.
   var identifier: String { get }
 
@@ -17,22 +13,21 @@ public protocol ImageTransformer {
   /// - Parameter image: The image to transform
   /// - Returns: The transformed image
   func transform(image: UIImage) -> UIImage?
-
 }
 
 infix operator >>>: AdditionPrecedence
 
-public func >>>(transformer1: ImageTransformer, transformer2: ImageTransformer) -> ImageTransformer {
+public func >>>(transformer1: ImageTransforming, transformer2: ImageTransforming) -> ImageTransforming {
   transformer1.appending(transformer: transformer2)
 }
 
-public extension ImageTransformer {
+public extension ImageTransforming {
 
   /// Appends one transformer to another
   ///
   /// - Parameter transformer: The transformer to append
   /// - Returns: A new transformer that will run both transformers after one another
-  func appending(transformer: ImageTransformer) -> ImageTransformer {
+  func appending(transformer: ImageTransforming) -> ImageTransforming {
     let chainIdentifier = identifier.appending(" -> \(transformer.identifier)")
 
     return BaseComposableImageTransformer(identifier: chainIdentifier) { image in
@@ -43,7 +38,7 @@ public extension ImageTransformer {
 
 }
 
-private class BaseComposableImageTransformer: ImageTransformer {
+private class BaseComposableImageTransformer: ImageTransforming {
 
   let identifier: String
   private let call: (UIImage) -> UIImage?
@@ -59,6 +54,6 @@ private class BaseComposableImageTransformer: ImageTransformer {
 
 }
 
-func ==(lhs: ImageTransformer, rhs: ImageTransformer) -> Bool {
+func ==(lhs: ImageTransforming, rhs: ImageTransforming) -> Bool {
   lhs.identifier == rhs.identifier
 }

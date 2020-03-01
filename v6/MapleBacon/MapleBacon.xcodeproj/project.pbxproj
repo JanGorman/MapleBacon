@@ -27,6 +27,8 @@
 		F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA1D2402D9A8006CD529 /* Downloader.swift */; };
 		F27CBA222402DC0B006CD529 /* DownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA212402DC0B006CD529 /* DownloaderTests.swift */; };
 		F27CBA242402DC34006CD529 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA232402DC34006CD529 /* MockURLProtocol.swift */; };
+		F2EEE583240BBC2E0002C9CA /* ImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE582240BBC2E0002C9CA /* ImageTransformer.swift */; };
+		F2EEE587240BBE040002C9CA /* ImageTransformingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE586240BBE040002C9CA /* ImageTransformingTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		F27CBA1D2402D9A8006CD529 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		F27CBA212402DC0B006CD529 /* DownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloaderTests.swift; sourceTree = "<group>"; };
 		F27CBA232402DC34006CD529 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		F2EEE582240BBC2E0002C9CA /* ImageTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformer.swift; sourceTree = "<group>"; };
+		F2EEE586240BBE040002C9CA /* ImageTransformingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformingTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +130,7 @@
 				F247A25B23FF163F0083DB03 /* MemoryCacheTests.swift */,
 				F27CBA232402DC34006CD529 /* MockURLProtocol.swift */,
 				F27CBA112402B33E006CD529 /* TestHelpers.swift */,
+				F2EEE586240BBE040002C9CA /* ImageTransformingTests.swift */,
 			);
 			path = MapleBaconTests;
 			sourceTree = "<group>";
@@ -140,6 +145,7 @@
 				F27CBA1D2402D9A8006CD529 /* Downloader.swift */,
 				F247A25923FF15980083DB03 /* MemoryCache.swift */,
 				F2255E212404606E00193742 /* MapleBacon.swift */,
+				F2EEE582240BBC2E0002C9CA /* ImageTransformer.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -272,6 +278,7 @@
 				F27CBA182402C551006CD529 /* FileManager.swift in Sources */,
 				F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */,
 				F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */,
+				F2EEE583240BBC2E0002C9CA /* ImageTransformer.swift in Sources */,
 				F27CBA0C2402B147006CD529 /* TimePeriod.swift in Sources */,
 				F27CBA1A2402CC13006CD529 /* CacheClearOptions.swift in Sources */,
 				F27CBA1C2402CC28006CD529 /* CacheResult.swift in Sources */,
@@ -290,6 +297,7 @@
 				F27CBA242402DC34006CD529 /* MockURLProtocol.swift in Sources */,
 				F27CBA102402B2F0006CD529 /* CacheTests.swift in Sources */,
 				F27CBA122402B33E006CD529 /* TestHelpers.swift in Sources */,
+				F2EEE587240BBE040002C9CA /* ImageTransformingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

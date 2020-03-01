@@ -20,7 +20,8 @@ extension UIImageView {
   public func setImage(with url: URL?,
                        placeholder: UIImage? = nil,
                        displayOptions: [DisplayOptions] = [],
-                       imageTransformer: ImageTransforming? = nil) {
+                       imageTransformer: ImageTransforming? = nil,
+                       completion: (() -> Void)? = nil) {
     baconImageUrl = url
     guard let url = url else {
       return
@@ -33,6 +34,9 @@ extension UIImageView {
     let transformer = makeTransformer(displayOptions: displayOptions, imageTransformer: imageTransformer)
 
     MapleBacon.shared.image(with: url, imageTransformer: transformer) { [weak self] result in
+      defer {
+        completion?()
+      }
       guard case let Result.success(image) = result, let self = self, url == self.baconImageUrl else {
         return
       }

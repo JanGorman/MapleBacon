@@ -36,7 +36,7 @@ public final class MapleBacon {
   init(cache: Cache<UIImage>, sessionConfiguration: URLSessionConfiguration) {
     self.cache = cache
     self.downloader = Downloader(sessionConfiguration: sessionConfiguration)
-    self.transformerQueue = DispatchQueue(label: Self.queueLabel)
+    self.transformerQueue = DispatchQueue(label: Self.queueLabel, attributes: .concurrent)
   }
 
   public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) {

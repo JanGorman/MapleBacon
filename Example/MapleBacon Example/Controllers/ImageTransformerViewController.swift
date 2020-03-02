@@ -8,7 +8,7 @@ import UIKit
 final class ImageTransformerViewController: UICollectionViewController {
 
   private var imageURLs: [URL] = []
-  private var imageTransformer = SepiaImageTransformer() >>> VignetteImageTransformer()
+  private var imageTransformer = SepiaImageTransformer()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -57,25 +57,3 @@ private class SepiaImageTransformer: ImageTransforming {
   }
 
 }
-
-private class VignetteImageTransformer: ImageTransforming {
-
-  let identifier = "com.schnaub.VignetteImageTransformer"
-
-  func transform(image: UIImage) -> UIImage? {
-    let filter = CIFilter(name: "CIVignette")!
-
-    let ciImage = CIImage(image: image)
-    filter.setValue(ciImage, forKey: kCIInputImageKey)
-
-    let context = CIContext()
-    guard let outputImage = filter.outputImage,
-          let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
-            return image
-    }
-
-    return UIImage(cgImage: cgImage)
-  }
-
-}
-

@@ -50,7 +50,14 @@ public final class MapleBacon {
     }
   }
 
-  private func fetchImageFromCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
+  public func clearCache(_ options: CacheClearOptions) {
+    cache.clear(options)
+  }
+
+}
+
+private extension MapleBacon {
+  func fetchImageFromCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
     let cacheKey = makeCacheKey(for: url, imageTransformer: imageTransformer)
     cache.value(forKey: cacheKey) { result in
       switch result {
@@ -62,7 +69,7 @@ public final class MapleBacon {
     }
   }
 
-  private func fetchImageFromNetworkAndCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
+  func fetchImageFromNetworkAndCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
     fetchImageFromNetwork(with: url) { result in
       switch result {
       case .success(let image):
@@ -79,11 +86,11 @@ public final class MapleBacon {
     }
   }
 
-  private func fetchImageFromNetwork(with url: URL, completion: @escaping ImageCompletion) {
+  func fetchImageFromNetwork(with url: URL, completion: @escaping ImageCompletion) {
     downloader.fetch(url, completion: completion)
   }
 
-  private func transformImageAndCache(_ image: UIImage, cacheKey: String, imageTransformer: ImageTransforming, completion: @escaping ImageCompletion) {
+  func transformImageAndCache(_ image: UIImage, cacheKey: String, imageTransformer: ImageTransforming, completion: @escaping ImageCompletion) {
     transformImage(image, imageTransformer: imageTransformer) { result in
       switch result {
       case .success(let image):
@@ -95,7 +102,7 @@ public final class MapleBacon {
     }
   }
 
-  private func transformImage(_ image: UIImage, imageTransformer: ImageTransforming, completion: @escaping ImageCompletion) {
+  func transformImage(_ image: UIImage, imageTransformer: ImageTransforming, completion: @escaping ImageCompletion) {
     transformerQueue.async {
       DispatchQueue.main.async {
         guard let image = imageTransformer.transform(image: image) else {
@@ -107,13 +114,12 @@ public final class MapleBacon {
     }
   }
 
-  private func makeCacheKey(for url: URL, imageTransformer: ImageTransforming?) -> String {
+  func makeCacheKey(for url: URL, imageTransformer: ImageTransforming?) -> String {
     guard let imageTransformer = imageTransformer else {
       return url.absoluteString
     }
     return url.absoluteString + imageTransformer.identifier
   }
-
 }
 
 #if canImport(Combine)

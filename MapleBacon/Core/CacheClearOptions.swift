@@ -4,11 +4,15 @@
 
 import Foundation
 
-struct CacheClearOptions: OptionSet {
-  let rawValue: Int
+public struct CacheClearOptions: OptionSet {
+  public let rawValue: Int
 
-  static let memory = CacheClearOptions(rawValue: 1 << 0)
-  static let disk = CacheClearOptions(rawValue: 1 << 1)
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
+  }
 
-  static let all: CacheClearOptions = [.memory, .disk]
+  public static let memory = CacheClearOptions(rawValue: 1 << 0)
+  public static let disk = CacheClearOptions(rawValue: 1 << 1)
+
+  public static let all: CacheClearOptions = [.memory, .disk]
 }

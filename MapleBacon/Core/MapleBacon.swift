@@ -115,3 +115,26 @@ public final class MapleBacon {
   }
 
 }
+
+#if canImport(Combine)
+import Combine
+
+@available(iOS 13.0, *)
+extension MapleBacon {
+
+  public func image(with url: URL, imageTransformer: ImageTransforming? = nil) -> AnyPublisher<UIImage, Error> {
+    Future { resolve in
+      self.image(with: url, imageTransformer: imageTransformer) { result in
+        switch result {
+        case .success(let image):
+          resolve(.success(image))
+        case .failure(let error):
+          resolve(.failure(error))
+        }
+      }
+    }.eraseToAnyPublisher()
+  }
+
+}
+
+#endif

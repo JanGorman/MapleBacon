@@ -44,8 +44,10 @@ func makeImageData() -> Data {
 
 extension XCTestCase {
   func wait(for interval: TimeInterval) {
-      let date = Date(timeIntervalSinceNow: interval)
-      RunLoop.current.run(mode: RunLoop.Mode.default, before: date)
+    let date = Date(timeIntervalSinceNow: interval)
+    while date.timeIntervalSinceNow > 0 {
+      CFRunLoopRunInMode(CFRunLoopMode.defaultMode, 0.1, true)
+    }
   }
 }
 

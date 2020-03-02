@@ -129,7 +129,6 @@ let chainedTransformer = SepiaImageTransformer() >>> DifferentTransformer() >>> 
 
 (Keep in mind that if you are using Core Image it might not be optimal to chain individual transformers but rather create one transformer that applies multiple `CIFilter`s in one pass. See the [Core Image Programming Guide](https://developer.apple.com/library/content/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_intro/ci_intro.html#//apple_ref/doc/uid/TP30001185).)
 
-
 ### Caching
 
 MapleBacon will cache your images both in memory and on disk. Disk storage is automatically pruned after a week (taking into account the last access date as well) but you can control the maximum cache time yourself too:
@@ -137,6 +136,19 @@ MapleBacon will cache your images both in memory and on disk. Disk storage is au
 ```swift
 let oneDaySeconds: TimeInterval = 60 * 60 * 24
 MapleBacon.default.maxCacheAgeSeconds = oneDaySeconds
+```
+
+### Combine
+
+On iOS13 and above, you can use `Combine` to fetch images from MapleBacon
+
+```swift
+MapleBacon.shared.image(with: url)
+  .receive(on: DispatchQueue.main) // Dispatch to the right queue if updating the UI
+  .sink(receiveValue: { image in
+    // Do something with your image
+  })
+  .store(in: &subscriptions) // Hold on to and dispose your subscriptions
 ```
 
 ## Migrating from 5.x

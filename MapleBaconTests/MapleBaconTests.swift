@@ -2,6 +2,9 @@
 //  Copyright © 2020 Schnaub. All rights reserved.
 //
 
+#if canImport(Combine)
+import Combine
+#endif
 @testable import MapleBacon
 import XCTest
 
@@ -11,10 +14,13 @@ final class MapleBaconTests: XCTestCase {
 
   private let cache = Cache<UIImage>(name: "MapleBaconTests")
 
+  @available(iOS 13.0, *)
+  private lazy var subscriptions: Set<AnyCancellable> = []
+
   override func tearDown() {
     cache.clear(.all)
     // Clearing the disk is an async operation so we should wait
-    wait(for: 2.seconds)
+    wait(for: 1.seconds)
 
     super.tearDown()
   }
@@ -82,3 +88,28 @@ final class MapleBaconTests: XCTestCase {
   }
 
 }
+
+#if canImport(Combine)
+
+@available(iOS 13.0, *)
+extension MapleBaconTests {
+
+  func testIntegrationPublisher() {
+    let expectation = self.expectation(description: #function)
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
+
+    mapleBacon.image(with: Self.url)
+      .sink(receiveCompletion: { _ in
+        expectation.fulfill()
+      }, receiveValue: { image in
+        XCTAssertEqual(image.pngData(), makeImageData())
+      })
+      .store(in: &self.subscriptions)
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
+}
+
+#endif

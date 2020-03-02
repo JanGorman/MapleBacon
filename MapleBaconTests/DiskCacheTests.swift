@@ -13,7 +13,7 @@ final class DiskCacheTests: XCTestCase {
     let cache = DiskCache(name: Self.cacheName)
     cache.clear()
     // Clearing the disk is an async operation so we should wait
-    wait(for: 2.seconds)
+    wait(for: 1.second)
 
     super.tearDown()
   }

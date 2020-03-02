@@ -2,9 +2,6 @@
 //  Copyright © 2020 Schnaub. All rights reserved.
 //
 
-#if canImport(CryptoKit)
-import CryptoKit
-#endif
 import UIKit
 
 enum CacheError: Error {
@@ -99,6 +96,8 @@ final class Cache<T: DataConvertible> where T.Result == T {
 }
 
 #if canImport(CryptoKit)
+import CryptoKit
+
 @available(iOS 13.0, *)
 private extension Cache {
 

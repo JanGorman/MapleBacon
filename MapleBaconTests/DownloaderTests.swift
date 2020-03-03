@@ -71,4 +71,33 @@ final class DownloaderTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
+  func testConcurrentDownloads() {
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader<Data>(sessionConfiguration: configuration)
+
+    let firstExpectation = expectation(description: "first")
+    downloader.fetch(Self.url) { response in
+      switch response {
+      case .success(let data):
+        XCTAssertNotNil(data)
+      case .failure:
+        XCTFail()
+      }
+      firstExpectation.fulfill()
+    }
+
+    let secondExpectation = expectation(description: "second")
+    downloader.fetch(Self.url) { response in
+      switch response {
+      case .success(let data):
+        XCTAssertNotNil(data)
+      case .failure:
+        XCTFail()
+      }
+      secondExpectation.fulfill()
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
 }

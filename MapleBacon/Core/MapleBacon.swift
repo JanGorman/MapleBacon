@@ -8,6 +8,8 @@ public enum MapleBaconError: Error {
   case imageTransformingError
 }
 
+public typealias DownloadToken = Int
+
 public final class MapleBacon {
 
   public typealias ImageCompletion = (Result<UIImage, Error>) -> Void
@@ -71,8 +73,8 @@ private extension MapleBacon {
     }
   }
 
-  func fetchImageFromNetworkAndCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
-    fetchImageFromNetwork(with: url) { result in
+  func fetchImageFromNetworkAndCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) -> DownloadToken {
+    return fetchImageFromNetwork(with: url) { result in
       switch result {
       case .success(let image):
         if let transformer = imageTransformer {
@@ -92,8 +94,8 @@ private extension MapleBacon {
     }
   }
 
-  func fetchImageFromNetwork(with url: URL, completion: @escaping ImageCompletion) {
-    downloader.fetch(url, completion: completion)
+  func fetchImageFromNetwork(with url: URL, completion: @escaping ImageCompletion) -> DownloadToken {
+    return downloader.fetch(url, completion: completion)
   }
 
   func transformImageAndCache(_ image: UIImage, cacheKey: String, imageTransformer: ImageTransforming, completion: @escaping ImageCompletion) {

@@ -16,7 +16,7 @@ final class DownloaderTests: XCTestCase {
 
     setupMockResponse(.data(dummyData()))
 
-    downloader.fetch(Self.url) { response in
+    _ = downloader.fetch(Self.url) { response in
       switch response {
       case .success(let data):
         XCTAssertNotNil(data)
@@ -37,7 +37,7 @@ final class DownloaderTests: XCTestCase {
 
     setupMockResponse(.data(dummyData()))
 
-    downloader.fetch(Self.url) { response in
+    _ = downloader.fetch(Self.url) { response in
       switch response {
       case .success:
         XCTFail()
@@ -58,7 +58,7 @@ final class DownloaderTests: XCTestCase {
 
     setupMockResponse(.error)
 
-    downloader.fetch(Self.url) { response in
+    _ = downloader.fetch(Self.url) { response in
       switch response {
       case .success:
         XCTFail()
@@ -78,7 +78,7 @@ final class DownloaderTests: XCTestCase {
     setupMockResponse(.data(dummyData()))
 
     let firstExpectation = expectation(description: "first")
-    downloader.fetch(Self.url) { response in
+    _ = downloader.fetch(Self.url) { response in
       switch response {
       case .success(let data):
         XCTAssertNotNil(data)
@@ -89,7 +89,7 @@ final class DownloaderTests: XCTestCase {
     }
 
     let secondExpectation = expectation(description: "second")
-    downloader.fetch(Self.url) { response in
+    _ = downloader.fetch(Self.url) { response in
       switch response {
       case .success(let data):
         XCTAssertNotNil(data)
@@ -98,6 +98,27 @@ final class DownloaderTests: XCTestCase {
       }
       secondExpectation.fulfill()
     }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
+  func testCancel() {
+    let expectation = self.expectation(description: #function)
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader<Data>(sessionConfiguration: configuration)
+
+    setupMockResponse(.error)
+
+    let token = downloader.fetch(Self.url) { response in
+      switch response {
+      case .success:
+        XCTFail()
+      case .failure(let error as NSError):
+        XCTAssertEqual(error.code, -1)
+      }
+      expectation.fulfill()
+    }
+    downloader.cancel(token: token)
 
     waitForExpectations(timeout: 5, handler: nil)
   }

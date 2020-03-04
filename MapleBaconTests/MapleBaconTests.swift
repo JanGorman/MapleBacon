@@ -97,6 +97,8 @@ extension MapleBaconTests {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
 
+    setupMockResponse(.data(makeImageData()))
+
     mapleBacon.image(with: Self.url)
       .sink(receiveCompletion: { _ in
         mapleBacon.clearCache(.all) { _ in

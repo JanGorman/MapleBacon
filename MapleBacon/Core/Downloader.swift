@@ -77,14 +77,14 @@ final class Downloader<T: DataConvertible> {
   }
 
   fileprivate func download(for url: URL) -> Download<T>? {
-    mutex.sync(flags: .barrier) {
-      return downloads[url]
+    mutex.sync {
+      downloads[url]
     }
   }
 
   fileprivate func clearDownload(for url: URL) {
-    mutex.sync(flags: .barrier) {
-      downloads[url] = nil
+    mutex.async(flags: .barrier) {
+      self.downloads[url] = nil
     }
   }
 

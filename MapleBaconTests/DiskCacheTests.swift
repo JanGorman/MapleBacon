@@ -9,22 +9,15 @@ final class DiskCacheTests: XCTestCase {
 
   private static let cacheName = "DiskCacheTests"
 
-  override func tearDown() {
-    let cache = DiskCache(name: Self.cacheName)
-    cache.clear()
-    // Clearing the disk is an async operation so we should wait
-    wait(for: 1.second)
-
-    super.tearDown()
-  }
-
   func testWrite() {
     let expectation = self.expectation(description: #function)
     let cache = DiskCache(name: Self.cacheName)
 
     cache.insert(dummyData(), forKey: "test") { error in
       XCTAssertNil(error)
-      expectation.fulfill()
+      cache.clear { _ in
+        expectation.fulfill()
+      }
     }
 
     waitForExpectations(timeout: 5, handler: nil)
@@ -44,7 +37,9 @@ final class DiskCacheTests: XCTestCase {
         case .failure:
           XCTFail()
         }
-        expectation.fulfill()
+        cache.clear { _ in
+          expectation.fulfill()
+        }
       }
     }
 
@@ -97,7 +92,9 @@ final class DiskCacheTests: XCTestCase {
         let expired = try! cache.expiredFileURLs()
         XCTAssertTrue(expired.isEmpty)
 
-        expectation.fulfill()
+        cache.clear { _ in
+          expectation.fulfill()
+        }
       }
     }
 

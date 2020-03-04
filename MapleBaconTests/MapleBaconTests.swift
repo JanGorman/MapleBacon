@@ -17,14 +17,6 @@ final class MapleBaconTests: XCTestCase {
   @available(iOS 13.0, *)
   private lazy var subscriptions: Set<AnyCancellable> = []
 
-  override func tearDown() {
-    cache.clear(.all)
-    // Clearing the disk is an async operation so we should wait
-    wait(for: 1.seconds)
-
-    super.tearDown()
-  }
-
   func testIntegration() {
     let expectation = self.expectation(description: #function)
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
@@ -39,7 +31,9 @@ final class MapleBaconTests: XCTestCase {
       case .failure:
         XCTFail()
       }
-      expectation.fulfill()
+      mapleBacon.clearCache(.all) { _ in
+        expectation.fulfill()
+      }
     }
 
     waitForExpectations(timeout: 5, handler: nil)
@@ -59,7 +53,9 @@ final class MapleBaconTests: XCTestCase {
       case .failure(let error):
         XCTAssertNotNil(error)
       }
-      expectation.fulfill()
+      mapleBacon.clearCache(.all) { _ in
+        expectation.fulfill()
+      }
     }
 
     waitForExpectations(timeout: 5, handler: nil)
@@ -81,7 +77,9 @@ final class MapleBaconTests: XCTestCase {
       case .failure:
         XCTFail()
       }
-      expectation.fulfill()
+      mapleBacon.clearCache(.all) { _ in
+        expectation.fulfill()
+      }
     }
 
     waitForExpectations(timeout: 5, handler: nil)
@@ -101,7 +99,9 @@ extension MapleBaconTests {
 
     mapleBacon.image(with: Self.url)
       .sink(receiveCompletion: { _ in
-        expectation.fulfill()
+        mapleBacon.clearCache(.all) { _ in
+          expectation.fulfill()
+        }
       }, receiveValue: { image in
         XCTAssertEqual(image.pngData(), makeImageData())
       })

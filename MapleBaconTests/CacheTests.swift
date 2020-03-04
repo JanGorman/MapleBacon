@@ -11,14 +11,6 @@ final class CacheTests: XCTestCase {
 
   private let cache = Cache<Data>(name: CacheTests.cacheName)
 
-  override func tearDown() {
-    cache.clear(.all)
-    // Clearing the disk is an async operation so we should wait
-    wait(for: 1.second)
-
-    super.tearDown()
-  }
-
   func testStorage() {
     let expectation = self.expectation(description: #function)
 
@@ -26,7 +18,9 @@ final class CacheTests: XCTestCase {
 
     cache.store(value: data, forKey: #function) { error in
       XCTAssertNil(error)
-      expectation.fulfill()
+      self.cache.clear(.all) { _ in
+        expectation.fulfill()
+      }
     }
 
     waitForExpectations(timeout: 5, handler: nil)
@@ -46,7 +40,9 @@ final class CacheTests: XCTestCase {
         case .failure:
           XCTFail()
         }
-        expectation.fulfill()
+        self.cache.clear(.all) { _ in
+          expectation.fulfill()
+        }
       }
     }
 
@@ -68,7 +64,9 @@ final class CacheTests: XCTestCase {
         case .failure(let error):
           XCTAssertNotNil(error)
         }
-        expectation.fulfill()
+        self.cache.clear(.all) { _ in
+          expectation.fulfill()
+        }
       }
     }
 
@@ -91,7 +89,9 @@ final class CacheTests: XCTestCase {
         case .failure:
           XCTFail()
         }
-        expectation.fulfill()
+        self.cache.clear(.all) { _ in
+          expectation.fulfill()
+        }
       }
     }
 
@@ -118,7 +118,9 @@ final class CacheTests: XCTestCase {
           }
         }
 
-        expectation.fulfill()
+        self.cache.clear(.all) { _ in
+          expectation.fulfill()
+        }
       }
     }
 

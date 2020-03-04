@@ -52,8 +52,8 @@ public final class MapleBacon {
     }
   }
 
-  public func clearCache(_ options: CacheClearOptions) {
-    cache.clear(options)
+  public func clearCache(_ options: CacheClearOptions, completion: ((Error?) -> Void)? = nil) {
+    cache.clear(options, completion: completion)
   }
 
 }

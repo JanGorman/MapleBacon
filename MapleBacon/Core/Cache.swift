@@ -64,12 +64,15 @@ final class Cache<T: DataConvertible> where T.Result == T {
     }
   }
 
-  func clear(_ options: CacheClearOptions) {
+  func clear(_ options: CacheClearOptions, completion: ((Error?) -> Void)? = nil) {
     if options.contains(.memory) {
       memoryCache.clear()
+      if !options.contains(.disk) {
+        completion?(nil)
+      }
     }
     if options.contains(.disk) {
-      diskCache.clear()
+      diskCache.clear(completion)
     }
   }
 

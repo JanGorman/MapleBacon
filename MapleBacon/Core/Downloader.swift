@@ -8,6 +8,63 @@ enum DownloaderError: Error {
   case dataConversion
 }
 
+final class Downloader<T: DataConvertible> {
+
+  let session: URLSession
+
+  private let sessionDelegate: SessionDelegate<T>
+
+  private let lock = NSLock()
+  private var downloads: [URL: Download<T>] = [:]
+
+  init(sessionConfiguration: URLSessionConfiguration = .default) {
+    self.sessionDelegate = SessionDelegate()
+    self.session = URLSession(configuration: sessionConfiguration, delegate: sessionDelegate, delegateQueue: .main)
+    self.sessionDelegate.downloader = self
+  }
+
+  func fetch(_ url: URL, completion: @escaping (Result<T.Result, Error>) -> Void) {
+    let task: URLSessionDataTask
+    if let download = download(for: url) {
+      task = download.task
+      download.completions.append(completion)
+    } else {
+      let newTask = session.dataTask(with: url)
+      let download = Download<T>(task: newTask, completion: completion)
+      download.start()
+      addDownload(download, for: url)
+      task = newTask
+    }
+
+    task.resume()
+  }
+
+  private func addDownload(_ download: Download<T>, for url: URL) {
+    defer {
+      lock.unlock()
+    }
+    lock.lock()
+    downloads[url] = download
+  }
+
+  fileprivate func download(for url: URL) -> Download<T>? {
+    defer {
+      lock.unlock()
+    }
+    lock.lock()
+    return downloads[url]
+  }
+
+  fileprivate func clearDownload(for url: URL) {
+    defer {
+      lock.unlock()
+    }
+    lock.lock()
+    self.downloads[url] = nil
+  }
+
+}
+
 private final class Download<T: DataConvertible> {
 
   let task: URLSessionDataTask
@@ -40,54 +97,6 @@ private final class Download<T: DataConvertible> {
     UIApplication.shared.endBackgroundTask(backgroundTask)
     backgroundTask = .invalid
   }
-}
-
-final class Downloader<T: DataConvertible> {
-
-  let session: URLSession
-
-  private let mutex: DispatchQueue
-  private let sessionDelegate: SessionDelegate<T>
-
-  private var downloads: [URL: Download<T>] = [:]
-
-  init(sessionConfiguration: URLSessionConfiguration = .default) {
-    self.sessionDelegate = SessionDelegate()
-    self.session = URLSession(configuration: sessionConfiguration, delegate: sessionDelegate, delegateQueue: .main)
-    self.mutex = DispatchQueue(label: "com.schnaub.Downloader.mutex", attributes: .concurrent)
-    self.sessionDelegate.downloader = self
-  }
-
-  func fetch(_ url: URL, completion: @escaping (Result<T.Result, Error>) -> Void) {
-    mutex.sync(flags: .barrier) {
-      let task: URLSessionDataTask
-      if let download = downloads[url] {
-        task = download.task
-        download.completions.append(completion)
-      } else {
-        let newTask = session.dataTask(with: url)
-        let download = Download<T>(task: newTask, completion: completion)
-        download.start()
-        downloads[url] = download
-        task = newTask
-      }
-
-      task.resume()
-    }
-  }
-
-  fileprivate func download(for url: URL) -> Download<T>? {
-    mutex.sync {
-      downloads[url]
-    }
-  }
-
-  fileprivate func clearDownload(for url: URL) {
-    mutex.async(flags: .barrier) {
-      self.downloads[url] = nil
-    }
-  }
-
 }
 
 private final class SessionDelegate<T: DataConvertible>: NSObject, URLSessionDataDelegate {

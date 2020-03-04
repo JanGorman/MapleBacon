@@ -23,9 +23,7 @@ final class DiskCache {
     diskQueue.async {
       var diskError: Error?
       defer {
-        DispatchQueue.main.async {
-          completion?(diskError)
-        }
+        completion?(diskError)
       }
       do {
         try self.store(data: data, key: key)
@@ -39,18 +37,14 @@ final class DiskCache {
     diskQueue.async {
       var diskError: Error?
       defer {
-        DispatchQueue.main.async {
-          if let error = diskError {
-            completion?(.failure(error))
-          }
+        if let error = diskError {
+          completion?(.failure(error))
         }
       }
       do {
         let url = try self.cacheDirectory().appendingPathComponent(key)
         let data = try FileManager.default.fileContents(at: url)
-        DispatchQueue.main.async {
-          completion?(.success(data))
-        }
+        completion?(.success(data))
       } catch {
         diskError = error
       }
@@ -61,9 +55,7 @@ final class DiskCache {
     diskQueue.async {
       var diskError: Error?
       defer {
-        DispatchQueue.main.async {
-          completion?(diskError)
-        }
+        completion?(diskError)
       }
       do {
         let cacheDirectory = try self.cacheDirectory()
@@ -78,9 +70,7 @@ final class DiskCache {
     diskQueue.async {
       var diskError: Error?
       defer {
-        DispatchQueue.main.async {
-          completion?(diskError)
-        }
+        completion?(diskError)
       }
       do {
         let expiredFiles = try self.expiredFileURLs()

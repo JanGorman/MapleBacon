@@ -43,7 +43,9 @@ public final class MapleBacon {
     fetchImageFromCache(with: url, imageTransformer: imageTransformer) { result in
       switch result {
       case .success(let image):
-        completion(.success(image))
+        DispatchQueue.main.optionalAsync {
+          completion(.success(image))
+        }
       case .failure:
         self.fetchImageFromNetworkAndCache(with: url, imageTransformer: imageTransformer, completion: completion)
       }
@@ -78,10 +80,14 @@ private extension MapleBacon {
           self.transformImageAndCache(image, cacheKey: cacheKey, imageTransformer: transformer, completion: completion)
         } else {
           self.cache.store(value: image, forKey: url.absoluteString)
-          completion(.success(image))
+          DispatchQueue.main.optionalAsync {
+            completion(.success(image))
+          }
         }
       case .failure(let error):
-        completion(.failure(error))
+        DispatchQueue.main.optionalAsync {
+          completion(.failure(error))
+        }
       }
     }
   }
@@ -95,22 +101,24 @@ private extension MapleBacon {
       switch result {
       case .success(let image):
         self.cache.store(value: image, forKey: cacheKey)
-        completion(.success(image))
+        DispatchQueue.main.optionalAsync {
+          completion(.success(image))
+        }
       case .failure(let error):
-        completion(.failure(error))
+        DispatchQueue.main.optionalAsync {
+          completion(.failure(error))
+        }
       }
     }
   }
 
   func transformImage(_ image: UIImage, imageTransformer: ImageTransforming, completion: @escaping ImageCompletion) {
     transformerQueue.async {
-      DispatchQueue.main.async {
-        guard let image = imageTransformer.transform(image: image) else {
-          completion(.failure(MapleBaconError.imageTransformingError))
-          return
-        }
-        completion(.success(image))
+      guard let image = imageTransformer.transform(image: image) else {
+        completion(.failure(MapleBaconError.imageTransformingError))
+        return
       }
+      completion(.success(image))
     }
   }
 

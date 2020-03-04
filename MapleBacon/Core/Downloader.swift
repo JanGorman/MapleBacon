@@ -51,15 +51,11 @@ final class Downloader<T: DataConvertible> {
 
   private var downloads: [URL: Download<T>] = [:]
 
-  fileprivate subscript(_ url: URL) -> Download<T>? {
-    downloads[url]
-  }
-
   init(sessionConfiguration: URLSessionConfiguration = .default) {
     self.sessionDelegate = SessionDelegate()
     self.session = URLSession(configuration: sessionConfiguration, delegate: sessionDelegate, delegateQueue: .main)
     self.mutex = DispatchQueue(label: "com.schnaub.Downloader.mutex", attributes: .concurrent)
-    self.sessionDelegate.delegate = self
+    self.sessionDelegate.downloader = self
   }
 
   func fetch(_ url: URL, completion: @escaping (Result<T.Result, Error>) -> Void) {
@@ -80,6 +76,12 @@ final class Downloader<T: DataConvertible> {
     }
   }
 
+  fileprivate func download(for url: URL) -> Download<T>? {
+    mutex.sync(flags: .barrier) {
+      return downloads[url]
+    }
+  }
+
   fileprivate func clearDownload(for url: URL) {
     mutex.sync(flags: .barrier) {
       downloads[url] = nil
@@ -90,21 +92,21 @@ final class Downloader<T: DataConvertible> {
 
 private final class SessionDelegate<T: DataConvertible>: NSObject, URLSessionDataDelegate {
 
-  weak var delegate: Downloader<T>?
+  weak var downloader: Downloader<T>?
 
   func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-    guard let url = dataTask.originalRequest?.url, let download = delegate?[url] else {
+    guard let url = dataTask.originalRequest?.url, let download = downloader?.download(for: url) else {
       return
     }
     download.data.append(data)
   }
 
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-    guard let url = task.originalRequest?.url, let download = delegate?[url] else {
+    guard let url = task.originalRequest?.url, let download = downloader?.download(for: url) else {
       return
     }
 
-    delegate?[url]?.completions.forEach { completion in
+    downloader?.download(for: url)?.completions.forEach { completion in
       if let error = error {
         completion(.failure(error))
         return
@@ -115,7 +117,7 @@ private final class SessionDelegate<T: DataConvertible>: NSObject, URLSessionDat
       }
       completion(.success(value))
     }
-    delegate?.clearDownload(for: url)
+    downloader?.clearDownload(for: url)
     download.finish()
   }
 

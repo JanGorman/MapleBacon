@@ -75,6 +75,8 @@ final class DownloaderTests: XCTestCase {
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     let downloader = Downloader<Data>(sessionConfiguration: configuration)
 
+    setupMockResponse(.data(dummyData()))
+
     let firstExpectation = expectation(description: "first")
     downloader.fetch(Self.url) { response in
       switch response {

@@ -15,7 +15,24 @@ final class Downloader<T: DataConvertible> {
   private let sessionDelegate: SessionDelegate<T>
 
   private let lock = NSLock()
-  private var downloads: [URL: Download<T>] = [:]
+
+  private var _downloads: [URL: Download<T>] = [:]
+  fileprivate var downloads: [URL: Download<T>] {
+    get {
+      defer {
+        lock.unlock()
+      }
+      lock.lock()
+      return _downloads
+    }
+    set {
+      defer {
+        lock.unlock()
+      }
+      lock.lock()
+      _downloads = newValue
+    }
+  }
 
   init(sessionConfiguration: URLSessionConfiguration = .default) {
     self.sessionDelegate = SessionDelegate()
@@ -25,42 +42,18 @@ final class Downloader<T: DataConvertible> {
 
   func fetch(_ url: URL, completion: @escaping (Result<T.Result, Error>) -> Void) {
     let task: URLSessionDataTask
-    if let download = download(for: url) {
+    if let download = downloads[url] {
       task = download.task
       download.completions.append(completion)
     } else {
       let newTask = session.dataTask(with: url)
       let download = Download<T>(task: newTask, completion: completion)
       download.start()
-      addDownload(download, for: url)
+      downloads[url] = download
       task = newTask
     }
 
     task.resume()
-  }
-
-  private func addDownload(_ download: Download<T>, for url: URL) {
-    defer {
-      lock.unlock()
-    }
-    lock.lock()
-    downloads[url] = download
-  }
-
-  fileprivate func download(for url: URL) -> Download<T>? {
-    defer {
-      lock.unlock()
-    }
-    lock.lock()
-    return downloads[url]
-  }
-
-  fileprivate func clearDownload(for url: URL) {
-    defer {
-      lock.unlock()
-    }
-    lock.lock()
-    self.downloads[url] = nil
   }
 
 }
@@ -104,18 +97,18 @@ private final class SessionDelegate<T: DataConvertible>: NSObject, URLSessionDat
   weak var downloader: Downloader<T>?
 
   func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-    guard let url = dataTask.originalRequest?.url, let download = downloader?.download(for: url) else {
+    guard let url = dataTask.originalRequest?.url, let download = downloader?.downloads[url] else {
       return
     }
     download.data.append(data)
   }
 
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-    guard let url = task.originalRequest?.url, let download = downloader?.download(for: url) else {
+    guard let url = task.originalRequest?.url, let download = downloader?.downloads[url] else {
       return
     }
 
-    downloader?.download(for: url)?.completions.forEach { completion in
+    downloader?.downloads[url]?.completions.forEach { completion in
       if let error = error {
         completion(.failure(error))
         return
@@ -126,7 +119,7 @@ private final class SessionDelegate<T: DataConvertible>: NSObject, URLSessionDat
       }
       completion(.success(value))
     }
-    downloader?.clearDownload(for: url)
+    downloader?.downloads[url] = nil
     download.finish()
   }
 

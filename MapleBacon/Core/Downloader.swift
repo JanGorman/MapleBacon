@@ -86,7 +86,7 @@ final class Downloader<T: DataConvertible> {
 
 }
 
-private final class Download<T: DataConvertible>: Hashable {
+private final class Download<T: DataConvertible> {
 
   let task: URLSessionDataTask
   let url: URL
@@ -118,18 +118,9 @@ private final class Download<T: DataConvertible>: Hashable {
     invalidateBackgroundTask()
   }
 
-  func hash(into hasher: inout Hasher) {
-    hasher.combine(url)
-    hasher.combine(token)
-  }
-
   private func invalidateBackgroundTask() {
     UIApplication.shared.endBackgroundTask(backgroundTask)
     backgroundTask = .invalid
-  }
-
-  static func == (lhs: Download<T>, rhs: Download<T>) -> Bool {
-    lhs.url == rhs.url && lhs.token == rhs.token
   }
 
 }

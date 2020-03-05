@@ -42,6 +42,7 @@ public final class MapleBacon {
     self.transformerQueue = DispatchQueue(label: Self.queueLabel, attributes: .concurrent)
   }
 
+  @discardableResult
   public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) -> CancelToken {
     let token = Self.makeToken()
 
@@ -60,6 +61,10 @@ public final class MapleBacon {
 
   public func clearCache(_ options: CacheClearOptions, completion: ((Error?) -> Void)? = nil) {
     cache.clear(options, completion: completion)
+  }
+
+  public func cancel(token: CancelToken) {
+    downloader.cancel(token: token)
   }
 
 }

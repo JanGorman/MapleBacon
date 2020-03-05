@@ -86,6 +86,29 @@ final class MapleBaconTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
+  func testCancel() {
+    let expectation = self.expectation(description: #function)
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
+
+    setupMockResponse(.error)
+
+    let token = mapleBacon.image(with: Self.url) { result in
+      switch result {
+      case .success:
+        XCTFail()
+      case .failure(let error as NSError):
+        XCTAssertEqual(error.code, -1)
+      }
+      mapleBacon.clearCache(.all) { _ in
+        expectation.fulfill()
+      }
+    }
+    mapleBacon.cancel(token: token)
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
 }
 
 #if canImport(Combine)

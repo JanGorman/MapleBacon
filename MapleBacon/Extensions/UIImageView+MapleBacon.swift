@@ -5,6 +5,7 @@
 import UIKit
 
 private var baconImageUrlKey: UInt8 = 0
+private var cancelTokenKey: UInt8 = 1
 
 extension UIImageView {
 
@@ -17,23 +18,30 @@ extension UIImageView {
     }
   }
 
+  private var cancelToken: CancelToken? {
+    get {
+      objc_getAssociatedObject(self, &cancelTokenKey) as? Int
+    }
+    set {
+      objc_setAssociatedObject(self, &cancelTokenKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+  }
+
   public func setImage(with url: URL?,
                        placeholder: UIImage? = nil,
                        displayOptions: [DisplayOptions] = [],
                        imageTransformer: ImageTransforming? = nil,
                        completion: (() -> Void)? = nil) {
+    cancelDownload()
     baconImageUrl = url
+    image = placeholder
     guard let url = url else {
       return
     }
 
-    if let placeholder = placeholder {
-      image = placeholder
-    }
-
     let transformer = makeTransformer(displayOptions: displayOptions, imageTransformer: imageTransformer)
 
-    MapleBacon.shared.image(with: url, imageTransformer: transformer) { [weak self] result in
+    cancelToken = MapleBacon.shared.image(with: url, imageTransformer: transformer) { [weak self] result in
       defer {
         completion?()
       }
@@ -42,6 +50,13 @@ extension UIImageView {
       }
       self.image = image
     }
+  }
+
+  private func cancelDownload() {
+    guard let token = cancelToken else {
+      return
+    }
+    MapleBacon.shared.cancel(token: token)
   }
 
   private func makeTransformer(displayOptions: [DisplayOptions] = [], imageTransformer: ImageTransforming?) -> ImageTransforming? {

@@ -8,6 +8,7 @@ import XCTest
 final class DownloaderTests: XCTestCase {
 
   private static let url = URL(string: "https://example.com/mapleBacon.png")!
+  private static let cancelToken = 1
 
   func testDownload() {
     let expectation = self.expectation(description: #function)
@@ -16,7 +17,7 @@ final class DownloaderTests: XCTestCase {
 
     setupMockResponse(.data(dummyData()))
 
-    _ = downloader.fetch(Self.url) { response in
+    downloader.fetch(Self.url, token: Self.cancelToken) { response in
       switch response {
       case .success(let data):
         XCTAssertNotNil(data)
@@ -37,7 +38,7 @@ final class DownloaderTests: XCTestCase {
 
     setupMockResponse(.data(dummyData()))
 
-    _ = downloader.fetch(Self.url) { response in
+    downloader.fetch(Self.url, token: Self.cancelToken) { response in
       switch response {
       case .success:
         XCTFail()
@@ -58,7 +59,7 @@ final class DownloaderTests: XCTestCase {
 
     setupMockResponse(.error)
 
-    _ = downloader.fetch(Self.url) { response in
+    downloader.fetch(Self.url, token: Self.cancelToken) { response in
       switch response {
       case .success:
         XCTFail()
@@ -78,7 +79,7 @@ final class DownloaderTests: XCTestCase {
     setupMockResponse(.data(dummyData()))
 
     let firstExpectation = expectation(description: "first")
-    _ = downloader.fetch(Self.url) { response in
+    downloader.fetch(Self.url, token: Self.cancelToken) { response in
       switch response {
       case .success(let data):
         XCTAssertNotNil(data)
@@ -89,7 +90,7 @@ final class DownloaderTests: XCTestCase {
     }
 
     let secondExpectation = expectation(description: "second")
-    _ = downloader.fetch(Self.url) { response in
+    downloader.fetch(Self.url, token: Self.cancelToken) { response in
       switch response {
       case .success(let data):
         XCTAssertNotNil(data)
@@ -109,7 +110,7 @@ final class DownloaderTests: XCTestCase {
 
     setupMockResponse(.error)
 
-    let token = downloader.fetch(Self.url) { response in
+    downloader.fetch(Self.url, token: Self.cancelToken) { response in
       switch response {
       case .success:
         XCTFail()
@@ -118,7 +119,7 @@ final class DownloaderTests: XCTestCase {
       }
       expectation.fulfill()
     }
-    downloader.cancel(token: token)
+    downloader.cancel(token: Self.cancelToken)
 
     waitForExpectations(timeout: 5, handler: nil)
   }

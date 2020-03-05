@@ -24,7 +24,7 @@ final class MapleBaconTests: XCTestCase {
 
     setupMockResponse(.data(makeImageData()))
 
-    mapleBacon.image(with: Self.url) { result in
+    let token = mapleBacon.image(with: Self.url) { result in
       switch result {
       case .success(let image):
         XCTAssertEqual(image.pngData(), makeImageData())
@@ -36,6 +36,7 @@ final class MapleBaconTests: XCTestCase {
       }
     }
 
+    XCTAssertNotNil(token)
     waitForExpectations(timeout: 5, handler: nil)
   }
 

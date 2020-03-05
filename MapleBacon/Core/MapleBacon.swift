@@ -8,7 +8,7 @@ public enum MapleBaconError: Error {
   case imageTransformingError
 }
 
-public typealias DownloadToken = Int
+public typealias CancelToken = Int
 
 public final class MapleBacon {
 
@@ -17,6 +17,7 @@ public final class MapleBacon {
   public static let shared = MapleBacon()
 
   private static let queueLabel = "com.schnaub.MapleBacon.transformer"
+  private static var token: CancelToken = 0
 
   public var maxCacheAgeSeconds: TimeInterval {
     get {
@@ -41,7 +42,9 @@ public final class MapleBacon {
     self.transformerQueue = DispatchQueue(label: Self.queueLabel, attributes: .concurrent)
   }
 
-  public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) {
+  public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) -> CancelToken {
+    let token = Self.makeToken()
+
     fetchImageFromCache(with: url, imageTransformer: imageTransformer) { result in
       switch result {
       case .success(let image):
@@ -49,9 +52,10 @@ public final class MapleBacon {
           completion(.success(image))
         }
       case .failure:
-        self.fetchImageFromNetworkAndCache(with: url, imageTransformer: imageTransformer, completion: completion)
+        self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: imageTransformer, completion: completion)
       }
     }
+    return token
   }
 
   public func clearCache(_ options: CacheClearOptions, completion: ((Error?) -> Void)? = nil) {
@@ -61,6 +65,12 @@ public final class MapleBacon {
 }
 
 private extension MapleBacon {
+
+  static func makeToken() -> CancelToken {
+    token += 1
+    return token
+  }
+
   func fetchImageFromCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
     let cacheKey = makeCacheKey(for: url, imageTransformer: imageTransformer)
     cache.value(forKey: cacheKey) { result in
@@ -73,8 +83,8 @@ private extension MapleBacon {
     }
   }
 
-  func fetchImageFromNetworkAndCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) -> DownloadToken {
-    return fetchImageFromNetwork(with: url) { result in
+  func fetchImageFromNetworkAndCache(with url: URL, token: CancelToken, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
+    fetchImageFromNetwork(with: url, token: token) { result in
       switch result {
       case .success(let image):
         if let transformer = imageTransformer {
@@ -94,8 +104,8 @@ private extension MapleBacon {
     }
   }
 
-  func fetchImageFromNetwork(with url: URL, completion: @escaping ImageCompletion) -> DownloadToken {
-    return downloader.fetch(url, completion: completion)
+  func fetchImageFromNetwork(with url: URL, token: CancelToken, completion: @escaping ImageCompletion) {
+    downloader.fetch(url, token: token, completion: completion)
   }
 
   func transformImageAndCache(_ image: UIImage, cacheKey: String, imageTransformer: ImageTransforming, completion: @escaping ImageCompletion) {

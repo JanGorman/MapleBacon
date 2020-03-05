@@ -15,7 +15,6 @@ final class Downloader<T: DataConvertible> {
   private let sessionDelegate: SessionDelegate<T>
 
   private let lock = NSLock()
-  private let tokenMaker = TokenMaker()
 
   private var _downloads: Set<Download<T>> = []
   private var downloads: Set<Download<T>> {
@@ -56,16 +55,13 @@ final class Downloader<T: DataConvertible> {
     session.invalidateAndCancel()
   }
 
-  func fetch(_ url: URL, completion: @escaping (Result<T.Result, Error>) -> Void) -> DownloadToken {
+  func fetch(_ url: URL, token: CancelToken, completion: @escaping (Result<T.Result, Error>) -> Void) {
     let task: URLSessionDataTask
-    let token: DownloadToken
     if let download = self[url] {
       task = download.task
       download.completions.append(completion)
-      token = download.token
     } else {
       let newTask = session.dataTask(with: url)
-      token = tokenMaker.makeToken()
       let download = Download<T>(task: newTask, url: url, token: token, completion: completion)
       download.start()
       downloads.insert(download)
@@ -73,10 +69,9 @@ final class Downloader<T: DataConvertible> {
     }
 
     task.resume()
-    return token
   }
 
-  func cancel(token: DownloadToken) {
+  func cancel(token: CancelToken) {
     guard let download = downloads.first(where: {$0.token == token }) else {
       return
     }
@@ -88,29 +83,18 @@ final class Downloader<T: DataConvertible> {
 
 }
 
-/// Wrapper class to access a static var because generic classes cannot contain statics
-private final class TokenMaker {
-
-  private static var token: Int = 0
-
-  func makeToken() -> Int {
-    Self.token += 1
-    return Self.token
-  }
-}
-
 private final class Download<T: DataConvertible>: Hashable {
 
   let task: URLSessionDataTask
   let url: URL
-  let token: DownloadToken
+  let token: CancelToken
 
   var completions: [(Result<T.Result, Error>) -> Void]
   var data = Data()
 
   private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
 
-  init(task: URLSessionDataTask, url: URL, token: DownloadToken, completion: @escaping (Result<T.Result, Error>) -> Void) {
+  init(task: URLSessionDataTask, url: URL, token: CancelToken, completion: @escaping (Result<T.Result, Error>) -> Void) {
     self.task = task
     self.url = url
     self.token = token

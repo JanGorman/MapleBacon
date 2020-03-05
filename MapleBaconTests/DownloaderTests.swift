@@ -112,10 +112,10 @@ final class DownloaderTests: XCTestCase {
 
     downloader.fetch(Self.url, token: Self.cancelToken) { response in
       switch response {
-      case .success:
+      case .failure(let error as DownloaderError):
+        XCTAssertEqual(error, .canceled)
+      case .success, .failure:
         XCTFail()
-      case .failure(let error as NSError):
-        XCTAssertEqual(error.code, -1)
       }
       expectation.fulfill()
     }

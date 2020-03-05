@@ -6,6 +6,7 @@ import UIKit
 
 enum DownloaderError: Error {
   case dataConversion
+  case canceled
 }
 
 final class Downloader<T: DataConvertible> {
@@ -16,8 +17,8 @@ final class Downloader<T: DataConvertible> {
 
   private let lock = NSLock()
 
-  private var _downloads: Set<Download<T>> = []
-  private var downloads: Set<Download<T>> {
+  private var _downloads: [CancelToken: Download<T>] = [:]
+  private var downloads: [CancelToken: Download<T>] {
     get {
       defer {
         lock.unlock()
@@ -36,11 +37,11 @@ final class Downloader<T: DataConvertible> {
 
   fileprivate subscript(url: URL) -> Download<T>? {
     get {
-      downloads.first(where: { $0.url == url })
+      downloads.values.first(where: { $0.url == url })
     }
     set {
-      if let download = downloads.first(where: { $0.url == url }) {
-        downloads.remove(download)
+      if let keyValue = downloads.first(where: { $1.url == url }) {
+        downloads[keyValue.key] = nil
       }
     }
   }
@@ -57,6 +58,7 @@ final class Downloader<T: DataConvertible> {
 
   func fetch(_ url: URL, token: CancelToken, completion: @escaping (Result<T.Result, Error>) -> Void) {
     let task: URLSessionDataTask
+    // TODO this is not great for lookup speed
     if let download = self[url] {
       task = download.task
       download.completions.append(completion)
@@ -64,7 +66,7 @@ final class Downloader<T: DataConvertible> {
       let newTask = session.dataTask(with: url)
       let download = Download<T>(task: newTask, url: url, token: token, completion: completion)
       download.start()
-      downloads.insert(download)
+      downloads[token] = download
       task = newTask
     }
 
@@ -72,12 +74,13 @@ final class Downloader<T: DataConvertible> {
   }
 
   func cancel(token: CancelToken) {
-    guard let download = downloads.first(where: {$0.token == token }) else {
+    guard let download = downloads[token] else {
       return
     }
-    if download.completions.isEmpty {
+    if download.completions.count == 1 {
       download.task.cancel()
-      downloads.remove(download)
+      download.completions.first?(.failure(DownloaderError.canceled))
+      downloads[token] = nil
     }
   }
 

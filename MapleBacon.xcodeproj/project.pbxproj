@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7778FD28240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7778FD27240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift */; };
+		77E75F812412445E00611894 /* DoubleKeyedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E75F802412445E00611894 /* DoubleKeyedContainer.swift */; };
+		77E75F8324124A4300611894 /* DoubleKeyedContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E75F8224124A4300611894 /* DoubleKeyedContainerTests.swift */; };
 		F2255E202404600D00193742 /* UIImageView+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2255E1F2404600D00193742 /* UIImageView+MapleBacon.swift */; };
 		F2255E222404606E00193742 /* MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2255E212404606E00193742 /* MapleBacon.swift */; };
 		F2255E24240462D800193742 /* MapleBaconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2255E23240462D800193742 /* MapleBaconTests.swift */; };
@@ -47,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		7778FD27240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+MapleBacon.swift"; sourceTree = "<group>"; };
+		77E75F802412445E00611894 /* DoubleKeyedContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleKeyedContainer.swift; sourceTree = "<group>"; };
+		77E75F8224124A4300611894 /* DoubleKeyedContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleKeyedContainerTests.swift; sourceTree = "<group>"; };
 		F2255E1F2404600D00193742 /* UIImageView+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+MapleBacon.swift"; sourceTree = "<group>"; };
 		F2255E212404606E00193742 /* MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBacon.swift; sourceTree = "<group>"; };
 		F2255E23240462D800193742 /* MapleBaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconTests.swift; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 			children = (
 				F27CBA0F2402B2F0006CD529 /* CacheTests.swift */,
 				F247A25F23FF19300083DB03 /* DiskCacheTests.swift */,
+				77E75F8224124A4300611894 /* DoubleKeyedContainerTests.swift */,
 				F27CBA212402DC0B006CD529 /* DownloaderTests.swift */,
 				F2EEE586240BBE040002C9CA /* ImageTransformingTests.swift */,
 				F247A24E23FF15410083DB03 /* Info.plist */,
@@ -150,6 +155,7 @@
 				F27CBA192402CC13006CD529 /* CacheClearOptions.swift */,
 				F27CBA1B2402CC28006CD529 /* CacheResult.swift */,
 				F247A25D23FF191C0083DB03 /* DiskCache.swift */,
+				77E75F802412445E00611894 /* DoubleKeyedContainer.swift */,
 				F27CBA1D2402D9A8006CD529 /* Downloader.swift */,
 				F247A25923FF15980083DB03 /* MemoryCache.swift */,
 				F2255E212404606E00193742 /* MapleBacon.swift */,
@@ -288,6 +294,7 @@
 				F2255E202404600D00193742 /* UIImageView+MapleBacon.swift in Sources */,
 				F247A25E23FF191C0083DB03 /* DiskCache.swift in Sources */,
 				F27CBA182402C551006CD529 /* FileManager.swift in Sources */,
+				77E75F812412445E00611894 /* DoubleKeyedContainer.swift in Sources */,
 				F2EEE589240BBEF90002C9CA /* DownsamplingImageTransformer.swift in Sources */,
 				F2EEE58D240BC17F0002C9CA /* DisplayOptions.swift in Sources */,
 				F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */,
@@ -307,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F27CBA222402DC0B006CD529 /* DownloaderTests.swift in Sources */,
+				77E75F8324124A4300611894 /* DoubleKeyedContainerTests.swift in Sources */,
 				F247A25C23FF163F0083DB03 /* MemoryCacheTests.swift in Sources */,
 				F2255E24240462D800193742 /* MapleBaconTests.swift in Sources */,
 				F247A26023FF19300083DB03 /* DiskCacheTests.swift in Sources */,

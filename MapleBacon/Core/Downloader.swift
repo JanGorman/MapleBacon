@@ -16,33 +16,47 @@ final class Downloader<T: DataConvertible> {
   private let sessionDelegate: SessionDelegate<T>
 
   private let lock = NSLock()
+  private let downloads = DoubleKeyedContainer<CancelToken, URL, Download<T>>()
 
-  private var _downloads: [CancelToken: Download<T>] = [:]
-  private var downloads: [CancelToken: Download<T>] {
+  fileprivate subscript(_ url: URL) -> Download<T>? {
     get {
       defer {
         lock.unlock()
       }
       lock.lock()
-      return _downloads
+      return downloads[url]
     }
     set {
       defer {
         lock.unlock()
       }
       lock.lock()
-      _downloads = newValue
+      guard let newValue = newValue else {
+        downloads.removeValue(forKey: url)
+        return
+      }
+      downloads.update(newValue, forKey: url)
     }
   }
 
-  fileprivate subscript(url: URL) -> Download<T>? {
+  fileprivate subscript(_ token: CancelToken) -> Download<T>? {
     get {
-      downloads.values.first(where: { $0.url == url })
+      defer {
+        lock.unlock()
+      }
+      lock.lock()
+      return downloads[token]
     }
     set {
-      if let keyValue = downloads.first(where: { $1.url == url }) {
-        downloads[keyValue.key] = nil
+      defer {
+        lock.unlock()
       }
+      lock.lock()
+      guard let newValue = newValue else {
+        downloads.removeValue(forKey: token)
+        return
+      }
+      downloads.update(newValue, forKey: token)
     }
   }
 
@@ -58,7 +72,6 @@ final class Downloader<T: DataConvertible> {
 
   func fetch(_ url: URL, token: CancelToken, completion: @escaping (Result<T.Result, Error>) -> Void) {
     let task: URLSessionDataTask
-    // TODO this is not great for lookup speed
     if let download = self[url] {
       task = download.task
       download.completions.append(completion)
@@ -66,7 +79,7 @@ final class Downloader<T: DataConvertible> {
       let newTask = session.dataTask(with: url)
       let download = Download<T>(task: newTask, url: url, token: token, completion: completion)
       download.start()
-      downloads[token] = download
+      downloads.insert(download, forKeys: (token, url))
       task = newTask
     }
 
@@ -80,7 +93,7 @@ final class Downloader<T: DataConvertible> {
     if download.completions.count == 1 {
       download.task.cancel()
       download.completions.first?(.failure(DownloaderError.canceled))
-      downloads[token] = nil
+      self[token] = nil
     }
   }
 

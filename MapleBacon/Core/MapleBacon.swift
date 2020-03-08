@@ -59,6 +59,10 @@ public final class MapleBacon {
     return token
   }
 
+  public func hydrateCache(urls: [URL]) {
+    urls.forEach { self.image(with: $0) { _ in } }
+  }
+
   public func clearCache(_ options: CacheClearOptions, completion: ((Error?) -> Void)? = nil) {
     cache.clear(options, completion: completion)
   }

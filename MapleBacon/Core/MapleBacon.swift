@@ -73,6 +73,21 @@ public final class MapleBacon {
     }
   }
 
+  public func hydrateCache(urls: [URL]) {
+    for url in urls {
+      let cacheKey = makeCacheKey(for: url, imageTransformer: nil)
+      cache.value(forKey: cacheKey) { result in
+        switch result {
+        case .failure:
+          let token = self.makeToken()
+          self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: nil, completion: { _ in })
+        default:
+          break
+        }
+      }
+    }
+  }
+
   public func clearCache(_ options: CacheClearOptions, completion: ((Error?) -> Void)? = nil) {
     cache.clear(options, completion: completion)
   }

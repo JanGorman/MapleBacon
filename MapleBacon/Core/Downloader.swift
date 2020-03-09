@@ -15,48 +15,31 @@ final class Downloader<T: DataConvertible> {
 
   private let sessionDelegate: SessionDelegate<T>
 
-  private let lock = NSLock()
-  private let downloads = DoubleKeyedContainer<CancelToken, URL, Download<T>>()
+  private let downloads = Atomic(DoubleKeyedContainer<CancelToken, URL, Download<T>>())
 
   fileprivate subscript(_ url: URL) -> Download<T>? {
     get {
-      defer {
-        lock.unlock()
-      }
-      lock.lock()
-      return downloads[url]
+      downloads.value[url]
     }
     set {
-      defer {
-        lock.unlock()
-      }
-      lock.lock()
       guard let newValue = newValue else {
-        downloads.removeValue(forKey: url)
+        downloads.mutate{ $0.removeValue(forKey: url) }
         return
       }
-      downloads.update(newValue, forKey: url)
+      downloads.mutate { $0.update(newValue, forKey: url) }
     }
   }
 
   fileprivate subscript(_ token: CancelToken) -> Download<T>? {
     get {
-      defer {
-        lock.unlock()
-      }
-      lock.lock()
-      return downloads[token]
+      downloads.value[token]
     }
     set {
-      defer {
-        lock.unlock()
-      }
-      lock.lock()
       guard let newValue = newValue else {
-        downloads.removeValue(forKey: token)
+        downloads.mutate { $0.removeValue(forKey: token) }
         return
       }
-      downloads.update(newValue, forKey: token)
+      downloads.mutate { $0.update(newValue, forKey: token) }
     }
   }
 
@@ -79,7 +62,7 @@ final class Downloader<T: DataConvertible> {
       let newTask = session.dataTask(with: url)
       let download = Download<T>(task: newTask, url: url, token: token, completion: completion)
       download.start()
-      downloads.insert(download, forKeys: (token, url))
+      downloads.mutate { $0.insert(download, forKeys: (token, url)) }
       task = newTask
     }
 
@@ -87,7 +70,7 @@ final class Downloader<T: DataConvertible> {
   }
 
   func cancel(token: CancelToken) {
-    guard let download = downloads[token] else {
+    guard let download = self[token] else {
       return
     }
     if download.completions.count == 1 {
@@ -176,3 +159,4 @@ private final class SessionDelegate<T: DataConvertible>: NSObject, URLSessionDat
   }
 
 }
+

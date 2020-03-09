@@ -39,10 +39,8 @@ final class PrefetchViewController: UICollectionViewController {
 extension PrefetchViewController: UICollectionViewDataSourcePrefetching {
 
   func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-    for indexPath in indexPaths {
-      let url = imageURLs[indexPath.item]
-      MapleBacon.shared.hydrateCache(url: url)
-    }
+    let urls = indexPaths.map { imageURLs[$0.item] }
+    MapleBacon.shared.hydrateCache(urls: urls)
   }
 
 }

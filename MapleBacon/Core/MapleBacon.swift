@@ -17,7 +17,6 @@ public final class MapleBacon {
   public static let shared = MapleBacon()
 
   private static let queueLabel = "com.schnaub.MapleBacon.transformer"
-  private static var token: CancelToken = 0
 
   public var maxCacheAgeSeconds: TimeInterval {
     get {
@@ -32,6 +31,8 @@ public final class MapleBacon {
   private let downloader: Downloader<UIImage>
   private let transformerQueue: DispatchQueue
 
+  private var token = Atomic<CancelToken>(0)
+
   public convenience init(name: String = "", sessionConfiguration: URLSessionConfiguration = .default) {
     self.init(cache: Cache(name: name), sessionConfiguration: sessionConfiguration)
   }
@@ -44,7 +45,7 @@ public final class MapleBacon {
 
   @discardableResult
   public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) -> CancelToken {
-    let token = Self.makeToken()
+    let token = makeToken()
 
     fetchImageFromCache(with: url, imageTransformer: imageTransformer) { result in
       switch result {
@@ -59,17 +60,15 @@ public final class MapleBacon {
     return token
   }
 
-  public func hydrateCache(urls: [URL]) {
-    urls.forEach { url in
-      let cacheKey = makeCacheKey(for: url, imageTransformer: nil)
-      cache.value(forKey: cacheKey) { result in
-        switch result {
-        case .failure:
-          let token = Self.makeToken()
-          self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: nil, completion: { _ in })
-        default:
-          break
-        }
+  public func hydrateCache(url: URL) {
+    let cacheKey = makeCacheKey(for: url, imageTransformer: nil)
+    cache.value(forKey: cacheKey) { result in
+      switch result {
+      case .failure:
+        let token = self.makeToken()
+        self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: nil, completion: { _ in })
+      default:
+        break
       }
     }
   }
@@ -86,9 +85,9 @@ public final class MapleBacon {
 
 private extension MapleBacon {
 
-  static func makeToken() -> CancelToken {
-    token += 1
-    return token
+  func makeToken() -> CancelToken {
+    token.mutate { $0 += 1 }
+    return token.value
   }
 
   func fetchImageFromCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {

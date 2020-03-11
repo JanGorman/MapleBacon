@@ -76,24 +76,28 @@ final class Cache<T: DataConvertible> where T.Result == T {
     }
   }
 
-  private func convertToTargetType(_ data: Data, type: CacheType) -> Result<CacheResult<T>, Error> {
+  @objc private func cleanDiskOnNotification() {
+    clear(.disk)
+  }
+
+}
+
+private extension Cache {
+
+  func convertToTargetType(_ data: Data, type: CacheType) -> Result<CacheResult<T>, Error> {
     guard let targetType = T.convert(from: data) else {
       return .failure(CacheError.dataConversion)
     }
     return .success(.init(value: targetType, type: type))
   }
 
-  private func safeCacheKey(_ key: String) -> String {
+  func safeCacheKey(_ key: String) -> String {
     #if canImport(CryptoKit)
     if #available(iOS 13.0, *) {
       return cryptoSafeCacheKey(key)
     }
     #endif
     return key.components(separatedBy: CharacterSet(charactersIn: "()/")).joined(separator: "-")
-  }
-
-  @objc private func cleanDiskOnNotification() {
-    clear(.disk)
   }
 
 }

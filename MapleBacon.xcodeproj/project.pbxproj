@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		775455712418DF4100FF8F5F /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775455702418DF4100FF8F5F /* Download.swift */; };
+		775455732418E70B00FF8F5F /* Data+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775455722418E70B00FF8F5F /* Data+MapleBacon.swift */; };
 		7778FD28240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7778FD27240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift */; };
 		77E75F812412445E00611894 /* DoubleKeyedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E75F802412445E00611894 /* DoubleKeyedContainer.swift */; };
 		77E75F8324124A4300611894 /* DoubleKeyedContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E75F8224124A4300611894 /* DoubleKeyedContainerTests.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		775455702418DF4100FF8F5F /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
+		775455722418E70B00FF8F5F /* Data+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+MapleBacon.swift"; sourceTree = "<group>"; };
 		7778FD27240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+MapleBacon.swift"; sourceTree = "<group>"; };
 		77E75F802412445E00611894 /* DoubleKeyedContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleKeyedContainer.swift; sourceTree = "<group>"; };
 		77E75F8224124A4300611894 /* DoubleKeyedContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleKeyedContainerTests.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				F2EEE588240BBEF90002C9CA /* DownsamplingImageTransformer.swift */,
 				F2EEE58A240BBFC00002C9CA /* CGSize+MapleBacon.swift */,
 				7778FD27240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift */,
+				775455722418E70B00FF8F5F /* Data+MapleBacon.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */,
 				F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */,
 				F2D870E12416CB5200946A0B /* Atomic.swift in Sources */,
+				775455732418E70B00FF8F5F /* Data+MapleBacon.swift in Sources */,
 				F2EEE58B240BBFC00002C9CA /* CGSize+MapleBacon.swift in Sources */,
 				775455712418DF4100FF8F5F /* Download.swift in Sources */,
 				F2EEE583240BBC2E0002C9CA /* ImageTransforming.swift in Sources */,

@@ -54,10 +54,10 @@ final class CacheTests: XCTestCase {
 
     let data = dummyData()
 
-    cache.store(value: data, forKey: #function) { _ in
+    cache.store(value: data, forKey: "test") { _ in
       self.cache.clear(.all)
 
-      self.cache.value(forKey: #function) { result in
+      self.cache.value(forKey: "test") { result in
         switch result {
         case .success:
           XCTFail()

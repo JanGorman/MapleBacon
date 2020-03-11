@@ -127,4 +127,24 @@ final class CacheTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
+  func testIsCached() {
+    let expectation = self.expectation(description: #function)
+
+    let data = dummyData()
+
+    cache.store(value: data, forKey: #function) { _ in
+      XCTAssertTrue(try! self.cache.isCached(forKey: #function))
+
+      self.cache.clear(.memory) { _ in
+        XCTAssertTrue(try! self.cache.isCached(forKey: #function))
+
+        self.cache.clear(.all) { _ in
+          expectation.fulfill()
+        }
+      }
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
 }

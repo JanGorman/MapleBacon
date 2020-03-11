@@ -101,7 +101,7 @@ final class DiskCacheTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
-  func testExists() {
+  func testIsCached() {
     let expectation = self.expectation(description: #function)
     let cache = DiskCache(name: Self.cacheName)
 

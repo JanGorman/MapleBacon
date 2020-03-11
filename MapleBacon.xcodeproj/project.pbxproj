@@ -106,6 +106,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		775455742419208B00FF8F5F /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				F27CBA0D2402B1FE006CD529 /* Cache.swift */,
+				F27CBA192402CC13006CD529 /* CacheClearOptions.swift */,
+				F27CBA1B2402CC28006CD529 /* CacheResult.swift */,
+				F247A25D23FF191C0083DB03 /* DiskCache.swift */,
+				F247A25923FF15980083DB03 /* MemoryCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
 		F247A23423FF15410083DB03 = {
 			isa = PBXGroup;
 			children = (
@@ -157,14 +169,10 @@
 		F247A25823FF158E0083DB03 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				F27CBA0D2402B1FE006CD529 /* Cache.swift */,
-				F27CBA192402CC13006CD529 /* CacheClearOptions.swift */,
-				F27CBA1B2402CC28006CD529 /* CacheResult.swift */,
-				F247A25D23FF191C0083DB03 /* DiskCache.swift */,
+				775455742419208B00FF8F5F /* Cache */,
 				77E75F802412445E00611894 /* DoubleKeyedContainer.swift */,
 				F27CBA1D2402D9A8006CD529 /* Downloader.swift */,
 				775455702418DF4100FF8F5F /* Download.swift */,
-				F247A25923FF15980083DB03 /* MemoryCache.swift */,
 				F2255E212404606E00193742 /* MapleBacon.swift */,
 				F2EEE582240BBC2E0002C9CA /* ImageTransforming.swift */,
 				F2EEE58C240BC17F0002C9CA /* DisplayOptions.swift */,

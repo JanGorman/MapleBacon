@@ -76,6 +76,14 @@ final class Cache<T: DataConvertible> where T.Result == T {
     }
   }
 
+  func isCached(forKey key: String) throws -> Bool {
+    let safeKey = safeCacheKey(key)
+    if memoryCache.isCached(forKey: safeKey) {
+      return true
+    }
+    return try diskCache.isCached(forKey: safeKey)
+  }
+
   @objc private func cleanDiskOnNotification() {
     clear(.disk)
   }

@@ -104,7 +104,7 @@ final class MapleBaconTests: XCTestCase {
         expectation.fulfill()
       }
     }
-    mapleBacon.cancel(token: token)
+//    mapleBacon.cancel(token: token)
 
     waitForExpectations(timeout: 5, handler: nil)
   }

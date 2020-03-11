@@ -51,7 +51,7 @@ extension UIImageView {
 
     let transformer = makeTransformer(displayOptions: displayOptions, imageTransformer: imageTransformer)
 
-    cancelToken = MapleBacon.shared.image(with: url, imageTransformer: transformer) { [weak self] result in
+    _ = MapleBacon.shared.image(with: url, imageTransformer: transformer) { [weak self] result in
       defer {
         self?.baconImageUrl = nil
         self?.cancelToken = nil

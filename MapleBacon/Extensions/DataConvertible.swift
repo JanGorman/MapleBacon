@@ -4,7 +4,7 @@
 
 import UIKit
 
-protocol DataConvertible {
+public protocol DataConvertible {
   associatedtype Result
 
   static func convert(from data: Data) -> Result?
@@ -13,11 +13,11 @@ protocol DataConvertible {
 }
 
 extension Data: DataConvertible {
-  static func convert(from data: Data) -> Data? {
+  public static func convert(from data: Data) -> Data? {
     data
   }
 
-  func toData() -> Data {
+  public func toData() -> Data {
     self
   }
 }
@@ -38,11 +38,11 @@ extension UIImage: DataConvertible {
     }
   }
 
-  static func convert(from data: Data) -> UIImage? {
+  public static func convert(from data: Data) -> UIImage? {
     UIImage(data: data, scale: UIScreen.main.scale)
   }
 
-  func toData() -> Data {
+  public func toData() -> Data {
     hasAlphaChannel ? pngData()! : jpegData(compressionQuality: 1)!
   }
 }

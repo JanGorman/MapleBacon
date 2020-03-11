@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class Download<T: DataConvertible> {
+public final class Download<T: DataConvertible> {
 
   let task: URLSessionDataTask
   let url: URL

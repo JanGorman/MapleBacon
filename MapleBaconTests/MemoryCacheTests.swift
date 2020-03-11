@@ -46,4 +46,12 @@ final class MemoryCacheTests: XCTestCase {
     XCTAssertNil(cache["foo"])
   }
 
+  func testIsCached() {
+    let cache = MemoryCache<String, String>()
+    cache["foo"] = "bar"
+
+    XCTAssertTrue(cache.isCached(forKey: "foo"))
+    XCTAssertFalse(cache.isCached(forKey: "bar"))
+  }
+
 }

@@ -44,20 +44,21 @@ public final class MapleBacon {
   }
 
   @discardableResult
-  public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) -> CancelToken {
+  public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) -> Download<UIImage>? {
     let token = makeToken()
 
-    fetchImageFromCache(with: url, imageTransformer: imageTransformer) { result in
-      switch result {
-      case .success(let image):
-        DispatchQueue.main.optionalAsync {
-          completion(.success(image))
-        }
-      case .failure:
-        self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: imageTransformer, completion: completion)
-      }
-    }
-    return token
+//    fetchImageFromCache(with: url, imageTransformer: imageTransformer) { result in
+//      switch result {
+//      case .success(let image):
+//        DispatchQueue.main.optionalAsync {
+//          completion(.success(image))
+//        }
+//      case .failure:
+//        self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: imageTransformer, completion: completion)
+//      }
+//    }
+//    return token
+    return nil
   }
 
   public func hydrateCache(url: URL) {

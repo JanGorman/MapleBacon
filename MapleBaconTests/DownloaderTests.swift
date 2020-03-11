@@ -103,25 +103,25 @@ final class DownloaderTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
-  func testCancel() {
-    let expectation = self.expectation(description: #function)
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let downloader = Downloader<Data>(sessionConfiguration: configuration)
-
-    setupMockResponse(.error)
-
-    downloader.fetch(Self.url, token: Self.cancelToken) { response in
-      switch response {
-      case .failure(let error as DownloaderError):
-        XCTAssertEqual(error, .canceled)
-      case .success, .failure:
-        XCTFail()
-      }
-      expectation.fulfill()
-    }
-    downloader.cancel(token: Self.cancelToken)
-
-    waitForExpectations(timeout: 5, handler: nil)
-  }
+//  func testCancel() {
+//    let expectation = self.expectation(description: #function)
+//    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+//    let downloader = Downloader<Data>(sessionConfiguration: configuration)
+//
+//    setupMockResponse(.error)
+//
+//    downloader.fetch(Self.url, token: Self.cancelToken) { response in
+//      switch response {
+//      case .failure(let error as DownloaderError):
+//        XCTAssertEqual(error, .canceled)
+//      case .success, .failure:
+//        XCTFail()
+//      }
+//      expectation.fulfill()
+//    }
+//    downloader.cancel(token: Self.cancelToken)
+//
+//    waitForExpectations(timeout: 5, handler: nil)
+//  }
 
 }

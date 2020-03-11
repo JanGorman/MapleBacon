@@ -93,7 +93,7 @@ public final class MapleBacon {
   }
 
   public func cancel(token: CancelToken) {
-    downloader.cancel(token: token)
+//    downloader.cancel(token: token)
   }
 
 }

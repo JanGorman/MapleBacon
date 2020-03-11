@@ -15,7 +15,7 @@ final class DiskCache {
 
   init(name: String) {
     let queueLabel = "\(Self.domain).\(name)"
-    self.diskQueue = DispatchQueue(label: queueLabel, qos: .background)
+    self.diskQueue = DispatchQueue(label: queueLabel)
     self.cacheName = "\(Self.domain).\(name)"
   }
 
@@ -105,13 +105,22 @@ final class DiskCache {
     return expiredFileUrls
   }
 
-  private func store(data: Data, key: String) throws {
+  func isCached(forKey key: String) throws -> Bool {
+    let url = try self.cacheDirectory().appendingPathComponent(key)
+    return FileManager.default.fileExists(atPath: url.path)
+  }
+
+}
+
+private extension DiskCache {
+
+  func store(data: Data, key: String) throws {
     let cacheDirectory = try self.cacheDirectory()
     let fileURL = cacheDirectory.appendingPathComponent(key)
     try data.write(to: fileURL)
   }
 
-  private func cacheDirectory() throws -> URL {
+  func cacheDirectory() throws -> URL {
     let fileManger = FileManager.default
 
     let folderURL = try FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)

@@ -6,6 +6,7 @@ import UIKit
 
 private var baconImageUrlKey: UInt8 = 0
 private var cancelTokenKey: UInt8 = 1
+private var downloadKey: UInt8 = 2
 
 extension UIImageView {
 
@@ -24,6 +25,15 @@ extension UIImageView {
     }
     set {
       objc_setAssociatedObject(self, &cancelTokenKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+  }
+
+  private var download: Download<UIImage>? {
+    get {
+      objc_getAssociatedObject(self, &downloadKey) as? Download<UIImage>
+    }
+    set {
+      objc_setAssociatedObject(self, &downloadKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
   }
 

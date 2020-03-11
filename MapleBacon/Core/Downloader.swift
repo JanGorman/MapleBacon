@@ -14,32 +14,24 @@ final class Downloader<T: DataConvertible> {
   let session: URLSession
 
   private let sessionDelegate: SessionDelegate<T>
+  private let lock = NSLock()
 
-  private let downloads = Atomic(DoubleKeyedContainer<CancelToken, URL, Download<T>>())
+  private var downloads: [URL: Download<T>] = [:]
 
   fileprivate subscript(_ url: URL) -> Download<T>? {
     get {
-      downloads.value[url]
+      defer {
+        lock.unlock()
+      }
+      lock.lock()
+      return downloads[url]
     }
     set {
-      guard let newValue = newValue else {
-        downloads.mutate{ $0.removeValue(forKey: url) }
-        return
+      defer {
+        lock.unlock()
       }
-      downloads.mutate { $0.update(newValue, forKey: url) }
-    }
-  }
-
-  fileprivate subscript(_ token: CancelToken) -> Download<T>? {
-    get {
-      downloads.value[token]
-    }
-    set {
-      guard let newValue = newValue else {
-        downloads.mutate { $0.removeValue(forKey: token) }
-        return
-      }
-      downloads.mutate { $0.update(newValue, forKey: token) }
+      lock.lock()
+      downloads[url] = newValue
     }
   }
 
@@ -62,62 +54,23 @@ final class Downloader<T: DataConvertible> {
       let newTask = session.dataTask(with: url)
       let download = Download<T>(task: newTask, url: url, token: token, completion: completion)
       download.start()
-      downloads.mutate { $0.insert(download, forKeys: (token, url)) }
+      self[url] = download
       task = newTask
     }
 
     task.resume()
   }
 
-  func cancel(token: CancelToken) {
-    guard let download = self[token] else {
-      return
-    }
-    if download.completions.count == 1 {
-      download.task.cancel()
-      download.completions.first?(.failure(DownloaderError.canceled))
-      self[token] = nil
-    }
-  }
-
-}
-
-private final class Download<T: DataConvertible> {
-
-  let task: URLSessionDataTask
-  let url: URL
-  let token: CancelToken
-
-  var completions: [(Result<T.Result, Error>) -> Void]
-  var data = Data()
-
-  private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
-
-  init(task: URLSessionDataTask, url: URL, token: CancelToken, completion: @escaping (Result<T.Result, Error>) -> Void) {
-    self.task = task
-    self.url = url
-    self.token = token
-    self.completions = [completion]
-  }
-
-  deinit {
-    invalidateBackgroundTask()
-  }
-
-  func start() {
-    backgroundTask = UIApplication.shared.beginBackgroundTask {
-      self.invalidateBackgroundTask()
-    }
-  }
-
-  func finish() {
-    invalidateBackgroundTask()
-  }
-
-  private func invalidateBackgroundTask() {
-    UIApplication.shared.endBackgroundTask(backgroundTask)
-    backgroundTask = .invalid
-  }
+//  func cancel(token: CancelToken) {
+//    guard let download = self[token] else {
+//      return
+//    }
+//    if download.completions.count == 1 {
+//      download.task.cancel()
+//      download.completions.first?(.failure(DownloaderError.canceled))
+//      self[token] = nil
+//    }
+//  }
 
 }
 

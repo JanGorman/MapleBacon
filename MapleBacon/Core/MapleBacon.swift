@@ -45,46 +45,27 @@ public final class MapleBacon {
 
   @discardableResult
   public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) -> Download<UIImage>? {
-    let token = makeToken()
+    if (try? isCached(with: url, imageTransformer: imageTransformer)) == true {
+      fetchImageFromCache(with: url, imageTransformer: imageTransformer, completion: completion)
+      return nil
+    }
 
-//    fetchImageFromCache(with: url, imageTransformer: imageTransformer) { result in
-//      switch result {
-//      case .success(let image):
-//        DispatchQueue.main.optionalAsync {
-//          completion(.success(image))
-//        }
-//      case .failure:
-//        self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: imageTransformer, completion: completion)
-//      }
-//    }
-//    return token
-    return nil
+    let token = makeToken()
+    return fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: imageTransformer, completion: completion)
   }
 
   public func hydrateCache(url: URL) {
-    let cacheKey = makeCacheKey(for: url, imageTransformer: nil)
-    cache.value(forKey: cacheKey) { result in
-      switch result {
-      case .failure:
-        let token = self.makeToken()
-        self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: nil, completion: { _ in })
-      default:
-        break
-      }
+    if (try? isCached(with: url, imageTransformer: nil)) == false {
+      let token = self.makeToken()
+      _ = self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: nil, completion: { _ in })
     }
   }
 
   public func hydrateCache(urls: [URL]) {
     for url in urls {
-      let cacheKey = makeCacheKey(for: url, imageTransformer: nil)
-      cache.value(forKey: cacheKey) { result in
-        switch result {
-        case .failure:
-          let token = self.makeToken()
-          self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: nil, completion: { _ in })
-        default:
-          break
-        }
+      if (try? isCached(with: url, imageTransformer: nil)) == false {
+        let token = self.makeToken()
+        _ = self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: nil, completion: { _ in })
       }
     }
   }
@@ -106,19 +87,28 @@ private extension MapleBacon {
     return token.value
   }
 
+  func isCached(with url: URL, imageTransformer: ImageTransforming?) throws -> Bool {
+    let cacheKey = makeCacheKey(for: url, imageTransformer: imageTransformer)
+    return try cache.isCached(forKey: cacheKey)
+  }
+
   func fetchImageFromCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
     let cacheKey = makeCacheKey(for: url, imageTransformer: imageTransformer)
     cache.value(forKey: cacheKey) { result in
       switch result {
       case .success(let cacheResult):
-        completion(.success(cacheResult.value))
+        DispatchQueue.main.optionalAsync {
+          completion(.success(cacheResult.value))
+        }
       case .failure(let error):
-        completion(.failure(error))
+        DispatchQueue.main.optionalAsync {
+          completion(.failure(error))
+        }
       }
     }
   }
 
-  func fetchImageFromNetworkAndCache(with url: URL, token: CancelToken, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
+  func fetchImageFromNetworkAndCache(with url: URL, token: CancelToken, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) -> Download<UIImage> {
     fetchImageFromNetwork(with: url, token: token) { result in
       switch result {
       case .success(let image):
@@ -139,7 +129,7 @@ private extension MapleBacon {
     }
   }
 
-  func fetchImageFromNetwork(with url: URL, token: CancelToken, completion: @escaping ImageCompletion) {
+  func fetchImageFromNetwork(with url: URL, token: CancelToken, completion: @escaping ImageCompletion) -> Download<UIImage> {
     downloader.fetch(url, token: token, completion: completion)
   }
 

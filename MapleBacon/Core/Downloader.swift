@@ -45,20 +45,26 @@ final class Downloader<T: DataConvertible> {
     session.invalidateAndCancel()
   }
 
-  func fetch(_ url: URL, token: CancelToken, completion: @escaping (Result<T.Result, Error>) -> Void) {
+  func fetch(_ url: URL, token: CancelToken, completion: @escaping (Result<T.Result, Error>) -> Void) -> Download<T> {
     let task: URLSessionDataTask
-    if let download = self[url] {
-      task = download.task
-      download.completions.append(completion)
+    let download: Download<T>
+
+    if let existingDownload = self[url] {
+      task = existingDownload.task
+      existingDownload.completions.append(completion)
+      download = existingDownload
     } else {
       let newTask = session.dataTask(with: url)
-      let download = Download<T>(task: newTask, url: url, token: token, completion: completion)
-      download.start()
-      self[url] = download
+      let newDownload = Download<T>(task: newTask, url: url, token: token, completion: completion)
+      newDownload.start()
+      self[url] = newDownload
       task = newTask
+      download = newDownload
     }
 
     task.resume()
+
+    return download
   }
 
 //  func cancel(token: CancelToken) {

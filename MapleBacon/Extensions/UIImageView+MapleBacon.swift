@@ -5,8 +5,7 @@
 import UIKit
 
 private var baconImageUrlKey: UInt8 = 0
-private var cancelTokenKey: UInt8 = 1
-private var downloadKey: UInt8 = 2
+private var downloadKey: UInt8 = 1
 
 extension UIImageView {
 
@@ -19,18 +18,9 @@ extension UIImageView {
     }
   }
 
-  private var cancelToken: CancelToken? {
+  private var downloadTask: DownloadTask<UIImage>? {
     get {
-      objc_getAssociatedObject(self, &cancelTokenKey) as? Int
-    }
-    set {
-      objc_setAssociatedObject(self, &cancelTokenKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-    }
-  }
-
-  private var download: Download<UIImage>? {
-    get {
-      objc_getAssociatedObject(self, &downloadKey) as? Download<UIImage>
+      objc_getAssociatedObject(self, &downloadKey) as? DownloadTask<UIImage>
     }
     set {
       objc_setAssociatedObject(self, &downloadKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -51,10 +41,10 @@ extension UIImageView {
 
     let transformer = makeTransformer(displayOptions: displayOptions, imageTransformer: imageTransformer)
 
-    _ = MapleBacon.shared.image(with: url, imageTransformer: transformer) { [weak self] result in
+    let task = MapleBacon.shared.image(with: url, imageTransformer: transformer) { [weak self] result in
       defer {
         self?.baconImageUrl = nil
-        self?.cancelToken = nil
+        self?.downloadTask = nil
         completion?()
       }
       guard case let Result.success(image) = result, let self = self, url == self.baconImageUrl else {
@@ -62,13 +52,11 @@ extension UIImageView {
       }
       self.image = image
     }
+    downloadTask = task
   }
 
   private func cancelDownload() {
-    guard let token = cancelToken else {
-      return
-    }
-    MapleBacon.shared.cancel(token: token)
+    downloadTask?.cancel()
   }
 
   private func makeTransformer(displayOptions: [DisplayOptions] = [], imageTransformer: ImageTransforming?) -> ImageTransforming? {

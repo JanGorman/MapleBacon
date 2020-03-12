@@ -31,8 +31,6 @@ public final class MapleBacon {
   private let downloader: Downloader<UIImage>
   private let transformerQueue: DispatchQueue
 
-  private var token = Atomic<CancelToken>(0)
-
   public convenience init(name: String = "", sessionConfiguration: URLSessionConfiguration = .default) {
     self.init(cache: Cache(name: name), sessionConfiguration: sessionConfiguration)
   }
@@ -44,28 +42,25 @@ public final class MapleBacon {
   }
 
   @discardableResult
-  public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) -> Download<UIImage>? {
+  public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) -> DownloadTask<UIImage>? {
     if (try? isCached(with: url, imageTransformer: imageTransformer)) == true {
       fetchImageFromCache(with: url, imageTransformer: imageTransformer, completion: completion)
       return nil
     }
 
-    let token = makeToken()
-    return fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: imageTransformer, completion: completion)
+    return fetchImageFromNetworkAndCache(with: url, imageTransformer: imageTransformer, completion: completion)
   }
 
   public func hydrateCache(url: URL) {
     if (try? isCached(with: url, imageTransformer: nil)) == false {
-      let token = self.makeToken()
-      _ = self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: nil, completion: { _ in })
+      _ = self.fetchImageFromNetworkAndCache(with: url, imageTransformer: nil, completion: { _ in })
     }
   }
 
   public func hydrateCache(urls: [URL]) {
     for url in urls {
       if (try? isCached(with: url, imageTransformer: nil)) == false {
-        let token = self.makeToken()
-        _ = self.fetchImageFromNetworkAndCache(with: url, token: token, imageTransformer: nil, completion: { _ in })
+        _ = self.fetchImageFromNetworkAndCache(with: url, imageTransformer: nil, completion: { _ in })
       }
     }
   }
@@ -74,18 +69,9 @@ public final class MapleBacon {
     cache.clear(options, completion: completion)
   }
 
-  public func cancel(token: CancelToken) {
-//    downloader.cancel(token: token)
-  }
-
 }
 
 private extension MapleBacon {
-
-  func makeToken() -> CancelToken {
-    token.mutate { $0 += 1 }
-    return token.value
-  }
 
   func isCached(with url: URL, imageTransformer: ImageTransforming?) throws -> Bool {
     let cacheKey = makeCacheKey(for: url, imageTransformer: imageTransformer)
@@ -108,8 +94,8 @@ private extension MapleBacon {
     }
   }
 
-  func fetchImageFromNetworkAndCache(with url: URL, token: CancelToken, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) -> Download<UIImage> {
-    fetchImageFromNetwork(with: url, token: token) { result in
+  func fetchImageFromNetworkAndCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) -> DownloadTask<UIImage> {
+    fetchImageFromNetwork(with: url) { result in
       switch result {
       case .success(let image):
         if let transformer = imageTransformer {
@@ -129,8 +115,8 @@ private extension MapleBacon {
     }
   }
 
-  func fetchImageFromNetwork(with url: URL, token: CancelToken, completion: @escaping ImageCompletion) -> Download<UIImage> {
-    downloader.fetch(url, token: token, completion: completion)
+  func fetchImageFromNetwork(with url: URL, completion: @escaping ImageCompletion) -> DownloadTask<UIImage> {
+    downloader.fetch(url, completion: completion)
   }
 
   func transformImageAndCache(_ image: UIImage, cacheKey: String, imageTransformer: ImageTransforming, completion: @escaping ImageCompletion) {

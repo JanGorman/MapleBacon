@@ -4,26 +4,71 @@
 
 import UIKit
 
-public final class Download<T: DataConvertible> {
+public struct DownloadTask<T: DataConvertible> {
+
+  let download: Download<T>
+
+  public let cancelToken: CancelToken
+
+  public func cancel() {
+    download.cancel(cancelToken: cancelToken)
+  }
+
+}
+
+final class Download<T: DataConvertible> {
+
+  typealias Completion = (Result<T.Result, Error>) -> Void
 
   let task: URLSessionDataTask
-  let url: URL
-  let token: CancelToken
 
-  var completions: [(Result<T.Result, Error>) -> Void]
-  var data = Data()
+  var completions: [Completion] {
+    defer {
+      lock.unlock()
+    }
+    lock.lock()
+    return Array(tokenCompletions.values)
+  }
 
+  private let lock = NSLock()
+
+  private(set) var data = Data()
+  private var currentToken: CancelToken = 0
   private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+  private var tokenCompletions: [CancelToken: Completion] = [:]
 
-  init(task: URLSessionDataTask, url: URL, token: CancelToken, completion: @escaping (Result<T.Result, Error>) -> Void) {
+  init(task: URLSessionDataTask) {
     self.task = task
-    self.url = url
-    self.token = token
-    self.completions = [completion]
   }
 
   deinit {
     invalidateBackgroundTask()
+  }
+
+  func addCompletion(_ completion: @escaping Completion) -> CancelToken {
+    defer {
+      currentToken += 1
+      lock.unlock()
+    }
+    lock.lock()
+    tokenCompletions[currentToken] = completion
+    return currentToken
+  }
+
+  func removeCompletion(for token: CancelToken) -> Completion? {
+    defer {
+      lock.unlock()
+    }
+    lock.lock()
+    guard let completion = tokenCompletions[token] else {
+      return nil
+    }
+    tokenCompletions[token] = nil
+    return completion
+  }
+
+  func appendData(_ data: Data) {
+    self.data.append(data)
   }
 
   func start() {
@@ -36,7 +81,21 @@ public final class Download<T: DataConvertible> {
     invalidateBackgroundTask()
   }
 
-  private func invalidateBackgroundTask() {
+  func cancel(cancelToken: CancelToken) {
+    guard let completion = removeCompletion(for: cancelToken) else {
+      return
+    }
+    if tokenCompletions.isEmpty {
+      task.cancel()
+    }
+    completion(.failure(DownloaderError.canceled))
+  }
+
+}
+
+private extension Download {
+
+  func invalidateBackgroundTask() {
     UIApplication.shared.endBackgroundTask(backgroundTask)
     backgroundTask = .invalid
   }

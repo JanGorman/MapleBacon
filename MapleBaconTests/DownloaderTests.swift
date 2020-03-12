@@ -8,7 +8,6 @@ import XCTest
 final class DownloaderTests: XCTestCase {
 
   private static let url = URL(string: "https://example.com/mapleBacon.png")!
-  private static let cancelToken = 1
 
   func testDownload() {
     let expectation = self.expectation(description: #function)
@@ -17,7 +16,7 @@ final class DownloaderTests: XCTestCase {
 
     setupMockResponse(.data(dummyData()))
 
-    _ = downloader.fetch(Self.url, token: Self.cancelToken) { response in
+    _ = downloader.fetch(Self.url) { response in
       switch response {
       case .success(let data):
         XCTAssertNotNil(data)
@@ -38,7 +37,7 @@ final class DownloaderTests: XCTestCase {
 
     setupMockResponse(.data(dummyData()))
 
-    _ = downloader.fetch(Self.url, token: Self.cancelToken) { response in
+    _ = downloader.fetch(Self.url) { response in
       switch response {
       case .success:
         XCTFail()
@@ -59,7 +58,7 @@ final class DownloaderTests: XCTestCase {
 
     setupMockResponse(.error)
 
-    _ = downloader.fetch(Self.url, token: Self.cancelToken) { response in
+    _ = downloader.fetch(Self.url) { response in
       switch response {
       case .success:
         XCTFail()
@@ -79,7 +78,7 @@ final class DownloaderTests: XCTestCase {
     setupMockResponse(.data(dummyData()))
 
     let firstExpectation = expectation(description: "first")
-    _ = downloader.fetch(Self.url, token: Self.cancelToken) { response in
+    _ = downloader.fetch(Self.url) { response in
       switch response {
       case .success(let data):
         XCTAssertNotNil(data)
@@ -90,7 +89,7 @@ final class DownloaderTests: XCTestCase {
     }
 
     let secondExpectation = expectation(description: "second")
-    _ = downloader.fetch(Self.url, token: Self.cancelToken) { response in
+    _ = downloader.fetch(Self.url) { response in
       switch response {
       case .success(let data):
         XCTAssertNotNil(data)
@@ -103,25 +102,27 @@ final class DownloaderTests: XCTestCase {
     waitForExpectations(timeout: 5, handler: nil)
   }
 
-//  func testCancel() {
-//    let expectation = self.expectation(description: #function)
-//    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-//    let downloader = Downloader<Data>(sessionConfiguration: configuration)
-//
-//    setupMockResponse(.error)
-//
-//    downloader.fetch(Self.url, token: Self.cancelToken) { response in
-//      switch response {
-//      case .failure(let error as DownloaderError):
-//        XCTAssertEqual(error, .canceled)
-//      case .success, .failure:
-//        XCTFail()
-//      }
-//      expectation.fulfill()
-//    }
-//    downloader.cancel(token: Self.cancelToken)
-//
-//    waitForExpectations(timeout: 5, handler: nil)
-//  }
+  func testCancel() {
+    let expectation = self.expectation(description: #function)
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let downloader = Downloader<Data>(sessionConfiguration: configuration)
+
+    setupMockResponse(.error)
+
+    let downloadTask = downloader.fetch(Self.url) { response in
+      switch response {
+      case .failure(let error as DownloaderError):
+        XCTAssertEqual(error, .canceled)
+      case .success, .failure:
+        XCTFail()
+      }
+      expectation.fulfill()
+    }
+
+    XCTAssertNotNil(downloadTask)
+    downloadTask.cancel()
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
 
 }

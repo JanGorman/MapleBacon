@@ -45,38 +45,21 @@ final class Downloader<T: DataConvertible> {
     session.invalidateAndCancel()
   }
 
-  func fetch(_ url: URL, token: CancelToken, completion: @escaping (Result<T.Result, Error>) -> Void) -> Download<T> {
-    let task: URLSessionDataTask
-    let download: Download<T>
-
-    if let existingDownload = self[url] {
-      task = existingDownload.task
-      existingDownload.completions.append(completion)
-      download = existingDownload
-    } else {
-      let newTask = session.dataTask(with: url)
-      let newDownload = Download<T>(task: newTask, url: url, token: token, completion: completion)
-      newDownload.start()
-      self[url] = newDownload
-      task = newTask
-      download = newDownload
+  func fetch(_ url: URL, completion: @escaping (Result<T.Result, Error>) -> Void) -> DownloadTask<T> {
+    if let download = self[url] {
+      let token = download.addCompletion(completion)
+      return DownloadTask(download: download, cancelToken: token)
     }
 
+    let task = session.dataTask(with: url)
+    let download = Download<T>(task: task)
+    let token = download.addCompletion(completion)
+    download.start()
+    self[url] = download
     task.resume()
 
-    return download
+    return DownloadTask(download: download, cancelToken: token)
   }
-
-//  func cancel(token: CancelToken) {
-//    guard let download = self[token] else {
-//      return
-//    }
-//    if download.completions.count == 1 {
-//      download.task.cancel()
-//      download.completions.first?(.failure(DownloaderError.canceled))
-//      self[token] = nil
-//    }
-//  }
 
 }
 
@@ -88,7 +71,7 @@ private final class SessionDelegate<T: DataConvertible>: NSObject, URLSessionDat
     guard let url = dataTask.originalRequest?.url, let download = downloader?[url] else {
       return
     }
-    download.data.append(data)
+    download.appendData(data)
   }
 
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {

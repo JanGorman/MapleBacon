@@ -30,7 +30,6 @@
 		F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA1D2402D9A8006CD529 /* Downloader.swift */; };
 		F27CBA222402DC0B006CD529 /* DownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA212402DC0B006CD529 /* DownloaderTests.swift */; };
 		F27CBA242402DC34006CD529 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA232402DC34006CD529 /* MockURLProtocol.swift */; };
-		F2D870E12416CB5200946A0B /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D870E02416CB5200946A0B /* Atomic.swift */; };
 		F2EEE583240BBC2E0002C9CA /* ImageTransforming.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE582240BBC2E0002C9CA /* ImageTransforming.swift */; };
 		F2EEE587240BBE040002C9CA /* ImageTransformingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE586240BBE040002C9CA /* ImageTransformingTests.swift */; };
 		F2EEE589240BBEF90002C9CA /* DownsamplingImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE588240BBEF90002C9CA /* DownsamplingImageTransformer.swift */; };
@@ -75,7 +74,6 @@
 		F27CBA1D2402D9A8006CD529 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		F27CBA212402DC0B006CD529 /* DownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloaderTests.swift; sourceTree = "<group>"; };
 		F27CBA232402DC34006CD529 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
-		F2D870E02416CB5200946A0B /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		F2EEE582240BBC2E0002C9CA /* ImageTransforming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransforming.swift; sourceTree = "<group>"; };
 		F2EEE586240BBE040002C9CA /* ImageTransformingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformingTests.swift; sourceTree = "<group>"; };
 		F2EEE588240BBEF90002C9CA /* DownsamplingImageTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownsamplingImageTransformer.swift; sourceTree = "<group>"; };
@@ -170,7 +168,6 @@
 				F2255E212404606E00193742 /* MapleBacon.swift */,
 				F2EEE582240BBC2E0002C9CA /* ImageTransforming.swift */,
 				F2EEE58C240BC17F0002C9CA /* DisplayOptions.swift */,
-				F2D870E02416CB5200946A0B /* Atomic.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -309,7 +306,6 @@
 				F2EEE58D240BC17F0002C9CA /* DisplayOptions.swift in Sources */,
 				F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */,
 				F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */,
-				F2D870E12416CB5200946A0B /* Atomic.swift in Sources */,
 				775455732418E70B00FF8F5F /* Data+MapleBacon.swift in Sources */,
 				F2EEE58B240BBFC00002C9CA /* CGSize+MapleBacon.swift in Sources */,
 				775455712418DF4100FF8F5F /* Download.swift in Sources */,

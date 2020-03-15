@@ -5,15 +5,15 @@
 import MapleBacon
 import UIKit
 
-final class ImageTransformerViewController: UICollectionViewController {
+final class PrefetchViewController: UICollectionViewController {
 
   private var imageURLs: [URL] = []
-  private var imageTransformer = SepiaImageTransformer()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     imageURLs = imageURLsFromBundle()
+    collectionView.prefetchDataSource = self
     collectionView?.reloadData()
   }
 
@@ -30,30 +30,17 @@ final class ImageTransformerViewController: UICollectionViewController {
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: ImageCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
     let url = imageURLs[indexPath.item]
-    cell.imageView.setImage(with: url, displayOptions: [.downsampled], imageTransformer: imageTransformer)
+    cell.imageView.setImage(with: url)
     return cell
   }
 
 }
 
-private class SepiaImageTransformer: ImageTransforming {
+extension PrefetchViewController: UICollectionViewDataSourcePrefetching {
 
-  let identifier = "com.schnaub.SepiaImageTransformer"
-
-  func transform(image: UIImage) -> UIImage? {
-    let filter = CIFilter(name: "CISepiaTone")!
-
-    let ciImage = CIImage(image: image)
-    filter.setValue(ciImage, forKey: kCIInputImageKey)
-    filter.setValue(0.5, forKey: kCIInputIntensityKey)
-
-    let context = CIContext()
-    guard let outputImage = filter.outputImage,
-          let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
-            return image
-    }
-
-    return UIImage(cgImage: cgImage)
+  func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+    let urls = indexPaths.map { imageURLs[$0.item] }
+    MapleBacon.shared.hydrateCache(urls: urls)
   }
 
 }

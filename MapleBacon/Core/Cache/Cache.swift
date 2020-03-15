@@ -2,9 +2,6 @@
 //  Copyright © 2020 Schnaub. All rights reserved.
 //
 
-#if canImport(CryptoKit)
-import CryptoKit
-#endif
 import UIKit
 
 enum CacheError: Error {
@@ -67,29 +64,24 @@ final class Cache<T: DataConvertible> where T.Result == T {
     }
   }
 
-  func clear(_ options: CacheClearOptions) {
+  func clear(_ options: CacheClearOptions, completion: ((Error?) -> Void)? = nil) {
     if options.contains(.memory) {
       memoryCache.clear()
+      if !options.contains(.disk) {
+        completion?(nil)
+      }
     }
     if options.contains(.disk) {
-      diskCache.clear()
+      diskCache.clear(completion)
     }
   }
 
-  private func convertToTargetType(_ data: Data, type: CacheType) -> Result<CacheResult<T>, Error> {
-    guard let targetType = T.convert(from: data) else {
-      return .failure(CacheError.dataConversion)
+  func isCached(forKey key: String) throws -> Bool {
+    let safeKey = safeCacheKey(key)
+    if memoryCache.isCached(forKey: safeKey) {
+      return true
     }
-    return .success(.init(value: targetType, type: type))
-  }
-
-  private func safeCacheKey(_ key: String) -> String {
-    #if canImport(CryptoKit)
-    if #available(iOS 13.0, *) {
-      return cryptoSafeCacheKey(key)
-    }
-    #endif
-    return key.components(separatedBy: CharacterSet(charactersIn: "()/")).joined(separator: "-")
+    return try diskCache.isCached(forKey: safeKey)
   }
 
   @objc private func cleanDiskOnNotification() {
@@ -98,7 +90,29 @@ final class Cache<T: DataConvertible> where T.Result == T {
 
 }
 
+private extension Cache {
+
+  func convertToTargetType(_ data: Data, type: CacheType) -> Result<CacheResult<T>, Error> {
+    guard let targetType = T.convert(from: data) else {
+      return .failure(CacheError.dataConversion)
+    }
+    return .success(.init(value: targetType, type: type))
+  }
+
+  func safeCacheKey(_ key: String) -> String {
+    #if canImport(CryptoKit)
+    if #available(iOS 13.0, *) {
+      return cryptoSafeCacheKey(key)
+    }
+    #endif
+    return key.components(separatedBy: CharacterSet(charactersIn: "()/")).joined(separator: "-")
+  }
+
+}
+
 #if canImport(CryptoKit)
+import CryptoKit
+
 @available(iOS 13.0, *)
 private extension Cache {
 

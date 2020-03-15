@@ -25,23 +25,29 @@ final class MemoryCache<Key: Hashable, Value> {
     backingCache.name = name
   }
 
+  func isCached(forKey key: Key) -> Bool {
+    self[key] != nil
+  }
+
   func clear() {
     backingCache.removeAllObjects()
   }
 
-  private func insert(_ value: Value, forKey key: Key) {
+}
+
+private extension MemoryCache {
+  func insert(_ value: Value, forKey key: Key) {
     backingCache.setObject(Entry(value: value), forKey: WrappedKey(key: key))
   }
 
-  private func value(forKey key: Key) -> Value? {
+  func value(forKey key: Key) -> Value? {
     let entry = backingCache.object(forKey: WrappedKey(key: key))
     return entry?.value
   }
 
-  private func removeValue(forKey key: Key) {
+  func removeValue(forKey key: Key) {
     backingCache.removeObject(forKey: WrappedKey(key: key))
   }
-
 }
 
 extension MemoryCache {

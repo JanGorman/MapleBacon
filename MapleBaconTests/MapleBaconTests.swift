@@ -2,6 +2,9 @@
 //  Copyright © 2020 Schnaub. All rights reserved.
 //
 
+#if canImport(Combine)
+import Combine
+#endif
 @testable import MapleBacon
 import XCTest
 
@@ -11,13 +14,8 @@ final class MapleBaconTests: XCTestCase {
 
   private let cache = Cache<UIImage>(name: "MapleBaconTests")
 
-  override func tearDown() {
-    cache.clear(.all)
-    // Clearing the disk is an async operation so we should wait
-    wait(for: 2.seconds)
-
-    super.tearDown()
-  }
+  @available(iOS 13.0, *)
+  private lazy var subscriptions: Set<AnyCancellable> = []
 
   func testIntegration() {
     let expectation = self.expectation(description: #function)
@@ -26,16 +24,19 @@ final class MapleBaconTests: XCTestCase {
 
     setupMockResponse(.data(makeImageData()))
 
-    mapleBacon.image(with: Self.url) { result in
+    let token = mapleBacon.image(with: Self.url) { result in
       switch result {
       case .success(let image):
         XCTAssertEqual(image.pngData(), makeImageData())
       case .failure:
         XCTFail()
       }
-      expectation.fulfill()
+      mapleBacon.clearCache(.all) { _ in
+        expectation.fulfill()
+      }
     }
 
+    XCTAssertNotNil(token)
     waitForExpectations(timeout: 5, handler: nil)
   }
 
@@ -53,7 +54,9 @@ final class MapleBaconTests: XCTestCase {
       case .failure(let error):
         XCTAssertNotNil(error)
       }
-      expectation.fulfill()
+      mapleBacon.clearCache(.all) { _ in
+        expectation.fulfill()
+      }
     }
 
     waitForExpectations(timeout: 5, handler: nil)
@@ -75,10 +78,66 @@ final class MapleBaconTests: XCTestCase {
       case .failure:
         XCTFail()
       }
-      expectation.fulfill()
+      mapleBacon.clearCache(.all) { _ in
+        expectation.fulfill()
+      }
     }
 
     waitForExpectations(timeout: 5, handler: nil)
   }
 
+  func testCancel() {
+    let expectation = self.expectation(description: #function)
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
+
+    setupMockResponse(.error)
+
+    let downloadTask = mapleBacon.image(with: Self.url) { result in
+      switch result {
+      case .failure(let error as DownloaderError):
+        XCTAssertEqual(error, .canceled)
+      case .success, .failure:
+        XCTFail()
+      }
+      mapleBacon.clearCache(.all) { _ in
+        expectation.fulfill()
+      }
+    }
+
+    XCTAssertNotNil(downloadTask)
+    downloadTask?.cancel()
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
 }
+
+#if canImport(Combine)
+
+@available(iOS 13.0, *)
+extension MapleBaconTests {
+
+  func testIntegrationPublisher() {
+    let expectation = self.expectation(description: #function)
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
+
+    setupMockResponse(.data(makeImageData()))
+
+    mapleBacon.image(with: Self.url)
+      .sink(receiveCompletion: { _ in
+        mapleBacon.clearCache(.all) { _ in
+          expectation.fulfill()
+        }
+      }, receiveValue: { image in
+        XCTAssertEqual(image.pngData(), makeImageData())
+      })
+      .store(in: &self.subscriptions)
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
+}
+
+#endif

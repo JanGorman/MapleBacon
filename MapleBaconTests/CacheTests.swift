@@ -11,14 +11,6 @@ final class CacheTests: XCTestCase {
 
   private let cache = Cache<Data>(name: CacheTests.cacheName)
 
-  override func tearDown() {
-    cache.clear(.all)
-    // Clearing the disk is an async operation so we should wait
-    wait(for: 2.seconds)
-
-    super.tearDown()
-  }
-
   func testStorage() {
     let expectation = self.expectation(description: #function)
 
@@ -26,7 +18,9 @@ final class CacheTests: XCTestCase {
 
     cache.store(value: data, forKey: #function) { error in
       XCTAssertNil(error)
-      expectation.fulfill()
+      self.cache.clear(.all) { _ in
+        expectation.fulfill()
+      }
     }
 
     waitForExpectations(timeout: 5, handler: nil)
@@ -46,7 +40,9 @@ final class CacheTests: XCTestCase {
         case .failure:
           XCTFail()
         }
-        expectation.fulfill()
+        self.cache.clear(.all) { _ in
+          expectation.fulfill()
+        }
       }
     }
 
@@ -58,17 +54,19 @@ final class CacheTests: XCTestCase {
 
     let data = dummyData()
 
-    cache.store(value: data, forKey: #function) { _ in
+    cache.store(value: data, forKey: "test") { _ in
       self.cache.clear(.all)
 
-      self.cache.value(forKey: #function) { result in
+      self.cache.value(forKey: "test") { result in
         switch result {
         case .success:
           XCTFail()
         case .failure(let error):
           XCTAssertNotNil(error)
         }
-        expectation.fulfill()
+        self.cache.clear(.all) { _ in
+          expectation.fulfill()
+        }
       }
     }
 
@@ -91,7 +89,9 @@ final class CacheTests: XCTestCase {
         case .failure:
           XCTFail()
         }
-        expectation.fulfill()
+        self.cache.clear(.all) { _ in
+          expectation.fulfill()
+        }
       }
     }
 
@@ -118,7 +118,29 @@ final class CacheTests: XCTestCase {
           }
         }
 
-        expectation.fulfill()
+        self.cache.clear(.all) { _ in
+          expectation.fulfill()
+        }
+      }
+    }
+
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+
+  func testIsCached() {
+    let expectation = self.expectation(description: #function)
+
+    let data = dummyData()
+
+    cache.store(value: data, forKey: #function) { _ in
+      XCTAssertTrue(try! self.cache.isCached(forKey: #function))
+
+      self.cache.clear(.memory) { _ in
+        XCTAssertTrue(try! self.cache.isCached(forKey: #function))
+
+        self.cache.clear(.all) { _ in
+          expectation.fulfill()
+        }
       }
     }
 

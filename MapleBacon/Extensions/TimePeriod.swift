@@ -25,6 +25,9 @@ enum TimePeriod {
 }
 
 extension Int {
+  var second: TimeInterval {
+      TimePeriod.seconds(self).timeInterval
+  }
   var seconds: TimeInterval {
       TimePeriod.seconds(self).timeInterval
   }

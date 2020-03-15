@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		775455712418DF4100FF8F5F /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775455702418DF4100FF8F5F /* Download.swift */; };
+		775455732418E70B00FF8F5F /* Data+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775455722418E70B00FF8F5F /* Data+MapleBacon.swift */; };
+		7778FD28240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7778FD27240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift */; };
 		F2255E202404600D00193742 /* UIImageView+MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2255E1F2404600D00193742 /* UIImageView+MapleBacon.swift */; };
 		F2255E222404606E00193742 /* MapleBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2255E212404606E00193742 /* MapleBacon.swift */; };
 		F2255E24240462D800193742 /* MapleBaconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2255E23240462D800193742 /* MapleBaconTests.swift */; };
@@ -45,6 +48,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		775455702418DF4100FF8F5F /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
+		775455722418E70B00FF8F5F /* Data+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+MapleBacon.swift"; sourceTree = "<group>"; };
+		7778FD27240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+MapleBacon.swift"; sourceTree = "<group>"; };
 		F2255E1F2404600D00193742 /* UIImageView+MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+MapleBacon.swift"; sourceTree = "<group>"; };
 		F2255E212404606E00193742 /* MapleBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBacon.swift; sourceTree = "<group>"; };
 		F2255E23240462D800193742 /* MapleBaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapleBaconTests.swift; sourceTree = "<group>"; };
@@ -94,6 +100,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		775455742419208B00FF8F5F /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				F27CBA0D2402B1FE006CD529 /* Cache.swift */,
+				F27CBA192402CC13006CD529 /* CacheClearOptions.swift */,
+				F27CBA1B2402CC28006CD529 /* CacheResult.swift */,
+				F247A25D23FF191C0083DB03 /* DiskCache.swift */,
+				F247A25923FF15980083DB03 /* MemoryCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
 		F247A23423FF15410083DB03 = {
 			isa = PBXGroup;
 			children = (
@@ -144,12 +162,9 @@
 		F247A25823FF158E0083DB03 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				F27CBA0D2402B1FE006CD529 /* Cache.swift */,
-				F27CBA192402CC13006CD529 /* CacheClearOptions.swift */,
-				F27CBA1B2402CC28006CD529 /* CacheResult.swift */,
-				F247A25D23FF191C0083DB03 /* DiskCache.swift */,
+				775455742419208B00FF8F5F /* Cache */,
 				F27CBA1D2402D9A8006CD529 /* Downloader.swift */,
-				F247A25923FF15980083DB03 /* MemoryCache.swift */,
+				775455702418DF4100FF8F5F /* Download.swift */,
 				F2255E212404606E00193742 /* MapleBacon.swift */,
 				F2EEE582240BBC2E0002C9CA /* ImageTransforming.swift */,
 				F2EEE58C240BC17F0002C9CA /* DisplayOptions.swift */,
@@ -166,6 +181,8 @@
 				F2255E1F2404600D00193742 /* UIImageView+MapleBacon.swift */,
 				F2EEE588240BBEF90002C9CA /* DownsamplingImageTransformer.swift */,
 				F2EEE58A240BBFC00002C9CA /* CGSize+MapleBacon.swift */,
+				7778FD27240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift */,
+				775455722418E70B00FF8F5F /* Data+MapleBacon.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -289,8 +306,11 @@
 				F2EEE58D240BC17F0002C9CA /* DisplayOptions.swift in Sources */,
 				F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */,
 				F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */,
+				775455732418E70B00FF8F5F /* Data+MapleBacon.swift in Sources */,
 				F2EEE58B240BBFC00002C9CA /* CGSize+MapleBacon.swift in Sources */,
+				775455712418DF4100FF8F5F /* Download.swift in Sources */,
 				F2EEE583240BBC2E0002C9CA /* ImageTransforming.swift in Sources */,
+				7778FD28240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift in Sources */,
 				F27CBA0C2402B147006CD529 /* TimePeriod.swift in Sources */,
 				F27CBA1A2402CC13006CD529 /* CacheClearOptions.swift in Sources */,
 				F27CBA1C2402CC28006CD529 /* CacheResult.swift in Sources */,

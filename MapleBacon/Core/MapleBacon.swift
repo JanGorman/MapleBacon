@@ -14,6 +14,7 @@ public final class MapleBacon {
 
   public typealias ImageCompletion = (Result<UIImage, Error>) -> Void
 
+  /// The shared instance of MapleBacon
   public static let shared = MapleBacon()
 
   private static let queueLabel = "com.schnaub.MapleBacon.transformer"
@@ -31,6 +32,10 @@ public final class MapleBacon {
   private let downloader: Downloader<UIImage>
   private let transformerQueue: DispatchQueue
 
+  /// Initialise a custom instance of MapleBacon
+  /// - Parameters:
+  ///   - name: The name to give this instance. Internally this reflects a distinct cache region.
+  ///   - sessionConfiguration: The URLSessionConfiguration to use. Uses `.default` when no parameter is supplied.
   public convenience init(name: String = "", sessionConfiguration: URLSessionConfiguration = .default) {
     self.init(cache: Cache(name: name), sessionConfiguration: sessionConfiguration)
   }
@@ -41,6 +46,13 @@ public final class MapleBacon {
     self.transformerQueue = DispatchQueue(label: Self.queueLabel, attributes: .concurrent)
   }
 
+  /// Return an image for the passed URL. This will check the in-memory and disk cache and fetch the image over the network if nothing is in either cache yet.
+  /// After a successful download, the image will be stored in both caches.
+  /// - Parameters:
+  ///   - url: The URL of the image
+  ///   - imageTransformer: An optional image transformer
+  ///   - completion: The completion to call with the image result
+  /// - Returns: An optional `DownloadTask<UIImage>` if needs to fetch the image over the network. The task can be used to cancel an inflight request
   @discardableResult
   public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) -> DownloadTask<UIImage>? {
     if (try? isCached(with: url, imageTransformer: imageTransformer)) == true {
@@ -51,12 +63,16 @@ public final class MapleBacon {
     return fetchImageFromNetworkAndCache(with: url, imageTransformer: imageTransformer, completion: completion)
   }
 
+  /// Hydrate the cache
+  /// - Parameter url: The URL to fetch
   public func hydrateCache(url: URL) {
     if (try? isCached(with: url, imageTransformer: nil)) == false {
       _ = self.fetchImageFromNetworkAndCache(with: url, imageTransformer: nil, completion: { _ in })
     }
   }
 
+  /// Hydrate the cache
+  /// - Parameter urls: An array of URLs to fetch
   public func hydrateCache(urls: [URL]) {
     for url in urls {
       if (try? isCached(with: url, imageTransformer: nil)) == false {
@@ -65,6 +81,10 @@ public final class MapleBacon {
     }
   }
 
+  /// Clear the cache
+  /// - Parameters:
+  ///   - options: The `CacheClearOptions`. Clear either only memory, disk or both caches.
+  ///   - completion: The completion to call after clearing the cache
   public func clearCache(_ options: CacheClearOptions, completion: ((Error?) -> Void)? = nil) {
     cache.clear(options, completion: completion)
   }
@@ -159,6 +179,12 @@ import Combine
 @available(iOS 13.0, *)
 extension MapleBacon {
 
+  /// The Combine way to fetch an image for the passed URL. This will check the in-memory and disk cache and fetch the image over the network if nothing is in either cache yet.
+  /// After a successful download, the image will be stored in both caches.
+  /// - Parameters:
+  ///   - url: The URL of the image
+  ///   - imageTransformer: An optional image transformer
+  /// - Returns: `AnyPublisher<UIImage, Error>`
   public func image(with url: URL, imageTransformer: ImageTransforming? = nil) -> AnyPublisher<UIImage, Error> {
     Future { resolve in
       self.image(with: url, imageTransformer: imageTransformer) { result in

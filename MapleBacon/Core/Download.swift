@@ -4,6 +4,7 @@
 
 import UIKit
 
+/// A download task – this wraps the internal download instance and can be used to cancel an inflight request
 public struct DownloadTask<T: DataConvertible> {
 
   let download: Download<T>

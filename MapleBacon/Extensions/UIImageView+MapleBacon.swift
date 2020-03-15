@@ -27,35 +27,48 @@ extension UIImageView {
     }
   }
 
+  /// Set remote image
+  /// - Parameters:
+  ///   - url: The URL of the image
+  ///   - placeholder: An optional placeholder image to set while fetching the remote image
+  ///   - displayOptions: `DisplayOptions`
+  ///   - imageTransformer: An optional image transformer
+  ///   - completion: An optional completion to call when the image is set
+  /// - Returns: An optional `DownloadTask<UIImage>` if needs to fetch the image over the network. The task can be used to cancel an inflight request
+  @discardableResult
   public func setImage(with url: URL?,
                        placeholder: UIImage? = nil,
                        displayOptions: [DisplayOptions] = [],
                        imageTransformer: ImageTransforming? = nil,
-                       completion: (() -> Void)? = nil) {
+                       completion: ((UIImage?) -> Void)? = nil) -> DownloadTask<UIImage>? {
     cancelDownload()
     baconImageUrl = url
     image = placeholder
     guard let url = url else {
-      return
+      return nil
     }
 
     let transformer = makeTransformer(displayOptions: displayOptions, imageTransformer: imageTransformer)
 
     let task = MapleBacon.shared.image(with: url, imageTransformer: transformer) { [weak self] result in
+      var resultImage: UIImage?
       defer {
         self?.baconImageUrl = nil
         self?.downloadTask = nil
-        completion?()
+        completion?(resultImage)
       }
       guard case let Result.success(image) = result, let self = self, url == self.baconImageUrl else {
         return
       }
+      resultImage = image
       self.image = image
     }
     downloadTask = task
+    return task
   }
 
-  private func cancelDownload() {
+  /// Cancel a running download
+  public func cancelDownload() {
     downloadTask?.cancel()
   }
 

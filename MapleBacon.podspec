@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'MapleBacon'
-  s.version          = '6.0.5'
+  s.version          = '6.1.0'
   s.swift_version    = '5.1'
   s.summary          = 'A lightweight and fast image downloading library iOS.'
 

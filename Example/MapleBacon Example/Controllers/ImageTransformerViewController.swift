@@ -50,7 +50,7 @@ private class SepiaImageTransformer: ImageTransforming {
     let context = CIContext()
     guard let outputImage = filter.outputImage,
           let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
-            return image
+      return image
     }
 
     return UIImage(cgImage: cgImage)

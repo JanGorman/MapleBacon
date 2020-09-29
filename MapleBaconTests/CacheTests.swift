@@ -11,6 +11,10 @@ final class CacheTests: XCTestCase {
 
   private let cache = Cache<Data>(name: CacheTests.cacheName)
 
+  override func tearDownWithError() throws {
+    cache.clear(.all)
+  }
+
   func testStorage() {
     let expectation = self.expectation(description: #function)
 
@@ -18,9 +22,7 @@ final class CacheTests: XCTestCase {
 
     cache.store(value: data, forKey: #function) { error in
       XCTAssertNil(error)
-      self.cache.clear(.all) { _ in
-        expectation.fulfill()
-      }
+      expectation.fulfill()
     }
 
     waitForExpectations(timeout: 5, handler: nil)
@@ -40,9 +42,7 @@ final class CacheTests: XCTestCase {
         case .failure:
           XCTFail()
         }
-        self.cache.clear(.all) { _ in
-          expectation.fulfill()
-        }
+        expectation.fulfill()
       }
     }
 
@@ -64,9 +64,7 @@ final class CacheTests: XCTestCase {
         case .failure(let error):
           XCTAssertNotNil(error)
         }
-        self.cache.clear(.all) { _ in
-          expectation.fulfill()
-        }
+        expectation.fulfill()
       }
     }
 
@@ -89,9 +87,7 @@ final class CacheTests: XCTestCase {
         case .failure:
           XCTFail()
         }
-        self.cache.clear(.all) { _ in
-          expectation.fulfill()
-        }
+        expectation.fulfill()
       }
     }
 
@@ -117,10 +113,7 @@ final class CacheTests: XCTestCase {
             XCTFail()
           }
         }
-
-        self.cache.clear(.all) { _ in
-          expectation.fulfill()
-        }
+        expectation.fulfill()
       }
     }
 
@@ -137,10 +130,7 @@ final class CacheTests: XCTestCase {
 
       self.cache.clear(.memory) { _ in
         XCTAssertTrue(try! self.cache.isCached(forKey: #function))
-
-        self.cache.clear(.all) { _ in
-          expectation.fulfill()
-        }
+        expectation.fulfill()
       }
     }
 

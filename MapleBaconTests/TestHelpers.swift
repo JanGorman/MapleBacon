@@ -5,28 +5,9 @@
 import UIKit
 import MapleBacon
 
-enum MockResponse {
-  case data(Data)
-  case error
-}
-
 func dummyData() -> Data {
   let string = #function + #file
   return Data(string.utf8)
-}
-
-func setupMockResponse(_ response: MockResponse) {
-  switch response {
-  case .data(let data):
-    MockURLProtocol.requestHandler = { request in
-      return (HTTPURLResponse(), data)
-    }
-  case .error:
-    MockURLProtocol.requestHandler = { request in
-      let anyError = NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
-      throw anyError
-    }
-  }
 }
 
 func makeImage() -> UIImage {

@@ -7,17 +7,18 @@ import XCTest
 
 final class DiskCacheTests: XCTestCase {
 
-  private static let cacheName = "DiskCacheTests"
+  private let cache = DiskCache(name: "DiskCacheTests")
+
+  override func tearDownWithError() throws {
+    cache.clear()
+  }
 
   func testWrite() {
     let expectation = self.expectation(description: #function)
-    let cache = DiskCache(name: Self.cacheName)
 
     cache.insert(dummyData(), forKey: "test") { error in
       XCTAssertNil(error)
-      cache.clear { _ in
-        expectation.fulfill()
-      }
+      expectation.fulfill()
     }
 
     waitForExpectations(timeout: 5, handler: nil)
@@ -25,21 +26,18 @@ final class DiskCacheTests: XCTestCase {
 
   func testReadWrite() {
     let expectation = self.expectation(description: #function)
-    let cache = DiskCache(name: Self.cacheName)
     let key = "test"
     let data = dummyData()
 
     cache.insert(data, forKey: key) { _ in
-      cache.value(forKey: key) { result in
+      self.cache.value(forKey: key) { result in
         switch result {
         case .success(let cacheData):
           XCTAssertEqual(cacheData, data)
         case .failure:
           XCTFail()
         }
-        cache.clear { _ in
-          expectation.fulfill()
-        }
+        expectation.fulfill()
       }
     }
 
@@ -48,7 +46,6 @@ final class DiskCacheTests: XCTestCase {
 
   func testReadInvalid() {
     let expectation = self.expectation(description: #function)
-    let cache = DiskCache(name: Self.cacheName)
 
     cache.value(forKey: #function) { result in
       switch result {
@@ -65,7 +62,6 @@ final class DiskCacheTests: XCTestCase {
 
   func testClear() {
     let expectation = self.expectation(description: #function)
-    let cache = DiskCache(name: Self.cacheName)
 
     cache.clear { error in
       XCTAssertNil(error)
@@ -77,24 +73,21 @@ final class DiskCacheTests: XCTestCase {
 
   func testClearExpired() {
     let expectation = self.expectation(description: #function)
-    let cache = DiskCache(name: Self.cacheName)
     cache.maxCacheAgeSeconds = 0.seconds
 
     cache.insert(dummyData(), forKey: "test") { _ in
       // Tests that setting maxCacheAgeSeconds does work
-      let expired = try! cache.expiredFileURLs()
+      let expired = try! self.cache.expiredFileURLs()
       XCTAssertFalse(expired.isEmpty)
 
-      cache.clearExpired { error in
+      self.cache.clearExpired { error in
         XCTAssertNil(error)
 
         // After clearing expired files, there should be no further expired URLs
-        let expired = try! cache.expiredFileURLs()
+        let expired = try! self.cache.expiredFileURLs()
         XCTAssertTrue(expired.isEmpty)
 
-        cache.clear { _ in
-          expectation.fulfill()
-        }
+        expectation.fulfill()
       }
     }
 
@@ -103,13 +96,10 @@ final class DiskCacheTests: XCTestCase {
 
   func testIsCached() {
     let expectation = self.expectation(description: #function)
-    let cache = DiskCache(name: Self.cacheName)
 
     cache.insert(dummyData(), forKey: "test") { _ in
-      XCTAssertTrue(try! cache.isCached(forKey: "test"))
-      cache.clear { _ in
-        expectation.fulfill()
-      }
+      XCTAssertTrue(try! self.cache.isCached(forKey: "test"))
+      expectation.fulfill()
     }
 
     waitForExpectations(timeout: 5, handler: nil)

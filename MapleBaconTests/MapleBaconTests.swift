@@ -19,10 +19,7 @@ final class MapleBaconTests: XCTestCase {
 
   func testIntegration() {
     let expectation = self.expectation(description: #function)
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
-
-    setupMockResponse(.data(makeImageData()))
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: .imageDataProviding)
 
     let token = mapleBacon.image(with: Self.url) { result in
       switch result {
@@ -42,10 +39,7 @@ final class MapleBaconTests: XCTestCase {
 
   func testError() {
     let expectation = self.expectation(description: #function)
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
-
-    setupMockResponse(.error)
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: .failed)
 
     mapleBacon.image(with: Self.url) { result in
       switch result {
@@ -64,11 +58,8 @@ final class MapleBaconTests: XCTestCase {
 
   func testTransformer() {
     let expectation = self.expectation(description: #function)
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
     let transformer = FirstDummyTransformer()
-
-    setupMockResponse(.data(makeImageData()))
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: .imageDataProviding)
 
     mapleBacon.image(with: Self.url, imageTransformer: transformer) { result in
       switch result {
@@ -88,10 +79,7 @@ final class MapleBaconTests: XCTestCase {
 
   func testCancel() {
     let expectation = self.expectation(description: #function)
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
-
-    setupMockResponse(.error)
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: .failed)
 
     let downloadTask = mapleBacon.image(with: Self.url) { result in
       switch result {
@@ -120,10 +108,7 @@ extension MapleBaconTests {
 
   func testIntegrationPublisher() {
     let expectation = self.expectation(description: #function)
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: configuration)
-
-    setupMockResponse(.data(makeImageData()))
+    let mapleBacon = MapleBacon(cache: cache, sessionConfiguration: .imageDataProviding)
 
     mapleBacon.image(with: Self.url)
       .sink(receiveCompletion: { _ in

@@ -29,7 +29,7 @@
 		F27CBA1C2402CC28006CD529 /* CacheResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA1B2402CC28006CD529 /* CacheResult.swift */; };
 		F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA1D2402D9A8006CD529 /* Downloader.swift */; };
 		F27CBA222402DC0B006CD529 /* DownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA212402DC0B006CD529 /* DownloaderTests.swift */; };
-		F27CBA242402DC34006CD529 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA232402DC34006CD529 /* MockURLProtocol.swift */; };
+		F27CBA242402DC34006CD529 /* MockURLSessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA232402DC34006CD529 /* MockURLSessionConfiguration.swift */; };
 		F2EEE583240BBC2E0002C9CA /* ImageTransforming.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE582240BBC2E0002C9CA /* ImageTransforming.swift */; };
 		F2EEE587240BBE040002C9CA /* ImageTransformingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE586240BBE040002C9CA /* ImageTransformingTests.swift */; };
 		F2EEE589240BBEF90002C9CA /* DownsamplingImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE588240BBEF90002C9CA /* DownsamplingImageTransformer.swift */; };
@@ -73,7 +73,7 @@
 		F27CBA1B2402CC28006CD529 /* CacheResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheResult.swift; sourceTree = "<group>"; };
 		F27CBA1D2402D9A8006CD529 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		F27CBA212402DC0B006CD529 /* DownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloaderTests.swift; sourceTree = "<group>"; };
-		F27CBA232402DC34006CD529 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		F27CBA232402DC34006CD529 /* MockURLSessionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSessionConfiguration.swift; sourceTree = "<group>"; };
 		F2EEE582240BBC2E0002C9CA /* ImageTransforming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransforming.swift; sourceTree = "<group>"; };
 		F2EEE586240BBE040002C9CA /* ImageTransformingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformingTests.swift; sourceTree = "<group>"; };
 		F2EEE588240BBEF90002C9CA /* DownsamplingImageTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownsamplingImageTransformer.swift; sourceTree = "<group>"; };
@@ -153,7 +153,7 @@
 				F247A24E23FF15410083DB03 /* Info.plist */,
 				F2255E23240462D800193742 /* MapleBaconTests.swift */,
 				F247A25B23FF163F0083DB03 /* MemoryCacheTests.swift */,
-				F27CBA232402DC34006CD529 /* MockURLProtocol.swift */,
+				F27CBA232402DC34006CD529 /* MockURLSessionConfiguration.swift */,
 				F27CBA112402B33E006CD529 /* TestHelpers.swift */,
 			);
 			path = MapleBaconTests;
@@ -244,7 +244,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Schnaub;
 				TargetAttributes = {
 					F247A23D23FF15410083DB03 = {
@@ -326,7 +326,7 @@
 				F247A25C23FF163F0083DB03 /* MemoryCacheTests.swift in Sources */,
 				F2255E24240462D800193742 /* MapleBaconTests.swift in Sources */,
 				F247A26023FF19300083DB03 /* DiskCacheTests.swift in Sources */,
-				F27CBA242402DC34006CD529 /* MockURLProtocol.swift in Sources */,
+				F27CBA242402DC34006CD529 /* MockURLSessionConfiguration.swift in Sources */,
 				F27CBA102402B2F0006CD529 /* CacheTests.swift in Sources */,
 				F27CBA122402B33E006CD529 /* TestHelpers.swift in Sources */,
 				F2EEE587240BBE040002C9CA /* ImageTransformingTests.swift in Sources */,
@@ -370,6 +370,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -395,7 +396,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -433,6 +434,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -452,7 +454,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

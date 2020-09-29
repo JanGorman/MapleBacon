@@ -11,10 +11,7 @@ final class DownloaderTests: XCTestCase {
 
   func testDownload() {
     let expectation = self.expectation(description: #function)
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let downloader = Downloader<Data>(sessionConfiguration: configuration)
-
-    setupMockResponse(.data(dummyData()))
+    let downloader = Downloader<Data>(sessionConfiguration: .dummyDataProviding)
 
     _ = downloader.fetch(Self.url) { response in
       switch response {
@@ -31,11 +28,7 @@ final class DownloaderTests: XCTestCase {
 
   func testInvalidData() {
     let expectation = self.expectation(description: #function)
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    // The default mock response returns Data that cannot be deserialised into a UIImage
-    let downloader = Downloader<UIImage>(sessionConfiguration: configuration)
-
-    setupMockResponse(.data(dummyData()))
+    let downloader = Downloader<UIImage>(sessionConfiguration: .dummyDataProviding)
 
     _ = downloader.fetch(Self.url) { response in
       switch response {
@@ -43,7 +36,6 @@ final class DownloaderTests: XCTestCase {
         XCTFail()
       case .failure(let error):
         XCTAssertNotNil(error)
-
       }
       expectation.fulfill()
     }
@@ -53,10 +45,7 @@ final class DownloaderTests: XCTestCase {
 
   func testFailure() {
     let expectation = self.expectation(description: #function)
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let downloader = Downloader<Data>(sessionConfiguration: configuration)
-
-    setupMockResponse(.error)
+    let downloader = Downloader<Data>(sessionConfiguration: .failed)
 
     _ = downloader.fetch(Self.url) { response in
       switch response {
@@ -72,10 +61,7 @@ final class DownloaderTests: XCTestCase {
   }
 
   func testConcurrentDownloads() {
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let downloader = Downloader<Data>(sessionConfiguration: configuration)
-
-    setupMockResponse(.data(dummyData()))
+    let downloader = Downloader<Data>(sessionConfiguration: .dummyDataProviding)
 
     let firstExpectation = expectation(description: "first")
     _ = downloader.fetch(Self.url) { response in
@@ -104,10 +90,7 @@ final class DownloaderTests: XCTestCase {
 
   func testCancel() {
     let expectation = self.expectation(description: #function)
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    let downloader = Downloader<Data>(sessionConfiguration: configuration)
-
-    setupMockResponse(.error)
+    let downloader = Downloader<Data>(sessionConfiguration: .failed)
 
     let downloadTask = downloader.fetch(Self.url) { response in
       switch response {

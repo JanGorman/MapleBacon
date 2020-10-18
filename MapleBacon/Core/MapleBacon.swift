@@ -101,15 +101,8 @@ private extension MapleBacon {
   func fetchImageFromCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
     let cacheKey = makeCacheKey(for: url, imageTransformer: imageTransformer)
     cache.value(forKey: cacheKey) { result in
-      switch result {
-      case .success(let cacheResult):
-        DispatchQueue.main.optionalAsync {
-          completion(.success(cacheResult.value))
-        }
-      case .failure(let error):
-        DispatchQueue.main.optionalAsync {
-          completion(.failure(error))
-        }
+      DispatchQueue.main.optionalAsync {
+        completion(result.flatMap { .success($0.value) })
       }
     }
   }
@@ -186,13 +179,10 @@ extension MapleBacon {
   ///   - imageTransformer: An optional image transformer
   /// - Returns: `AnyPublisher<UIImage, Error>`
   public func image(with url: URL, imageTransformer: ImageTransforming? = nil) -> AnyPublisher<UIImage, Error> {
-    Future { resolve in
-      self.image(with: url, imageTransformer: imageTransformer) { result in
-        switch result {
-        case .success(let image):
-          resolve(.success(image))
-        case .failure(let error):
-          resolve(.failure(error))
+    Deferred {
+      Future { resolve in
+        self.image(with: url, imageTransformer: imageTransformer) { result in
+          resolve(result)
         }
       }
     }.eraseToAnyPublisher()

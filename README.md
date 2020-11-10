@@ -32,7 +32,7 @@ MapleBacon is available through [CocoaPods](http://cocoapods.org). To install ad
 pod "MapleBacon"
 ```
 
-[Carthage](https://github.com/Carthage/Carthage) / [punic](https://github.com/schwa/punic):
+[Carthage](https://github.com/Carthage/Carthage)
 
 ```ogdl
 github "JanGorman/MapleBacon"

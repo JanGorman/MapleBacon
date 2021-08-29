@@ -30,6 +30,10 @@
 		F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA1D2402D9A8006CD529 /* Downloader.swift */; };
 		F27CBA222402DC0B006CD529 /* DownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA212402DC0B006CD529 /* DownloaderTests.swift */; };
 		F27CBA242402DC34006CD529 /* MockURLSessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27CBA232402DC34006CD529 /* MockURLSessionConfiguration.swift */; };
+		F280024B26DBABB70031391E /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F280024A26DBABB70031391E /* ImageDownloader.swift */; };
+		F280024E26DBAEF80031391E /* TheBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F280024D26DBAEF80031391E /* TheBacon.swift */; };
+		F280025026DBB04F0031391E /* UIImageView+TheBacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F280024F26DBB04F0031391E /* UIImageView+TheBacon.swift */; };
+		F280025226DBB9D70031391E /* BaconDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F280025126DBB9D70031391E /* BaconDiskCache.swift */; };
 		F2EEE583240BBC2E0002C9CA /* ImageTransforming.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE582240BBC2E0002C9CA /* ImageTransforming.swift */; };
 		F2EEE587240BBE040002C9CA /* ImageTransformingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE586240BBE040002C9CA /* ImageTransformingTests.swift */; };
 		F2EEE589240BBEF90002C9CA /* DownsamplingImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EEE588240BBEF90002C9CA /* DownsamplingImageTransformer.swift */; };
@@ -74,6 +78,10 @@
 		F27CBA1D2402D9A8006CD529 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		F27CBA212402DC0B006CD529 /* DownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloaderTests.swift; sourceTree = "<group>"; };
 		F27CBA232402DC34006CD529 /* MockURLSessionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSessionConfiguration.swift; sourceTree = "<group>"; };
+		F280024A26DBABB70031391E /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		F280024D26DBAEF80031391E /* TheBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheBacon.swift; sourceTree = "<group>"; };
+		F280024F26DBB04F0031391E /* UIImageView+TheBacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+TheBacon.swift"; sourceTree = "<group>"; };
+		F280025126DBB9D70031391E /* BaconDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaconDiskCache.swift; sourceTree = "<group>"; };
 		F2EEE582240BBC2E0002C9CA /* ImageTransforming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransforming.swift; sourceTree = "<group>"; };
 		F2EEE586240BBE040002C9CA /* ImageTransformingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTransformingTests.swift; sourceTree = "<group>"; };
 		F2EEE588240BBEF90002C9CA /* DownsamplingImageTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownsamplingImageTransformer.swift; sourceTree = "<group>"; };
@@ -107,6 +115,7 @@
 				F27CBA192402CC13006CD529 /* CacheClearOptions.swift */,
 				F27CBA1B2402CC28006CD529 /* CacheResult.swift */,
 				F247A25D23FF191C0083DB03 /* DiskCache.swift */,
+				F280025126DBB9D70031391E /* BaconDiskCache.swift */,
 				F247A25923FF15980083DB03 /* MemoryCache.swift */,
 			);
 			path = Cache;
@@ -166,8 +175,10 @@
 				F27CBA1D2402D9A8006CD529 /* Downloader.swift */,
 				775455702418DF4100FF8F5F /* Download.swift */,
 				F2255E212404606E00193742 /* MapleBacon.swift */,
+				F280024D26DBAEF80031391E /* TheBacon.swift */,
 				F2EEE582240BBC2E0002C9CA /* ImageTransforming.swift */,
 				F2EEE58C240BC17F0002C9CA /* DisplayOptions.swift */,
+				F280024A26DBABB70031391E /* ImageDownloader.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -183,6 +194,7 @@
 				F2EEE58A240BBFC00002C9CA /* CGSize+MapleBacon.swift */,
 				7778FD27240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift */,
 				775455722418E70B00FF8F5F /* Data+MapleBacon.swift */,
+				F280024F26DBB04F0031391E /* UIImageView+TheBacon.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -300,11 +312,14 @@
 				F27CBA162402BCDA006CD529 /* DataConvertible.swift in Sources */,
 				F247A25A23FF15980083DB03 /* MemoryCache.swift in Sources */,
 				F2255E202404600D00193742 /* UIImageView+MapleBacon.swift in Sources */,
+				F280025226DBB9D70031391E /* BaconDiskCache.swift in Sources */,
 				F247A25E23FF191C0083DB03 /* DiskCache.swift in Sources */,
 				F27CBA182402C551006CD529 /* FileManager.swift in Sources */,
 				F2EEE589240BBEF90002C9CA /* DownsamplingImageTransformer.swift in Sources */,
 				F2EEE58D240BC17F0002C9CA /* DisplayOptions.swift in Sources */,
+				F280025026DBB04F0031391E /* UIImageView+TheBacon.swift in Sources */,
 				F27CBA0E2402B1FE006CD529 /* Cache.swift in Sources */,
+				F280024B26DBABB70031391E /* ImageDownloader.swift in Sources */,
 				F27CBA1E2402D9A8006CD529 /* Downloader.swift in Sources */,
 				775455732418E70B00FF8F5F /* Data+MapleBacon.swift in Sources */,
 				F2EEE58B240BBFC00002C9CA /* CGSize+MapleBacon.swift in Sources */,
@@ -313,6 +328,7 @@
 				7778FD28240FAC6B007764C6 /* DispatchQueue+MapleBacon.swift in Sources */,
 				F27CBA0C2402B147006CD529 /* TimePeriod.swift in Sources */,
 				F27CBA1A2402CC13006CD529 /* CacheClearOptions.swift in Sources */,
+				F280024E26DBAEF80031391E /* TheBacon.swift in Sources */,
 				F27CBA1C2402CC28006CD529 /* CacheResult.swift in Sources */,
 				F2255E222404606E00193742 /* MapleBacon.swift in Sources */,
 			);
@@ -396,7 +412,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -454,7 +470,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

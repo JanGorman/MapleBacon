@@ -19,7 +19,7 @@ final class DownsamplingViewController: UICollectionViewController {
   private func imageURLsFromBundle() -> [URL] {
     let file = Bundle.main.path(forResource: "images", ofType: "plist")!
     let urls = NSArray(contentsOfFile: file) as! [String]
-    return urls.compactMap { URL(string: $0) }
+    return urls.compactMap(URL.init(string:))
   }
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -29,8 +29,17 @@ final class DownsamplingViewController: UICollectionViewController {
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: ImageCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
     let url = imageURLs[indexPath.item]
-    cell.imageView.setImage(with: url, displayOptions: [.downsampled])
+    Task {
+      let size = cell.imageView.bounds.size * UIScreen.main.scale
+      await cell.imageView.setImage(from: url, scalingOption: .scaled(size: size))
+    }
     return cell
   }
 
+}
+
+extension CGSize {
+    static func * (size: CGSize, scale: CGFloat) -> CGSize {
+        size.applying(CGAffineTransform(scaleX: scale, y: scale))
+    }
 }

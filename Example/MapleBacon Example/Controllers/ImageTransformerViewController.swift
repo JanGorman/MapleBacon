@@ -20,7 +20,7 @@ final class ImageTransformerViewController: UICollectionViewController {
   private func imageURLsFromBundle() -> [URL] {
     let file = Bundle.main.path(forResource: "images", ofType: "plist")!
     let urls = NSArray(contentsOfFile: file) as! [String]
-    return urls.compactMap { URL(string: $0) }
+    return urls.compactMap(URL.init(string:))
   }
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

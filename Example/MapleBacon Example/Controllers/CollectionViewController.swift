@@ -19,7 +19,7 @@ final class CollectionViewController: UICollectionViewController {
   private func imageURLsFromBundle() -> [URL] {
     let file = Bundle.main.path(forResource: "images", ofType: "plist")!
     let urls = NSArray(contentsOfFile: file) as! [String]
-    return urls.compactMap { URL(string: $0) }
+    return urls.compactMap(URL.init(string:))
   }
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -29,8 +29,9 @@ final class CollectionViewController: UICollectionViewController {
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: ImageCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
     let url = imageURLs[indexPath.item]
-    cell.imageView.setImage(with: url)
+    Task {
+      await cell.imageView.setImage(from: url)
+    }
     return cell
   }
-
 }

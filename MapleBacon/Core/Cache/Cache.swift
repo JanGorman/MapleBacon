@@ -36,8 +36,11 @@ final class Cache<T: DataConvertible> where T.Result == T {
 
   func store(value: T, forKey key: String, completion: ((Error?) -> Void)? = nil) {
     let safeKey = safeCacheKey(key)
-    memoryCache[safeKey] = value.toData()
-    diskCache.insert(value.toData(), forKey: safeKey, completion: completion)
+    guard let data = value.toData() else {
+      return
+    }
+    memoryCache[safeKey] = data
+    diskCache.insert(data, forKey: safeKey, completion: completion)
   }
 
   func value(forKey key: String, completion: CacheCompletion? = nil) {

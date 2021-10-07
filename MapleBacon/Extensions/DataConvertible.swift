@@ -53,7 +53,7 @@ enum ImageType: String {
   case jpg = "public.jpeg"
 
   static func fromData(_ data: Data) -> Self? {
-    func _match(_ prefixes: [UInt8?]) -> Bool {
+    func matchesPrefix(_ prefixes: [UInt8?]) -> Bool {
       guard data.count >= prefixes.count else {
         return false
       }
@@ -65,10 +65,10 @@ enum ImageType: String {
       }
     }
 
-    if _match([0xFF, 0xD8, 0xFF]) {
+    if matchesPrefix([0xFF, 0xD8, 0xFF]) {
       return .jpg
     }
-    if _match([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]) {
+    if matchesPrefix([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]) {
       return .png
     }
 

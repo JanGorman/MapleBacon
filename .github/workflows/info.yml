@@ -9,15 +9,12 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/setup-ruby@v1
-      with:
-        ruby-version: '2.x'
     - name: Get the version from tag
       id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
     - name: Print Info
       env:
-        BACON_VERSION: ${{ steps.get_version.outputs.VERSION }}
+        BACON_VERSION: ${{ steps.get_version.outputs.tag }}
       run:
         echo $BACON_VERSION
       

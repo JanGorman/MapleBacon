@@ -6,14 +6,12 @@ import PackageDescription
 let package = Package(
   name: "MapleBacon",
   platforms: [
-    .iOS(.v10)
+    .iOS(.v12)
   ],
   products: [
-    .library(name: "MapleBacon",
-             targets: ["MapleBacon"])
+    .library(name: "MapleBacon", targets: ["MapleBacon"]),
   ],
   targets: [
-    .target(name: "MapleBacon",
-            path: "MapleBacon")
+    .target(name: "MapleBacon", path: "MapleBacon"),
   ]
 )

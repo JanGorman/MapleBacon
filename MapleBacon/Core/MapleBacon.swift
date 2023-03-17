@@ -54,7 +54,11 @@ public final class MapleBacon {
   ///   - completion: The completion to call with the image result
   /// - Returns: An optional `DownloadTask<UIImage>` if needs to fetch the image over the network. The task can be used to cancel an inflight request
   @discardableResult
-  public func image(with url: URL, imageTransformer: ImageTransforming? = nil, completion: @escaping ImageCompletion) -> DownloadTask<UIImage>? {
+  public func image(
+    with url: URL,
+    imageTransformer: ImageTransforming? = nil,
+    completion: @escaping ImageCompletion
+  ) -> DownloadTask<UIImage>? {
     if (try? isCached(with: url, imageTransformer: imageTransformer)) == true {
       fetchImageFromCache(with: url, imageTransformer: imageTransformer, completion: completion)
       return nil
@@ -65,20 +69,20 @@ public final class MapleBacon {
 
   /// Hydrate the cache
   /// - Parameter url: The URL to fetch
-  public func hydrateCache(url: URL) {
-    if (try? isCached(with: url, imageTransformer: nil)) == false {
-      _ = self.fetchImageFromNetworkAndCache(with: url, imageTransformer: nil, completion: { _ in })
+  /// - Parameter imageTransformer: An optional image transformer to apply during hydration
+  public func hydrateCache(url: URL, imageTransformer: ImageTransforming? = nil) {
+    if (try? isCached(with: url, imageTransformer: imageTransformer)) == false {
+      _ = self.fetchImageFromNetworkAndCache(with: url, imageTransformer: imageTransformer, completion: { _ in })
     }
   }
 
   /// Hydrate the cache
   /// - Parameter urls: An array of URLs to fetch
+  /// - Parameter imageTransformer: An optional image transformer to apply during hydration
   public func hydrateCache(urls: [URL], imageTransformer: ImageTransforming? = nil) {
     for url in urls {
       if (try? isCached(with: url, imageTransformer: imageTransformer)) == false {
-        _ = self.fetchImageFromNetworkAndCache(with: url,
-                                               imageTransformer: imageTransformer,
-                                               completion: { _ in })
+        _ = self.fetchImageFromNetworkAndCache(with: url, imageTransformer: imageTransformer, completion: { _ in })
       }
     }
   }
@@ -100,7 +104,11 @@ private extension MapleBacon {
     return try cache.isCached(forKey: cacheKey)
   }
 
-  func fetchImageFromCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) {
+  func fetchImageFromCache(
+    with url: URL,
+    imageTransformer: ImageTransforming?,
+    completion: @escaping ImageCompletion
+  ) {
     let cacheKey = makeCacheKey(for: url, imageTransformer: imageTransformer)
     cache.value(forKey: cacheKey) { result in
       DispatchQueue.main.optionalAsync {
@@ -109,13 +117,22 @@ private extension MapleBacon {
     }
   }
 
-  func fetchImageFromNetworkAndCache(with url: URL, imageTransformer: ImageTransforming?, completion: @escaping ImageCompletion) -> DownloadTask<UIImage> {
+  func fetchImageFromNetworkAndCache(
+    with url: URL,
+    imageTransformer: ImageTransforming?,
+    completion: @escaping ImageCompletion
+  ) -> DownloadTask<UIImage> {
     fetchImageFromNetwork(with: url) { result in
       switch result {
       case .success(let image):
         if let transformer = imageTransformer {
           let cacheKey = self.makeCacheKey(for: url, imageTransformer: transformer)
-          self.transformImageAndCache(image, cacheKey: cacheKey, imageTransformer: transformer, completion: completion)
+          self.transformImageAndCache(
+            image,
+            cacheKey: cacheKey,
+            imageTransformer: transformer,
+            completion: completion
+          )
         } else {
           self.cache.store(value: image, forKey: url.absoluteString)
           DispatchQueue.main.optionalAsync {
@@ -134,7 +151,12 @@ private extension MapleBacon {
     downloader.fetch(url, completion: completion)
   }
 
-  func transformImageAndCache(_ image: UIImage, cacheKey: String, imageTransformer: ImageTransforming, completion: @escaping ImageCompletion) {
+  func transformImageAndCache(
+    _ image: UIImage,
+    cacheKey: String,
+    imageTransformer: ImageTransforming,
+    completion: @escaping ImageCompletion
+  ) {
     transformImage(image, imageTransformer: imageTransformer) { result in
       switch result {
       case .success(let image):

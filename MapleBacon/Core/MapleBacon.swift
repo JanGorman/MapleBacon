@@ -73,10 +73,12 @@ public final class MapleBacon {
 
   /// Hydrate the cache
   /// - Parameter urls: An array of URLs to fetch
-  public func hydrateCache(urls: [URL]) {
+  public func hydrateCache(urls: [URL], imageTransformer: ImageTransforming? = nil) {
     for url in urls {
-      if (try? isCached(with: url, imageTransformer: nil)) == false {
-        _ = self.fetchImageFromNetworkAndCache(with: url, imageTransformer: nil, completion: { _ in })
+      if (try? isCached(with: url, imageTransformer: imageTransformer)) == false {
+        _ = self.fetchImageFromNetworkAndCache(with: url,
+                                               imageTransformer: imageTransformer,
+                                               completion: { _ in })
       }
     }
   }

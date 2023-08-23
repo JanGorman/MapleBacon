@@ -14,8 +14,20 @@ final class MapleBaconTests: XCTestCase {
 
   private let cache = Cache<UIImage>(name: "MapleBaconTests")
 
+  
+  private lazy var _subscriptions: Any? = nil
   @available(iOS 13.0, *)
-  private lazy var subscriptions: Set<AnyCancellable> = []
+  private var subscriptions: Set<AnyCancellable> {
+    get {
+      if _subscriptions == nil {
+        _subscriptions = Set<AnyCancellable>()
+      }
+      return _subscriptions as! Set<AnyCancellable>
+    }
+    set {
+      _subscriptions = newValue
+    }
+  }
 
   func testIntegration() {
     let expectation = self.expectation(description: #function)
